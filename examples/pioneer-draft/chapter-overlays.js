@@ -1,6 +1,6 @@
-import {buildArchivedSpringChart} from './archived-spring-chart.js?v=revision-20261029-9';
-import {buildDiagram} from './chapter-diagram-layer.js?v=revision-20261029-9';
-import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-9';
+import {buildArchivedSpringChart} from './archived-spring-chart.js?v=revision-20261029-12';
+import {buildDiagram} from './chapter-diagram-layer.js?v=revision-20261029-12';
+import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-12';
 // Short visual explanations. All quantitative FEA marks use the same archived solver case.
 const C={ink:'#1a3a7a',accent:'#a44725',muted:'#585950',line:'#b5b3ab',paper:'#fdfcf8'};
 const text=(x,y,s,z=26,c=C.ink,a='middle')=>`<text x="${x}" y="${y}" font-size="${z}" fill="${c}" text-anchor="${a}" stroke="${C.paper}" stroke-width="5" paint-order="stroke">${s}</text>`;
@@ -16,11 +16,54 @@ export function buildChapterOverlay(ctx){
  const diagram=buildDiagram(c,b,{progress:1,reducedMotion:true});
  if(diagram)return diagram;
  if(c===2){
-  if(b===0){s+=`<image href="./assets/elderly-material-symbol.svg" x="1200" y="40" width="135" height="135" opacity=".8"/>`+text(1267,215,'Older adults',32,C.accent);const p=project(human.getAttachment('left').kneeAnchor);s+=`<circle cx="${p[0]}" cy="${p[1]}" r="28" fill="none" stroke="${C.accent}" stroke-width="3"/>`+text(p[0]+90,p[1]-40,'Joint surfaces',27,C.accent);}
-  if(b===1)return ctx.legacy();
-  if(b===2){s+=text(1260,165,'Sarcopenia',32,C.accent);for(let i=0;i<5;i++)s+=`<image href="./assets/elderly-material-symbol.svg" x="${1030+i*88}" y="220" width="75" height="100" opacity="${i===0?1:.16}"/>`;}
-  if(b===3){for(const side of ['left','right']){const a=human.getAttachment(side),hip=project(a.hipAnchor),knee=project(a.kneeAnchor),out=side==='left'?35:-35,foot=project(a.kneeAnchor.clone().add(point([0,-.36,0])));s+=`<path d="M${hip[0]+out} ${hip[1]}L${knee[0]+out} ${knee[1]}L${foot[0]+out} ${foot[1]}" fill="none" stroke="${C.accent}" stroke-width="8"/>`;s+=arrow([knee[0]+out,knee[1]],[knee[0],knee[1]],C.ink);}s+=text(1260,170,'Fitting &amp; donning',30)+text(1260,230,'External interfaces',27,C.muted);}
-  if(b===4)s+=text(1220,145,'Motion + assistance',31,C.accent);
+  // Keep these marks attached to anatomy; the right column carries the argument.
+  // Figure coordinates follow the camera, rather than becoming a second caption column.
+  const label=(p,name,dx=200,dy=-48,color=C.accent)=>{
+   if(!p)return '';
+   const x=Math.max(dx<0?340:110,Math.min(1040,p[0]+dx)),y=Math.max(112,Math.min(450,p[1]+dy));
+   return arrow([x+(dx<0?16:-16),y+8],[p[0]+14,p[1]],color)+text(x,y,name,40,color,dx<0?'end':'start');
+  };
+  const knee=human?.getAttachment('left')?.kneeAnchor;
+  if(b===0&&knee)s+=label(project(knee),'Joint surfaces');
+  if(b===1){
+   const centers=partPoint('clinical');
+   if(centers?.insert)s+=label(project(centers.insert),'Replaced joint surfaces',200,-62);
+  }
+  if(b===2){
+   const a=human?.getAttachment('left');
+   if(a?.hipAnchor&&a?.kneeAnchor){
+    const thigh=a.hipAnchor.clone().lerp(a.kneeAnchor,.56);
+    s+=label(project(thigh),'Thigh muscles',-440,10);
+   }
+   // Pooled estimate for TKA populations, not a rate for all older adults.
+   // The interval is uncertainty across the meta-analysis, not muscle-force loss.
+   const x=1050,y=324,w=430,max=40,value=20.1,lo=13.6,hi=28.8;
+   const q=v=>x+w*v/max;
+   s+=text(x+w/2,225,'Sarcopenia in TKA populations',36,C.ink);
+   s+=`<path d="M${x} ${y+28}H${x+w}" fill="none" stroke="${C.line}" stroke-width="2"/>`;
+   for(const v of[0,10,20,30,40])s+=`<path d="M${q(v)} ${y+24}v8" stroke="${C.line}" stroke-width="2"/>`+text(q(v),y+55,`${v}%`,27,C.muted);
+   s+=`<path d="M${q(lo)} ${y}H${q(hi)}M${q(lo)} ${y-9}v18M${q(hi)} ${y-9}v18" fill="none" stroke="${C.accent}" stroke-width="4"/><circle cx="${q(value)}" cy="${y}" r="8" fill="${C.accent}"/>`;
+   s+=text(q(value),y-30,'20.1%',44,C.accent)+text(x+w/2,420,'95% CI 13.6–28.8%',30,C.muted)+text(x+w/2,455,'Sumbal et al., 2024',27,C.muted);
+  }
+  if(b===3){
+   if((live.bgExamples||0)<.98)return '';
+   // The layer provides one real world-space label anchor per attached model.
+   const labels=ctx.myoExamples?.labels||[];
+   for(const item of labels){
+    const anchor=item.position||item.anchor;
+    if(!anchor)continue;
+    const p=project(anchor);
+    s+=text(p[0],28,item.name,38,C.ink);
+   }
+  }
+  if(b===4&&ctx.conceptPoints){
+   if((live.bgMotor||0)<.98)return '';
+   const joint=project(ctx.conceptPoints.joint),motor=project(ctx.conceptPoints.motor);
+   const y=Math.min(445,Math.max(joint[1],motor[1])+95);
+   s+=text(joint[0],y,'Joint replacement',38,C.ink)+text(motor[0],y,'Maxon motor',38,C.ink);
+   s+=text((joint[0]+motor[0])/2,(joint[1]+motor[1])/2+9,'+',66,C.accent);
+  }
+  return s;
  }
  if(c===3){
   if(b===0)return '';

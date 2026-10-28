@@ -1,0 +1,6 @@
+MyoAssist wearable-device examples
+Derived from assist_sim 1.0.0 and myo_sim 0.2.3 (Apache License 2.0).
+Upstream model definitions, original device colours and every visible source triangle are preserved.
+Presentation modifications: hidden wrap geometries omitted; exact meshes shared; unused vertices compacted; float32 display buffers; signed-normalized Int16 shading normals; canonical-keyframe kinematics pre-evaluated; source Z-up converted to display Y-up; anatomy materials muted.
+These are attached-device illustrations, not simulation outcome or validated device comparisons.
+See provenance.json for repositories, release commits and source file SHA256.

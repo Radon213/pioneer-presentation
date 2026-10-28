@@ -44,43 +44,48 @@
   {
     "id": 2,
     "title": "Background",
-    "ko": "관절 치환과 함께 근력 보조가 필요한 이유",
-    "lead": "Our target is an older adult with knee replacement and sarcopenia.",
+    "ko": "관절 치환에서 능동 보조로",
+    "lead": "Aging affects the joint and the muscles that move it.",
     "duration": 85,
-    "source": "Pioneer_2022_proposal.pdf: PDF p11/printed p2 and PDF p40/printed p31 · Sumbal et al.,2024 · Reicherzer et al.,2024",
+    "source": "Pioneer_2022_proposal.pdf: PDF p11/printed p2 and PDF p40/printed p31 · Sumbal et al.,2024 · MyoAssist open-source models",
     "stages": [
       {
-        "caption": "The project begins with an older person who needs knee replacement.",
-        "question": "What does replacement change?",
-        "notes": "The Pioneer proposal targets the combined problem of joint degeneration and reduced muscle capacity. Keep one person in view as we move from walking to the knee. The generic musculoskeletal geometry is an explanation of this target, not an elderly patient-specific model. 한국어: 고령·TKA·근감소증이 함께 있는 대상을 설명하며 모든 TKA 환자가 근감소증을 가진다고 일반화하지 않는다.",
-        "body": "<p>The target is an <strong>older adult</strong>.</p><p><strong>Knee replacement</strong><br>and <strong>sarcopenia</strong> coexist.</p>"
+        "caption": "Joint degeneration can limit everyday movement in older adults.",
+        "question": "",
+        "notes": "The Pioneer proposal begins with older adults who need knee replacement because of joint degeneration. Keep the same person visible while approaching the knee. The joint-degeneration comparison is an explanatory illustration, and the generic musculoskeletal model is not an elderly patient-specific reconstruction. Introduce the muscles after explaining what replacement changes. 한국어: 수술을 고려하는 고령층과 관절 손상에서 출발한다. 근감소증은 다음 단계에서 노화의 맥락으로 자연스럽게 연결한다.",
+        "subtitle": "Joint degeneration can limit everyday movement",
+        "body": "<p><strong>Joint degeneration</strong><br>can limit everyday movement.</p><p>The target is an <strong>older adult</strong><br>needing <strong>knee replacement</strong>.</p>"
       },
       {
-        "caption": "Knee replacement renews joint surfaces while the surrounding muscles remain.",
-        "question": "What if those muscles are weak?",
-        "notes": "Conventional total knee replacement changes damaged joint surfaces using metal components and a polyethylene insert. The surrounding bones and muscles continue to move the body. The component placement is educational and omits surgical detail; it is not a validated patient fit. 한국어: 표면 치환을 설명하며 근육을 대체하는 수술처럼 표현하지 않는다.",
-        "body": "<p>Replace the <strong>joint surfaces</strong>.</p><p>The <strong>muscles</strong> still move the body.</p>"
+        "caption": "Replacement changes the joint surfaces. Muscles still produce movement.",
+        "question": "What happens when muscle strength also declines?",
+        "notes": "Conventional total knee replacement changes damaged joint surfaces using metal components and a polyethylene insert. The surrounding muscles remain responsible for producing movement. Retain the same knee, its neighbouring bones and the muscle context while inserting the conventional components. The placement is educational and omits surgical detail; it is not a validated patient fit. 한국어: 일반 인공관절의 표면 치환 역할을 보여주고, 여전히 움직임을 만드는 근육으로 시선을 이어간다.",
+        "subtitle": "Joint surfaces change; muscles still drive movement",
+        "body": "<p>Replace the <strong>joint surfaces</strong>.</p><p>The <strong>muscles</strong><br>still produce movement.</p>"
       },
       {
-        "caption": "Sarcopenia adds a muscle-capacity problem to the joint problem.",
-        "question": "Where could assistance come from?",
-        "notes": "Sumbal and colleagues reported a pooled sarcopenia prevalence of 20.1% in TKA populations, with 95% CI 13.6–28.8% and substantial heterogeneity, I² 94.7%. This is neither a Korean prevalence nor a rate for every older adult. It supports the relevance of the intersection, not causation by surgery. Source: https://pubmed.ncbi.nlm.nih.gov/38901711/ ; https://doi.org/10.1016/j.arth.2024.06.021. 한국어: 메타분석의 TKA 집단 추정치이며 한국 전체 노인이나 우리 실험 대상자의 유병률로 쓰지 않는다.",
-        "body": "<p><strong class=\"stage-stat\">20.1%</strong></p><p>Pooled sarcopenia prevalence<br>in <strong>TKA populations</strong>.</p><p class=\"stage-reference\">95% CI 13.6–28.8% · Sumbal et al.,2024</p>"
+        "caption": "Aging can reduce muscle mass and strength as well as affect the joint.",
+        "question": "How could we support movement?",
+        "notes": "People reaching the age at which knee replacement is needed can also experience age-related loss of muscle mass and strength. Sarcopenia is a possible coexisting condition in this older population, not an inevitable consequence of aging or surgery. Sumbal and colleagues reported a pooled sarcopenia prevalence of 20.1% in TKA populations, with 95% CI 13.6–28.8% and substantial heterogeneity, I² 94.7%. Present that estimate in the supporting graph while preserving the same knee and highlighting the muscles around it. This is neither a Korean prevalence nor a rate for every older adult. Source: https://pubmed.ncbi.nlm.nih.gov/38901711/ ; https://doi.org/10.1016/j.arth.2024.06.021. 한국어: 인공관절 수술이 필요한 연령대에서는 관절뿐 아니라 근육의 양과 근력도 저하될 수 있다는 흐름으로 연결한다. 모든 고령자나 TKA 환자에게 근감소증이 필연적으로 동반된다고 일반화하지 않는다. 20.1%는 연구에 포함된 TKA 집단의 통합 추정치다.",
+        "subtitle": "Aging affects muscles as well as joints",
+        "body": "<p>Aging can reduce<br><strong>muscle mass and strength</strong>.</p><p>In this population,<br><strong>sarcopenia can coexist</strong>.</p>"
       },
       {
-        "caption": "External assistance also requires wearing and fitting the device.",
-        "question": "Could support be integrated into the implant?",
-        "notes": "A qualitative Myosuit study with older adults and physiotherapists identified donning, fit and pressure-related comfort as practical considerations. Views differed, and some users anticipated independent use. We show a generic external frame to explain those considerations, not a comparison proving that exoskeletons are inferior. Source: https://rehab.jmir.org/2024/1/e52676. 한국어: 일반 외골격의 열등성이나 모든 제품의 무게·보조인력 필요성을 주장하지 않는다.",
-        "body": "<p><strong>Wearing and fitting</strong><br>are part of external assistance.</p><p><strong>Comfort</strong> also matters.</p>"
+        "caption": "Assistance can be worn outside the body.",
+        "question": "",
+        "notes": "Show three actual open-source MyoAssist human–device models: HMEDI_L1 (hip assistance via cables), OpenExo_L1 (ankle assistance via a strut), and DephyExoBoot_L1 (ankle assistance via a boot). Preserve the source devices, their body attachments and the source human geometry. Canonical standing and source-keyframe motion are kinematic presentation replays, not trained assistance policies or evidence of a walking benefit. The examples illustrate external assistance and attachment locations; their appearance is not evidence of discomfort, clinical effectiveness or comparative superiority. 한국어: MyoAssist에서 실제 사람 모델에 장착된 HMEDI L1, OpenExo L1, Dephy ExoBoot L1을 보여준다. 기본 기립 자세와 원본 키프레임으로 구성한 기구학 재생이며 학습된 보조 보행이나 보조 효과 검증 결과가 아니다. 몸에 고정하여 힘을 전달하는 구조를 설명하고 외골격 전반의 불편함·열등성으로 확대하지 않는다.",
+        "subtitle": "Assistance can be worn outside the body",
+        "body": "<p><strong>Wearable devices</strong><br>can support movement.</p><p>They transmit support through<br><strong>attachments to the body</strong>.</p>"
       },
       {
-        "caption": "The project adds an assistance function to a biomechanical artificial knee.",
-        "question": "How can the mechanism preserve knee motion?",
-        "notes": "Return to the already-required artificial joint. The research objective is to integrate support while respecting the natural movement and the packaging constraints of an implant. This is a design direction with unresolved surgical, power and thermal questions, not a clinically established replacement for wearable systems. 한국어: 기존 생체역학 인공관절을 능동 보조로 발전시킨 과제의 흐름을 연결한다.",
-        "body": "<p>Add <strong>active support</strong><br>to the artificial joint.</p><p>Preserve <strong>biomechanical motion</strong>.</p>"
+        "caption": "Could the implant also provide active support?",
+        "question": "What mechanism could make this possible?",
+        "notes": "Return to exactly the conventional knee-replacement components shown in the surgery step, then bring in the original Maxon motor model beside them. The composition introduces the idea of combining joint replacement and active assistance. Do not reveal the completed Pioneer assembly in this step or imply that the motor attaches directly to the conventional implant as shown. The arrangement is a research concept rather than a surgically or mechanically validated assembly. Carry the motor-to-joint idea into the Hardware chapter, where the actual mechanism and transmission are explained. 한국어: 2단계의 일반 인공관절에 기존 맥슨 모터를 더하는 개념으로 표현한다. 우리 완성품은 아직 공개하지 않고, 그 결합을 실제로 구현하려면 어떤 기구가 필요한지 다음 Hardware 장으로 이어간다.",
+        "subtitle": "Could the implant also provide active support?",
+        "body": "<p>Combine <strong>joint replacement</strong><br>with a <strong>compact motor</strong>.</p><p>A research concept for<br><strong>active assistance</strong>.</p>"
       }
     ],
-    "subtitle": "Why Joint Replacement May Need Muscle Support",
+    "subtitle": "From Joint Replacement to Active Support",
     "targetGroup": "Older adults",
     "steps": 4,
     "scene": {
@@ -91,7 +96,7 @@
     "body": "",
     "bridge": "",
     "dummy": false,
-    "notes": "Stage 0: The Pioneer proposal targets the combined problem of joint degeneration and reduced muscle capacity. Keep one person in view as we move from walking to the knee. The generic musculoskeletal geometry is an explanation of this target, not an elderly patient-specific model. 한국어: 고령·TKA·근감소증이 함께 있는 대상을 설명하며 모든 TKA 환자가 근감소증을 가진다고 일반화하지 않는다.\n\nStage 1: Conventional total knee replacement changes damaged joint surfaces using metal components and a polyethylene insert. The surrounding bones and muscles continue to move the body. The component placement is educational and omits surgical detail; it is not a validated patient fit. 한국어: 표면 치환을 설명하며 근육을 대체하는 수술처럼 표현하지 않는다.\n\nStage 2: Sumbal and colleagues reported a pooled sarcopenia prevalence of 20.1% in TKA populations, with 95% CI 13.6–28.8% and substantial heterogeneity, I² 94.7%. This is neither a Korean prevalence nor a rate for every older adult. It supports the relevance of the intersection, not causation by surgery. Source: https://pubmed.ncbi.nlm.nih.gov/38901711/ ; https://doi.org/10.1016/j.arth.2024.06.021. 한국어: 메타분석의 TKA 집단 추정치이며 한국 전체 노인이나 우리 실험 대상자의 유병률로 쓰지 않는다.\n\nStage 3: A qualitative Myosuit study with older adults and physiotherapists identified donning, fit and pressure-related comfort as practical considerations. Views differed, and some users anticipated independent use. We show a generic external frame to explain those considerations, not a comparison proving that exoskeletons are inferior. Source: https://rehab.jmir.org/2024/1/e52676. 한국어: 일반 외골격의 열등성이나 모든 제품의 무게·보조인력 필요성을 주장하지 않는다.\n\nStage 4: Return to the already-required artificial joint. The research objective is to integrate support while respecting the natural movement and the packaging constraints of an implant. This is a design direction with unresolved surgical, power and thermal questions, not a clinically established replacement for wearable systems. 한국어: 기존 생체역학 인공관절을 능동 보조로 발전시킨 과제의 흐름을 연결한다."
+    "notes": "Stage 0: The Pioneer proposal begins with older adults who need knee replacement because of joint degeneration. Keep the same person visible while approaching the knee. The joint-degeneration comparison is an explanatory illustration, and the generic musculoskeletal model is not an elderly patient-specific reconstruction. Introduce the muscles after explaining what replacement changes. 한국어: 수술을 고려하는 고령층과 관절 손상에서 출발한다. 근감소증은 다음 단계에서 노화의 맥락으로 자연스럽게 연결한다.\n\nStage 1: Conventional total knee replacement changes damaged joint surfaces using metal components and a polyethylene insert. The surrounding muscles remain responsible for producing movement. Retain the same knee, its neighbouring bones and the muscle context while inserting the conventional components. The placement is educational and omits surgical detail; it is not a validated patient fit. 한국어: 일반 인공관절의 표면 치환 역할을 보여주고, 여전히 움직임을 만드는 근육으로 시선을 이어간다.\n\nStage 2: People reaching the age at which knee replacement is needed can also experience age-related loss of muscle mass and strength. Sarcopenia is a possible coexisting condition in this older population, not an inevitable consequence of aging or surgery. Sumbal and colleagues reported a pooled sarcopenia prevalence of 20.1% in TKA populations, with 95% CI 13.6–28.8% and substantial heterogeneity, I² 94.7%. Present that estimate in the supporting graph while preserving the same knee and highlighting the muscles around it. This is neither a Korean prevalence nor a rate for every older adult. Source: https://pubmed.ncbi.nlm.nih.gov/38901711/ ; https://doi.org/10.1016/j.arth.2024.06.021. 한국어: 인공관절 수술이 필요한 연령대에서는 관절뿐 아니라 근육의 양과 근력도 저하될 수 있다는 흐름으로 연결한다. 모든 고령자나 TKA 환자에게 근감소증이 필연적으로 동반된다고 일반화하지 않는다. 20.1%는 연구에 포함된 TKA 집단의 통합 추정치다.\n\nStage 3: Show three actual open-source MyoAssist human–device models: HMEDI_L1 (hip assistance via cables), OpenExo_L1 (ankle assistance via a strut), and DephyExoBoot_L1 (ankle assistance via a boot). Preserve the source devices, their body attachments and the source human geometry. Canonical standing and source-keyframe motion are kinematic presentation replays, not trained assistance policies or evidence of a walking benefit. The examples illustrate external assistance and attachment locations; their appearance is not evidence of discomfort, clinical effectiveness or comparative superiority. 한국어: MyoAssist에서 실제 사람 모델에 장착된 HMEDI L1, OpenExo L1, Dephy ExoBoot L1을 보여준다. 기본 기립 자세와 원본 키프레임으로 구성한 기구학 재생이며 학습된 보조 보행이나 보조 효과 검증 결과가 아니다. 몸에 고정하여 힘을 전달하는 구조를 설명하고 외골격 전반의 불편함·열등성으로 확대하지 않는다.\n\nStage 4: Return to exactly the conventional knee-replacement components shown in the surgery step, then bring in the original Maxon motor model beside them. The composition introduces the idea of combining joint replacement and active assistance. Do not reveal the completed Pioneer assembly in this step or imply that the motor attaches directly to the conventional implant as shown. The arrangement is a research concept rather than a surgically or mechanically validated assembly. Carry the motor-to-joint idea into the Hardware chapter, where the actual mechanism and transmission are explained. 한국어: 2단계의 일반 인공관절에 기존 맥슨 모터를 더하는 개념으로 표현한다. 우리 완성품은 아직 공개하지 않고, 그 결합을 실제로 구현하려면 어떤 기구가 필요한지 다음 Hardware 장으로 이어간다."
   },
   {
     "id": 3,

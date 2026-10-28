@@ -1,8 +1,8 @@
 import {startPresentationBenchmark} from './performance-benchmark.js';
-import slides,{deckVersion} from './deck-data.js?v=revision-20261029-9';
-import {createPresentationNavigation} from './presentation-navigation.js?v=revision-20261029-9';
-import {getMotionRate,setMotionRate} from './motion-clock.js?v=revision-20261029-9';
-import {getLoadProgress,reportLoadStage} from './asset-loading.js?v=revision-20261029-9';
+import slides,{deckVersion} from './deck-data.js?v=revision-20261029-12';
+import {createPresentationNavigation} from './presentation-navigation.js?v=revision-20261029-12';
+import {getMotionRate,setMotionRate} from './motion-clock.js?v=revision-20261029-12';
+import {getLoadProgress,reportLoadStage} from './asset-loading.js?v=revision-20261029-12';
 const deck=document.querySelector('.deck'),announcer=document.querySelector('#announcer'),sections=[...deck.querySelectorAll('.slide')];
 startPresentationBenchmark(deck);
 const params=new URLSearchParams(location.search),staticMode=params.get('motion')==='static',previewMode=params.has('preview'),reduced=matchMedia('(prefers-reduced-motion: reduce)');
@@ -45,7 +45,7 @@ for(const el of sections){const total=Number(el.dataset.steps)+1,p=document.crea
 function readRoute(){const m=location.hash.match(/^#\/(\d+)(?:\/(\d+))?/);page=Math.max(1,Math.min(slides.length,Number(params.get('preview')||m?.[1])||1));step=Math.max(0,Math.min(slides[page-1].steps,Number(m?.[2])||0));if(staticMode)step=slides[page-1].steps;}
 function fit(){deck.style.setProperty('--fit',Math.min(innerWidth/1920,innerHeight/1080));deck.style.setProperty('--continuous-top','298px');viewer?.resize();}
 function publish(){const slide=slides[page-1],stage=slide.stages[step];channel?.postMessage({type:'state',page,step,slide:{...slide,notes:stage.notes},next:slides[page]||null,total:slides.length});}
-function prepare(el){const slide=slides[page-1],stage=slide.stages[step];el.dataset.currentStage=step;const text=el.querySelector('[data-stage-caption]');if(stage.body)text.innerHTML=stage.body;else text.textContent=stage.caption;el.querySelector('[data-stage-question]').textContent=stage.question;const p=el.querySelector('.build-progress');p.setAttribute('aria-valuenow',step+1);p.setAttribute('aria-valuetext',`Stage ${step+1} of ${slide.steps+1}`);p.querySelector('.build-progress-count').textContent=`${step+1}/${slide.steps+1}`;p.querySelectorAll('i').forEach((s,i)=>s.classList.toggle('is-complete',i<=step));}
+function prepare(el){const slide=slides[page-1],stage=slide.stages[step];el.dataset.currentStage=step;const subtitle=el.querySelector('.chapter-subtitle');if(subtitle)subtitle.textContent=stage.subtitle||slide.subtitle;const text=el.querySelector('[data-stage-caption]');if(stage.body)text.innerHTML=stage.body;else text.textContent=stage.caption;el.querySelector('[data-stage-question]').textContent=stage.question;const p=el.querySelector('.build-progress');p.setAttribute('aria-valuenow',step+1);p.setAttribute('aria-valuetext',`Stage ${step+1} of ${slide.steps+1}`);p.querySelector('.build-progress-count').textContent=`${step+1}/${slide.steps+1}`;p.querySelectorAll('i').forEach((s,i)=>s.classList.toggle('is-complete',i<=step));}
 function clearUI(){const t=uiTransition;if(!t)return;uiTransition=null;for(const a of t.animations)a.cancel();for(const n of t.temporary)n.remove();for(const el of sections){el.style.opacity='';el.style.zIndex='';el.hidden=Number(el.dataset.slide)!==rendered;}delete deck.dataset.pageTransition;}
 function animateOpacity(el,from,to,duration,delay=0){const a=el.animate([{opacity:from},{opacity:to}],{duration,delay,fill:'both',easing:'cubic-bezier(.16,1,.3,1)'});a.playbackRate=getMotionRate();return a;}
 function updateUI(animate){
@@ -56,7 +56,7 @@ function updateUI(animate){
   prepare(incoming);incoming.hidden=false;incoming.style.opacity='0';incoming.style.zIndex='4';outgoing.hidden=false;outgoing.style.zIndex='3';outgoing.inert=true;
   t.animations.push(animateOpacity(outgoing,1,0,260),animateOpacity(incoming,0,1,420,140));deck.dataset.pageTransition='crossfading';
  }else if(enabled&&outgoing){
-  const current=incoming.querySelector('.stage-copy'),old=current.cloneNode(true);old.classList.add('outgoing-stage-copy');incoming.append(old);t.temporary.push(old);prepare(incoming);t.animations.push(animateOpacity(old,1,0,200),animateOpacity(current,0,1,320,110));
+  const current=incoming.querySelector('.stage-copy'),old=current.cloneNode(true);old.classList.add('outgoing-stage-copy');old.setAttribute('aria-hidden','true');old.inert=true;incoming.append(old);t.temporary.push(old);prepare(incoming);t.animations.push(...(page===2?[animateOpacity(old,1,0,180,340),animateOpacity(current,0,1,260,490)]:[animateOpacity(old,1,0,200),animateOpacity(current,0,1,320,110)]));
  }else prepare(incoming);
  sections.forEach(el=>{const active=el===incoming;el.inert=!active;el.setAttribute('aria-hidden',String(!active));if(el!==incoming&&(!changed||!enabled||el!==outgoing))el.hidden=true;});incoming.hidden=false;
  rendered=page;Object.assign(deck.dataset,{page:String(page),step:String(step),animate:String(enabled)});document.title=`Pioneer · ${page}/${slides.length} · ${slides[page-1].title}`;announcer.textContent=`Chapter ${page} of ${slides.length}, stage ${step+1} of ${slides[page-1].steps+1}: ${slides[page-1].stages[step].caption}`;

@@ -1,0 +1,226 @@
+{
+  "classification": "OPEN_SOURCE_MYOASSIST_ATTACHED_EXAMPLES_PRESENTATION_EXPORT",
+  "created": "2026-10-29",
+  "units": "metres",
+  "sourceCoordinateSystem": "MuJoCo Z-up",
+  "displayCoordinateSystem": "Y-up via -90 degrees X, then model yaw",
+  "sourceVersions": {
+    "assist_sim": "1.0.0",
+    "myo_sim": "0.2.3",
+    "mujoco": "3.4.0"
+  },
+  "upstream": [
+    {
+      "name": "MyoAssist",
+      "url": "https://github.com/neumovelab/myoassist",
+      "commit": "b1baf69da59dc6728515d0977cbc8fbf00b9225a",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "assist_sim",
+      "url": "https://github.com/neumovelab/assist_sim",
+      "version": "1.0.0",
+      "commit": "8bd46c72713f8e591b09c3e1c196211344f52bbb",
+      "commitRole": "v1.0.0 release tag",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "myo_sim",
+      "url": "https://github.com/MyoHub/myo_sim",
+      "version": "0.2.3",
+      "commit": "93b0ca8f4ec90c9899ee7f05fee561e9911da91b",
+      "commitRole": "v0.2.3 release commit",
+      "license": "Apache-2.0"
+    }
+  ],
+  "researchLimit": "No physics integration, no measured locomotion and no assistance benefit claimed. Small limb motions are interpolation of supplied canonical keyframe poses; device and anatomy matrices are evaluated by mj_forward. Source models, topology, attachment configuration and source device RGBA preserved. Anatomy display is muted only in the runtime material. Hidden wrapping/collision geometry is intentionally omitted. No mesh decimation.",
+  "binarySHA256": "4bc0a806ee07b183ed35924f0106919499765e46159a62bc5eb74fc225c35bf1",
+  "binaryBytes": 6715932,
+  "gzipBytes": 4419742,
+  "uniqueMeshCount": 62,
+  "uniqueTriangles": 358663,
+  "renderedTriangles": 529285,
+  "examples": [
+    {
+      "key": "HMEDI_L1",
+      "name": "HMEDI",
+      "description": "Hip assistance",
+      "sourceMSK": "myolegs26",
+      "sourceFloorZ": 0.08214567745431592,
+      "sourceBoundsZUp": [
+        [
+          -0.17120251236432743,
+          -0.13191644822414522,
+          0.08214567745431592
+        ],
+        [
+          0.1699999966034637,
+          0.27136605575987827,
+          1.751765025096003
+        ]
+      ],
+      "displayYaw": 2.8215926535897933,
+      "sourceFilesSHA256": {
+        "HMEDI/L1config.yaml": "d6019343d2e78e83bfb32e81037337030892851707e4bda1665e0402054c2c1a",
+        "HMEDI/L1model.xml": "5cca867fdac5f21df2820ff88cff4c05573eba7aa33daa9908764086e1afcf90",
+        "HMEDI/mesh/ASSEM_MEDI FemurFlap_L.stl": "1d4e7db53ea2315eebc48260b89d20b9fd1033ef4e956bd4388c72ace9a25b8f",
+        "HMEDI/mesh/ASSEM_MEDI FemurFlap_R.stl": "16655a9d02a391ed0efe9e54baf863e4ae007bea62266c4cfe3c331ffcb1f4ca",
+        "HMEDI/mesh/ASSEM_MEDI MM03 Cobra 150.stl": "dd0404e2e62cddd3297bb153da9041c622748236ef3eeb8e3a6278286d2ed61c",
+        "HMEDI/mesh/ASSEM_MEDI MM03 Cobra.stl": "e6f85db1063a0fa685d466de2e6e0693b139cc5410f9f822a24240198258ab08",
+        "HMEDI/mesh/ASSEM_MEDI Torso_Reduced.stl": "e1d6aa5dca73ac8113d601289a417bca5e94c18a1f5bb9d90b18bd286ce6e9b1",
+        "HMEDI/mesh/ASSEM_MEDI WaistBand.stl": "58a763596e230f2e83b2e45e64e8be8cce30a82890d7b7f2bf11e583bb5a6d3c",
+        "HMEDI/mesh/ASSEM_MEDI thigh INDV.stl": "2900448ed3231eb32ccf1c8f00b0ec473abb6f5f7b01c09e0097974084b51e00"
+      },
+      "sourceKeyframes": [
+        "stand",
+        "walk_left",
+        "walk_right"
+      ],
+      "classification": "SOURCE_ATTACHED_CANONICAL_KEYFRAME_KINEMATIC_ILLUSTRATION",
+      "physicsSteps": 0,
+      "mjForwardCalls": 34,
+      "keyframeBlendAmplitude": 0.18
+    },
+    {
+      "key": "OpenExo_L1",
+      "name": "OpenExo",
+      "description": "Ankle assistance",
+      "sourceMSK": "myolegs26",
+      "sourceFloorZ": 0.07891812655150138,
+      "sourceBoundsZUp": [
+        [
+          -0.1780022579108445,
+          -0.13191644822414522,
+          0.07891812655150138
+        ],
+        [
+          0.1785000009187354,
+          0.200685036923707,
+          1.751765025096003
+        ]
+      ],
+      "displayYaw": 2.8215926535897933,
+      "sourceFilesSHA256": {
+        "OpenExo/L1config.yaml": "5fa523231345e6d0c48772221d88c1a311ca3b0f919e34b847978296db48b219",
+        "OpenExo/L1model.xml": "784c627ad4d98f756a2c32c183ebf9cd1e91def064b753fa3825e5e760e89a9a",
+        "OpenExo/mesh/blade_l.stl": "3888bf8a3026a0b286cd144ea7b22aeb8ac8ea280a21f3e43fc7540a39a8523b",
+        "OpenExo/mesh/blade_r.stl": "c635a8929913796dc9b903d207e265f9a106baa26320bd563adf48d94a7f4456",
+        "OpenExo/mesh/cuff_l.stl": "ac5f589be7449d85e2bacae2088037009ede4c8d21a3bb451cb8504ca15d1b55",
+        "OpenExo/mesh/cuff_r.stl": "0aae1e4081c78ff63b5bbadeb03e416b1c98356209125595dfb3e9b5cd793fa5",
+        "OpenExo/mesh/shaft_l.stl": "a8897a4b21e90ef3fb6f33b534f7d6131d92bfbbeaf4ed80dee320202b86108b",
+        "OpenExo/mesh/shaft_r.stl": "54ec13363581aa7145ac912cf7b70b2092a87c5b54501afc52967ec9217c16e3"
+      },
+      "sourceKeyframes": [
+        "stand",
+        "walk_left",
+        "walk_right"
+      ],
+      "classification": "SOURCE_ATTACHED_CANONICAL_KEYFRAME_KINEMATIC_ILLUSTRATION",
+      "physicsSteps": 0,
+      "mjForwardCalls": 34,
+      "keyframeBlendAmplitude": 0.18
+    },
+    {
+      "key": "DephyExoBoot_L1",
+      "name": "Dephy ExoBoot",
+      "description": "Ankle assistance",
+      "sourceMSK": "myolegs26",
+      "sourceFloorZ": 0.03613307119119747,
+      "sourceBoundsZUp": [
+        [
+          -0.18747760112189382,
+          -0.1574577210260108,
+          0.03613307119119747
+        ],
+        [
+          0.19200000273800638,
+          0.2593750155424322,
+          1.751765025096003
+        ]
+      ],
+      "displayYaw": 2.8215926535897933,
+      "sourceFilesSHA256": {
+        "DephyExoBoot/L1config.yaml": "d30fd1cbc7cf35defdf8bccdba5b0d27713116810c524cd829301f71069adf0d",
+        "DephyExoBoot/L1model.xml": "56534188dbfd1323d030aac3295b9ec7ba8e9a87fe75a6586ad1c83ddfe9d93d",
+        "DephyExoBoot/mesh/Battery.stl": "852130e16f94467fe9a0195954af715ded52939ceb9da1df27730d1d2562df6d",
+        "DephyExoBoot/mesh/Fanny pack.stl": "3c88a4dfdbff0dcda2c0b2f4aa40c48bc8504b90c9049ae2e70746df18135a28",
+        "DephyExoBoot/mesh/Raspberry Pi 5.stl": "e7349378ac448fc72b4b4a85cee9a6f783cac235ff0a9c3c2ad8ce3aeebb602e",
+        "DephyExoBoot/mesh/exo_1_l.stl": "18eeb9ae55d40cc34d093a1d46705f03f3f34140ae2820ffddea3ba25e04036e",
+        "DephyExoBoot/mesh/exo_1_r.stl": "a4415fdcb1b79b5a372d38d53e91a4e96ee8d537b1e0ae7af97a1ecc23c88173",
+        "DephyExoBoot/mesh/exo_2_l.stl": "82066ba382b74318ceb1c51ebadf5965743bb148aca10ea398d4543ba9088204",
+        "DephyExoBoot/mesh/exo_2_r.stl": "0e98c8a89a96ba068faf79b0c3168712db7847c0f74e6ebd0535ea23eb30c4b8",
+        "DephyExoBoot/mesh/tacboot_mid_l.stl": "7a6b6a2f8dd74bcfa2d985eb4ea4b4fd34cddbe7278b4cef2282c94f954a5f64",
+        "DephyExoBoot/mesh/tacboot_mid_r.stl": "9999066e9cbefb365dae0646dd550b8e96b88e2b17afd90a945636eb2f7c82d3",
+        "DephyExoBoot/mesh/tacboot_shank_l.stl": "b626bfabe5acecb0f844773d0a1df7e7c3ae8b5f33ae2672d7515c8c467b578c",
+        "DephyExoBoot/mesh/tacboot_shank_r.stl": "e5ef51676fbb4b680d0aea03bb9c0896ae53af9c66fdd90066f1059856dfe3c4",
+        "DephyExoBoot/mesh/tacboot_toe_l.stl": "2549327d903c5f4c995a2a1da858b6997a94585173a10fa3f1ed8bbdb6158b11",
+        "DephyExoBoot/mesh/tacboot_toe_r.stl": "d8161c84d3bf3d7283fcbb63fc727d669578b3194a035081a2ecf3b5f4850818"
+      },
+      "sourceKeyframes": [
+        "stand",
+        "walk_left",
+        "walk_right"
+      ],
+      "classification": "SOURCE_ATTACHED_CANONICAL_KEYFRAME_KINEMATIC_ILLUSTRATION",
+      "physicsSteps": 0,
+      "mjForwardCalls": 34,
+      "keyframeBlendAmplitude": 0.18
+    }
+  ],
+  "verifiedReleaseSourceFiles": [
+    {
+      "file": "assist_sim/models/HMEDI/L1config.yaml",
+      "commit": "8bd46c72713f8e591b09c3e1c196211344f52bbb",
+      "localEqualsUpstream": true,
+      "localSHA256": "d6019343d2e78e83bfb32e81037337030892851707e4bda1665e0402054c2c1a"
+    },
+    {
+      "file": "assist_sim/models/HMEDI/L1model.xml",
+      "commit": "8bd46c72713f8e591b09c3e1c196211344f52bbb",
+      "localEqualsUpstream": true,
+      "localSHA256": "5cca867fdac5f21df2820ff88cff4c05573eba7aa33daa9908764086e1afcf90"
+    },
+    {
+      "file": "assist_sim/models/OpenExo/L1config.yaml",
+      "commit": "8bd46c72713f8e591b09c3e1c196211344f52bbb",
+      "localEqualsUpstream": true,
+      "localSHA256": "5fa523231345e6d0c48772221d88c1a311ca3b0f919e34b847978296db48b219"
+    },
+    {
+      "file": "assist_sim/models/OpenExo/L1model.xml",
+      "commit": "8bd46c72713f8e591b09c3e1c196211344f52bbb",
+      "localEqualsUpstream": true,
+      "localSHA256": "784c627ad4d98f756a2c32c183ebf9cd1e91def064b753fa3825e5e760e89a9a"
+    },
+    {
+      "file": "assist_sim/models/DephyExoBoot/L1config.yaml",
+      "commit": "8bd46c72713f8e591b09c3e1c196211344f52bbb",
+      "localEqualsUpstream": true,
+      "localSHA256": "d30fd1cbc7cf35defdf8bccdba5b0d27713116810c524cd829301f71069adf0d"
+    },
+    {
+      "file": "assist_sim/models/DephyExoBoot/L1model.xml",
+      "commit": "8bd46c72713f8e591b09c3e1c196211344f52bbb",
+      "localEqualsUpstream": true,
+      "localSHA256": "56534188dbfd1323d030aac3295b9ec7ba8e9a87fe75a6586ad1c83ddfe9d93d"
+    },
+    {
+      "file": "myo_sim/__init__.py",
+      "commit": "93b0ca8f4ec90c9899ee7f05fee561e9911da91b",
+      "localEqualsUpstream": true,
+      "localSHA256": "48ba58834387be54775f0e4f52581cae1a8671af5fd20a4b13e97d29193d2693"
+    },
+    {
+      "file": "myo_sim/build/compose.py",
+      "commit": "93b0ca8f4ec90c9899ee7f05fee561e9911da91b",
+      "localEqualsUpstream": true,
+      "localSHA256": "d49e065cb5dedd98c7f4ca7d912a654f035240534dd17541baacbf0dd278a999"
+    }
+  ],
+  "displayBufferPrecision": {
+    "positions": "Float32, exact compiled source vertex values",
+    "indices": "Uint16/Uint32, all source visible faces retained",
+    "normals": "Signed normalized Int16, shading directions only; no geometry quantization",
+    "poses": "Float32 display matrices from source mj_forward evaluations; research models untouched"
+  }
+}

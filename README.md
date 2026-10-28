@@ -1,6 +1,6 @@
 # Pioneer · ICCAS 2026 presentation
 
-Working source and public presentation with continuous Three.js scenes. Current slide revision: `revision-20261029-9`.
+Working source and public presentation with continuous Three.js scenes. Current slide revision: `revision-20261029-12`.
 
 - [Presentation](https://radon213.github.io/pioneer-presentation/examples/pioneer-draft/index.html)
 - Right / Space: next stage. Left: previous stage. Hold an arrow for fast navigation.
@@ -26,3 +26,9 @@ For asset changes, compare transfer, parsing/memory, mesh preparation and frame 
 This is ongoing research. Recorded motion and illustrative FEA replay are not clinical validation or proof of assistance benefit. Only runtime data and small authoring/validation tools belong here; research archives, Blender projects, older experiments and unrelated workspace files remain outside the public repository.
 
 Third-party notices are in `THIRD_PARTY_NOTICES.md` and the corresponding source directories.
+
+## Background sequence
+
+The five Background builds follow joint degeneration, conventional replacement, age-related muscle capacity, three source-composed wearable examples, and a conventional replacement plus original Maxon motor concept. The completed Pioneer assembly is withheld in the last concept build.
+
+HMEDI, OpenExo and Dephy ExoBoot retain their actual MyoAssist human attachments. Their small source-keyframe motion is a kinematic illustration, not a learned assistance result. The 4.42 MB compressed examples prepare on demand while the preceding Background stage is shown; they are absent from the cover download. Quantitative source/provenance and licenses are in `assets/myoassist-examples/`.

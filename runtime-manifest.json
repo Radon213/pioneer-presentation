@@ -1,11 +1,11 @@
 {
   "schema": "pioneer-runtime-package-v1",
-  "runtimeBytes": 58832203,
+  "runtimeBytes": 70022898,
   "files": [
     {
       "path": "examples/pioneer-draft/app.js",
-      "bytes": 15045,
-      "sha256": "b1eac6c0f6647725b3938ffa3b2d9a37c2c829c2e0fd9ca4c68a7098d6f2f7c7"
+      "bytes": 15306,
+      "sha256": "5f2b694eb2ffb6a6de2f66771d329956f912d862b45eea61303cc40a00a016d0"
     },
     {
       "path": "examples/pioneer-draft/archived-spring-chart.js",
@@ -78,6 +78,36 @@
       "sha256": "0d2165465c281b8d3342cf53bcee9cdb78fbcd811e2f6f8e69df92e734a6010a"
     },
     {
+      "path": "examples/pioneer-draft/assets/myoassist-examples/NOTICE.txt",
+      "bytes": 664,
+      "sha256": "5c4d6155fac857bc114e69a47e08f0d64a62d1dc0ea01a4f6a61af423106585f"
+    },
+    {
+      "path": "examples/pioneer-draft/assets/myoassist-examples/assist_sim-LICENSE.txt",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "examples/pioneer-draft/assets/myoassist-examples/examples.bin",
+      "bytes": 6715932,
+      "sha256": "4bc0a806ee07b183ed35924f0106919499765e46159a62bc5eb74fc225c35bf1"
+    },
+    {
+      "path": "examples/pioneer-draft/assets/myoassist-examples/examples.bin.gz",
+      "bytes": 4419742,
+      "sha256": "624d1c90f33256631b0921e2ad7a9f08af3e3c9dc1b0078b7956f2092a6fc5e8"
+    },
+    {
+      "path": "examples/pioneer-draft/assets/myoassist-examples/myo_sim-LICENSE.txt",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "examples/pioneer-draft/assets/myoassist-examples/provenance.json",
+      "bytes": 10024,
+      "sha256": "2fa4eba5a700dcd11157e67ae35d95343c90952c9e18f836892b27a8dcfc01d1"
+    },
+    {
       "path": "examples/pioneer-draft/assets/pnu-signature.png",
       "bytes": 62211,
       "sha256": "12163d4c07fcde79a83404b294d5d1dfcfde1d541ed50a900bd204e23db19d6c"
@@ -94,8 +124,8 @@
     },
     {
       "path": "examples/pioneer-draft/chapter-overlays.js",
-      "bytes": 7422,
-      "sha256": "457cb7f309a0fd57766145da8ddca7ea8a78507eff578f82e13f55b6afb66f5a"
+      "bytes": 8799,
+      "sha256": "a2662233c894f7fcd1a0987deb7774df986ee375918b1119dc745183e7ca1dc6"
     },
     {
       "path": "examples/pioneer-draft/clinical-knee-layer.js",
@@ -104,33 +134,33 @@
     },
     {
       "path": "examples/pioneer-draft/continuous-human-layer.js",
-      "bytes": 13855,
-      "sha256": "107c524900b4c6bb32b8d8fdeccb594c616b93241cdeadd8a3433992dcf4f2c9"
+      "bytes": 14186,
+      "sha256": "330827430e4e2199aedc927387cadabce211ded10330b1a0ff792b48d6821885"
     },
     {
       "path": "examples/pioneer-draft/continuous-knee-viewer.js",
-      "bytes": 57409,
-      "sha256": "ae6ec12c6ab66fb1927c41509b3cbb2341dcad13e2016c2e71ce450e7762afea"
+      "bytes": 63620,
+      "sha256": "777fd2f0f5c98d3d4c5fa77fbce9ed686d27d6a75b5507835acbce5ac350eba3"
     },
     {
       "path": "examples/pioneer-draft/deck-data.js",
-      "bytes": 26895,
-      "sha256": "2a64a8e58d15a86bc6fecda9722f8b92a13505f7b656e3ea0a8dede712cdb74f"
+      "bytes": 28745,
+      "sha256": "39afcdc4c26175766356bb512531ca9226ca7b16b4c04cb1e72d466a2149b10f"
     },
     {
       "path": "examples/pioneer-draft/gait-binary-loader.js",
-      "bytes": 3590,
-      "sha256": "08cde482025394d257dacdb639d766fd64940a4b73a2960d861bf73493067cb8"
+      "bytes": 3591,
+      "sha256": "5f8a65224de937bc5e406a878339ebdc8fd8e38b3e69b4cc27e3884da2d8a25b"
     },
     {
       "path": "examples/pioneer-draft/gait-chapter-layer.js",
-      "bytes": 9778,
-      "sha256": "90c7768d4fa00e74a87b67b5eb05a4caf9edc5e8e776bba07bc40d54c28f2718"
+      "bytes": 9779,
+      "sha256": "ef1adec458beb399e07a062bcd742d03c1027830fa6ebe8614c14bc0f28b2049"
     },
     {
       "path": "examples/pioneer-draft/index.html",
-      "bytes": 23234,
-      "sha256": "81638c3b2291cec0d7c31c71056cb54407ad6b3ee9ad15e09a0cfe9f5431ba2d"
+      "bytes": 24930,
+      "sha256": "200da46a0bd7e91703483ca27320ad84148d1dd4ae8155d8943c3b62127992ae"
     },
     {
       "path": "examples/pioneer-draft/motion-clock.js",
@@ -138,9 +168,14 @@
       "sha256": "c53afad6500d2e117398b8febcfd9ead356e41c1a6a3da7f1330a290954eddf4"
     },
     {
+      "path": "examples/pioneer-draft/myoassist-examples-layer.js",
+      "bytes": 9888,
+      "sha256": "9aac97991e7abc1385b61eea7fc97bc4f41fefade302977fe53656b4252d1846"
+    },
+    {
       "path": "examples/pioneer-draft/native-knee-comparison.js",
-      "bytes": 8915,
-      "sha256": "b6c2f70162ed286b30aeb365ea72169cc5d0ec09c4a54075a663019298d5e5e2"
+      "bytes": 8916,
+      "sha256": "7f217fec09c8b35ff3f381b0a5dd6be46fd03a70164b009f2d48135a0fc0595c"
     },
     {
       "path": "examples/pioneer-draft/performance-benchmark.js",
@@ -164,13 +199,13 @@
     },
     {
       "path": "examples/pioneer-draft/spring-analysis-data.js",
-      "bytes": 4088,
-      "sha256": "766de9a1a869f578ffb37b772002cc0972be5dbb3a0620e729148dbe21423b73"
+      "bytes": 4089,
+      "sha256": "0aa2c8a4225ee766dfe9b83cd3338da62dea2898256a64420eb3e6a5b464fd91"
     },
     {
       "path": "examples/pioneer-draft/spring-fea-layer.js",
-      "bytes": 8573,
-      "sha256": "075e4b73a48cae285c469b15cf585ca376bc47bd05c18691cecf864b34ea1fe0"
+      "bytes": 8574,
+      "sha256": "15ef58c845d54d43f9b3e7e4984f0918a588b1526533eef4ed5448ca38494a6b"
     },
     {
       "path": "examples/pioneer-draft/style.css",

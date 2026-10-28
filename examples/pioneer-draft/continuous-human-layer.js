@@ -1,4 +1,4 @@
-import {loadJSONWithProgress} from './asset-loading.js?v=revision-20261029-9';
+import {loadJSONWithProgress} from './asset-loading.js?v=revision-20261029-12';
 import * as THREE from 'three';
 
 /** One-scene replay of the actual native-muscle STS reference.
@@ -10,6 +10,7 @@ export async function createContinuousHumanLayer(scene,{side='left'}={}){
  const [data,attachments]=await Promise.all([load('simulation-scene.json'),load('bilateral-sts-attachments.json')]);
  if(data.provenance.trace_sha256!==attachments.provenance.trace_sha256||data.frames.length!==attachments.frames.length)throw Error('Native replay and bilateral attachment sources differ.');
  const defaultSide=side==='right'?'right':'left';
+ let focusLeft=0;
  const group=new THREE.Group();group.name='ActualRecordedBilateralSTS';
  group.userData={source:'assets/simulation-scene.json',attachmentSource:'assets/bilateral-sts-attachments.json',classification:attachments.classification,episode:data.provenance.episode_index,defaultSide,activeAssistance:false,registration:'Source bilateral CAD registration; native recorded movement with illustrative graft'};
  const C=new THREE.Matrix4().makeRotationX(-Math.PI/2),Ci=C.clone().invert();
@@ -71,6 +72,7 @@ export async function createContinuousHumanLayer(scene,{side='left'}={}){
  function updateMuscles(){
   let index=0;
   data.tendons.forEach((tendon,j)=>{
+   if(focusLeft>.999&&tendon.name.includes('_r_'))return;
    let pa=currentFrameA.tendons[j],pb=currentFrameB.tendons[j];
    // Wrap topology can change at a real contact event; switch source topology
    // rather than inventing extra path points between mismatched wrap arrays.
@@ -78,7 +80,7 @@ export async function createContinuousHumanLayer(scene,{side='left'}={}){
    const rgb=new THREE.Color().setRGB(...tendon.rgba.slice(0,3));
    for(let k=0;k<pa.length/3-1;k++){
     interpolatePoint(a,pa,pb,k*3);interpolatePoint(b,pa,pb,(k+1)*3);dir.subVectors(b,a);const length=dir.length();
-    dummy.position.copy(a).add(b).multiplyScalar(.5);dummy.quaternion.setFromUnitVectors(up,length>1e-10?dir.divideScalar(length):up);dummy.scale.set(tendon.width,length,tendon.width);dummy.updateMatrix();muscles.setMatrixAt(index,dummy.matrix);muscles.setColorAt(index,rgb);index++;
+    dummy.position.copy(a).add(b).multiplyScalar(.5);dummy.quaternion.setFromUnitVectors(up,length>1e-10?dir.divideScalar(length):up);dummy.scale.set(tendon.width*(tendon.name.includes('_r_')?1-focusLeft:1),length,tendon.width*(tendon.name.includes('_r_')?1-focusLeft:1));dummy.updateMatrix();muscles.setMatrixAt(index,dummy.matrix);muscles.setColorAt(index,rgb);index++;
    }
   });
   muscles.count=index;muscles.instanceMatrix.needsUpdate=true;if(muscles.instanceColor)muscles.instanceColor.needsUpdate=true;
@@ -108,12 +110,13 @@ export async function createContinuousHumanLayer(scene,{side='left'}={}){
   if(disposed)return;group.updateMatrixWorld(true);group.visible=reveal>.0001;
   const sc=group.getWorldScale(new THREE.Vector3());
   for(const s of ['left','right']){clips[s].amount.value=s==='left'?replaceLeft:replaceRight;clips[s].center.value.copy(getAttachment(s).kneeAnchor);clips[s].radius.value=.052*Math.max(sc.x,sc.y,sc.z);}
-  for(const o of objects){const alpha=reveal*(o.isChair?chairReveal:1);o.material.opacity=o.baseAlpha*alpha;o.mesh.visible=alpha>.0001;const cut=o.limb==='left'?replaceLeft:(o.limb==='right'?replaceRight:0);o.material.depthWrite=alpha>.97&&cut<.001;}
+  for(const o of objects){const alpha=reveal*(o.isChair?chairReveal:1)*(o.mesh.name.includes('_r_geom')?1-focusLeft:1);o.material.opacity=o.baseAlpha*alpha;o.mesh.visible=alpha>.0001;const cut=o.limb==='left'?replaceLeft:(o.limb==='right'?replaceRight:0);o.material.depthWrite=alpha>.97&&cut<.001;}
   muscleMaterial.opacity=reveal*muscleReveal*.82;muscleMaterial.depthWrite=false;muscles.visible=muscleReveal>.0001&&reveal>.0001;
   Object.assign(group.userData,{reveal,replaceLeft,replaceRight,muscleReveal,chairReveal,resectionRadiusMeters:.052});
  }
  const clamp=v=>THREE.MathUtils.clamp(Number(v)||0,0,1);
  function setState(next={}){
+  if(next.focusLeft!==undefined&&clamp(next.focusLeft)!==focusLeft){focusLeft=clamp(next.focusLeft);updateMuscles();}
   if(next.reveal!==undefined)reveal=clamp(next.reveal);if(next.muscles!==undefined)muscleReveal=clamp(next.muscles);if(next.chair!==undefined)chairReveal=clamp(next.chair);
   if(next.replace!==undefined){if(defaultSide==='left')replaceLeft=clamp(next.replace);else replaceRight=clamp(next.replace);}
   if(next.replaceLeft!==undefined)replaceLeft=clamp(next.replaceLeft);if(next.replaceRight!==undefined)replaceRight=clamp(next.replaceRight);
