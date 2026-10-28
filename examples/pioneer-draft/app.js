@@ -1,0 +1,78 @@
+import {startPresentationBenchmark} from './performance-benchmark.js';
+import slides,{deckVersion} from './deck-data.js?v=revision-20261029-9';
+import {createPresentationNavigation} from './presentation-navigation.js?v=revision-20261029-9';
+import {getMotionRate,setMotionRate} from './motion-clock.js?v=revision-20261029-9';
+import {getLoadProgress,reportLoadStage} from './asset-loading.js?v=revision-20261029-9';
+const deck=document.querySelector('.deck'),announcer=document.querySelector('#announcer'),sections=[...deck.querySelectorAll('.slide')];
+startPresentationBenchmark(deck);
+const params=new URLSearchParams(location.search),staticMode=params.get('motion')==='static',previewMode=params.has('preview'),reduced=matchMedia('(prefers-reduced-motion: reduce)');
+const host=document.createElement('div');host.className='scene-host continuous-knee-host';host.innerHTML='<div class="scene-status" role="status">Preparing the recorded walking scene…</div>';deck.append(host);deck.dataset.continuous='true';
+let page=1,step=0,rendered=0,sceneReady=Promise.resolve(),viewer=null,viewerPromise=null,serial=0,uiTransition=null,heldKey=null,holdTimer=0;
+// Initial readiness is driven by measured asset events, never a timer-based rate.
+const loading=document.createElement('div');loading.className='initial-loading';loading.innerHTML='<div class="initial-loading-inner"><p class="initial-loading-title">Preparing the presentation</p><p class="initial-loading-phase" role="status" aria-live="polite">Opening the source scene…</p><p class="initial-loading-percent" aria-hidden="true">—</p><div class="initial-loading-meter" role="progressbar" aria-label="Current source asset download" aria-valuemin="0" aria-valuemax="100"><span></span></div><p class="initial-loading-detail">Source models and recorded motion</p></div>';deck.append(loading);deck.setAttribute('aria-busy','true');
+const loadRows=new Map(getLoadProgress().map(r=>[r.key,r]));let initialLoadDone=false,loadPaint=0;
+const loadPart=selector=>loading.querySelector(selector);
+const byteLabel=value=>Number.isFinite(value)?`${(value/1048576).toFixed(1)} MB`:null;
+function paintInitialLoad(){
+ loadPaint=0;if(initialLoadDone)return;
+ const rows=[...loadRows.values()].sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
+ const active=rows.find(r=>r.phase==='download'&&r.state==='running')||rows.find(r=>r.state==='running')||rows[0];
+ if(!active)return;
+ const downloading=active.phase==='download'&&active.state==='running',geometryBuild=active.phase==='setup'&&active.state==='running'&&Number.isFinite(active.ratio),ratio=(downloading||geometryBuild)&&Number.isFinite(active.ratio)?Math.max(0,Math.min(1,active.ratio)):null;
+ const phase=downloading?'Downloading':active.phase==='decode'?'Decoding':active.phase==='parse'?'Reading':active.phase==='error'?'Could not load':'Preparing';
+ const percent=ratio!==null?Math.floor(ratio*100):null;
+ const name=active.label&&active.label!==active.key?active.label:(active.stage||active.key);loadPart('.initial-loading-phase').textContent=geometryBuild?`${active.stage||'Building source geometry'}…`:`${phase} ${name||'source scene'}…`;
+ loadPart('.initial-loading-percent').textContent=percent===null?'—':`${percent}%`;
+ const meter=loadPart('.initial-loading-meter');meter.classList.toggle('is-indeterminate',ratio===null);meter.firstElementChild.style.width=ratio===null?'28%':`${ratio*100}%`;
+ if(percent===null)meter.removeAttribute('aria-valuenow');else meter.setAttribute('aria-valuenow',String(percent));
+ meter.setAttribute('aria-label',downloading?'Current source asset download':geometryBuild?'Current geometry build':'Source scene preparation');
+ const bytes=byteLabel(active.loadedBytes),total=byteLabel(active.totalBytes);
+ loadPart('.initial-loading-detail').textContent=downloading&&bytes?`${bytes}${total?` of ${total}`:''} · current asset`:geometryBuild?'Current geometry build · measured mesh completion':active.phase==='decode'?'Decompressing the recorded source asset':active.phase==='parse'?'Reading recorded data before geometry setup':'Building geometry and preparing the first scene';
+ Object.assign(loading.dataset,{phase:active.phase,key:active.key,percent:percent===null?'':String(percent),loadedBytes:String(active.loadedBytes??''),totalBytes:String(active.totalBytes??''),transferBasis:active.transferBasis||''});deck.dataset.loadingState=active.phase;
+}
+function onLoadProgress(event){if(initialLoadDone)return;loadRows.set(event.detail.key,event.detail);if(!loadPaint)loadPaint=requestAnimationFrame(paintInitialLoad);}
+addEventListener('pioneer-load-progress',onLoadProgress);paintInitialLoad();
+function finishInitialLoad(){
+ initialLoadDone=true;removeEventListener('pioneer-load-progress',onLoadProgress);cancelAnimationFrame(loadPaint);deck.dataset.loadingState='ready';deck.setAttribute('aria-busy','false');loading.dataset.phase='ready';loading.dataset.percent='100';
+ loadPart('.initial-loading-percent').textContent='100%';loadPart('.initial-loading-phase').textContent='Source scene ready';loadPart('.initial-loading-detail').textContent='';
+ const meter=loadPart('.initial-loading-meter');meter.classList.remove('is-indeterminate');meter.firstElementChild.style.width='100%';meter.setAttribute('aria-valuenow','100');meter.setAttribute('aria-label','Presentation ready');
+ loading.classList.add('is-complete');setTimeout(()=>{loading.hidden=true;loading.inert=true;},reduced.matches?0:260);
+}
+function failInitialLoad(error){initialLoadDone=true;removeEventListener('pioneer-load-progress',onLoadProgress);cancelAnimationFrame(loadPaint);deck.dataset.loadingState='error';deck.setAttribute('aria-busy','false');loading.dataset.phase='error';loading.classList.add('is-error');loadPart('.initial-loading-phase').textContent='The source scene could not initialize.';loadPart('.initial-loading-detail').textContent='Reload the page to retry.';loadPart('.initial-loading-percent').textContent='—';loadPart('.initial-loading-meter').removeAttribute('aria-valuenow');}
+
+const channel=typeof BroadcastChannel!=='undefined'?new BroadcastChannel('pioneer-draft-presenter'):null;
+for(const el of sections){const total=Number(el.dataset.steps)+1,p=document.createElement('div');p.className='build-progress';p.setAttribute('role','progressbar');p.setAttribute('aria-label','Chapter stage');p.setAttribute('aria-valuemin','1');p.setAttribute('aria-valuemax',total);p.innerHTML=`<span class="build-progress-segments" aria-hidden="true">${Array.from({length:total},()=>'<i></i>').join('')}</span><span class="build-progress-count"></span>`;el.querySelector('footer .number').before(p);let wrapper=el.querySelector('.chapter-copy');if(!wrapper){wrapper=document.createElement('div');wrapper.className='chapter-copy';wrapper.append(el.querySelector('[data-stage-caption]'),el.querySelector('[data-stage-question]'));el.append(wrapper);}wrapper.classList.add('stage-copy');}
+function readRoute(){const m=location.hash.match(/^#\/(\d+)(?:\/(\d+))?/);page=Math.max(1,Math.min(slides.length,Number(params.get('preview')||m?.[1])||1));step=Math.max(0,Math.min(slides[page-1].steps,Number(m?.[2])||0));if(staticMode)step=slides[page-1].steps;}
+function fit(){deck.style.setProperty('--fit',Math.min(innerWidth/1920,innerHeight/1080));deck.style.setProperty('--continuous-top','298px');viewer?.resize();}
+function publish(){const slide=slides[page-1],stage=slide.stages[step];channel?.postMessage({type:'state',page,step,slide:{...slide,notes:stage.notes},next:slides[page]||null,total:slides.length});}
+function prepare(el){const slide=slides[page-1],stage=slide.stages[step];el.dataset.currentStage=step;const text=el.querySelector('[data-stage-caption]');if(stage.body)text.innerHTML=stage.body;else text.textContent=stage.caption;el.querySelector('[data-stage-question]').textContent=stage.question;const p=el.querySelector('.build-progress');p.setAttribute('aria-valuenow',step+1);p.setAttribute('aria-valuetext',`Stage ${step+1} of ${slide.steps+1}`);p.querySelector('.build-progress-count').textContent=`${step+1}/${slide.steps+1}`;p.querySelectorAll('i').forEach((s,i)=>s.classList.toggle('is-complete',i<=step));}
+function clearUI(){const t=uiTransition;if(!t)return;uiTransition=null;for(const a of t.animations)a.cancel();for(const n of t.temporary)n.remove();for(const el of sections){el.style.opacity='';el.style.zIndex='';el.hidden=Number(el.dataset.slide)!==rendered;}delete deck.dataset.pageTransition;}
+function animateOpacity(el,from,to,duration,delay=0){const a=el.animate([{opacity:from},{opacity:to}],{duration,delay,fill:'both',easing:'cubic-bezier(.16,1,.3,1)'});a.playbackRate=getMotionRate();return a;}
+function updateUI(animate){
+ const incoming=sections[page-1],outgoing=rendered?sections[rendered-1]:null,changed=!!outgoing&&outgoing!==incoming;clearUI();const enabled=animate&&!staticMode&&!reduced.matches;
+ const t={animations:[],temporary:[]};uiTransition=t;
+ if(changed&&enabled){
+  // Outgoing text is left untouched until its complete layer has faded away.
+  prepare(incoming);incoming.hidden=false;incoming.style.opacity='0';incoming.style.zIndex='4';outgoing.hidden=false;outgoing.style.zIndex='3';outgoing.inert=true;
+  t.animations.push(animateOpacity(outgoing,1,0,260),animateOpacity(incoming,0,1,420,140));deck.dataset.pageTransition='crossfading';
+ }else if(enabled&&outgoing){
+  const current=incoming.querySelector('.stage-copy'),old=current.cloneNode(true);old.classList.add('outgoing-stage-copy');incoming.append(old);t.temporary.push(old);prepare(incoming);t.animations.push(animateOpacity(old,1,0,200),animateOpacity(current,0,1,320,110));
+ }else prepare(incoming);
+ sections.forEach(el=>{const active=el===incoming;el.inert=!active;el.setAttribute('aria-hidden',String(!active));if(el!==incoming&&(!changed||!enabled||el!==outgoing))el.hidden=true;});incoming.hidden=false;
+ rendered=page;Object.assign(deck.dataset,{page:String(page),step:String(step),animate:String(enabled)});document.title=`Pioneer · ${page}/${slides.length} · ${slides[page-1].title}`;announcer.textContent=`Chapter ${page} of ${slides.length}, stage ${step+1} of ${slides[page-1].steps+1}: ${slides[page-1].stages[step].caption}`;
+ if(!previewMode)history.replaceState(null,'',`#/${page}/${step}`);publish();fit();
+ return Promise.all(t.animations.map(a=>a.finished.catch(()=>{}))).finally(()=>{if(uiTransition!==t)return;for(const a of t.animations)a.cancel();for(const n of t.temporary)n.remove();sections.forEach(el=>{el.hidden=el!==incoming;el.style.opacity='';el.style.zIndex='';});uiTransition=null;delete deck.dataset.pageTransition;});
+}
+async function apply(animate=false){
+ const ticket=++serial,ui=updateUI(animate);viewerPromise??=import(`./continuous-knee-viewer.js?v=${deckVersion}`).then(m=>m.createContinuousKneeViewer(host));viewer=await viewerPromise;if(ticket!==serial)return;await viewer.setChapter(page,step,animate&&!staticMode&&!reduced.matches);viewer.resize();await ui;
+}
+function runningAnimations(){return deck.getAnimations({subtree:true}).filter(a=>['running','pending'].includes(a.playState)&&a.effect?.getComputedTiming().iterations!==Infinity);}
+function setRate(rate){setMotionRate(rate);for(const a of runningAnimations())a.updatePlaybackRate(rate);}
+function settle(current,fast=()=>false){return new Promise(resolve=>{function check(){if(!current()||document.hidden){resolve();return;}const animations=runningAnimations();for(const a of animations)if(a.playbackRate!==getMotionRate())a.updatePlaybackRate(getMotionRate());if(host.dataset.animation!=='running'&&!animations.length){resolve();return;}requestAnimationFrame(check);}check();});}
+const nav=createPresentationNavigation({setRate,onState:s=>Object.assign(deck.dataset,{navigationPending:String(s.pending),navigationBusy:String(s.running),playbackRate:String(s.rate),heldDirection:String(s.heldDirection)}),async perform(direction,current,fast){await sceneReady;await settle(current);if(!current())return false;if(direction>0){if(step<slides[page-1].steps)step++;else if(page<slides.length){page++;step=0;}else return false;}else{if(step>0)step--;else if(page>1){page--;step=slides[page-1].steps;}else return false;}sceneReady=apply(true);await sceneReady;await settle(current,fast);if(current()){const trace=JSON.parse(deck.dataset.completedSteps||'[]');trace.push({page,step,direction});deck.dataset.completedSteps=JSON.stringify(trace.slice(-100));}return true;}});
+function release(){clearTimeout(holdTimer);holdTimer=0;heldKey=null;nav.hold(0);}function cancel(){release();nav.cancel();}
+function directionFor(k){return['ArrowRight','ArrowDown','PageDown',' ','Enter'].includes(k)?1:['ArrowLeft','ArrowUp','PageUp','Backspace'].includes(k)?-1:0;}
+channel?.addEventListener('message',e=>{if(e.data?.type!=='command')return;const a=e.data.action;if(a==='next')nav.request(1);if(a==='previous')nav.request(-1);if(a==='hold-next')nav.hold(1);if(a==='hold-previous')nav.hold(-1);if(a==='hold-stop')nav.hold(0);if(a==='request')publish();});
+addEventListener('keydown',e=>{if(e.ctrlKey||e.metaKey||e.altKey||/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;const k=e.key,d=directionFor(k);if(d){e.preventDefault();if(!loading.hidden)return;if(e.repeat||heldKey===k)return;release();heldKey=k;nav.request(d);if(k.startsWith('Arrow'))holdTimer=setTimeout(()=>{if(heldKey===k)nav.hold(d);},180);}else if(k==='Home'||k==='End'){e.preventDefault();cancel();page=k==='Home'?1:slides.length;step=k==='Home'?0:slides.at(-1).steps;sceneReady=apply(false);}else if(k.toLowerCase()==='s')window.open(`presenter.html?v=${deckVersion}`,'pioneer-draft-presenter','width=1200,height=850');else if(k.toLowerCase()==='f'){if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen().catch(()=>{});}else if(k.toLowerCase()==='r'){cancel();sceneReady=apply(true);}});
+addEventListener('keyup',e=>{if(e.key===heldKey)release();});addEventListener('blur',release);addEventListener('resize',fit);deck.addEventListener('click',e=>{if(!loading.hidden)return;if(e.button===0&&!e.ctrlKey&&!e.metaKey)nav.request(1);});addEventListener('hashchange',()=>{cancel();readRoute();sceneReady=apply(false);});reduced.addEventListener('change',()=>{cancel();sceneReady=apply(false);});document.addEventListener('visibilitychange',()=>{if(document.hidden){cancel();viewer?.pause();}else sceneReady=apply(false);});
+readRoute();fit();reportLoadStage('presentation','fonts',{label:'presentation fonts'});await document.fonts.ready;reportLoadStage('presentation','initial-scene',{label:'source scene geometry'});sceneReady=apply(false);sceneReady.then(()=>{deck.dataset.ready='true';reportLoadStage('presentation','ready',{label:'presentation scene',phase:'ready',state:'complete',ratio:1});finishInitialLoad();const warm=()=>viewer?.warmSources?.().catch(()=>{});if('requestIdleCallback'in window)requestIdleCallback(warm,{timeout:3500});else setTimeout(warm,400);}).catch(e=>{console.error(e);announcer.textContent='The source scene could not initialize.';failInitialLoad(e);});

@@ -1,0 +1,103 @@
+:root{--paper:#fdfcf8;--ink:#0a0a0a;--navy:#1a3a7a;--red:#8a1a1a;--rule:#c6c4be;--fit:.6;--ease:cubic-bezier(.16,1,.3,1)}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--paper);color:var(--ink)}body{font-family:'Playfair Display',Georgia,serif}::selection{background:#e8edf8;color:var(--ink)}
+.deck{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform:translate(-50%,-50%) scale(var(--fit));transform-origin:center;background:var(--paper);isolation:isolate}
+.slide{position:absolute;inset:0;padding:76px 104px 130px}.slide[hidden]{display:none!important}.slide header{position:relative;z-index:1}h1{margin:0;font-size:62px;line-height:1.12;letter-spacing:-.025em;font-weight:700;text-wrap:balance}.long-title h1{font-size:54px}.ko{margin:11px 0 0;font:400 23px/1.4 'Noto Sans CJK KR','Malgun Gothic',Arial,sans-serif;color:#5a5650}.lead{font-size:30px;line-height:1.4;margin:18px 0 0;color:#333}.header-rule{height:1px;background:var(--rule);margin-top:19px;width:100%}
+.long-title .content{top:340px}.content{position:absolute;left:104px;right:104px;top:310px;bottom:174px}.content>div{height:100%}.visual-full{width:100%;height:100%}.split{display:flex;align-items:center;gap:64px;height:100%;width:100%}.copy{flex:0 0 39%;min-width:0}.figure{flex:1;min-width:0;height:100%;position:relative}.scene-slot{width:100%;height:100%;position:relative;overflow:hidden}.scene-host{width:100%;height:100%;position:relative;pointer-events:none}.scene-host canvas{display:block;width:100%;height:100%}.scene-status{position:absolute;inset:0;display:flex;justify-content:center;align-items:center;background:var(--paper);font-size:25px;color:#4f5d75;text-align:center}.scene-status[hidden]{display:none}.scene-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}.scene-poster[hidden]{display:none}
+.diagram{width:100%;height:100%;display:block;font-family:Geist,Arial,sans-serif}.equation{font-size:49px;color:var(--navy);line-height:1.3}.caption,figcaption{font-size:23px;line-height:1.4;color:#454545}.caption{margin:12px 0 0}.fact{font-size:39px;line-height:1.3}.micro{font:400 21px/1.45 Geist,Arial,sans-serif;color:#4f5d75}p{margin:0}.bridge{position:absolute;left:104px;right:104px;bottom:112px;font-size:26px;line-height:1.3;font-style:italic;color:var(--navy);text-align:right}footer{position:absolute;left:104px;right:104px;bottom:42px;border-top:1px solid var(--ink);padding-top:16px;display:flex;align-items:flex-start;justify-content:space-between;gap:32px;font-size:19px;line-height:1.3;color:#454545}footer .source{max-width:1490px}footer .number{font-size:22px;color:var(--ink);white-space:nowrap;font-variant-numeric:tabular-nums}.notes{display:none}.dummy-notice{position:absolute;right:104px;bottom:156px;font:600 19px/1.3 "Playfair Display",Georgia,serif;color:var(--red);background:var(--paper);border:1px solid #b55a3a;padding:8px 14px;z-index:6}
+.presentation-ready [data-cue]{opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity 300ms var(--ease),transform 440ms var(--ease);transform-box:fill-box;transform-origin:center}.presentation-ready [data-cue].is-visible{opacity:1;visibility:visible;transform:none}.presentation-ready[data-animate=false] [data-cue]{transition:none}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.error-surface{padding:80px;font-size:30px}
+/* The existing source figures fit the common content area. */
+.content .spring-shape .figure{height:100%}.content .spring-shape .scene-slot{min-height:0;height:100%}.content .spring-shape .copy{flex-basis:43%;width:auto}.content .spring-fea-image{height:420px}.content .spring-shape .spring-source-design{height:245px}.content .spring-diagram{overflow:hidden}.content .spring-dummy+.spring-diagram{height:calc(100% - 65px)}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+@page{size:16in 9in;margin:0}@media print{html,body{height:auto;overflow:visible}.deck{position:static;width:1920px;height:auto;transform:none}.slide,.slide[hidden]{display:block!important;position:relative;width:1920px;height:1080px;break-after:page}.presentation-ready [data-cue]{opacity:1!important;visibility:visible!important;transform:none!important}.scene-host canvas{display:none}.scene-poster{display:block!important}.notes{display:none}}
+
+/* Prose outside technical figures retains the academic serif. */
+.copy .micro{font-family:"Playfair Display",Georgia,serif}
+
+.motion-stage{display:flex;flex-direction:column;width:100%;height:100%;gap:12px}.motion-stage>.scene-slot{flex:1;min-height:0}.motion-footnote{flex:0 0 auto;font:400 21px/1.35 "Playfair Display",Georgia,serif;color:#4f5d75;margin:0}.mechanism-host,.spring-motion-host{height:100%;width:100%}.motion-stage canvas{outline:none}.motion-stage svg text{user-select:none}
+
+/* One full-width picture between the academic header and footer rules. */
+.continuous-knee-host{position:absolute!important;inset:var(--continuous-top,290px) 104px 110px;width:auto;height:auto;z-index:1;pointer-events:none}
+.continuous-knee-host[hidden]{display:none!important}
+.deck[data-continuous=true] .slide .content,.deck[data-continuous=true] .slide .bridge,.deck[data-continuous=true] .slide footer .source{display:none}
+.deck[data-continuous=true] .slide header,.deck[data-continuous=true] .slide footer{z-index:3}
+.deck[data-continuous=true] .slide footer{justify-content:flex-end}
+footer .source{flex:1;min-width:0}
+.build-progress{display:flex;align-items:center;gap:10px;align-self:center;flex:0 0 auto;pointer-events:none;color:#5a5650;font:400 17px/1.3 "Playfair Display",Georgia,serif;font-variant-numeric:tabular-nums}
+.build-progress-segments{display:flex;gap:4px;width:84px}
+.build-progress-segments i{display:block;flex:1;height:3px;background:#d0cdc5}
+.build-progress-segments i.is-complete{background:#5a5650}
+/* Large-angle evidence stays within the established academic shell. */
+.analysis-plot-layout{position:relative;height:100%;display:flex;align-items:flex-start;justify-content:center}
+.analysis-plot{width:100%;height:440px;object-fit:contain}
+.analysis-plot-note{position:absolute;right:20px;bottom:4px;font-size:23px;line-height:1.4;color:#714224;text-align:right}
+.analysis-method,.analysis-references{display:grid;grid-template-columns:1fr 1fr;column-gap:100px;padding:12px 28px;font-size:30px;line-height:1.45}
+.analysis-method h2,.analysis-references h2{font-size:34px;font-weight:500;margin:0 0 24px}
+.analysis-method p{margin:12px 0}.analysis-method-limit{grid-column:1/-1;color:#714224;font-size:25px;border-top:1px solid #c9c9bd;padding-top:18px}
+.analysis-references p{margin:0 0 27px;font-size:28px}.analysis-references small{font-size:23px;color:#5d665e}
+
+/* Give the actual FEA figure the same header-to-footer breathing room. */
+.slide[data-slide="14"] .content{bottom:110px}
+.slide[data-slide="14"] .bridge{display:none}
+
+/* Eight large chapters: stable rules and one readable stage caption. */
+.chapter-slide header{height:244px}
+.chapter-slide header .header-rule{position:absolute;left:0;right:0;bottom:0;margin:0}
+.chapter-slide h1{max-width:1712px;font-size:62px;line-height:1.12}
+.chapter-slide.long-title h1{font-size:54px}
+.chapter-slide .content,.chapter-slide .bridge,.chapter-slide footer .source{display:none!important}
+.chapter-slide footer{justify-content:flex-end;z-index:4}
+.chapter-slide header{z-index:4}
+.chapter-deck .continuous-knee-host{inset:var(--continuous-top,342px) 104px 110px}
+.chapter-caption,.chapter-question{position:absolute;left:104px;right:104px;z-index:4;pointer-events:none;background:var(--paper);padding:4px 0;transition:opacity 220ms var(--ease),transform 280ms var(--ease)}
+.chapter-caption{bottom:164px;font-size:32px;line-height:1.25;color:var(--ink)}
+.chapter-question{bottom:118px;font-size:26px;line-height:1.25;font-style:italic;color:var(--navy)}
+.chapter-caption.is-changing,.chapter-question.is-changing{opacity:0;transform:translateY(5px)}
+.chapter-caption[hidden],.chapter-question[hidden]{display:none}
+@media print{.chapter-caption,.chapter-question{opacity:1!important;transform:none!important}}
+
+.stage-copy{position:absolute;inset:0;pointer-events:none;z-index:4}.outgoing-stage-copy{z-index:5}.chapter-deck .scene-status{font-family:inherit}.chapter-deck .chapter-caption,.chapter-deck .chapter-question{transition:none}
+
+/* Revision: picture at left, short readable explanations at right. */
+.chapter-deck{--chapter-picture-fraction:.64;--chapter-copy-left:1260px}
+.chapter-subtitle{margin:14px 0 0;font-size:30px;line-height:1.35;color:#333}
+.chapter-slide .ko{margin-top:11px}
+.chapter-copy{position:absolute;left:var(--chapter-copy-left);right:104px;top:var(--continuous-top,342px);bottom:110px;z-index:4;display:flex;flex-direction:column;justify-content:center;pointer-events:none}
+.chapter-copy .chapter-caption,.chapter-copy .chapter-question{position:static;inset:auto;background:none;padding:0;max-width:none}
+.chapter-copy .chapter-caption{font-size:32px;line-height:1.38}
+.chapter-copy .chapter-caption p{margin:0}
+.chapter-copy .chapter-caption p+p{margin-top:17px}
+.chapter-copy .chapter-caption strong{font-weight:700}
+.chapter-copy .chapter-caption .stage-stat{font-size:76px;line-height:1.05;letter-spacing:-.025em;color:var(--navy)}
+.chapter-copy .chapter-caption .stage-reference{font-size:20px;line-height:1.4;color:#5a5650}
+.chapter-copy .chapter-question{margin:32px 0 0;font-size:26px;line-height:1.35;color:var(--navy)}
+.chapter-cover .chapter-copy{display:none}
+.cover-authorship{position:absolute;left:var(--chapter-copy-left);right:104px;top:405px;z-index:4}
+.cover-author{font-size:36px;line-height:1.4;margin:0 0 9px}
+.cover-author sup,.cover-affiliation sup{font-size:.56em;vertical-align:super;margin-left:3px}
+.cover-affiliation{margin-top:28px;font-size:26px;line-height:1.5}
+.cover-correspondence{margin-top:20px;font-size:21px;line-height:1.4;color:#5a5650}
+
+/* Initial loading: byte percentage belongs to the named asset, not guessed overall work. */
+.initial-loading{position:absolute;inset:0;z-index:100;background:var(--paper);display:flex;align-items:center;justify-content:center;opacity:1;transition:opacity 260ms var(--ease)}
+.initial-loading[hidden]{display:none!important}
+.initial-loading.is-complete{opacity:0;pointer-events:none}
+.initial-loading-inner{width:760px}
+.initial-loading-title{font-size:48px;line-height:1.2;letter-spacing:-.02em}
+.initial-loading-phase{font-size:28px;line-height:1.4;color:#454545;margin-top:24px;min-height:40px}
+.initial-loading-percent{font-size:80px;line-height:1.1;font-variant-numeric:tabular-nums;margin-top:38px}
+.initial-loading-meter{height:4px;background:#d6d3ca;margin-top:22px;overflow:hidden}
+.initial-loading-meter span{display:block;height:100%;width:0;background:var(--navy);transition:width 90ms linear}
+.initial-loading-meter.is-indeterminate span{animation:source-loading-travel 1400ms linear infinite}
+.initial-loading-detail{font-size:23px;line-height:1.4;color:#5a5650;margin-top:18px;min-height:33px}
+.initial-loading.is-error .initial-loading-meter{display:none}
+@keyframes source-loading-travel{from{transform:translateX(-100%)}to{transform:translateX(360%)}}
+
+.chapter-cover .cover-conference{font-size:26px;font-weight:700;letter-spacing:.02em;color:var(--ink,#1a3a7a);margin:0 0 24px}
+
+@font-face{font-family:'Geist';font-style:normal;font-weight:100 900;font-display:swap;src:url('../pioneer-interactive/assets/Geist-Variable.ttf') format('truetype')}
+
+.chapter-cover .cover-pnu-logo{position:absolute;right:104px;bottom:138px;width:350px;height:auto;z-index:4;object-fit:contain}
+
+/* English-only headers reclaim the former translation row without moving the footer. */
+.chapter-slide header{height:200px}
+.chapter-subtitle{max-width:1600px}

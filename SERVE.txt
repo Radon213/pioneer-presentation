@@ -1,0 +1,1 @@
+Serve this directory over HTTP. Open /examples/pioneer-draft/index.html (and presenter.html with S). Keep examples/pioneer-interactive relative layout. Archive sources remain in the original project.

@@ -1,0 +1,365 @@
+{
+  "source_blend": "work/rebound-pos5-native/AAKJ_ver3_native_rebound.blend",
+  "export": "Original native glTF triangle ownership corrected. POSBody/Ball/SLPT removed from old composites and rebound to source joint frames. No vendor meshes, shape, constraint or dynamics changes.",
+  "meshes": [
+    {
+      "name": "12mm_m3_shcs::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "12mm_m3_shcs_1::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "12mm_m5_shcs::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "12mm_m5_shcs_1::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "20mm_m4_shcs::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "4mm_m3_shcs::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "4mm_m3_shcs_1::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "4mm_m4_shcs::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "4x12_washer::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "bearing_holder::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "body_c_cfs2_4_5__cut_extrude1::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "fem_4_7::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "femur_stem::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "guide1_e_crvs1020__mirror1_2::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "helical_1m_21t::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "insert_left::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "insert_middle::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "insert_right::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "jfm_0507_05::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "jfm_0507_05_1::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "jfm_0507_05_2::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "jfm_0507_05_3::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "joint3_shaft::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "jsm_0508_05::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "jtm_0512_010::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "jtm_0512_010_1::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "link_1::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "link_3::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "linkage_base::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "lmsbm6_5_60::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "motor::visual0",
+      "category": "motor"
+    },
+    {
+      "name": "motor_cable::visual0",
+      "category": "motor"
+    },
+    {
+      "name": "motor_shaft::visual0",
+      "category": "motor"
+    },
+    {
+      "name": "mta05_13_h_zz_dbs::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "o_ring_shaft_::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "o_ring_stem_::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "part_49::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "peek_bushing::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "plate::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "root::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "Slider_Cover",
+      "category": "structure"
+    },
+    {
+      "name": "squre_splined_bevel_gear::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "sspsr2_16::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "sspsr3_20::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "strong_spring_bottom::visual0",
+      "category": "spring"
+    },
+    {
+      "name": "tibial_base::visual0",
+      "category": "structure"
+    },
+    {
+      "name": "weak_spring_top::visual0",
+      "category": "spring"
+    },
+    {
+      "name": "condyle_left::visual0",
+      "category": "shell"
+    },
+    {
+      "name": "condyle_right::visual0",
+      "category": "shell"
+    },
+    {
+      "name": "motor_housing::visual0",
+      "category": "shell"
+    },
+    {
+      "name": "pos_5ecbody__pos_5ecbody__1_::visual0",
+      "category": "structure",
+      "source": "Original native source glTF named subtree",
+      "parentLink": "pos_5ecbody__pos_5ecbody__1_"
+    },
+    {
+      "name": "slpt6_25__1_::visual0",
+      "category": "structure",
+      "source": "Original native source glTF named subtree",
+      "parentLink": "slpt6_25__1_"
+    },
+    {
+      "name": "pos_5ecball__pos_5ecball__1_::visual0",
+      "category": "structure",
+      "source": "Original native source glTF named subtree",
+      "parentLink": "pos_5ecball__pos_5ecball__1_"
+    }
+  ],
+  "animation": {
+    "fps": 30,
+    "frames": [
+      1,
+      525
+    ],
+    "driver": "revolute_3",
+    "range_deg": [
+      0,
+      131
+    ],
+    "note": "Mechanism input angle, not anatomical knee flexion."
+  },
+  "spring_gauge": {
+    "origin_blender": [
+      0.005,
+      -0.012,
+      0.094
+    ],
+    "axis_blender": [
+      0.121869,
+      0,
+      0.992546
+    ],
+    "note": "Illustrative angle markers; rigid CAD geometry is undeformed."
+  },
+  "recovery": {
+    "method": "native named source subtree ownership repair",
+    "supersedes": "aakj-v3-complete.glb vendor-addition approach; do not use that asset",
+    "sourceURDF": "work/rebound-pos5-native/corrected-source-native/aakj_ver_3/urdf/aakj_ver_3_native_rebound.urdf",
+    "contract": "work/rebound-pos5-native/native-subtrees.json",
+    "newParts": [
+      {
+        "name": "pos_5ecbody__pos_5ecbody__1_::visual0",
+        "targetLink": "pos_5ecbody__pos_5ecbody__1_",
+        "sourceCompositeLink": "body_c_cfs2_4_5__cut_extrude1",
+        "sourceRootName": "POS 5ECBody__POS 5ECBody",
+        "sourceTriangles": 4376,
+        "targetFromCompositeLocalMatrix": [
+          [
+            1.0,
+            -1.859010973103692e-18,
+            -7.135760621112508e-18,
+            8.891050430482659e-17
+          ],
+          [
+            -4.1832475723052235e-18,
+            1.0000000000000002,
+            -8.251119535380285e-20,
+            5.547847363798749e-10
+          ],
+          [
+            7.135760621112504e-18,
+            8.251119535379052e-20,
+            1.0,
+            3.2823166497965357e-10
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "name": "slpt6_25__1_::visual0",
+        "targetLink": "slpt6_25__1_",
+        "sourceCompositeLink": "body_c_cfs2_4_5__cut_extrude1",
+        "sourceRootName": "SLPT6-25",
+        "sourceTriangles": 1996,
+        "targetFromCompositeLocalMatrix": [
+          [
+            0.9994726036438405,
+            -0.03247329003047015,
+            -7.129317836985017e-18,
+            8.053368198440323e-05
+          ],
+          [
+            0.032473290030470135,
+            0.9994726036438404,
+            -3.141893034874261e-19,
+            -0.002478689445507852
+          ],
+          [
+            7.135760621112504e-18,
+            8.251119535380285e-20,
+            1.0,
+            0.007400000328231665
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "name": "pos_5ecball__pos_5ecball__1_::visual0",
+        "targetLink": "pos_5ecball__pos_5ecball__1_",
+        "sourceCompositeLink": "guide1_e_crvs1020__mirror1_2",
+        "sourceRootName": "POS 5ECBall__POS 5ECBall",
+        "sourceTriangles": 5568,
+        "targetFromCompositeLocalMatrix": [
+          [
+            0.9999999999999999,
+            1.761564589434711e-08,
+            -1.221600972963581e-17,
+            4.206624803390111e-11
+          ],
+          [
+            -1.7615645900389372e-08,
+            1.0,
+            6.805998887110875e-17,
+            1.3476255974481084e-10
+          ],
+          [
+            1.2216010928556468e-17,
+            -6.805998865591586e-17,
+            1.0,
+            3.282316649380612e-10
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      }
+    ],
+    "originalTotalTrianglesPreserved": true,
+    "vendorMeshesAdded": false,
+    "maxZeroWorldVertexRoundtripM": 9.385703304198744e-10,
+    "all263BearingCentreErrorsM": {
+      "pos_5ecbody__pos_5ecbody__1_": 8.954194418720776e-09,
+      "pos_5ecball__pos_5ecball__1_": 8.750723773698823e-09
+    },
+    "maxRodAxisCrossProduct": 0.0
+  }
+}

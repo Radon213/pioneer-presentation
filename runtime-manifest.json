@@ -1,0 +1,266 @@
+{
+  "schema": "pioneer-runtime-package-v1",
+  "runtimeBytes": 58803217,
+  "files": [
+    {
+      "path": "examples/pioneer-draft/app.js",
+      "bytes": 15045,
+      "sha256": "b1eac6c0f6647725b3938ffa3b2d9a37c2c829c2e0fd9ca4c68a7098d6f2f7c7"
+    },
+    {
+      "path": "examples/pioneer-draft/archived-spring-chart.js",
+      "bytes": 16224,
+      "sha256": "ad8b9df94a59d4499aeabe318cafef1ea4760fa9e896227599d8d170b584f1fe"
+    },
+    {
+      "path": "examples/pioneer-draft/asset-loading.js",
+      "bytes": 6162,
+      "sha256": "44bf97f628d1411026f89403bf7525c8934d55ec3821c8f749e046e85e240663"
+    },
+    {
+      "path": "examples/pioneer-draft/assets/bilateral-sts-attachments.json",
+      "bytes": 283723,
+      "sha256": "384a50be9cad1d461ea8b7f34d0adb9041e0f6369c78da16b5bfc3e166881a21"
+    },
+    {
+      "path": "examples/pioneer-draft/assets/elderly-material-symbol.svg",
+      "bytes": 525,
+      "sha256": "2c813b7640b9be860a9151682ef3deef991bb181210012133e086941c6754fce"
+    },
+    {
+      "path": "examples/pioneer-draft/assets/gait-chapter-native-rebound.bin",
+      "bytes": 14892712,
+      "sha256": "63aa5e7ac63f0a3240895b1455932a279a9c51a3a6c230f8192d876147a21450"
+    },
+    {
+      "path": "examples/pioneer-draft/assets/gait-chapter-native-rebound.bin.gz",
+      "bytes": 9174013,
+      "sha256": "4cddf02ba1a4b5c70235f598cffe0f4685d270857bbb16625d8fcbcfe0716b39"
+    },
+    {
+      "path": "examples/pioneer-draft/assets/motion/clinical-tka-source/baseplate.stl",
+      "bytes": 448784,
+      "sha256": "879a84befffe25cc629ec3d07b589c29a0ba2864f2fa8abd8f4af23a9c5a8df2"
+    },
+    {
+      "path": "examples/pioneer-draft/assets/motion/clinical-tka-source/femoral-left.stl",
+      "bytes": 1221084,
+      "sha256": "ec99b44bceede7130469762de6f48bcee160fff151f8dd416c9744994d2023b9"
+    },
+    {
+      "path": "examples/pioneer-draft/assets/motion/clinical-tka-source/femoral-right.stl",
+      "bytes": 1221084,
+      "sha256": "e7d6490e8f447636a6ad8e6cf4fe2877ab6be7b5d077cf71cb7ecaa1430c4fd1"
+    },
+    {
+      "path": "examples/pioneer-draft/assets/motion/clinical-tka-source/insert.stl",
+      "bytes": 417684,
+      "sha256": "6e7278fa16f73ec8935f33e846ec18b5db3f0356c690499fdf0e143167366907"
+    },
+    {
+      "path": "examples/pioneer-draft/assets/motion/mechanism-motion.json",
+      "bytes": 591943,
+      "sha256": "69123372cc4557681c38b547819bb570b65fb97bc3f4643f1e052998aeb89871"
+    },
+    {
+      "path": "examples/pioneer-draft/assets/motion/spring-analysis-110.display.bin.gz",
+      "bytes": 4853112,
+      "sha256": "4e1b6bb5bef041fa13c5b3d0138376bf54ac396ea074f0e6ca8c8c5b7684aa9a"
+    },
+    {
+      "path": "examples/pioneer-draft/assets/motion/spring-analysis-110.display.json",
+      "bytes": 616784,
+      "sha256": "0d2165465c281b8d3342cf53bcee9cdb78fbcd811e2f6f8e69df92e734a6010a"
+    },
+    {
+      "path": "examples/pioneer-draft/assets/pnu-signature.png",
+      "bytes": 62211,
+      "sha256": "12163d4c07fcde79a83404b294d5d1dfcfde1d541ed50a900bd204e23db19d6c"
+    },
+    {
+      "path": "examples/pioneer-draft/assets/simulation-scene.json",
+      "bytes": 3230455,
+      "sha256": "590459f79ff6105591f5cb6ef6f8c02304147f991c7df01cdd504a5feba920aa"
+    },
+    {
+      "path": "examples/pioneer-draft/chapter-diagram-layer.js",
+      "bytes": 9815,
+      "sha256": "3cafb0a7361478c9639758ff30f1e9e84aeb2aa5133659d761215ae0728b8b13"
+    },
+    {
+      "path": "examples/pioneer-draft/chapter-overlays.js",
+      "bytes": 7422,
+      "sha256": "457cb7f309a0fd57766145da8ddca7ea8a78507eff578f82e13f55b6afb66f5a"
+    },
+    {
+      "path": "examples/pioneer-draft/clinical-knee-layer.js",
+      "bytes": 8011,
+      "sha256": "aa65116200a5fab7364193f093a9ab461f051928c6675979552610565df28bbb"
+    },
+    {
+      "path": "examples/pioneer-draft/continuous-human-layer.js",
+      "bytes": 13855,
+      "sha256": "107c524900b4c6bb32b8d8fdeccb594c616b93241cdeadd8a3433992dcf4f2c9"
+    },
+    {
+      "path": "examples/pioneer-draft/continuous-knee-viewer.js",
+      "bytes": 57409,
+      "sha256": "ae6ec12c6ab66fb1927c41509b3cbb2341dcad13e2016c2e71ce450e7762afea"
+    },
+    {
+      "path": "examples/pioneer-draft/deck-data.js",
+      "bytes": 26895,
+      "sha256": "2a64a8e58d15a86bc6fecda9722f8b92a13505f7b656e3ea0a8dede712cdb74f"
+    },
+    {
+      "path": "examples/pioneer-draft/gait-binary-loader.js",
+      "bytes": 3590,
+      "sha256": "08cde482025394d257dacdb639d766fd64940a4b73a2960d861bf73493067cb8"
+    },
+    {
+      "path": "examples/pioneer-draft/gait-chapter-layer.js",
+      "bytes": 9778,
+      "sha256": "90c7768d4fa00e74a87b67b5eb05a4caf9edc5e8e776bba07bc40d54c28f2718"
+    },
+    {
+      "path": "examples/pioneer-draft/index.html",
+      "bytes": 23234,
+      "sha256": "81638c3b2291cec0d7c31c71056cb54407ad6b3ee9ad15e09a0cfe9f5431ba2d"
+    },
+    {
+      "path": "examples/pioneer-draft/motion-clock.js",
+      "bytes": 381,
+      "sha256": "c53afad6500d2e117398b8febcfd9ead356e41c1a6a3da7f1330a290954eddf4"
+    },
+    {
+      "path": "examples/pioneer-draft/native-knee-comparison.js",
+      "bytes": 8915,
+      "sha256": "b6c2f70162ed286b30aeb365ea72169cc5d0ec09c4a54075a663019298d5e5e2"
+    },
+    {
+      "path": "examples/pioneer-draft/performance-benchmark.js",
+      "bytes": 3418,
+      "sha256": "860e1c0bb700a8035055e2b4317abf254e298501741d65011a9c69e885a93ca2"
+    },
+    {
+      "path": "examples/pioneer-draft/presentation-navigation.js",
+      "bytes": 2315,
+      "sha256": "6bd7ffc84f240dd57d923461bb204d3a95f95e3313e900fba60815f79f9b9f07"
+    },
+    {
+      "path": "examples/pioneer-draft/presenter.html",
+      "bytes": 3345,
+      "sha256": "9f254b08fbcfde1d9392d891ca3a200aa1b2f6c11f339019a0e70703f2fcdaf2"
+    },
+    {
+      "path": "examples/pioneer-draft/shaded-edges.js",
+      "bytes": 5177,
+      "sha256": "56f4743bff48b0238b8b08808b8788742523a48037e4a8a5aca19ba2d37310fa"
+    },
+    {
+      "path": "examples/pioneer-draft/spring-analysis-data.js",
+      "bytes": 4088,
+      "sha256": "766de9a1a869f578ffb37b772002cc0972be5dbb3a0620e729148dbe21423b73"
+    },
+    {
+      "path": "examples/pioneer-draft/spring-fea-layer.js",
+      "bytes": 8573,
+      "sha256": "075e4b73a48cae285c469b15cf585ca376bc47bd05c18691cecf864b34ea1fe0"
+    },
+    {
+      "path": "examples/pioneer-draft/style.css",
+      "bytes": 11940,
+      "sha256": "8470a0fc2b3ed4a4ecbe2edbcb692f78856db672f61298dbd589729b9310d8dd"
+    },
+    {
+      "path": "examples/pioneer-draft/visual-explanations.js",
+      "bytes": 8532,
+      "sha256": "9ff3dff121cf41fbbbe193e8ac3e3e13f7311b0f16933ba2484edf474f4f2181"
+    },
+    {
+      "path": "examples/pioneer-interactive/assets/Geist-Variable.ttf",
+      "bytes": 169056,
+      "sha256": "73894e0448cae90a92b6c2f8732b7bb9acb7b94c418bff559dad4a18e1de9659"
+    },
+    {
+      "path": "examples/pioneer-interactive/assets/aakj-v3-native-rebound.glb",
+      "bytes": 10617124,
+      "sha256": "7864a845dd70720e558891ff336665cb79ab7963cb27b2013d7c17bb32028fbb"
+    },
+    {
+      "path": "examples/pioneer-interactive/assets/aakj-v3-native-rebound.glb.gz",
+      "bytes": 8575386,
+      "sha256": "697652c9d9c6b767499c9106fdd917d22d19e19939cbf08c620af7e1091a9f9e"
+    },
+    {
+      "path": "examples/pioneer-interactive/assets/fonts.css",
+      "bytes": 676,
+      "sha256": "8f3144aebd3c03f16ae49e1e8c5ee17691bf9e8c4221adea5560cc52d606fd62"
+    },
+    {
+      "path": "examples/pioneer-interactive/assets/model-meta-native-rebound.json",
+      "bytes": 8760,
+      "sha256": "8998f617cc3f08577a2eef3606943f178717e8b1b46edaae1f9afb96c16cb430"
+    },
+    {
+      "path": "examples/pioneer-interactive/assets/playfair-display-0.ttf",
+      "bytes": 110816,
+      "sha256": "6021680663c58b344d8404c289c755aadc662a02189ffe4f5ca79378f9e97840"
+    },
+    {
+      "path": "examples/pioneer-interactive/assets/playfair-display-1.ttf",
+      "bytes": 123240,
+      "sha256": "1609a54fa3ad1abc8d0037132f73700333241ea0b65672079998e352f151dea7"
+    },
+    {
+      "path": "examples/pioneer-interactive/assets/playfair-display-2.ttf",
+      "bytes": 123672,
+      "sha256": "8ab6a1db2d7caeb46c742371da500d0f3de1dc6ec6bea2aef0106f678d7a1f8d"
+    },
+    {
+      "path": "examples/pioneer-interactive/assets/playfair-display-3.ttf",
+      "bytes": 123536,
+      "sha256": "adefc53e7b3d483f1fa5e85edd82b7689ca79db25a1f6786bd7949cdcfeec601"
+    },
+    {
+      "path": "examples/pioneer-interactive/vendor/BufferGeometryUtils.js",
+      "bytes": 31906,
+      "sha256": "9be041e96308775d00e2695cc607645b9a9b64fd7c0e759dd8f7c00a8d92becb"
+    },
+    {
+      "path": "examples/pioneer-interactive/vendor/DRACOLoader.js",
+      "bytes": 13628,
+      "sha256": "65c114ecb7b349cdc59c75b2c92d19cca672a138060dba0f60f64262fa40408c"
+    },
+    {
+      "path": "examples/pioneer-interactive/vendor/GLTFLoader.js",
+      "bytes": 108515,
+      "sha256": "3d8d4b6b2c7e9b0690fe4b464d4fbb0faca5eda0b1d86391405b9634c1a11355"
+    },
+    {
+      "path": "examples/pioneer-interactive/vendor/RoomEnvironment.js",
+      "bytes": 3735,
+      "sha256": "e21f41b7ef2016f2984a5d27850b42dffa797a6a194a138e288b06576d765a7b"
+    },
+    {
+      "path": "examples/pioneer-interactive/vendor/THREE-LICENSE.txt",
+      "bytes": 1081,
+      "sha256": "852e0e8699169bf9f6fdc6bda3e682d078dcbc738b5d33e74df594721bff271d"
+    },
+    {
+      "path": "examples/pioneer-interactive/vendor/draco_decoder.wasm",
+      "bytes": 192420,
+      "sha256": "a680d927bed9cb864ddbd63521868891af2bfbe755092761b4837487618df8ac"
+    },
+    {
+      "path": "examples/pioneer-interactive/vendor/draco_wasm_wrapper.js",
+      "bytes": 58456,
+      "sha256": "8bb2952d2ba7d67e1414f8df819410cb0434a666be53f671fff75f68843d76f6"
+    },
+    {
+      "path": "examples/pioneer-interactive/vendor/three.module.js",
+      "bytes": 1272972,
+      "sha256": "76dea8151bc9352aef3528b4262e249b2604f62543828328db978d060d61a495"
+    }
+  ]
+}
