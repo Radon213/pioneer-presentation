@@ -1,0 +1,378 @@
+[
+  {
+    "id": 1,
+    "title": "Nonlinear SEA Preload Control for Knee Assistance under Limited Runtime Sensing",
+    "ko": "제한된 실행 시점 센싱에서 무릎 보조를 위한 비선형 SEA 예압 제어",
+    "lead": "Jongchan Mun and Sang Rok Jin",
+    "duration": 20,
+    "source": "Pioneer_2022_proposal.pdf: PDF p11/printed p2 and PDF p40/printed p31",
+    "stages": [
+      {
+        "caption": "Preserve natural movement while preparing active support.",
+        "question": "Who needs this assistance?",
+        "notes": "This work concerns an active artificial knee for older adults who need knee replacement and also experience sarcopenia. We begin with the person, follow the biomechanical implant into its nonlinear spring, and then ask how reinforcement learning could control assistance. The motion on the cover is a visual reference, not evidence of an assistance benefit. 한국어: 기존 ICCAS 제목만 유지하고 현재 진행 중인 연구로 구성한다. 표지 보행 연출은 대상 노인에 대한 보조 성능 결과가 아니다. Cover spring: actual stored double-spiral FEA loading frames are replayed forward and backward in the same 1.12-second presentation cycle as recorded walking. The enlarged inset and timing are explanatory presentation choices, not a coupled gait/FEA spring response or a solved unloading branch. PNU signature is the original official transparent PNG, aspect ratio preserved.",
+        "body": "<p>Preserve <strong>natural motion</strong>.</p><p>Add <strong>timely support</strong>.</p>"
+      }
+    ],
+    "subtitle": "",
+    "authors": [
+      {
+        "name": "Jongchan Mun",
+        "affiliation": "1",
+        "corresponding": false
+      },
+      {
+        "name": "Sang Rok Jin",
+        "affiliation": "1",
+        "corresponding": true
+      }
+    ],
+    "affiliation": "School of Mechanical Engineering, Pusan National University",
+    "affiliationLocation": "Busan, 46231, Korea",
+    "authorSource": "/mnt/arl/NAS관리/백업/학회/2026년도/26.10.27~30 ICCAS/문종찬/논문/main.tex:19–23",
+    "steps": 0,
+    "scene": {
+      "kind": "continuous",
+      "mode": "chapter",
+      "chapter": 1
+    },
+    "body": "",
+    "bridge": "",
+    "dummy": false,
+    "notes": "Stage 0: This work concerns an active artificial knee for older adults who need knee replacement and also experience sarcopenia. We begin with the person, follow the biomechanical implant into its nonlinear spring, and then ask how reinforcement learning could control assistance. The motion on the cover is a visual reference, not evidence of an assistance benefit. 한국어: 기존 ICCAS 제목만 유지하고 현재 진행 중인 연구로 구성한다. 표지 보행 연출은 대상 노인에 대한 보조 성능 결과가 아니다.\nCover authors and affiliation reproduced from /mnt/arl/NAS관리/백업/학회/2026년도/26.10.27~30 ICCAS/문종찬/논문/main.tex:19–23. Exact author spelling/order: Jongchan Mun; Sang Rok Jin. Paper results are not reused. Cover spring: actual stored double-spiral FEA loading frames are replayed forward and backward in the same 1.12-second presentation cycle as recorded walking. The enlarged inset and timing are explanatory presentation choices, not a coupled gait/FEA spring response or a solved unloading branch. PNU signature is the original official transparent PNG, aspect ratio preserved."
+  },
+  {
+    "id": 2,
+    "title": "Background",
+    "ko": "관절 치환과 함께 근력 보조가 필요한 이유",
+    "lead": "Our target is an older adult with knee replacement and sarcopenia.",
+    "duration": 85,
+    "source": "Pioneer_2022_proposal.pdf: PDF p11/printed p2 and PDF p40/printed p31 · Sumbal et al.,2024 · Reicherzer et al.,2024",
+    "stages": [
+      {
+        "caption": "The project begins with an older person who needs knee replacement.",
+        "question": "What does replacement change?",
+        "notes": "The Pioneer proposal targets the combined problem of joint degeneration and reduced muscle capacity. Keep one person in view as we move from walking to the knee. The generic musculoskeletal geometry is an explanation of this target, not an elderly patient-specific model. 한국어: 고령·TKA·근감소증이 함께 있는 대상을 설명하며 모든 TKA 환자가 근감소증을 가진다고 일반화하지 않는다.",
+        "body": "<p>The target is an <strong>older adult</strong>.</p><p><strong>Knee replacement</strong><br>and <strong>sarcopenia</strong> coexist.</p>"
+      },
+      {
+        "caption": "Knee replacement renews joint surfaces while the surrounding muscles remain.",
+        "question": "What if those muscles are weak?",
+        "notes": "Conventional total knee replacement changes damaged joint surfaces using metal components and a polyethylene insert. The surrounding bones and muscles continue to move the body. The component placement is educational and omits surgical detail; it is not a validated patient fit. 한국어: 표면 치환을 설명하며 근육을 대체하는 수술처럼 표현하지 않는다.",
+        "body": "<p>Replace the <strong>joint surfaces</strong>.</p><p>The <strong>muscles</strong> still move the body.</p>"
+      },
+      {
+        "caption": "Sarcopenia adds a muscle-capacity problem to the joint problem.",
+        "question": "Where could assistance come from?",
+        "notes": "Sumbal and colleagues reported a pooled sarcopenia prevalence of 20.1% in TKA populations, with 95% CI 13.6–28.8% and substantial heterogeneity, I² 94.7%. This is neither a Korean prevalence nor a rate for every older adult. It supports the relevance of the intersection, not causation by surgery. Source: https://pubmed.ncbi.nlm.nih.gov/38901711/ ; https://doi.org/10.1016/j.arth.2024.06.021. 한국어: 메타분석의 TKA 집단 추정치이며 한국 전체 노인이나 우리 실험 대상자의 유병률로 쓰지 않는다.",
+        "body": "<p><strong class=\"stage-stat\">20.1%</strong></p><p>Pooled sarcopenia prevalence<br>in <strong>TKA populations</strong>.</p><p class=\"stage-reference\">95% CI 13.6–28.8% · Sumbal et al.,2024</p>"
+      },
+      {
+        "caption": "External assistance also requires wearing and fitting the device.",
+        "question": "Could support be integrated into the implant?",
+        "notes": "A qualitative Myosuit study with older adults and physiotherapists identified donning, fit and pressure-related comfort as practical considerations. Views differed, and some users anticipated independent use. We show a generic external frame to explain those considerations, not a comparison proving that exoskeletons are inferior. Source: https://rehab.jmir.org/2024/1/e52676. 한국어: 일반 외골격의 열등성이나 모든 제품의 무게·보조인력 필요성을 주장하지 않는다.",
+        "body": "<p><strong>Wearing and fitting</strong><br>are part of external assistance.</p><p><strong>Comfort</strong> also matters.</p>"
+      },
+      {
+        "caption": "The project adds an assistance function to a biomechanical artificial knee.",
+        "question": "How can the mechanism preserve knee motion?",
+        "notes": "Return to the already-required artificial joint. The research objective is to integrate support while respecting the natural movement and the packaging constraints of an implant. This is a design direction with unresolved surgical, power and thermal questions, not a clinically established replacement for wearable systems. 한국어: 기존 생체역학 인공관절을 능동 보조로 발전시킨 과제의 흐름을 연결한다.",
+        "body": "<p>Add <strong>active support</strong><br>to the artificial joint.</p><p>Preserve <strong>biomechanical motion</strong>.</p>"
+      }
+    ],
+    "subtitle": "Why Joint Replacement May Need Muscle Support",
+    "targetGroup": "Older adults",
+    "steps": 4,
+    "scene": {
+      "kind": "continuous",
+      "mode": "chapter",
+      "chapter": 2
+    },
+    "body": "",
+    "bridge": "",
+    "dummy": false,
+    "notes": "Stage 0: The Pioneer proposal targets the combined problem of joint degeneration and reduced muscle capacity. Keep one person in view as we move from walking to the knee. The generic musculoskeletal geometry is an explanation of this target, not an elderly patient-specific model. 한국어: 고령·TKA·근감소증이 함께 있는 대상을 설명하며 모든 TKA 환자가 근감소증을 가진다고 일반화하지 않는다.\n\nStage 1: Conventional total knee replacement changes damaged joint surfaces using metal components and a polyethylene insert. The surrounding bones and muscles continue to move the body. The component placement is educational and omits surgical detail; it is not a validated patient fit. 한국어: 표면 치환을 설명하며 근육을 대체하는 수술처럼 표현하지 않는다.\n\nStage 2: Sumbal and colleagues reported a pooled sarcopenia prevalence of 20.1% in TKA populations, with 95% CI 13.6–28.8% and substantial heterogeneity, I² 94.7%. This is neither a Korean prevalence nor a rate for every older adult. It supports the relevance of the intersection, not causation by surgery. Source: https://pubmed.ncbi.nlm.nih.gov/38901711/ ; https://doi.org/10.1016/j.arth.2024.06.021. 한국어: 메타분석의 TKA 집단 추정치이며 한국 전체 노인이나 우리 실험 대상자의 유병률로 쓰지 않는다.\n\nStage 3: A qualitative Myosuit study with older adults and physiotherapists identified donning, fit and pressure-related comfort as practical considerations. Views differed, and some users anticipated independent use. We show a generic external frame to explain those considerations, not a comparison proving that exoskeletons are inferior. Source: https://rehab.jmir.org/2024/1/e52676. 한국어: 일반 외골격의 열등성이나 모든 제품의 무게·보조인력 필요성을 주장하지 않는다.\n\nStage 4: Return to the already-required artificial joint. The research objective is to integrate support while respecting the natural movement and the packaging constraints of an implant. This is a design direction with unresolved surgical, power and thermal questions, not a clinically established replacement for wearable systems. 한국어: 기존 생체역학 인공관절을 능동 보조로 발전시킨 과제의 흐름을 연결한다."
+  },
+  {
+    "id": 3,
+    "title": "Hardware",
+    "ko": "무릎의 움직임을 보존하고 구동 기능 더하기",
+    "lead": "Follow the same implant from its joint mechanism to its motor and gears.",
+    "duration": 150,
+    "source": "Moon, thesis interim presentation, 2024-12-10: slides3–15 · original AAKJ CAD/URDF and restored kinematics · native-knee primary references",
+    "stages": [
+      {
+        "caption": "The biomechanical joint was the starting point before active assistance.",
+        "question": "Why is a simple hinge insufficient?",
+        "notes": "The previous team analyzed knee motion and developed the equivalent four-bar foundation before my contribution. Natural movement involves more than rotation about one stationary hinge. Compare a qualitative native-knee illustration with the source implant. The source bones are real meshes, while comparison rollback and pivot are authored explanatory motion, not measurements from the hinge-only STS trace. 한국어: 선행 팀의 기여를 명시한다.",
+        "body": "<p>Start with the <strong>biomechanical joint</strong>.</p><p>Build on the <strong>previous team’s design</strong>.</p>"
+      },
+      {
+        "caption": "An equivalent four-bar lets the joint centre move during flexion.",
+        "question": "How does that movement create medial rotation?",
+        "notes": "Follow the four equivalent centres. J1 is the Peek_Bushing cam-follower centre; J2 is the curved-slot circle centre in Condyle_Right, an equivalent point rather than a physical pin. J3 is R3 and J4 is R2. The source cam constraint is represented by an equivalent connection without inventing another physical bar. 한국어: J2 등가점을 실물 핀으로 설명하지 않는다.",
+        "body": "<p>An <strong>equivalent four-bar</strong><br>moves the joint centre.</p><p>J2 is a <strong>virtual centre</strong>, not a pin.</p>"
+      },
+      {
+        "caption": "Joint 3 displacement constrains motion along the AP slider.",
+        "question": "How does the slider create medial rotation?",
+        "notes": "Keep the source side view while following Joint 3 displacement into the guide and slider. The constrained path provides the connection between flexion and the axial motion examined next. Genuine source components and restored kinematics are retained. 한국어: 측면에서 J3 변위와 실제 슬라이더 구속을 먼저 이해시킨다.",
+        "body": "<p><strong>Joint 3 displacement</strong><br>constrains the <strong>AP slider</strong>.</p>"
+      },
+      {
+        "caption": "The slider couples flexion to rotation around the medial-pivot axis.",
+        "question": "Where does active torque enter?",
+        "notes": "Now turn to the axial view of the same mechanism. Follow the constrained slider motion into medial-pivot rotation. This is restored source kinematics, compared with authored qualitative native motion rather than a patient-specific measured match. The actual Slider_Cover mesh remains traceable. 한국어: 같은 기구를 축방향에서 보며 굴곡과 내측회전의 연동을 설명한다.",
+        "body": "<p>The slider couples <strong>flexion</strong><br>to <strong>medial-pivot rotation</strong>.</p>"
+      },
+      {
+        "caption": "The motor and gears add a drive path to the biomechanical mechanism.",
+        "question": "What if the person moves the joint first?",
+        "notes": "Reveal the motor and follow the gears toward the elastic element and output. Compact reduction provides useful torque but makes reverse interaction important. The person can initiate movement too, so we must examine the same path from the output back toward the motor. 한국어: 모터·기어 전달과 사람 주도 역방향 상호작용을 같은 단계에서 연결한다.",
+        "body": "<p><strong>Motor → gears → output</strong></p><p>The person can also move<br>through the <strong>reverse path</strong>.</p>"
+      },
+      {
+        "caption": "The torque path reaches an elastic element inside the same joint.",
+        "question": "Why should that element be nonlinear?",
+        "notes": "Stay in the same implant as the view approaches the original spring location. Series elasticity can separate rigid motor drive from compliant interaction at the output. The next chapter defines the SEA and explains the stiffness trade-off and actual spiral design. Native-knee background references: https://pubmed.ncbi.nlm.nih.gov/15330038/ ; https://pubmed.ncbi.nlm.nih.gov/11132285/. 한국어: 같은 인공관절 내부의 원본 스프링 위치로 접근하며 다음 SEA 설명을 준비한다.",
+        "body": "<p>The drive path reaches<br>the <strong>elastic element</strong>.</p><p>Compliance becomes a design choice.</p>"
+      }
+    ],
+    "subtitle": "Preserve Knee Motion, Then Add a Drive",
+    "steps": 5,
+    "scene": {
+      "kind": "continuous",
+      "mode": "chapter",
+      "chapter": 3
+    },
+    "body": "",
+    "bridge": "",
+    "dummy": false,
+    "notes": "Stage 0: The previous team analyzed knee motion and developed the equivalent four-bar foundation before my contribution. Natural movement involves more than rotation about one stationary hinge. Compare a qualitative native-knee illustration with the source implant. The source bones are real meshes, while comparison rollback and pivot are authored explanatory motion, not measurements from the hinge-only STS trace. 한국어: 선행 팀의 기여를 명시한다.\n\nStage 1: Follow the four equivalent centres. J1 is the Peek_Bushing cam-follower centre; J2 is the curved-slot circle centre in Condyle_Right, an equivalent point rather than a physical pin. J3 is R3 and J4 is R2. The source cam constraint is represented by an equivalent connection without inventing another physical bar. 한국어: J2 등가점을 실물 핀으로 설명하지 않는다.\n\nStage 2: Keep the source side view while following Joint 3 displacement into the guide and slider. The constrained path provides the connection between flexion and the axial motion examined next. Genuine source components and restored kinematics are retained. 한국어: 측면에서 J3 변위와 실제 슬라이더 구속을 먼저 이해시킨다.\n\nStage 3: Now turn to the axial view of the same mechanism. Follow the constrained slider motion into medial-pivot rotation. This is restored source kinematics, compared with authored qualitative native motion rather than a patient-specific measured match. The actual Slider_Cover mesh remains traceable. 한국어: 같은 기구를 축방향에서 보며 굴곡과 내측회전의 연동을 설명한다.\n\nStage 4: Reveal the motor and follow the gears toward the elastic element and output. Compact reduction provides useful torque but makes reverse interaction important. The person can initiate movement too, so we must examine the same path from the output back toward the motor. 한국어: 모터·기어 전달과 사람 주도 역방향 상호작용을 같은 단계에서 연결한다.\n\nStage 5: Stay in the same implant as the view approaches the original spring location. Series elasticity can separate rigid motor drive from compliant interaction at the output. The next chapter defines the SEA and explains the stiffness trade-off and actual spiral design. Native-knee background references: https://pubmed.ncbi.nlm.nih.gov/15330038/ ; https://pubmed.ncbi.nlm.nih.gov/11132285/. 한국어: 같은 인공관절 내부의 원본 스프링 위치로 접근하며 다음 SEA 설명을 준비한다."
+  },
+  {
+    "id": 4,
+    "title": "Nonlinear Spring",
+    "ko": "직렬 탄성요소를 비선형으로 설계한 이유",
+    "lead": "A spring in the torque path links mechanical compliance to assistance control.",
+    "duration": 165,
+    "source": "Moon, thesis interim presentation, 2024-12-10: slides3–15 · original spring CAD · separate archived representative FEA",
+    "stages": [
+      {
+        "caption": "A series elastic actuator places a spring between the motor drive and the load.",
+        "question": "What should this spring allow?",
+        "notes": "SEA means series elastic actuator. The spring lies in the torque-transmission path between the motor-side drive and the output. Relative rotation deforms the spring and generates elastic torque. This gives the person a compliant interaction instead of an ideally rigid transmission. 한국어: 처음 듣는 청중을 위해 SEA의 위치와 역할을 먼저 정의한다.",
+        "body": "<p><strong>SEA</strong> means<br>series elastic actuator.</p><p>The spring lies <strong>in the torque path</strong>.</p>"
+      },
+      {
+        "caption": "Low stiffness permits yielding, but useful torque can require more deflection.",
+        "question": "Can one constant stiffness serve both needs?",
+        "notes": "With a linear spring, low stiffness needs more relative deflection for the same torque, while high stiffness resists motion more strongly. This is a design trade-off rather than proof that every conventional SEA fails. We want yielding behavior at small loading and stronger torque transfer as deformation grows. 한국어: 낮은 강성과 큰 토크 전달 사이의 설계 상충을 설명한다.",
+        "body": "<p><strong>Low stiffness</strong> permits yielding.</p><p>Useful torque may require<br><strong>more deflection</strong>.</p>"
+      },
+      {
+        "caption": "The design seeks a stiffness that rises as the spring winds.",
+        "question": "How can geometry change that stiffness?",
+        "notes": "A nonlinear torque–deflection relationship is the mechanical objective. It changes how much added torque follows an added relative angle. This explains why a nonlinear spring is useful before showing the specific spiral geometry. No performance curve on this conceptual step is an experimental or learned result. 한국어: 목표 곡선의 개념과 검증된 특성곡선을 구분한다.",
+        "body": "<p>Let stiffness <strong>rise with winding</strong>.</p><p>Balance yielding with<br><strong>torque transmission</strong>.</p>"
+      },
+      {
+        "caption": "Two spiral units in series carry the same torque and share the total deflection.",
+        "question": "Which unit deforms more first?",
+        "notes": "In an ideal quasistatic serial pair, both springs transmit the same torque and their deflections add. The compliant unit deforms more initially; the stiffer unit also deforms, rather than waiting with zero torque. The axial source-CAD view exposes strip width and coil spacing; axial depth is a separate dimension. 한국어: 직렬 연결은 같은 토크이며 변위가 합쳐진다는 점을 분명히 한다.",
+        "body": "<p>In series: <strong>same torque</strong>.</p><p><strong>Both springs deform</strong>;<br>their deflections add.</p>"
+      },
+      {
+        "caption": "Strip width, axial depth and coil gap define the spiral geometry.",
+        "question": "How can the design be examined through analysis?",
+        "notes": "Identify strip width a, axial depth b and coil gap as separate dimensions. The native spring does not acquire nonlinearity from an invented variable-width profile. The historical concept uses turn approach and the winding limit to change additional compliance, with more added deflection then shared by the stiffer serial unit. This design illustration is not solved contact or a calibrated native spring law. Axial depth cannot be inferred from a top view alone. 한국어: 폭a·축방향 깊이b·코일 간격을 구분하고 실제 원본에 없는 가변 폭 형상을 주장하지 않는다. 다음 해석은 별도 대표형상이다.",
+        "body": "<p><strong>a</strong> — strip width</p><p><strong>b</strong> — axial depth</p><p><strong>g</strong> — coil gap</p>"
+      },
+      {
+        "caption": "The finite-element example uses a separate archived representative cartridge.",
+        "question": "How reliable is its computed response?",
+        "notes": "The actual FEA is a reconstructed two-arm representative geometry from the NAS, not the complete native compliant/stiff CAD assembly. Actual converged frames use circular inner-node motion and fixed outer attachments. The chosen full-envelope inter-arm contact model is frictionless and elastic. Displacements are shown at true scale. Source: assets/motion/spring-analysis-report.md ; assets/motion/spring-analysis-summary.json. 한국어: 실제 원본 스프링 시각화와 별도 대표 해석 형상을 명확히 분리한다.",
+        "body": "<p>Inspect <strong>actual FEA fields</strong>.</p><p>This is a <strong>separate representative cartridge</strong>.</p>"
+      },
+      {
+        "caption": "Archived ANSYS design curves show the original computed torque–deflection response.",
+        "question": "How should control prepare spring deformation?",
+        "notes": "Original ANSYS CSV tables from the user-confirmed NAS backup are plotted with every finite torque point. P=2 mm, a=0.7 mm, b=10 mm spans 1.2–120 degrees; b=20 mm spans 0.45–45 degrees. Each panel has its own labelled axes. The original torque decrease is retained. These are archived prototype computations, not physical measurements or a calibrated law of the current weak/strong series pair. They are independent from the new 110-degree animation reconstruction; no point is synchronized to that animation. CSV headers, raw rows, exact paths and SHA256 are preserved in assets/motion/archived-spring-curves.json. 한국어: 보관된 원본 ANSYS 표를 그대로 표시하며 현재 직렬 스프링의 검증된 특성으로 주장하지 않는다.",
+        "body": "<p><strong>Original ANSYS tables</strong><br>from the archived designs.</p><p>These prototypes are <strong>separate</strong><br>from the current series pair.</p>"
+      }
+    ],
+    "subtitle": "Why the Series Elastic Element Is Nonlinear",
+    "steps": 6,
+    "scene": {
+      "kind": "continuous",
+      "mode": "chapter",
+      "chapter": 4
+    },
+    "body": "",
+    "bridge": "",
+    "dummy": false,
+    "notes": "Stage 0: SEA means series elastic actuator. The spring lies in the torque-transmission path between the motor-side drive and the output. Relative rotation deforms the spring and generates elastic torque. This gives the person a compliant interaction instead of an ideally rigid transmission. 한국어: 처음 듣는 청중을 위해 SEA의 위치와 역할을 먼저 정의한다.\n\nStage 1: With a linear spring, low stiffness needs more relative deflection for the same torque, while high stiffness resists motion more strongly. This is a design trade-off rather than proof that every conventional SEA fails. We want yielding behavior at small loading and stronger torque transfer as deformation grows. 한국어: 낮은 강성과 큰 토크 전달 사이의 설계 상충을 설명한다.\n\nStage 2: A nonlinear torque–deflection relationship is the mechanical objective. It changes how much added torque follows an added relative angle. This explains why a nonlinear spring is useful before showing the specific spiral geometry. No performance curve on this conceptual step is an experimental or learned result. 한국어: 목표 곡선의 개념과 검증된 특성곡선을 구분한다.\n\nStage 3: In an ideal quasistatic serial pair, both springs transmit the same torque and their deflections add. The compliant unit deforms more initially; the stiffer unit also deforms, rather than waiting with zero torque. The axial source-CAD view exposes strip width and coil spacing; axial depth is a separate dimension. 한국어: 직렬 연결은 같은 토크이며 변위가 합쳐진다는 점을 분명히 한다.\n\nStage 4: Identify strip width a, axial depth b and coil gap as separate dimensions. The native spring does not acquire nonlinearity from an invented variable-width profile. The historical concept uses turn approach and the winding limit to change additional compliance, with more added deflection then shared by the stiffer serial unit. This design illustration is not solved contact or a calibrated native spring law. Axial depth cannot be inferred from a top view alone. 한국어: 폭a·축방향 깊이b·코일 간격을 구분하고 실제 원본에 없는 가변 폭 형상을 주장하지 않는다. 다음 해석은 별도 대표형상이다.\n\nStage 5: The actual FEA is a reconstructed two-arm representative geometry from the NAS, not the complete native compliant/stiff CAD assembly. Actual converged frames use circular inner-node motion and fixed outer attachments. The chosen full-envelope inter-arm contact model is frictionless and elastic. Displacements are shown at true scale. Source: assets/motion/spring-analysis-report.md ; assets/motion/spring-analysis-summary.json. 한국어: 실제 원본 스프링 시각화와 별도 대표 해석 형상을 명확히 분리한다.\n\nStage 6: Original ANSYS CSV tables from the user-confirmed NAS backup are plotted with every finite torque point. P=2 mm, a=0.7 mm, b=10 mm spans 1.2–120 degrees; b=20 mm spans 0.45–45 degrees. Each panel has its own labelled axes. The original torque decrease is retained. These are archived prototype computations, not physical measurements or a calibrated law of the current weak/strong series pair. They are independent from the new 110-degree animation reconstruction; no point is synchronized to that animation. CSV headers, raw rows, exact paths and SHA256 are preserved in assets/motion/archived-spring-curves.json. 한국어: 보관된 원본 ANSYS 표를 그대로 표시하며 현재 직렬 스프링의 검증된 특성으로 주장하지 않는다."
+  },
+  {
+    "id": 5,
+    "title": "Control",
+    "ko": "얼마나 예압하고 언제 준비할 것인가",
+    "lead": "Nonlinear compliance turns a mechanical design into a timing and control problem.",
+    "duration": 45,
+    "source": "CONTROLLER_AND_SENSOR_CONTRACT_KO.txt · oracle-guided RL r3 plan",
+    "stages": [
+      {
+        "caption": "Motor–output relative angle determines spring deformation.",
+        "question": "How much deformation is useful?",
+        "notes": "For a referred motor angle and output angle, relative angle defines elastic deformation. A nonlinear spring maps that deformation to torque. The controller therefore needs to account for the spring state rather than requesting ideal joint assistance directly. 한국어: 모터 기준으로 환산된 각도와 출력 각도의 차이를 설명한다.",
+        "body": "<p><strong>Relative angle</strong><br>deforms the spring.</p><p>Deformation generates <strong>elastic torque</strong>.</p>"
+      },
+      {
+        "caption": "Preparing deformation earlier can change when support becomes available.",
+        "question": "When should the preparation begin?",
+        "notes": "Preload is a way to prepare an elastic state ahead of a later assistance demand. Amount and timing are coupled through motor limits, spring dynamics and the person’s movement. This is a control hypothesis to evaluate, not evidence of energy savings or an already optimized schedule. 한국어: 예압량과 시점을 제어 가설로 설명한다.",
+        "body": "<p>Choose <strong>how much</strong> preload.</p><p>Choose <strong>when</strong> to prepare it.</p>"
+      },
+      {
+        "caption": "The control question is to coordinate support with the responding person.",
+        "question": "Where can this interaction be evaluated?",
+        "notes": "The person changes movement in response to assistance, so a fixed demonstration waveform cannot settle the control problem. We need a coupled environment, consistent task conditions and valid comparisons before claiming that a strategy helps. 한국어: 시뮬레이션 환경의 필요성을 사람의 반응에서 도출한다.",
+        "body": "<p>The person <strong>responds</strong><br>to assistance.</p><p>Evaluate the <strong>coupled interaction</strong>.</p>"
+      }
+    ],
+    "subtitle": "How Much Preload, and When?",
+    "steps": 2,
+    "scene": {
+      "kind": "continuous",
+      "mode": "chapter",
+      "chapter": 5
+    },
+    "body": "",
+    "bridge": "",
+    "dummy": false,
+    "notes": "Stage 0: For a referred motor angle and output angle, relative angle defines elastic deformation. A nonlinear spring maps that deformation to torque. The controller therefore needs to account for the spring state rather than requesting ideal joint assistance directly. 한국어: 모터 기준으로 환산된 각도와 출력 각도의 차이를 설명한다.\n\nStage 1: Preload is a way to prepare an elastic state ahead of a later assistance demand. Amount and timing are coupled through motor limits, spring dynamics and the person’s movement. This is a control hypothesis to evaluate, not evidence of energy savings or an already optimized schedule. 한국어: 예압량과 시점을 제어 가설로 설명한다.\n\nStage 2: The person changes movement in response to assistance, so a fixed demonstration waveform cannot settle the control problem. We need a coupled environment, consistent task conditions and valid comparisons before claiming that a strategy helps. 한국어: 시뮬레이션 환경의 필요성을 사람의 반응에서 도출한다."
+  },
+  {
+    "id": 6,
+    "title": "Simulation",
+    "ko": "인체와 인공관절의 상호작용을 평가할 환경",
+    "lead": "Keep the same device and connect it to a traceable musculoskeletal model.",
+    "duration": 75,
+    "source": "assets/gait-chapter.json ; assets/gait-chapter-provenance.json · Pioneer_2022_proposal.pdf: PDF p11/printed p2 and PDF p40/printed p31",
+    "stages": [
+      {
+        "caption": "The recorded simulation contains a person wearing the device on both sides.",
+        "question": "Which controller produced this reference?",
+        "notes": "The gait replay contains the actual source musculoskeletal geometry, muscles and both implanted devices. It is a saved simulation trajectory with powered motor position hold, not a demonstrated support policy or a clinical gait result. It establishes the modeled scene, not assistance benefit. 한국어: 실제 양측 장치 착용 보행 기록이며 모터 위치유지 구동 조건임을 밝힌다.",
+        "body": "<p>Replay actual <strong>device-worn gait</strong>.</p><p>Keep the source body<br>and <strong>both implants</strong>.</p>"
+      },
+      {
+        "caption": "Powered motor position hold is a reference condition, not a support-effect result.",
+        "question": "What physical limits must control respect?",
+        "notes": "The shown loop uses unmodified recorded states from the source gait window 20.89–22.01 seconds, approximately 1.0 metre per second. No new physics is solved by this presentation. Source mesh transforms and tendon paths are replayed; the loop seam and one-condition coverage limit interpretation. No muscle-effort or metabolic improvement is claimed. 한국어: 기록된 모터 위치유지 기준 보행이며 보조 효과 검증이나 임의 보간으로 만든 물리 결과가 아니다.",
+        "body": "<p>The motors use<br><strong>powered position hold</strong>.</p><p>This is a reference,<br>not an assistance-benefit result.</p>"
+      },
+      {
+        "caption": "The policy must act through motor, transmission and actuator limits.",
+        "question": "How should the walking task be checked?",
+        "notes": "A requested motor torque passes through actual modeled drive limits and the nonlinear elastic element before interacting with the joint. The policy cannot directly apply unlimited ideal knee torque. The motor/actuator diagram explains the physical action path, not a new validated drive experiment. 한국어: 정책이 실제 모터·전달계·구동기 제한을 통과한다는 경로를 설명한다.",
+        "body": "<p>The policy acts through<br><strong>motor and actuator limits</strong>.</p><p>No unlimited ideal knee torque.</p>"
+      },
+      {
+        "caption": "Walking validity and matched conditions precede any assistance comparison.",
+        "question": "How can a policy learn within these constraints?",
+        "notes": "Task speed, tracking and valid gait must be checked before comparing effort. The proposal condition is at most 2.5 kilometres per hour, approximately 0.69 metres per second; the replay is a nominal 1.0-metre-per-second benchmark. Those are different conditions and neither establishes elderly patient validation. 한국어: 보행 지표는 과제 유효성 확인이며 개선율이나 대상 노인 검증으로 쓰지 않는다.",
+        "body": "<p>Check <strong>valid walking</strong><br>and <strong>matched conditions</strong>.</p><p>Then compare assistance.</p>"
+      }
+    ],
+    "subtitle": "Build an Environment for Human–Implant Interaction",
+    "steps": 3,
+    "scene": {
+      "kind": "continuous",
+      "mode": "chapter",
+      "chapter": 6
+    },
+    "body": "",
+    "bridge": "",
+    "dummy": false,
+    "notes": "Stage 0: The gait replay contains the actual source musculoskeletal geometry, muscles and both implanted devices. It is a saved simulation trajectory with powered motor position hold, not a demonstrated support policy or a clinical gait result. It establishes the modeled scene, not assistance benefit. 한국어: 실제 양측 장치 착용 보행 기록이며 모터 위치유지 구동 조건임을 밝힌다.\n\nStage 1: The shown loop uses unmodified recorded states from the source gait window 20.89–22.01 seconds, approximately 1.0 metre per second. No new physics is solved by this presentation. Source mesh transforms and tendon paths are replayed; the loop seam and one-condition coverage limit interpretation. No muscle-effort or metabolic improvement is claimed. 한국어: 기록된 모터 위치유지 기준 보행이며 보조 효과 검증이나 임의 보간으로 만든 물리 결과가 아니다.\n\nStage 2: A requested motor torque passes through actual modeled drive limits and the nonlinear elastic element before interacting with the joint. The policy cannot directly apply unlimited ideal knee torque. The motor/actuator diagram explains the physical action path, not a new validated drive experiment. 한국어: 정책이 실제 모터·전달계·구동기 제한을 통과한다는 경로를 설명한다.\n\nStage 3: Task speed, tracking and valid gait must be checked before comparing effort. The proposal condition is at most 2.5 kilometres per hour, approximately 0.69 metres per second; the replay is a nominal 1.0-metre-per-second benchmark. Those are different conditions and neither establishes elderly patient validation. 한국어: 보행 지표는 과제 유효성 확인이며 개선율이나 대상 노인 검증으로 쓰지 않는다."
+  },
+  {
+    "id": 7,
+    "title": "Reinforcement Learning",
+    "ko": "제어를 학습한 뒤 실행 시점 센싱 줄이기",
+    "lead": "A full-state teacher precedes any planned limited-sensing student.",
+    "duration": 130,
+    "source": "CONTROLLER_AND_SENSOR_CONTRACT_KO.txt · oracle-guided RL r3 plan",
+    "stages": [
+      {
+        "caption": "A full-state teacher can use simulator information during learning.",
+        "question": "What does the policy actually command?",
+        "notes": "The teacher can use information available during simulation training to investigate the control problem. That privileged access is not the runtime sensor set of an implanted device. The teacher must first qualify under a valid task and comparison protocol. 한국어: 교사의 전체 상태 접근과 실제 실행 센서를 구분한다.",
+        "body": "<p>Train a <strong>full-state teacher</strong>.</p><p>Training information is not<br>the runtime sensor set.</p>"
+      },
+      {
+        "caption": "The current policy outputs a total motor-torque request through the physical drive.",
+        "question": "How is that request improved?",
+        "notes": "The current contract retains an explicit algorithmic motor request and adds a learned residual initialized at zero. The final command is a total requested motor torque, passed through the same motor limits and nonlinear spring. It is not an unconstrained ideal knee-torque source or a proven separate preload controller. 한국어: 실제 모터 요청·제한·스프링 경로를 유지한다.",
+        "body": "<p>Learn a <strong>residual motor request</strong>.</p><p>Keep the same <strong>physical drive limits</strong>.</p>"
+      },
+      {
+        "caption": "Training must improve a valid task before an assistance benefit can be claimed.",
+        "question": "Can the control later use fewer measurements?",
+        "notes": "Reinforcement learning changes the policy through interaction with the environment. A reward is a training specification, not a clinical outcome. We still need valid task execution, matched baselines, meaningful effort measures and repeated evaluation before reporting an assistance benefit. No improvement percentage is presented here. 한국어: 미완료 성능 결과나 더미 개선율을 넣지 않는다.",
+        "body": "<p>Qualify <strong>task execution</strong><br>before claiming benefit.</p><p>Use <strong>matched comparisons</strong>.</p>"
+      },
+      {
+        "caption": "A limited-sensing student is planned after the teacher qualifies.",
+        "question": "What remains to be demonstrated?",
+        "notes": "The planned student uses the existing 54-value sensing input rather than hidden muscle activation or true spring torque as extra observations. Its final output remains total requested motor torque. Current simulator sensing includes idealized assumptions requiring separate hardware validation. This is the planned next stage, not a completed student result. 한국어: 학생 정책은 계획 단계이며 관측 가정과 하드웨어 검증을 분리한다.",
+        "body": "<p>A <strong>limited-sensing student</strong><br>is the planned next step.</p><p>It is <strong>not yet a demonstrated result</strong>.</p>"
+      }
+    ],
+    "subtitle": "Learn Control, Then Reduce the Sensing",
+    "steps": 3,
+    "scene": {
+      "kind": "continuous",
+      "mode": "chapter",
+      "chapter": 7
+    },
+    "body": "",
+    "bridge": "",
+    "dummy": false,
+    "notes": "Stage 0: The teacher can use information available during simulation training to investigate the control problem. That privileged access is not the runtime sensor set of an implanted device. The teacher must first qualify under a valid task and comparison protocol. 한국어: 교사의 전체 상태 접근과 실제 실행 센서를 구분한다.\n\nStage 1: The current contract retains an explicit algorithmic motor request and adds a learned residual initialized at zero. The final command is a total requested motor torque, passed through the same motor limits and nonlinear spring. It is not an unconstrained ideal knee-torque source or a proven separate preload controller. 한국어: 실제 모터 요청·제한·스프링 경로를 유지한다.\n\nStage 2: Reinforcement learning changes the policy through interaction with the environment. A reward is a training specification, not a clinical outcome. We still need valid task execution, matched baselines, meaningful effort measures and repeated evaluation before reporting an assistance benefit. No improvement percentage is presented here. 한국어: 미완료 성능 결과나 더미 개선율을 넣지 않는다.\n\nStage 3: The planned student uses the existing 54-value sensing input rather than hidden muscle activation or true spring torque as extra observations. Its final output remains total requested motor torque. Current simulator sensing includes idealized assumptions requiring separate hardware validation. This is the planned next stage, not a completed student result. 한국어: 학생 정책은 계획 단계이며 관측 가정과 하드웨어 검증을 분리한다."
+  },
+  {
+    "id": 8,
+    "title": "Conclusion",
+    "ko": "자연스러운 움직임을 보존하고 유효한 보조를 검증하기",
+    "lead": "The hardware, nonlinear compliance and learning environment form one research path.",
+    "duration": 50,
+    "source": "Current project status · source-qualified design and simulation explanation",
+    "stages": [
+      {
+        "caption": "The same implant connects biomechanical motion, nonlinear compliance and control.",
+        "question": "What evidence is needed next?",
+        "notes": "Return to the same human–implant system. The mechanical path explains why preserving movement led to nonlinear series elasticity and why that spring creates a control problem. The simulation and learning framework provide the route to evaluate it; the visuals alone do not establish effective assistance. 한국어: 사람·기구·스프링·제어를 하나의 연구 경로로 정리한다.",
+        "body": "<p>Connect <strong>motion</strong>,<br><strong>compliance</strong> and <strong>control</strong>.</p><p>Keep one patient-centred goal.</p>"
+      },
+      {
+        "caption": "The next milestone is valid, reproducible assistance under the target conditions.",
+        "question": "Thank you.",
+        "notes": "Next, qualify task execution, source-consistent coupling, matched comparisons and the teacher policy before progressing to the limited-sensing student. Calibrate the spring and validate sensing and hardware separately. Unready outcome plots and fabricated benefit data are deliberately absent. 한국어: 검증이 남은 단계와 다음 연구 목표로 마무리하며 개선율이나 완성된 연구 성과로 포장하지 않는다.",
+        "body": "<p>Next: <strong>valid, reproducible assistance</strong><br>under the target conditions.</p>"
+      }
+    ],
+    "subtitle": "Preserve Motion and Establish Useful Support",
+    "steps": 1,
+    "scene": {
+      "kind": "continuous",
+      "mode": "chapter",
+      "chapter": 8
+    },
+    "body": "",
+    "bridge": "",
+    "dummy": false,
+    "notes": "Stage 0: Return to the same human–implant system. The mechanical path explains why preserving movement led to nonlinear series elasticity and why that spring creates a control problem. The simulation and learning framework provide the route to evaluate it; the visuals alone do not establish effective assistance. 한국어: 사람·기구·스프링·제어를 하나의 연구 경로로 정리한다.\n\nStage 1: Next, qualify task execution, source-consistent coupling, matched comparisons and the teacher policy before progressing to the limited-sensing student. Calibrate the spring and validate sensing and hardware separately. Unready outcome plots and fabricated benefit data are deliberately absent. 한국어: 검증이 남은 단계와 다음 연구 목표로 마무리하며 개선율이나 완성된 연구 성과로 포장하지 않는다."
+  }
+]

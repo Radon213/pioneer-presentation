@@ -1,6 +1,6 @@
 {
   "schema": "pioneer-runtime-package-v1",
-  "runtimeBytes": 58803217,
+  "runtimeBytes": 58832203,
   "files": [
     {
       "path": "examples/pioneer-draft/app.js",
@@ -36,6 +36,11 @@
       "path": "examples/pioneer-draft/assets/gait-chapter-native-rebound.bin.gz",
       "bytes": 9174013,
       "sha256": "4cddf02ba1a4b5c70235f598cffe0f4685d270857bbb16625d8fcbcfe0716b39"
+    },
+    {
+      "path": "examples/pioneer-draft/assets/motion/clinical-tka-source/LICENSE-Apache-2.0.txt",
+      "bytes": 11358,
+      "sha256": "c95bae1d1ce0235ecccd3560b772ec1efb97f348a79f0fbe0a634f0c2ccefe2c"
     },
     {
       "path": "examples/pioneer-draft/assets/motion/clinical-tka-source/baseplate.stl",
@@ -181,6 +186,26 @@
       "path": "examples/pioneer-interactive/assets/Geist-Variable.ttf",
       "bytes": 169056,
       "sha256": "73894e0448cae90a92b6c2f8732b7bb9acb7b94c418bff559dad4a18e1de9659"
+    },
+    {
+      "path": "examples/pioneer-interactive/assets/OFL-Geist-Mono.txt",
+      "bytes": 4387,
+      "sha256": "1781d2806a07d91c4edf4740b88449fab7d0eadad53f7c351b94cd4d4eb8c00f"
+    },
+    {
+      "path": "examples/pioneer-interactive/assets/OFL-Geist.txt",
+      "bytes": 4387,
+      "sha256": "1781d2806a07d91c4edf4740b88449fab7d0eadad53f7c351b94cd4d4eb8c00f"
+    },
+    {
+      "path": "examples/pioneer-interactive/assets/OFL-Instrument-Serif.txt",
+      "bytes": 4405,
+      "sha256": "129ed7618959716959f2941fdd5b49e0ad6e6c1d78726761786a00253d865521"
+    },
+    {
+      "path": "examples/pioneer-interactive/assets/OFL-Playfair-Display.txt",
+      "bytes": 4449,
+      "sha256": "566be814f8e96e93dfa16101331557eb6b5467e9e03f627c0910fe93ca12300e"
     },
     {
       "path": "examples/pioneer-interactive/assets/aakj-v3-native-rebound.glb",

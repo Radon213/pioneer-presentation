@@ -1,0 +1,11 @@
+{
+  "name": "pioneer-presentation",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node examples/pioneer-draft/build-deck.mjs",
+    "test": "node --test examples/pioneer-draft/tests/*.test.mjs",
+    "manifest": "python3 tools/runtime_manifest.py",
+    "check": "python3 tools/runtime_manifest.py --check"
+  }
+}
