@@ -223,32 +223,78 @@
   {
     "id": 5,
     "title": "Control",
-    "ko": "얼마나 예압하고 언제 준비할 것인가",
-    "lead": "Nonlinear compliance turns a mechanical design into a timing and control problem.",
-    "duration": 45,
-    "source": "CONTROLLER_AND_SENSOR_CONTRACT_KO.txt · oracle-guided RL r3 plan",
+    "ko": "제한된 실행 센싱으로 보조 준비하기",
+    "lead": "Follow the elastic state from the drive into a coupled human–implant simulation.",
+    "duration": 250,
+    "source": "docs/control-evidence.md · selected_best_checkpoint_audit · cycle_execution_tracking_r1",
     "stages": [
       {
-        "caption": "Motor–output relative angle determines spring deformation.",
-        "question": "How much deformation is useful?",
-        "notes": "For a referred motor angle and output angle, relative angle defines elastic deformation. A nonlinear spring maps that deformation to torque. The controller therefore needs to account for the spring state rather than requesting ideal joint assistance directly. 한국어: 모터 기준으로 환산된 각도와 출력 각도의 차이를 설명한다.",
-        "body": "<p><strong>Relative angle</strong><br>deforms the spring.</p><p>Deformation generates <strong>elastic torque</strong>.</p>"
+        "caption": "Control the elastic state, not an ideal knee torque.",
+        "question": "What should we prepare, and when?",
+        "notes": "The same spring carries the story forward from mechanical design. Relative rotation between the referred motor angle and the device output angle defines spring deformation; the nonlinear spring law maps deformation to elastic torque. The device output coordinate is not automatically the anatomical knee angle. Preload amount and timing must be coordinated with motion and physical actuator limits. The animated arrows and preparation sequence illustrate this control question; they are not a newly optimized trajectory. 한국어: 모터 환산각과 장치 출력각의 차이로 스프링이 변형된다. 무릎에 이상 토크를 바로 주는 문제가 아니라 탄성 상태를 준비하는 문제로 전환한다.",
+        "subtitle": "Control the Spring State",
+        "duration": 25,
+        "body": "<p><strong>Relative angle</strong><br>sets spring deformation.</p><p>Choose <strong>how much</strong> support<br>and <strong>when</strong> to prepare it.</p>"
       },
       {
-        "caption": "Preparing deformation earlier can change when support becomes available.",
-        "question": "When should the preparation begin?",
-        "notes": "Preload is a way to prepare an elastic state ahead of a later assistance demand. Amount and timing are coupled through motor limits, spring dynamics and the person’s movement. This is a control hypothesis to evaluate, not evidence of energy savings or an already optimized schedule. 한국어: 예압량과 시점을 제어 가설로 설명한다.",
-        "body": "<p>Choose <strong>how much</strong> preload.</p><p>Choose <strong>when</strong> to prepare it.</p>"
+        "caption": "Human muscles and the implant respond together.",
+        "question": "How should assistance follow the movement?",
+        "notes": "The current sit-to-stand simulation uses MuJoCo-Warp with the actual bilateral device and the 22-muscle human model. Muscle control and implant motor control are separate pathways coupled through movement and contact. This is the model behind the preliminary result, not the MyoLeg80 illustration used for background. A frozen learned human controller and engineering muscle-output limiter remain in the evaluated setup; it is not a calibrated sarcopenic older-adult model or clinical validation. Show the real chair and body geometry and preserve source bone/device transforms. 한국어: 인체 근육 경로와 장치 모터 경로를 구분한다. 현재 성능 자료는 22근육 공학 모델이며 노인 대상 검증을 뜻하지 않는다.",
+        "subtitle": "Evaluate Human–Implant Interaction",
+        "duration": 25,
+        "body": "<p>The person and implant<br><strong>respond together</strong>.</p><p>Separate <strong>muscle control</strong><br>from <strong>motor control</strong>.</p>"
       },
       {
-        "caption": "The control question is to coordinate support with the responding person.",
-        "question": "Where can this interaction be evaluated?",
-        "notes": "The person changes movement in response to assistance, so a fixed demonstration waveform cannot settle the control problem. We need a coupled environment, consistent task conditions and valid comparisons before claiming that a strategy helps. 한국어: 시뮬레이션 환경의 필요성을 사람의 반응에서 도출한다.",
-        "body": "<p>The person <strong>responds</strong><br>to assistance.</p><p>Evaluate the <strong>coupled interaction</strong>.</p>"
+        "caption": "Prepare, assist and release through one movement.",
+        "question": "Can a working strategy be built with full simulation state?",
+        "notes": "Use one continuous seated-to-standing movement to introduce preparation, assistance and release. These labels explain the intended sequencing; display any target illustration separately from measured replay channels. The spring target must pass through the observer, the existing motor servo and the same physical drive limits. Avoid implying that the learned student independently discovered an optimal preload schedule or that the cyclic illustration proves net energy recovery. 한국어: 앉은 자세에서 준비하고 일어설 때 보조하며 이후 탄성 상태를 조절하는 하나의 흐름을 보여준다. 설명용 목표와 실제 기록을 구분하고 에너지 절감으로 해석하지 않는다.",
+        "subtitle": "Prepare, Assist, Release",
+        "duration": 30,
+        "body": "<p><strong>Prepare</strong> the elastic state.</p><p><strong>Assist</strong> the rise.<br><strong>Release</strong> as the task changes.</p>"
+      },
+      {
+        "caption": "Develop a full-state teacher before reducing the sensing.",
+        "question": "Which information is available on the device?",
+        "notes": "The teacher in this work is an explicit model-based assistance controller with finite searches over preparation and release proposals. It can inspect privileged simulator information while developing a working strategy. The separately frozen human controller drives muscles; the implant teacher is not that muscle policy. The teacher provides trajectories and target corrections for imitation, rather than proof of globally optimal or clinically beneficial assistance. Keep task execution and hardware limits visible as design conditions. 한국어: 티처는 전체 상태를 활용하는 명시적 모델 기반 보조 제어와 유한 탐색으로 구성했다. 인체를 움직이는 학습 정책과 장치 티처를 혼동하지 않는다.",
+        "subtitle": "Develop a Full-State Teacher",
+        "duration": 35,
+        "body": "<p>Use <strong>full simulation state</strong><br>to develop a working strategy.</p><p>Keep <strong>task conditions</strong><br>and <strong>actuator limits</strong>.</p>"
+      },
+      {
+        "caption": "Estimate the spring state from device-side signals.",
+        "question": "Can a student retain the strategy with this information?",
+        "notes": "The permitted actor input is Device54: 18 features at each of three successive frames. One frame contains bilateral local-cue phase one-hot features (8), sine and cosine of motor encoder angles (4), encoder velocities (2), applied motor torque as an ideal current-to-torque proxy (2), and previous motor requests (2). The declared local cue clock is part of this experiment; it is not an autonomous estimate of human intent. No true output angle, muscle activation or hidden human state is supplied to the student actor. A physics-based encoder/current spring observer runs at 100 Hz. The current proxy, friction and sensing assumptions still require hardware validation. 한국어: 엔코더·전류 대응값뿐 아니라 이전 명령과 알려진 로컬 큐가 포함된다. 18×3=54이며 실제 센서만으로 자율 의도 추정을 완성했다는 주장은 하지 않는다.",
+        "subtitle": "Operate with Device-Side Sensing",
+        "duration": 30,
+        "body": "<p>Use <strong>device-side signals</strong><br>and a declared <strong>local cue</strong>.</p><p>Infer the <strong>spring state</strong><br>with a physics observer.</p>"
+      },
+      {
+        "caption": "Imitate the teacher, then execute through the physical drive.",
+        "question": "What can the current implementation demonstrate?",
+        "notes": "The selected student is a behavior-cloned recurrent GRU model trained for 400 epochs, using the 54-value device history and its own memory. It updates two mirrored desired-spring-torque residuals at 10 Hz. Those residuals modify an explicit goal controller; a physics observer and fixed servo convert the spring target into motor requests at 100 Hz. It does not directly command unlimited anatomical knee torque. A subsequent recurrent PPO pilot completed three updates, but selected best_iteration=0: the initial imitation model remained best under that pilot criterion. No additional PPO benefit or neural performance advantage is claimed. 한국어: 최종 채택 모델은 모방학습 학생이다. GRU가 양측 스프링 목표 토크를 보정하며 하위 물리 관측기와 고정 서보를 통과한다. PPO는 추가 개선이 확인되지 않아 성과 도표에서 제외한다.",
+        "subtitle": "Transfer the Strategy to a Student",
+        "duration": 35,
+        "body": "<p><strong>Imitation learning</strong><br>transfers the strategy.</p><p>A recurrent student adjusts<br><strong>spring-torque targets</strong>.</p>"
+      },
+      {
+        "caption": "A preliminary simulation completes the nominal sit-to-stand task.",
+        "question": "What changes when assistance must repeat during walking?",
+        "notes": "Replay the selected student condition from the actual 18-second record: seated on a 40 cm chair, rising, and maintaining quiet standing for about 13.21 seconds by the independent diagnostic criterion. The audit includes 96 total worlds across three controller conditions; the student condition contributes 32 nominal numerical copies with noise=0, not 32 distinct starts, patients or robustness trials. All recorded hardware gates pass, but the audit explicitly remains diagnostic_only=true and qualified=false. Substep equality-map freshness, native closed-loop residuals and device–chair collision clearance still require separate audits. If effort is asked about: the whole-record activation-squared integral is about 3.273% lower than powered position hold, while the zero-neural-residual controller is about 3.324% lower under the same final audit. This does not show a student or GRU advantage. Do not put those percentages or a 32/32 success-rate headline on screen. 한국어: 성과는 명목 조건에서 작동하는 예비 기립 데모 수준으로 제시한다. 동일 초기조건 복제이며 강건성·보조 효과 검증 완료로 표현하지 않는다.",
+        "subtitle": "Preliminary Sit-to-Stand Evaluation",
+        "duration": 40,
+        "body": "<p><strong>Rise and maintain standing</strong><br>in the nominal simulation.</p><p>Preliminary execution;<br><strong>model audits remain</strong>.</p>"
+      },
+      {
+        "caption": "Repeated walking requires the next spring state to be prepared in time.",
+        "question": "How can anticipation remain within the actuator limits?",
+        "notes": "Use the latest independent walking record as a challenge illustration, not a successful assistance comparison. The candidate terminated at 27.19 seconds with device-side shaft power 26.9548206 W exceeding the 25 W bound. This is a different walking controller and experiment from the sit-to-stand student. At the limiting instant, the motor-generated power was already saturated at 25 W; motor-side inertia accounts for the larger shaft power. Requesting more motor torque at that instant is therefore insufficient. Small cycle-to-cycle differences in nonlinear spring state motivate earlier preparation. Assistance and position-hold walking speeds differed beyond the comparison tolerance, so reported activation differences do not establish effort reduction. 한국어: 실패 수치는 하드웨어가 불가능함을 뜻하지 않고 현재 보정 표현의 한계다. 같은 인체 장면으로 이어가되 기립 학생과 별도 보행 실험임을 노트와 작은 조건 문구로 분명히 한다.",
+        "subtitle": "Toward Continuous Walking Assistance",
+        "duration": 30,
+        "body": "<p>Walking repeats the challenge<br><strong>every cycle</strong>.</p><p>Prepare the next spring state<br>within <strong>actuator limits</strong>.</p>"
       }
     ],
-    "subtitle": "How Much Preload, and When?",
-    "steps": 2,
+    "subtitle": "Prepare Assistance with Limited Runtime Sensing",
+    "steps": 7,
     "scene": {
       "kind": "continuous",
       "mode": "chapter",
@@ -257,43 +303,31 @@
     "body": "",
     "bridge": "",
     "dummy": false,
-    "notes": "Stage 0: For a referred motor angle and output angle, relative angle defines elastic deformation. A nonlinear spring maps that deformation to torque. The controller therefore needs to account for the spring state rather than requesting ideal joint assistance directly. 한국어: 모터 기준으로 환산된 각도와 출력 각도의 차이를 설명한다.\n\nStage 1: Preload is a way to prepare an elastic state ahead of a later assistance demand. Amount and timing are coupled through motor limits, spring dynamics and the person’s movement. This is a control hypothesis to evaluate, not evidence of energy savings or an already optimized schedule. 한국어: 예압량과 시점을 제어 가설로 설명한다.\n\nStage 2: The person changes movement in response to assistance, so a fixed demonstration waveform cannot settle the control problem. We need a coupled environment, consistent task conditions and valid comparisons before claiming that a strategy helps. 한국어: 시뮬레이션 환경의 필요성을 사람의 반응에서 도출한다."
+    "notes": "Stage 0: The same spring carries the story forward from mechanical design. Relative rotation between the referred motor angle and the device output angle defines spring deformation; the nonlinear spring law maps deformation to elastic torque. The device output coordinate is not automatically the anatomical knee angle. Preload amount and timing must be coordinated with motion and physical actuator limits. The animated arrows and preparation sequence illustrate this control question; they are not a newly optimized trajectory. 한국어: 모터 환산각과 장치 출력각의 차이로 스프링이 변형된다. 무릎에 이상 토크를 바로 주는 문제가 아니라 탄성 상태를 준비하는 문제로 전환한다.\n\nStage 1: The current sit-to-stand simulation uses MuJoCo-Warp with the actual bilateral device and the 22-muscle human model. Muscle control and implant motor control are separate pathways coupled through movement and contact. This is the model behind the preliminary result, not the MyoLeg80 illustration used for background. A frozen learned human controller and engineering muscle-output limiter remain in the evaluated setup; it is not a calibrated sarcopenic older-adult model or clinical validation. Show the real chair and body geometry and preserve source bone/device transforms. 한국어: 인체 근육 경로와 장치 모터 경로를 구분한다. 현재 성능 자료는 22근육 공학 모델이며 노인 대상 검증을 뜻하지 않는다.\n\nStage 2: Use one continuous seated-to-standing movement to introduce preparation, assistance and release. These labels explain the intended sequencing; display any target illustration separately from measured replay channels. The spring target must pass through the observer, the existing motor servo and the same physical drive limits. Avoid implying that the learned student independently discovered an optimal preload schedule or that the cyclic illustration proves net energy recovery. 한국어: 앉은 자세에서 준비하고 일어설 때 보조하며 이후 탄성 상태를 조절하는 하나의 흐름을 보여준다. 설명용 목표와 실제 기록을 구분하고 에너지 절감으로 해석하지 않는다.\n\nStage 3: The teacher in this work is an explicit model-based assistance controller with finite searches over preparation and release proposals. It can inspect privileged simulator information while developing a working strategy. The separately frozen human controller drives muscles; the implant teacher is not that muscle policy. The teacher provides trajectories and target corrections for imitation, rather than proof of globally optimal or clinically beneficial assistance. Keep task execution and hardware limits visible as design conditions. 한국어: 티처는 전체 상태를 활용하는 명시적 모델 기반 보조 제어와 유한 탐색으로 구성했다. 인체를 움직이는 학습 정책과 장치 티처를 혼동하지 않는다.\n\nStage 4: The permitted actor input is Device54: 18 features at each of three successive frames. One frame contains bilateral local-cue phase one-hot features (8), sine and cosine of motor encoder angles (4), encoder velocities (2), applied motor torque as an ideal current-to-torque proxy (2), and previous motor requests (2). The declared local cue clock is part of this experiment; it is not an autonomous estimate of human intent. No true output angle, muscle activation or hidden human state is supplied to the student actor. A physics-based encoder/current spring observer runs at 100 Hz. The current proxy, friction and sensing assumptions still require hardware validation. 한국어: 엔코더·전류 대응값뿐 아니라 이전 명령과 알려진 로컬 큐가 포함된다. 18×3=54이며 실제 센서만으로 자율 의도 추정을 완성했다는 주장은 하지 않는다.\n\nStage 5: The selected student is a behavior-cloned recurrent GRU model trained for 400 epochs, using the 54-value device history and its own memory. It updates two mirrored desired-spring-torque residuals at 10 Hz. Those residuals modify an explicit goal controller; a physics observer and fixed servo convert the spring target into motor requests at 100 Hz. It does not directly command unlimited anatomical knee torque. A subsequent recurrent PPO pilot completed three updates, but selected best_iteration=0: the initial imitation model remained best under that pilot criterion. No additional PPO benefit or neural performance advantage is claimed. 한국어: 최종 채택 모델은 모방학습 학생이다. GRU가 양측 스프링 목표 토크를 보정하며 하위 물리 관측기와 고정 서보를 통과한다. PPO는 추가 개선이 확인되지 않아 성과 도표에서 제외한다.\n\nStage 6: Replay the selected student condition from the actual 18-second record: seated on a 40 cm chair, rising, and maintaining quiet standing for about 13.21 seconds by the independent diagnostic criterion. The audit includes 96 total worlds across three controller conditions; the student condition contributes 32 nominal numerical copies with noise=0, not 32 distinct starts, patients or robustness trials. All recorded hardware gates pass, but the audit explicitly remains diagnostic_only=true and qualified=false. Substep equality-map freshness, native closed-loop residuals and device–chair collision clearance still require separate audits. If effort is asked about: the whole-record activation-squared integral is about 3.273% lower than powered position hold, while the zero-neural-residual controller is about 3.324% lower under the same final audit. This does not show a student or GRU advantage. Do not put those percentages or a 32/32 success-rate headline on screen. 한국어: 성과는 명목 조건에서 작동하는 예비 기립 데모 수준으로 제시한다. 동일 초기조건 복제이며 강건성·보조 효과 검증 완료로 표현하지 않는다.\n\nStage 7: Use the latest independent walking record as a challenge illustration, not a successful assistance comparison. The candidate terminated at 27.19 seconds with device-side shaft power 26.9548206 W exceeding the 25 W bound. This is a different walking controller and experiment from the sit-to-stand student. At the limiting instant, the motor-generated power was already saturated at 25 W; motor-side inertia accounts for the larger shaft power. Requesting more motor torque at that instant is therefore insufficient. Small cycle-to-cycle differences in nonlinear spring state motivate earlier preparation. Assistance and position-hold walking speeds differed beyond the comparison tolerance, so reported activation differences do not establish effort reduction. 한국어: 실패 수치는 하드웨어가 불가능함을 뜻하지 않고 현재 보정 표현의 한계다. 같은 인체 장면으로 이어가되 기립 학생과 별도 보행 실험임을 노트와 작은 조건 문구로 분명히 한다."
   },
   {
     "id": 6,
-    "title": "Simulation",
-    "ko": "인체와 인공관절의 상호작용을 평가할 환경",
-    "lead": "Keep the same device and connect it to a traceable musculoskeletal model.",
-    "duration": 75,
-    "source": "assets/gait-chapter.json ; assets/gait-chapter-provenance.json · Pioneer_2022_proposal.pdf: PDF p11/printed p2 and PDF p40/printed p31",
+    "title": "Conclusion",
+    "ko": "자연스러운 움직임에서 적시 보조로",
+    "lead": "A biomechanical implant, nonlinear spring and limited-sensing control form one research path.",
+    "duration": 50,
+    "source": "Current design and preliminary simulation status · docs/control-evidence.md",
     "stages": [
       {
-        "caption": "The recorded simulation contains a person wearing the device on both sides.",
-        "question": "Which controller produced this reference?",
-        "notes": "The gait replay contains the actual source musculoskeletal geometry, muscles and both implanted devices. It is a saved simulation trajectory with powered motor position hold, not a demonstrated support policy or a clinical gait result. It establishes the modeled scene, not assistance benefit. 한국어: 실제 양측 장치 착용 보행 기록이며 모터 위치유지 구동 조건임을 밝힌다.",
-        "body": "<p>Replay actual <strong>device-worn gait</strong>.</p><p>Keep the source body<br>and <strong>both implants</strong>.</p>"
+        "caption": "Preserve joint motion, shape compliance and prepare support.",
+        "question": "What must be verified before useful assistance is established?",
+        "notes": "Return to the same human–implant scene and connect the four contributions without introducing a new performance claim: the biomechanical mechanism preserves coupled knee motion; the motor adds an active path; nonlinear series elasticity shapes interaction; the observer and imitation student provide a limited-sensing execution route. The present result is nominal sit-to-stand execution in a coupled simulation. It is not evidence of an elderly patient benefit, a learning advantage or completed physical validation. 한국어: 하드웨어→비선형 스프링→제어의 이유를 하나로 회수한다. 학생 구현을 계획 단계라고 되돌리지 않는다.",
+        "body": "<p><strong>Natural motion</strong>.<br><strong>Nonlinear compliance</strong>.<br><strong>Timely assistance</strong>.</p><p>One connected research path.</p>"
       },
       {
-        "caption": "Powered motor position hold is a reference condition, not a support-effect result.",
-        "question": "What physical limits must control respect?",
-        "notes": "The shown loop uses unmodified recorded states from the source gait window 20.89–22.01 seconds, approximately 1.0 metre per second. No new physics is solved by this presentation. Source mesh transforms and tendon paths are replayed; the loop seam and one-condition coverage limit interpretation. No muscle-effort or metabolic improvement is claimed. 한국어: 기록된 모터 위치유지 기준 보행이며 보조 효과 검증이나 임의 보간으로 만든 물리 결과가 아니다.",
-        "body": "<p>The motors use<br><strong>powered position hold</strong>.</p><p>This is a reference,<br>not an assistance-benefit result.</p>"
-      },
-      {
-        "caption": "The policy must act through motor, transmission and actuator limits.",
-        "question": "How should the walking task be checked?",
-        "notes": "A requested motor torque passes through actual modeled drive limits and the nonlinear elastic element before interacting with the joint. The policy cannot directly apply unlimited ideal knee torque. The motor/actuator diagram explains the physical action path, not a new validated drive experiment. 한국어: 정책이 실제 모터·전달계·구동기 제한을 통과한다는 경로를 설명한다.",
-        "body": "<p>The policy acts through<br><strong>motor and actuator limits</strong>.</p><p>No unlimited ideal knee torque.</p>"
-      },
-      {
-        "caption": "Walking validity and matched conditions precede any assistance comparison.",
-        "question": "How can a policy learn within these constraints?",
-        "notes": "Task speed, tracking and valid gait must be checked before comparing effort. The proposal condition is at most 2.5 kilometres per hour, approximately 0.69 metres per second; the replay is a nominal 1.0-metre-per-second benchmark. Those are different conditions and neither establishes elderly patient validation. 한국어: 보행 지표는 과제 유효성 확인이며 개선율이나 대상 노인 검증으로 쓰지 않는다.",
-        "body": "<p>Check <strong>valid walking</strong><br>and <strong>matched conditions</strong>.</p><p>Then compare assistance.</p>"
+        "caption": "Next: reproducible assistance under the target conditions.",
+        "question": "Thank you.",
+        "notes": "The next work is to close the coupling and contact audits, calibrate the spring and device-side sensing, test varied initial conditions and disturbances, and compare valid matched tasks before claiming useful assistance. Continuous walking additionally needs anticipatory spring-state control within motor limits. The limited-sensing student already exists; its benefit, robustness and transfer remain to be established. 한국어: 구현된 학생과 남아 있는 검증을 구분한다. 과제 대상인 고령층·근감소증 조건으로 이어지는 검증이 다음 단계다.",
+        "body": "<p>Verify <strong>coupling</strong> and <strong>sensing</strong>.</p><p>Establish <strong>reproducible assistance</strong><br>under the target conditions.</p>"
       }
     ],
-    "subtitle": "Build an Environment for Human–Implant Interaction",
-    "steps": 3,
+    "subtitle": "Connect Natural Motion to Timely Assistance",
+    "steps": 1,
     "scene": {
       "kind": "continuous",
       "mode": "chapter",
@@ -302,84 +336,6 @@
     "body": "",
     "bridge": "",
     "dummy": false,
-    "notes": "Stage 0: The gait replay contains the actual source musculoskeletal geometry, muscles and both implanted devices. It is a saved simulation trajectory with powered motor position hold, not a demonstrated support policy or a clinical gait result. It establishes the modeled scene, not assistance benefit. 한국어: 실제 양측 장치 착용 보행 기록이며 모터 위치유지 구동 조건임을 밝힌다.\n\nStage 1: The shown loop uses unmodified recorded states from the source gait window 20.89–22.01 seconds, approximately 1.0 metre per second. No new physics is solved by this presentation. Source mesh transforms and tendon paths are replayed; the loop seam and one-condition coverage limit interpretation. No muscle-effort or metabolic improvement is claimed. 한국어: 기록된 모터 위치유지 기준 보행이며 보조 효과 검증이나 임의 보간으로 만든 물리 결과가 아니다.\n\nStage 2: A requested motor torque passes through actual modeled drive limits and the nonlinear elastic element before interacting with the joint. The policy cannot directly apply unlimited ideal knee torque. The motor/actuator diagram explains the physical action path, not a new validated drive experiment. 한국어: 정책이 실제 모터·전달계·구동기 제한을 통과한다는 경로를 설명한다.\n\nStage 3: Task speed, tracking and valid gait must be checked before comparing effort. The proposal condition is at most 2.5 kilometres per hour, approximately 0.69 metres per second; the replay is a nominal 1.0-metre-per-second benchmark. Those are different conditions and neither establishes elderly patient validation. 한국어: 보행 지표는 과제 유효성 확인이며 개선율이나 대상 노인 검증으로 쓰지 않는다."
-  },
-  {
-    "id": 7,
-    "title": "Reinforcement Learning",
-    "ko": "제어를 학습한 뒤 실행 시점 센싱 줄이기",
-    "lead": "A full-state teacher precedes any planned limited-sensing student.",
-    "duration": 130,
-    "source": "CONTROLLER_AND_SENSOR_CONTRACT_KO.txt · oracle-guided RL r3 plan",
-    "stages": [
-      {
-        "caption": "A full-state teacher can use simulator information during learning.",
-        "question": "What does the policy actually command?",
-        "notes": "The teacher can use information available during simulation training to investigate the control problem. That privileged access is not the runtime sensor set of an implanted device. The teacher must first qualify under a valid task and comparison protocol. 한국어: 교사의 전체 상태 접근과 실제 실행 센서를 구분한다.",
-        "body": "<p>Train a <strong>full-state teacher</strong>.</p><p>Training information is not<br>the runtime sensor set.</p>"
-      },
-      {
-        "caption": "The current policy outputs a total motor-torque request through the physical drive.",
-        "question": "How is that request improved?",
-        "notes": "The current contract retains an explicit algorithmic motor request and adds a learned residual initialized at zero. The final command is a total requested motor torque, passed through the same motor limits and nonlinear spring. It is not an unconstrained ideal knee-torque source or a proven separate preload controller. 한국어: 실제 모터 요청·제한·스프링 경로를 유지한다.",
-        "body": "<p>Learn a <strong>residual motor request</strong>.</p><p>Keep the same <strong>physical drive limits</strong>.</p>"
-      },
-      {
-        "caption": "Training must improve a valid task before an assistance benefit can be claimed.",
-        "question": "Can the control later use fewer measurements?",
-        "notes": "Reinforcement learning changes the policy through interaction with the environment. A reward is a training specification, not a clinical outcome. We still need valid task execution, matched baselines, meaningful effort measures and repeated evaluation before reporting an assistance benefit. No improvement percentage is presented here. 한국어: 미완료 성능 결과나 더미 개선율을 넣지 않는다.",
-        "body": "<p>Qualify <strong>task execution</strong><br>before claiming benefit.</p><p>Use <strong>matched comparisons</strong>.</p>"
-      },
-      {
-        "caption": "A limited-sensing student is planned after the teacher qualifies.",
-        "question": "What remains to be demonstrated?",
-        "notes": "The planned student uses the existing 54-value sensing input rather than hidden muscle activation or true spring torque as extra observations. Its final output remains total requested motor torque. Current simulator sensing includes idealized assumptions requiring separate hardware validation. This is the planned next stage, not a completed student result. 한국어: 학생 정책은 계획 단계이며 관측 가정과 하드웨어 검증을 분리한다.",
-        "body": "<p>A <strong>limited-sensing student</strong><br>is the planned next step.</p><p>It is <strong>not yet a demonstrated result</strong>.</p>"
-      }
-    ],
-    "subtitle": "Learn Control, Then Reduce the Sensing",
-    "steps": 3,
-    "scene": {
-      "kind": "continuous",
-      "mode": "chapter",
-      "chapter": 7
-    },
-    "body": "",
-    "bridge": "",
-    "dummy": false,
-    "notes": "Stage 0: The teacher can use information available during simulation training to investigate the control problem. That privileged access is not the runtime sensor set of an implanted device. The teacher must first qualify under a valid task and comparison protocol. 한국어: 교사의 전체 상태 접근과 실제 실행 센서를 구분한다.\n\nStage 1: The current contract retains an explicit algorithmic motor request and adds a learned residual initialized at zero. The final command is a total requested motor torque, passed through the same motor limits and nonlinear spring. It is not an unconstrained ideal knee-torque source or a proven separate preload controller. 한국어: 실제 모터 요청·제한·스프링 경로를 유지한다.\n\nStage 2: Reinforcement learning changes the policy through interaction with the environment. A reward is a training specification, not a clinical outcome. We still need valid task execution, matched baselines, meaningful effort measures and repeated evaluation before reporting an assistance benefit. No improvement percentage is presented here. 한국어: 미완료 성능 결과나 더미 개선율을 넣지 않는다.\n\nStage 3: The planned student uses the existing 54-value sensing input rather than hidden muscle activation or true spring torque as extra observations. Its final output remains total requested motor torque. Current simulator sensing includes idealized assumptions requiring separate hardware validation. This is the planned next stage, not a completed student result. 한국어: 학생 정책은 계획 단계이며 관측 가정과 하드웨어 검증을 분리한다."
-  },
-  {
-    "id": 8,
-    "title": "Conclusion",
-    "ko": "자연스러운 움직임을 보존하고 유효한 보조를 검증하기",
-    "lead": "The hardware, nonlinear compliance and learning environment form one research path.",
-    "duration": 50,
-    "source": "Current project status · source-qualified design and simulation explanation",
-    "stages": [
-      {
-        "caption": "The same implant connects biomechanical motion, nonlinear compliance and control.",
-        "question": "What evidence is needed next?",
-        "notes": "Return to the same human–implant system. The mechanical path explains why preserving movement led to nonlinear series elasticity and why that spring creates a control problem. The simulation and learning framework provide the route to evaluate it; the visuals alone do not establish effective assistance. 한국어: 사람·기구·스프링·제어를 하나의 연구 경로로 정리한다.",
-        "body": "<p>Connect <strong>motion</strong>,<br><strong>compliance</strong> and <strong>control</strong>.</p><p>Keep one patient-centred goal.</p>"
-      },
-      {
-        "caption": "The next milestone is valid, reproducible assistance under the target conditions.",
-        "question": "Thank you.",
-        "notes": "Next, qualify task execution, source-consistent coupling, matched comparisons and the teacher policy before progressing to the limited-sensing student. Calibrate the spring and validate sensing and hardware separately. Unready outcome plots and fabricated benefit data are deliberately absent. 한국어: 검증이 남은 단계와 다음 연구 목표로 마무리하며 개선율이나 완성된 연구 성과로 포장하지 않는다.",
-        "body": "<p>Next: <strong>valid, reproducible assistance</strong><br>under the target conditions.</p>"
-      }
-    ],
-    "subtitle": "Preserve Motion and Establish Useful Support",
-    "steps": 1,
-    "scene": {
-      "kind": "continuous",
-      "mode": "chapter",
-      "chapter": 8
-    },
-    "body": "",
-    "bridge": "",
-    "dummy": false,
-    "notes": "Stage 0: Return to the same human–implant system. The mechanical path explains why preserving movement led to nonlinear series elasticity and why that spring creates a control problem. The simulation and learning framework provide the route to evaluate it; the visuals alone do not establish effective assistance. 한국어: 사람·기구·스프링·제어를 하나의 연구 경로로 정리한다.\n\nStage 1: Next, qualify task execution, source-consistent coupling, matched comparisons and the teacher policy before progressing to the limited-sensing student. Calibrate the spring and validate sensing and hardware separately. Unready outcome plots and fabricated benefit data are deliberately absent. 한국어: 검증이 남은 단계와 다음 연구 목표로 마무리하며 개선율이나 완성된 연구 성과로 포장하지 않는다."
+    "notes": "Stage 0: Return to the same human–implant scene and connect the four contributions without introducing a new performance claim: the biomechanical mechanism preserves coupled knee motion; the motor adds an active path; nonlinear series elasticity shapes interaction; the observer and imitation student provide a limited-sensing execution route. The present result is nominal sit-to-stand execution in a coupled simulation. It is not evidence of an elderly patient benefit, a learning advantage or completed physical validation. 한국어: 하드웨어→비선형 스프링→제어의 이유를 하나로 회수한다. 학생 구현을 계획 단계라고 되돌리지 않는다.\n\nStage 1: The next work is to close the coupling and contact audits, calibrate the spring and device-side sensing, test varied initial conditions and disturbances, and compare valid matched tasks before claiming useful assistance. Continuous walking additionally needs anticipatory spring-state control within motor limits. The limited-sensing student already exists; its benefit, robustness and transfer remain to be established. 한국어: 구현된 학생과 남아 있는 검증을 구분한다. 과제 대상인 고령층·근감소증 조건으로 이어지는 검증이 다음 단계다."
   }
 ]
