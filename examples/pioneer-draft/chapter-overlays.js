@@ -1,7 +1,7 @@
-import {buildBackgroundOverlay} from './background-overlay.js?v=revision-20261029-47';
-import {buildArchivedSpringChart} from './archived-spring-chart.js?v=revision-20261029-47';
-import {buildDiagram} from './chapter-diagram-layer.js?v=revision-20261029-47';
-import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-47';
+import {buildBackgroundOverlay} from './background-overlay.js?v=revision-20261029-48';
+import {buildArchivedSpringChart} from './archived-spring-chart.js?v=revision-20261029-48';
+import {buildDiagram} from './chapter-diagram-layer.js?v=revision-20261029-48';
+import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-48';
 // Short visual explanations. All quantitative FEA marks use the same archived solver case.
 const C={ink:'#1a3a7a',accent:'#a44725',muted:'#585950',line:'#b5b3ab',paper:'#fdfcf8'};
 const text=(x,y,s,z=26,c=C.ink,a='middle')=>`<text x="${x}" y="${y}" font-size="${z}" fill="${c}" text-anchor="${a}" stroke="${C.paper}" stroke-width="5" paint-order="stroke">${s}</text>`;
@@ -16,8 +16,8 @@ export function buildChapterOverlay(ctx){
  if(c===5)return '';
  if(c===6)return ''; // The main conclusion copy already carries this message.
  if(c===4&&b===0){const a=partPoint('motor_shaft'),o=partPoint('squre_splined_bevel_gear');let labels='';for(const [p,label,dy]of[[a,'θᵢₙ',-55],[o,'θₒᵤₜ = 0°',55]])if(p){const q=project(p),labelY=Math.max(42,Math.min(490,q[1]+dy));labels+=text(Math.max(85,q[0]-150),labelY,label,31,C.accent)+arrow([Math.max(110,q[0]-115),labelY+10],[q[0]-10,q[1]],C.accent);}return labels;}
- if(c===4&&(b===1||b===2)){const motion=ctx.springMotion;if(!motion)return '';let marks='';for(const [unit,label,value]of[['weak','Low k',motion.lowDeflectionDeg],['strong','High k',motion.highDeflectionDeg]]){const q=project(ctx.springPoint(unit)),x=Math.max(125,q[0]-170),y=Math.max(80,Math.min(465,q[1]));const a=-Math.PI*.7,end=a+Math.max(.12,value*Math.PI/180),r=34;marks+=`<path d="M${x+r*Math.cos(a)} ${y+r*Math.sin(a)} A${r} ${r} 0 0 1 ${x+r*Math.cos(end)} ${y+r*Math.sin(end)}" fill="none" stroke="${C.accent}" stroke-width="3"/>`+text(x-30,y+55,`${label}: ${value.toFixed(0)}°`,34,C.accent); }return marks;}
- if(c===4&&b===4&&ctx.springMotion?.contact){const q=project(partPoint('contactBoundary')),x=Math.max(160,q[0]-230),y=Math.max(80,Math.min(475,q[1]+110));return `<circle cx="${q[0]}" cy="${q[1]}" r="17" fill="none" stroke="${C.accent}" stroke-width="3"/>`+text(x,y,'Turn contact',34,C.accent)+arrow([x+55,y-20],q,C.accent);}
+ if(c===4&&(b===1||b===2||b===3)){const motion=ctx.springMotion;if(!motion)return '';let marks='';for(const [unit,label,value]of[['weak','Low k',motion.lowDeflectionDeg],['strong','High k',motion.highDeflectionDeg]]){const q=project(ctx.springPoint(unit));marks+=text(q[0],Math.min(510,q[1]+(b===3?90:100)),b===3?(unit==='weak'?'Lower · compliant':'Upper · stiffer'):`${label}: ${value.toFixed(0)}°`,30,C.accent);}return marks;}
+ if(c===4&&b===4&&ctx.springMotion?.contact){const q=project(partPoint('contactBoundary')),centre=project(ctx.springPoint('weak'));return `<circle cx="${q[0]}" cy="${q[1]}" r="17" fill="none" stroke="${C.accent}" stroke-width="3"/>`+text(centre[0],Math.min(510,centre[1]+170),'Turn contact',32,C.accent);}
  if(c===4)return ''; // The persistent native spring and dedicated figure panel own this chapter.
  const diagram=buildDiagram(c,b,{progress:1,reducedMotion:true});
  if(diagram)return diagram;
@@ -36,11 +36,11 @@ export function buildChapterOverlay(ctx){
    const n=ctx.nativeLandmarks;if(!n)return '';
    const m=project(n.medial),l=project(n.lateral),trail=[];
    const trace=Array.from({length:75},(_,i)=>project(point(ctx.history(.86*i/74).femoralReference))),reference=project(point(frame.femoralReference));
-   s+=path(trace,C.accent,true,3)+dot(reference,8)+leader(reference,1160,430,'Femoral trajectory');
+   s+=path(trace,C.accent,true,4)+dot(reference,8)+leader(reference,1120,405,'Femoral trajectory');
    // Qualitative lateral rollback cue. Anchors are source bone surfaces, not
    // measured contact points from the cadaveric GIF in the interim talk.
-   s+=dot(m,9,C.ink)+leader(m,380,95,'Medial side',C.ink);
-   s+=arrow(project(n.lateralStart),l)+dot(l,7)+leader(l,1160,365,'Roll + glide');
+   s+=dot(m,9,C.ink)+leader(m,470,110,'Medial side',C.ink);
+   s+=arrow(project(n.lateralStart),l)+dot(l,7)+leader(l,1140,330,'Roll + glide');
    return s;
   }
   if(b===1){

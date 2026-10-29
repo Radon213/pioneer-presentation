@@ -1,4 +1,4 @@
-import {loadJSONWithProgress} from './asset-loading.js?v=revision-20261029-47';
+import {loadJSONWithProgress} from './asset-loading.js?v=revision-20261029-48';
 import * as THREE from 'three';
 
 /** One-scene replay of the actual native-muscle STS reference.

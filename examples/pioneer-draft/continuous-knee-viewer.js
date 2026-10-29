@@ -1,26 +1,26 @@
-import {sampleSpringExplanationMotion} from './spring-explanation-motion.js?v=revision-20261029-47';
-import {applyOppositeSpringFace,createSpringFaceAccents} from './spring-face-accent.js?v=revision-20261029-47';
-import {sampleBackgroundSurfaceSequence,BACKGROUND_SURFACE_DURATION,applyBackgroundSurfaceView,backgroundClinicalHighlight} from './background-sequence.js?v=revision-20261029-47';
-import {sampleSpringWinding,applySpringWindingPose} from './spring-drive-winding.js?v=revision-20261029-47';
-import {createCoverKneeFocus} from './cover-knee-focus.js?v=revision-20261029-47';
-import {sampleSitStandCycle} from './control-sts-cycle.js?v=revision-20261029-47';
-import {createControlExplanationPanel} from './control-explanation-panel.js?v=revision-20261029-47';
-import {createSpringExplanationPanel} from './spring-explanation-panel.js?v=revision-20261029-47';
-import {addFemoralReference} from './hardware-reference.js?v=revision-20261029-47';
-import {getMotionRate} from './motion-clock.js?v=revision-20261029-47';
+import {sampleSpringExplanationMotion} from './spring-explanation-motion.js?v=revision-20261029-48';
+import {applyOppositeSpringFace,createSpringFaceAccents} from './spring-face-accent.js?v=revision-20261029-48';
+import {sampleBackgroundSurfaceSequence,BACKGROUND_SURFACE_DURATION,applyBackgroundSurfaceView,backgroundClinicalHighlight} from './background-sequence.js?v=revision-20261029-48';
+import {sampleSpringWinding,applySpringWindingPose} from './spring-drive-winding.js?v=revision-20261029-48';
+import {createCoverKneeFocus} from './cover-knee-focus.js?v=revision-20261029-48';
+import {sampleSitStandCycle} from './control-sts-cycle.js?v=revision-20261029-48';
+import {createControlExplanationPanel} from './control-explanation-panel.js?v=revision-20261029-48';
+import {createSpringExplanationPanel} from './spring-explanation-panel.js?v=revision-20261029-48';
+import {addFemoralReference} from './hardware-reference.js?v=revision-20261029-48';
+import {getMotionRate} from './motion-clock.js?v=revision-20261029-48';
 import * as THREE from 'three';
 import {GLTFLoader} from '../pioneer-interactive/vendor/GLTFLoader.js';
 import {DRACOLoader} from '../pioneer-interactive/vendor/DRACOLoader.js';
 import {RoomEnvironment} from '../pioneer-interactive/vendor/RoomEnvironment.js';
-import {createContinuousHumanLayer} from './continuous-human-layer.js?v=revision-20261029-47';
-import {createClinicalKneeLayer} from './clinical-knee-layer.js?v=revision-20261029-47';
-import {createShadedEdges} from './shaded-edges.js?v=revision-20261029-47';
-import {createNativeKneeComparison} from './native-knee-comparison.js?v=revision-20261029-47';
-import {buildVisualExplanation} from './visual-explanations.js?v=revision-20261029-47';
-import {buildChapterOverlay} from './chapter-overlays.js?v=revision-20261029-47';
-import {createGaitChapterLayer} from './gait-chapter-layer.js?v=revision-20261029-47';
-import {createSpringFEALayer} from './spring-fea-layer.js?v=revision-20261029-47';
-import {loadJSONWithProgress,loadBinaryWithProgress,reportLoadStage} from './asset-loading.js?v=revision-20261029-47';
+import {createContinuousHumanLayer} from './continuous-human-layer.js?v=revision-20261029-48';
+import {createClinicalKneeLayer} from './clinical-knee-layer.js?v=revision-20261029-48';
+import {createShadedEdges} from './shaded-edges.js?v=revision-20261029-48';
+import {createNativeKneeComparison} from './native-knee-comparison.js?v=revision-20261029-48';
+import {buildVisualExplanation} from './visual-explanations.js?v=revision-20261029-48';
+import {buildChapterOverlay} from './chapter-overlays.js?v=revision-20261029-48';
+import {createGaitChapterLayer} from './gait-chapter-layer.js?v=revision-20261029-48';
+import {createSpringFEALayer} from './spring-fea-layer.js?v=revision-20261029-48';
+import {loadJSONWithProgress,loadBinaryWithProgress,reportLoadStage} from './asset-loading.js?v=revision-20261029-48';
 
 const ASSETS=new URL('../pioneer-interactive/assets/',import.meta.url);
 const VENDOR=new URL('../pioneer-interactive/vendor/',import.meta.url);
@@ -134,9 +134,9 @@ export async function createContinuousKneeViewer(host){
   let gait=null,fea=null,chapterToken=0;status.hidden=false;status.textContent='Loading recorded bilateral gait…';
   try{gait=await createGaitChapterLayer(scene,{human});gait.setOpacity(0);host.dataset.gaitGeometryCount=String(gait.group.userData.geometryCount);host.dataset.gaitRestoredNativeBones=String(gait.group.userData.retainedNativeShaftCount);host.dataset.gaitVisualRecovery='6 original native POS5/SLPT subtrees rebound once to saved body poses';}catch(e){console.warn('Recorded gait unavailable',e);}
   status.hidden=true;let sts=null,stsPromise=null,walkingDiagnostic=null,walkingPromise=null,walking=null,walkingLayerPromise=null;
-  const ensureSTS=()=>stsPromise??=import('./control-sts-layer.js?v=revision-20261029-47').then(m=>m.createControlSTSLayer(scene,{gait,human})).then(layer=>{sts=layer;sts.setOpacity(0);return layer;});
-  const ensureWalkingDiagnostic=()=>walkingPromise??=loadJSONWithProgress(new URL('assets/control-walking-diagnostic.json?v=revision-20261029-47',import.meta.url),{key:'walking-diagnostic',label:'Recorded actuator-limit diagnostic'}).then(data=>walkingDiagnostic=data);
-  const ensureWalking=()=>walkingLayerPromise??=import('./control-walking-layer.js?v=revision-20261029-47').then(m=>m.createControlWalkingLayer(scene,{gait,human})).then(layer=>{walking=layer;walking.setOpacity(0);return layer;});
+  const ensureSTS=()=>stsPromise??=import('./control-sts-layer.js?v=revision-20261029-48').then(m=>m.createControlSTSLayer(scene,{gait,human})).then(layer=>{sts=layer;sts.setOpacity(0);return layer;});
+  const ensureWalkingDiagnostic=()=>walkingPromise??=loadJSONWithProgress(new URL('assets/control-walking-diagnostic.json?v=revision-20261029-48',import.meta.url),{key:'walking-diagnostic',label:'Recorded actuator-limit diagnostic'}).then(data=>walkingDiagnostic=data);
+  const ensureWalking=()=>walkingLayerPromise??=import('./control-walking-layer.js?v=revision-20261029-48').then(m=>m.createControlWalkingLayer(scene,{gait,human})).then(layer=>{walking=layer;walking.setOpacity(0);return layer;});
   status.hidden=true;let feaPromise=null;
   const ensureFEA=()=>feaPromise??=(createSpringFEALayer(scene).then(layer=>{fea=layer;fea.setOpacity(0);return layer;}));
   // This concept reuses the original Maxon mesh, without exposing the complete
@@ -151,9 +151,9 @@ export async function createContinuousKneeViewer(host){
   conceptMotor.updateMatrixWorld(true);const motorBox=new THREE.Box3().setFromObject(conceptMotor),motorCenter=motorBox.getCenter(new THREE.Vector3());
   for(const mesh of conceptMotor.children)mesh.matrix.premultiply(new THREE.Matrix4().makeTranslation(-motorCenter.x,-motorCenter.y,-motorCenter.z));
   conceptMotor.visible=false;let myo80=null,myo80Promise=null,backgroundClock=0;
-  const ensureMyo80=()=>myo80Promise??=(import('./myoleg80-muscle-layer.js?v=revision-20261029-47').then(m=>m.createMyoLeg80MuscleLayer(scene,{human})).then(layer=>myo80=layer));
+  const ensureMyo80=()=>myo80Promise??=(import('./myoleg80-muscle-layer.js?v=revision-20261029-48').then(m=>m.createMyoLeg80MuscleLayer(scene,{human})).then(layer=>myo80=layer));
   let myoExamples=null,myoPromise=null,myoPrefetchTimer=0;
-  const ensureMyoExamples=()=>myoPromise??=import('./myoassist-examples-layer.js?v=revision-20261029-47').then(m=>m.createMyoAssistExamplesLayer(scene)).then(layer=>{myoExamples=layer;layer.setReveal(0);return layer;}).catch(error=>{myoPromise=null;throw error;});
+  const ensureMyoExamples=()=>myoPromise??=import('./myoassist-examples-layer.js?v=revision-20261029-48').then(m=>m.createMyoAssistExamplesLayer(scene)).then(layer=>{myoExamples=layer;layer.setReveal(0);return layer;}).catch(error=>{myoPromise=null;throw error;});
   function backgroundRotation(){const target=new THREE.Vector3(),direction=new THREE.Vector3(1.3,.14,-.4).normalize();return new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(direction,target,UP));}
   function backgroundState(st,to){
     human.group.position.set(0,0,0);human.setState({motionProgress:1});
@@ -207,12 +207,12 @@ export async function createContinuousKneeViewer(host){
       const key=partKey(p.name);
       if(build>0&&build<=4&&HARDWARE_HIGHLIGHTS.has(key))return 1;
       if(build<=3){
-        if(build===1&&['condyle_right','condyle_left','femur_stem','femur_medium','fem_4_7','femur_ots_guide'].includes(key))return 0;
+        if(build>0&&['condyle_right','condyle_left','femur_stem','femur_medium','fem_4_7','femur_ots_guide'].includes(key))return 0;
         if(/^guide2_/.test(key))return .5;
         if(/^guide1_/.test(key))return .13;
         if(/^cbstssr/.test(key))return .16;
         const fastener=/shcs|washer|^jfm_|^jtm_|^jsm_|^mta|^lmsbm|^slpt|^pos_5ec|^peek_bushing/.test(key);
-        if(fastener)return .11;
+        if(fastener)return MECHANISM_CORE.has(key)?.11:0;
         if(['linkage_base','tibial_base','bearing_holder','insert_left','insert_right','insert_middle'].includes(key))return build===2?.075:.17;
         if(MECHANISM_CORE.has(key))return 1;
         if(key==='condyle_right')return .10;
@@ -416,7 +416,9 @@ export async function createContinuousKneeViewer(host){
       const bounds=nativeComparison?.getBounds()?.clone()||new THREE.Box3();
       for(const f of trajectory.frames)bounds.expandByPoint(new THREE.Vector3(...f.femoralReference));
       s.target.copy(bounds.getCenter(new THREE.Vector3()));
-      height=Math.max(.27,bounds.getSize(new THREE.Vector3()).length()*.94);s.distance=height/(2*Math.tan(THREE.MathUtils.degToRad(16)));
+      // Fit the inspected joint, rather than the bounding-box diagonal. The
+      // local inspection cube still fits throughout the side-to-top orbit.
+      const size=bounds.getSize(new THREE.Vector3());height=Math.max(.27,Math.max(size.x,size.y,size.z)*1.40);s.distance=height/(2*Math.tan(THREE.MathUtils.degToRad(16)));
     }
     if(chapter===3&&build>=4){
       // Fit actual projected source meshes AFTER applying the final explosion
@@ -601,7 +603,7 @@ export async function createContinuousKneeViewer(host){
     if(gait)gait.group.position.copy(right).multiplyScalar(-.42*inset);
     if(fea){
       if(chapter===4){const sourceMesh=fea.group.children.find(child=>child.isMesh),size=sourceMesh.geometry.boundingBox.getSize(new THREE.Vector3()),scale=.0201/Math.max(size.x,size.y);fea.group.position.copy(worldSpringPoint(weak));fea.group.scale.setScalar(scale);fea.group.quaternion.copy(s.rotation);host.dataset.springFEAHandoff='registered orthographic cross-dissolve; no source geometry equivalence implied';}
-      else{fea.group.position.copy(s.target).addScaledVector(right,.68).multiplyScalar(inset);fea.group.scale.setScalar(1+34*inset);fea.group.quaternion.identity().slerp(s.rotation,inset);}
+      else{fea.group.position.copy(s.target).addScaledVector(right,.85).multiplyScalar(inset);fea.group.scale.setScalar(1+34*inset);fea.group.quaternion.identity().slerp(s.rotation,inset);}
     }
     if(chapter===4)Object.assign(host.dataset,{springPersistent:'complete same native CAD assembly',springDock:String(s.springDock),nativeSpringClipping:'none',nativeSpringDeformation:build===0?'illustrative unequal series winding':'none',springAssemblySeparation:String(s.spreadStrong),springFaceFlip:String(s.flipStrong),springContact:String(springMotion.contact),springExplanationPhase:String(springMotion.phase),springExplanationLoad:String(springMotion.load),springChapterPurpose:'why nonlinear stiffness -> how geometry creates it'});
     if(renderNow)render();

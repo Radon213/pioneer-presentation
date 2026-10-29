@@ -142,6 +142,7 @@
         "caption": "The biomechanical joint was the starting point before active assistance.",
         "question": "Why is a simple hinge insufficient?",
         "notes": "The previous team analyzed knee motion and developed the equivalent four-bar foundation before my contribution. Natural movement involves more than rotation about one stationary hinge. Reference the interim presentation printed page 4 (PPTX slide 6, image22.gif) and the sagittal bone-motion GIF on printed page 3 (PPTX slide 5, image17.gif). Recreate their flexion, roll/glide and medial-side pivot vocabulary in Three.js using actual native bone surfaces. The source kinematic pivot is used only as the explanatory replay timing; this is not recovered cadaveric motion. Compare a qualitative native-knee illustration with the source implant. The source bones are real meshes, while comparison rollback and pivot are authored explanatory motion, not measurements from the hinge-only STS trace. 한국어: 선행 팀의 기여를 명시한다.",
+        "subtitle": "Natural knee motion combines rolling and gliding",
         "body": "<p>The knee <strong>rolls and glides</strong> as it bends.</p><p>Its motion is more than a <strong>fixed hinge</strong>.</p>",
         "takeaway": "The knee is more than a hinge.",
         "layout": {
@@ -154,6 +155,7 @@
         "caption": "An equivalent four-bar lets the joint centre move during flexion.",
         "question": "How does that movement create medial rotation?",
         "notes": "Track a frame rigidly fixed to the J2–J3 femoral link, with its neutral origin at URDF [0,0,0.021] m. Its trajectory is reference-point dependent; do not call J2 itself the femoral frame. The exact orthographic sagittal view shows the projected path. Follow the four equivalent centres. J1 is the Peek_Bushing cam-follower centre; J2 is the curved-slot circle centre in Condyle_Right, an equivalent point rather than a physical pin. J3 is R3 and J4 is R2. The source cam constraint is represented by an equivalent connection without inventing another physical bar. 한국어: J2 등가점을 실물 핀으로 설명하지 않는다.",
+        "subtitle": "A four-bar reproduces the moving reference",
         "body": "<p>An <strong>equivalent four-bar</strong> recreates femoral motion.</p><p>The aim is to <strong>mimic knee motion</strong>.</p>",
         "takeaway": "Recreate the motion with a linkage.",
         "layout": {
@@ -166,6 +168,7 @@
         "caption": "One bend couples Joint 3 descent, slider retreat and medial rotation.",
         "question": "How does the same motion look from above?",
         "notes": "Keep the source side view while following Joint 3 displacement into the guide and slider. The constrained path provides the connection between flexion and the axial motion examined next. Genuine source components and restored kinematics are retained. 한국어: 측면에서 J3 변위와 실제 슬라이더 구속을 먼저 이해시킨다.",
+        "subtitle": "Flexion drives slider translation",
         "body": "<p>One bend couples <strong>Joint 3 descent</strong>, <strong>slider retreat</strong>, and <strong>medial-pivot rotation</strong>.</p>",
         "takeaway": "One mechanism couples the motions.",
         "layout": {
@@ -178,6 +181,7 @@
         "caption": "The same bend produces rotation around the medial side.",
         "question": "Where does active torque enter?",
         "notes": "Now turn to the axial view of the same mechanism. Follow the constrained slider motion into medial-pivot rotation. This is restored source kinematics, compared with authored qualitative native motion rather than a patient-specific measured match. The actual Slider_Cover mesh remains traceable. 한국어: 같은 기구를 축방향에서 보며 굴곡과 내측회전의 연동을 설명한다.",
+        "subtitle": "Slider motion produces medial-pivot rotation",
         "body": "<p>The same motion rotates about the <strong>medial side</strong>.</p><p>Flexion and axial rotation are <strong>mechanically coupled</strong>.</p>",
         "takeaway": "Rotation follows a medial pivot.",
         "layout": {
@@ -190,6 +194,7 @@
         "caption": "The motor and gears add a drive path to the biomechanical mechanism.",
         "question": "What if the person moves the joint first?",
         "notes": "Reveal the motor and follow the gears toward the elastic element and output. Compact reduction provides useful torque but makes reverse interaction important. The person can initiate movement too, so we must examine the same path from the output back toward the motor. 한국어: 모터·기어 전달과 사람 주도 역방향 상호작용을 같은 단계에서 연결한다.",
+        "subtitle": "Motor torque passes through the gears",
         "body": "<p><strong>Motor → gears → joint</strong></p><p>Add active drive while keeping the <strong>coupled knee motion</strong>.</p>",
         "takeaway": "Add power through the same mechanism.",
         "layout": {
@@ -202,6 +207,7 @@
         "caption": "Motor, series spring and output form one drive path.",
         "question": "Why should that element be nonlinear?",
         "notes": "Explode the original motor assembly, the two source spring leaves and the output hub without reparenting any source joint. The motor shaft remains owned by the motor assembly; the splined bevel gear is the output-side visual anchor. Presentation-only offsets are removed on exit. Stay in the same implant as the view approaches the original spring location. Series elasticity can separate rigid motor drive from compliant interaction at the output. The next chapter defines the SEA and explains the stiffness trade-off and actual spiral design. Native-knee background references: https://pubmed.ncbi.nlm.nih.gov/15330038/ ; https://pubmed.ncbi.nlm.nih.gov/11132285/. 한국어: 같은 인공관절 내부의 원본 스프링 위치로 접근하며 다음 SEA 설명을 준비한다.",
+        "subtitle": "A spring couples the drive to the output",
         "body": "<p>A <strong>series spring</strong> connects the drive to the output.</p><p>Compliance is part of the <strong>drive design</strong>.</p>",
         "takeaway": "Put compliance in the torque path.",
         "layout": {
@@ -284,7 +290,7 @@
         }
       },
       {
-        "caption": "Strip width, axial depth and coil gap define the spiral geometry.",
+        "caption": "Neighboring-turn contact increases tangent stiffness.",
         "question": "How can the design be examined through analysis?",
         "notes": "Identify strip width a, axial depth b and coil gap as separate dimensions. The native spring does not acquire nonlinearity from an invented variable-width profile. The historical concept uses turn approach and the winding limit to change additional compliance, with more added deflection then shared by the stiffer serial unit. This design illustration is not solved contact or a calibrated native spring law. Axial depth cannot be inferred from a top view alone. 한국어: 폭a·축방향 깊이b·코일 간격을 구분하고 실제 원본에 없는 가변 폭 형상을 주장하지 않는다. 다음 해석은 별도 대표형상이다.",
         "subtitle": "Contact produces a steeper torque response",
@@ -301,7 +307,7 @@
         "question": "How does geometry shape the response?",
         "notes": "Stress display: normalized by the unchanged global source maximum (4458 MPa); no yield-strength claim or material recalibration is implied. Absolute stress needs a separate model/material/contact/boundary-condition audit. The chart marker is angle-aligned to the separately supplied P2 a0.7 b10 ANSYS curve by piecewise linear interpolation. Its torque is not the reaction torque from the displayed FEA; this is a coordinated presentation, not a paired simulation result. Stored loading frames run forward and in reverse for visual inspection; no unloading solution is implied. The actual FEA is a reconstructed two-arm representative geometry from the NAS, not the complete native compliant/stiff CAD assembly. Actual converged frames use circular inner-node motion and fixed outer attachments. The chosen full-envelope inter-arm contact model is frictionless and elastic. Displacements are shown at true scale. Source: assets/motion/spring-analysis-report.md ; assets/motion/spring-analysis-summary.json. 한국어: 실제 원본 스프링 시각화와 별도 대표 해석 형상을 명확히 분리한다.",
         "subtitle": "Inspect deformation and stress",
-        "body": "<p>Follow <strong>deformation</strong> and <strong>reaction torque</strong> through the loading path.</p>",
+        "body": "<p>Inspect <strong>deformation</strong> and <strong>stress</strong>.</p><p>Compare the <strong>torque–rotation response</strong>.</p>",
         "takeaway": "Inspect the deformation and response.",
         "layout": {
           "left": 1290,
@@ -310,11 +316,11 @@
         }
       },
       {
-        "caption": "Spring geometry shapes the torque–rotation response.",
+        "caption": "Add unit deflections at the same torque to estimate the series response.",
         "question": "How should control prepare spring deformation?",
         "notes": "Original ANSYS CSV tables from the user-confirmed NAS backup are plotted with every finite torque point. P=2 mm, a=0.7 mm, b=10 mm spans 1.2–120 degrees; b=20 mm spans 0.45–45 degrees. Each panel has its own labelled axes. The original torque decrease is retained. These are archived prototype computations, not physical measurements or a calibrated law of the current weak/strong series pair. They are independent from the new 110-degree animation reconstruction; no point is synchronized to that animation. CSV headers, raw rows, exact paths and SHA256 are preserved in assets/motion/archived-spring-curves.json. 한국어: 보관된 원본 ANSYS 표를 그대로 표시하며 현재 직렬 스프링의 검증된 특성으로 주장하지 않는다. Series estimate: supplied curves plotted on identical 0–120 degree / 0–20 Nm axes. Common source-supported torque is 0.0593–1.0921 Nm. Beyond this, the upper unit is linearly extended from 45 degrees / 1.0921 Nm using the terminal OLS slope 0.0280801 Nm/degree; the inferred series response is dashed. Approximate series low/high slopes are 0.0079974 / 0.0260641 Nm/degree (0.458 / 1.493 Nm/rad). These are model estimates from prototype tables, not calibrated current hardware or validated allowable travel. Details: docs/spring-series-20261029.md.",
         "subtitle": "Two unit responses form one series response",
-        "body": "<p>The <strong>lower unit</strong> has a contact-driven response. The <strong>upper unit</strong> shares the torque.</p><p>Their <strong>series response</strong> changes from low to higher stiffness.</p>",
+        "body": "<p>Add the two <strong>deflections</strong> at the <strong>same torque</strong>.</p><p>The dashed branch uses a <strong>linear upper-unit approximation</strong>.</p>",
         "takeaway": "Combine the two elastic responses.",
         "layout": {
           "left": 1250,

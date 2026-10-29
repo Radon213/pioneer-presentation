@@ -6,6 +6,8 @@
 .spring-explanation[data-build="6"]{left:0;width:62%;top:0;bottom:0;display:grid;grid-template-rows:minmax(0,1fr) 74px;gap:0}
 .spring-explanation[data-build="6"] .spring-explanation-math{font-size:31px;margin:0}
 .spring-explanation[data-build="6"] .spring-explanation-figure svg{overflow:visible}
+.spring-explanation[data-build="5"]{grid-template-rows:minmax(0,1fr) 74px}
+.spring-explanation[data-build="5"] .spring-explanation-math{position:absolute;left:0;width:43%;top:18%;font-size:31px;min-height:52px;margin:0}
 .spring-explanation [data-objective-point],.spring-explanation [data-contact-point],.spring-explanation [data-trade-low],.spring-explanation [data-trade-high]{transition:none}
 @media(prefers-reduced-motion:reduce){.spring-explanation *{animation-duration:0s!important}}
 /* Intrinsic SVG ratios prevent tall flex boxes from inserting letterbox space

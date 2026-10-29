@@ -1,8 +1,8 @@
-import {springResponsePoints,responseAtAngle} from './spring-plot-data.js?v=revision-20261029-47';
-import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-47';
-import {SPRING_MATH} from './spring-math.js?v=revision-20261029-47';
-import {SPRING_COMPARISON,SERIES_LINEAR_ESTIMATE} from './spring-series-data.js?v=revision-20261029-47';
-import {sampleSpringExplanationMotion,conceptualContactResponse} from './spring-explanation-motion.js?v=revision-20261029-47';
+import {springResponsePoints,responseAtAngle} from './spring-plot-data.js?v=revision-20261029-48';
+import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-48';
+import {SPRING_MATH} from './spring-math.js?v=revision-20261029-48';
+import {SPRING_COMPARISON,SERIES_LINEAR_ESTIMATE} from './spring-series-data.js?v=revision-20261029-48';
+import {sampleSpringExplanationMotion,conceptualContactResponse} from './spring-explanation-motion.js?v=revision-20261029-48';
 // Diagram Design example-architecture / example-process / example-line grammar:
 // retain their neutral nodes, single burnt-tangerine focus, thin connectors,
 // rounded orthogonal ports and line/area/dot hierarchy. Slide shell is untouched.
@@ -119,6 +119,7 @@ function feaLegend(fea){if(!fea)return '';const curve=springResponsePoints,ymax=
  out+=t(680,150,'Torque (N·m)',29,P.muted,'start')+t(1130,550,'Rotation (°)',29,P.muted,'end')+line('M680 200V460H1130',P.muted,1.5);
  for(let j=0;j<=2;j++){const y=j*ymax/2;out+=line(`M680 ${py(y)}H1130`,P.rule,1)+t(660,py(y)+9,String(y),27,P.muted,'end')+t(px(60*j),505,String(60*j),27,P.muted);}
  out+=`<polyline data-reveal-curve="true" pathLength="1" data-fea-curve-points="${curve.length}" points="${curve.map(p=>`${px(p.angleDeg)},${py(p.torqueNm)}`).join(' ')}" stroke="${P.accent}" stroke-width="3.2" fill="none"/><path data-fea-guide="true" stroke="${P.muted}" stroke-width="1.3" fill="none"/><circle data-fea-marker="true" r="8" fill="${P.accent}" stroke="#fdfcf8" stroke-width="2"/><text data-fea-value="true" x="905" y="95" font-size="32" fill="${P.accent}" text-anchor="middle"></text>`;
+ out+=t(600,590,'Separate analyses · aligned by rotation',24,P.muted);
  return svg(out,'Angle-aligned FEA replay and ANSYS spring design response; stress normalized by the unchanged global source maximum').replace('viewBox="0 0 720 500"','viewBox="0 0 1200 600"');}
 const SOURCES=[
  'Illustrative winding · motor angle referred to spring input.',
@@ -170,8 +171,8 @@ export function createSpringExplanationPanel(host){
  const root=document.createElement('div');root.className='spring-explanation';root.hidden=true;root.setAttribute('aria-label','Nonlinear torsion spring explanation');host.append(root);let current=-1;
  return {update({active,build,settled,fea,winding,springMotion,timeSec}){root.hidden=!active;if(!active)return;if(current!==build){current=build;const figures=[sea,tradeoff,nonlinear,serial,contactCurve,()=>feaLegend(fea),archive];root.innerHTML=`<div class="spring-explanation-figure">${figures[build]()}</div><div class="spring-explanation-math">${SPRING_MATH[build]}</div><p class="spring-explanation-source">${SOURCES[build]}</p>`;root.dataset.build=String(build);
  root.querySelector('.spring-explanation-source').hidden=true;
- if(build===0){root.style.left='29%';root.style.width='33%';root.style.top='10%';root.style.bottom='10%';root.style.gridTemplateRows='auto auto';root.style.alignContent='center';root.querySelector('.spring-explanation-figure').style.aspectRatio='720 / 500';root.style.gap='0';const source=root.querySelector('.spring-explanation-source');source.hidden=true;root.querySelector('.spring-explanation-math').style.cssText='font-size:27px;min-height:60px;margin-top:0;';}
- else{root.style.removeProperty('left');root.style.removeProperty('width');root.style.removeProperty('top');root.style.removeProperty('bottom');root.style.removeProperty('grid-template-rows');root.style.removeProperty('gap');root.style.removeProperty('align-content');}}
+ if(build===0){root.style.left='29%';root.style.width='33%';root.style.top='10%';root.style.bottom='10%';root.style.display='flex';root.style.flexDirection='column';root.style.justifyContent='center';root.style.alignContent='center';root.querySelector('.spring-explanation-figure').style.aspectRatio='720 / 500';root.style.gap='0';const source=root.querySelector('.spring-explanation-source');source.hidden=true;root.querySelector('.spring-explanation-math').style.cssText='order:-1;font-size:35px;min-height:76px;margin:0 0 12px;';}
+ else{root.style.removeProperty('left');root.style.removeProperty('width');root.style.removeProperty('top');root.style.removeProperty('bottom');root.style.removeProperty('grid-template-rows');root.style.removeProperty('gap');root.style.removeProperty('align-content');root.style.removeProperty('display');root.style.removeProperty('flex-direction');root.style.removeProperty('justify-content');}}
 
  root.style.opacity=settled?'1':'0';root.dataset.settled=String(settled);
  updatePanelMotion(root,build,springMotion||sampleSpringExplanationMotion(timeSec||0,build));
