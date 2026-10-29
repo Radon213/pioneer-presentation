@@ -1,0 +1,22 @@
+{
+  "originalTriangles": 680404,
+  "outputTriangles": 680404,
+  "deviceGLBMeshes": 54,
+  "unaffectedOriginalGeometryPreserved": true,
+  "originalMaterialsPreserved": true,
+  "originalActionsPreserved": true,
+  "vendorGeometryAdded": false,
+  "duplicateSourceTrianglesAdded": false,
+  "maxZeroWorldVertexRoundtripM": 1.041250292910165e-09,
+  "max263SliderRelativeTransformError": 3.095856904167249e-13,
+  "max263SliderDisplacementMismatchM": 4.547473508864641e-13,
+  "part": "E-LBBH6L",
+  "oldOwner": "body_c_cfs2_4_5__cut_extrude1 composite",
+  "correctOwner": "e_lbbh6l__1_",
+  "sourceNamedSubtree": 357,
+  "nativeJoint": "slider_1",
+  "sourceResearchFilesModified": false,
+  "verificationPoses": 263,
+  "glbBytes": 10621700,
+  "gzipBytes": 8575906
+}
