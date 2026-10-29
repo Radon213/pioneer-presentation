@@ -1,6 +1,6 @@
-import {buildArchivedSpringChart} from './archived-spring-chart.js?v=revision-20261029-25';
-import {buildDiagram} from './chapter-diagram-layer.js?v=revision-20261029-25';
-import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-25';
+import {buildArchivedSpringChart} from './archived-spring-chart.js?v=revision-20261029-26';
+import {buildDiagram} from './chapter-diagram-layer.js?v=revision-20261029-26';
+import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-26';
 // Short visual explanations. All quantitative FEA marks use the same archived solver case.
 const C={ink:'#1a3a7a',accent:'#a44725',muted:'#585950',line:'#b5b3ab',paper:'#fdfcf8'};
 const text=(x,y,s,z=26,c=C.ink,a='middle')=>`<text x="${x}" y="${y}" font-size="${z}" fill="${c}" text-anchor="${a}" stroke="${C.paper}" stroke-width="5" paint-order="stroke">${s}</text>`;
@@ -69,7 +69,12 @@ export function buildChapterOverlay(ctx){
   const dot=(p,r=8,color=C.accent)=>`<circle cx="${p[0]}" cy="${p[1]}" r="${r}" fill="${C.paper}" stroke="${color}" stroke-width="3"/>`;
   const path=(pts,color=C.accent,dash=false,width=3)=>`<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${color}" stroke-width="${width}" stroke-linecap="round" stroke-linejoin="round" ${dash?'stroke-dasharray="6 6"':''}/>`;
   const at=k=>project(point(frame.jointCenters[k]));
-  const leader=(p,x,y,label,color=C.accent)=>path([p,[x,y+10]],color,false,1.5)+text(x,y,label,32,color);
+  const leader=(p,x,y,label,color=C.accent)=>{
+   // Stop outside the glyph rectangle. A line ending below its baseline can
+   // still slash diagonally through the words when the anchor is above it.
+   const end=p[1]<y-26?[x,y-26]:p[1]>y+14?[x,y+14]:[x+(p[0]<x?-1:1)*(label.length*32*.32+18),y-8];
+   return '<g data-hardware-leader="true">'+path([p,end],color,false,1.5)+text(x,y,label,32,color)+'</g>';
+  };
   if(b===0){
    const n=ctx.nativeLandmarks;if(!n)return '';
    const m=project(n.medial),l=project(n.lateral),trail=[];
