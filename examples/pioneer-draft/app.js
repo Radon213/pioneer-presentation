@@ -1,8 +1,8 @@
 import {startPresentationBenchmark} from './performance-benchmark.js';
-import slides,{deckVersion} from './deck-data.js?v=revision-20261029-42';
-import {createPresentationNavigation} from './presentation-navigation.js?v=revision-20261029-42';
-import {getMotionRate,setMotionRate} from './motion-clock.js?v=revision-20261029-42';
-import {getLoadProgress,reportLoadStage} from './asset-loading.js?v=revision-20261029-42';
+import slides,{deckVersion} from './deck-data.js?v=revision-20261029-44';
+import {createPresentationNavigation} from './presentation-navigation.js?v=revision-20261029-44';
+import {getMotionRate,setMotionRate} from './motion-clock.js?v=revision-20261029-44';
+import {getLoadProgress,reportLoadStage} from './asset-loading.js?v=revision-20261029-44';
 const deck=document.querySelector('.deck'),announcer=document.querySelector('#announcer'),sections=[...deck.querySelectorAll('.slide')];
 startPresentationBenchmark(deck);
 const params=new URLSearchParams(location.search),staticMode=params.get('motion')==='static',previewMode=params.has('preview'),reduced=matchMedia('(prefers-reduced-motion: reduce)');

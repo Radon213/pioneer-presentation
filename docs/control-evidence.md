@@ -69,3 +69,12 @@ The Prepare/Assist/Release introduction replays the first six seconds of the sam
 Walking torque is displayed as a 0.24 s centred time average with rounded, segment-bounded interpolation. Power uses a 0.5 s causal mean; its numerical value is held for 0.75 s between updates and rounded to 0.1 W. Raw data, raw peak and limit events are unchanged; the terminal figure separately states the recorded 26.95 W maximum. Both walking stages run at 1x source speed, and the terminal stage plays the last five seconds.
 
 Development now begins with an actual full ground fall from earlier human-policy training, without implants. That recorded continuation after a validity-failure flag is unscored; it is not an implant-assistance result. See control-sts-development.md for the exact source and slow-motion/hold schedule.
+
+
+## Revision 43: preload and continuous nominal playback
+
+The introductory and evaluation STS views and both walking views now show a moving operating point on the actual implemented nonlinear simulation spring law, with deflection/torque guide lines, a short trajectory trail and the elastic-energy area. This law is verified against the saved channels; the earlier Ansys design tables are not substituted for it. See control-preload-curves.md. The reference beyond 101.7 degrees is dashed as a mathematical continuation, without a calibration claim.
+
+Power labels update in fixed 0.2-second buckets (5 Hz). Walking retains its 0.5 s causal power mean and separately stated raw peak. STS command power remains its recorded command-power definition.
+
+Nominal STS stage 3 uses a six-source-second excerpt and stage 7 uses eight source seconds. They repeat until navigation advances, with velocity-continuous forward playback, a stand hold, an eased reverse presentation reset and a seated hold. Return to start is labelled and quantitative labels are suppressed during reset; the source record, audit and physical execution evidence are unchanged. The failure-development sequence remains separate. See control-sts-cycle.md.

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {reportLoadStage} from './asset-loading.js?v=revision-20261029-42';
+import {reportLoadStage} from './asset-loading.js?v=revision-20261029-44';
 import {createShadedEdges} from './shaded-edges.js';
 
 /** Saved walking candidate states only. The controller failed the 25 W test at 27.19 s. A renderer, animation loop, solver,
