@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {loadSpringAnalysis} from './spring-analysis-data.js?v=revision-20261029-53';
+import {loadSpringAnalysis} from './spring-analysis-data.js?v=revision-20261029-54';
 import {createShadedEdges} from './shaded-edges.js';
 
 const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));

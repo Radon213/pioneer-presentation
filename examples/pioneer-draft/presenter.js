@@ -1,7 +1,8 @@
-import slides from './deck-data.js?v=revision-20261029-53';
-import {getTalkStage} from './presenter-script.js?v=revision-20261029-53';
+import slides from './deck-data.js?v=revision-20261029-54';
+import {getTalkStage} from './presenter-script.js?v=revision-20261029-54';
 const $=selector=>document.querySelector(selector);
-const channel=typeof BroadcastChannel==='function'?new BroadcastChannel('pioneer-draft-presenter'):null;
+const audienceSession=new URLSearchParams(location.search).get('audience');
+const channel=typeof BroadcastChannel==='function'?new BroadcastChannel(`pioneer-draft-presenter${audienceSession?':'+audienceSession:''}`):null;
 const command=action=>channel?.postMessage({type:'command',action});
 const clock=seconds=>`${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(Math.floor(seconds%60)).padStart(2,'0')}`;
 let elapsed=0,started=0,running=false,lastState=0,current=null,stageStarted=0,stageElapsed=0;
