@@ -1,5 +1,5 @@
 // Eight large chapters; the archived thirty-page draft remains in archive/.
-export const deckVersion='revision-20261029-30';
+export const deckVersion='revision-20261029-31';
 const stage=(caption,question,notes)=>({caption,question,notes});
 const proposal='Pioneer_2022_proposal.pdf: PDF p11/printed p2 and PDF p40/printed p31';
 const interim='Moon, thesis interim presentation, 2024-12-10: slides3–15';
@@ -60,7 +60,7 @@ const raw=[
   stage('The next milestone is valid, reproducible assistance under the target conditions.','Thank you.','Next, qualify task execution, source-consistent coupling, matched comparisons and the teacher policy before progressing to the limited-sensing student. Calibrate the spring and validate sensing and hardware separately. Unready outcome plots and fabricated benefit data are deliberately absent. 한국어: 검증이 남은 단계와 다음 연구 목표로 마무리하며 개선율이나 완성된 연구 성과로 포장하지 않는다.')
  ]}
 ];
-const headings={2:'Background',3:'Hardware',4:'Nonlinear Spring',5:'Control',6:'Simulation',7:'Reinforcement Learning',8:'Conclusion'};
+const headings={2:'Background',3:'Hardware',4:'Nonlinear Torsion Spring',5:'Control',6:'Simulation',7:'Reinforcement Learning',8:'Conclusion'};
 const stageBodies={
 1:[`<p>Preserve <strong>natural motion</strong>.</p><p>Add <strong>timely support</strong>.</p>`],
 2:[
@@ -80,10 +80,10 @@ const stageBodies={
 ],
 4:[
  `<p><strong>SEA</strong> means<br>series elastic actuator.</p><p>The spring lies <strong>in the torque path</strong>.</p>`,
- `<p><strong>Low stiffness</strong> permits yielding.</p><p>Useful torque may require<br><strong>more deflection</strong>.</p>`,
+ `<p><strong>Soft</strong> enough to yield.</p><p><strong>Stiff</strong> enough to transmit torque<br>within limited travel.</p>`,
  `<p>Let stiffness <strong>rise with winding</strong>.</p><p>Balance yielding with<br><strong>torque transmission</strong>.</p>`,
  `<p>In series: <strong>same torque</strong>.</p><p><strong>Both springs deform</strong>;<br>their deflections add.</p>`,
- `<p><strong>a</strong> — strip width</p><p><strong>b</strong> — axial depth</p><p><strong>g</strong> — coil gap</p>`,
+ `<p>As the <strong>gap closes</strong>,<br>neighboring turns engage.</p><p>Less free flexure produces<br><strong>higher tangent stiffness</strong>.</p>`,
  `<p>Inspect <strong>actual FEA fields</strong>.</p><p>This is a <strong>separate representative cartridge</strong>.</p>`,
  `<p><strong>Original ANSYS tables</strong><br>from the archived designs.</p><p>These prototypes are <strong>separate</strong><br>from the current series pair.</p>`
 ],
@@ -112,7 +112,8 @@ const stageBodies={
 const authors=[{name:'Jongchan Mun',affiliation:'1',corresponding:false},{name:'Sang Rok Jin',affiliation:'1',corresponding:true}];
 const affiliation='School of Mechanical Engineering, Pusan National University';
 const authorSource='/mnt/arl/NAS관리/백업/학회/2026년도/26.10.27~30 ICCAS/문종찬/논문/main.tex:19–23';
-const slides=raw.map(s=>({...s,subtitle:s.id===1?'':s.title,title:headings[s.id]||s.title,authors:s.id===1?authors:undefined,affiliation:s.id===1?affiliation:undefined,affiliationLocation:s.id===1?'Busan, 46231, Korea':undefined,authorSource:s.id===1?authorSource:undefined,targetGroup:s.id===2?'Older adults':undefined,steps:s.stages.length-1,scene:{kind:'continuous',mode:'chapter',chapter:s.id},body:'',bridge:'',dummy:false,stages:s.stages.map((x,i)=>({...x,body:stageBodies[s.id][i]})),notes:s.stages.map((x,i)=>`Stage ${i}: ${x.notes}`).join('\n\n')+(s.id===1?`\nCover authors and affiliation reproduced from ${authorSource}. Exact author spelling/order: Jongchan Mun; Sang Rok Jin. Paper results are not reused.`:'')}));
+const springSubtitles=['Elasticity in the torque path','One stiffness, two competing needs','Compliant first, stiffer as winding grows','Two spring units share one torque','Contact changes the free flexure','Inspect deformation and stress','Check the original computed response'];
+const slides=raw.map(s=>({...s,subtitle:s.id===1?'':s.title,title:headings[s.id]||s.title,authors:s.id===1?authors:undefined,affiliation:s.id===1?affiliation:undefined,affiliationLocation:s.id===1?'Busan, 46231, Korea':undefined,authorSource:s.id===1?authorSource:undefined,targetGroup:s.id===2?'Older adults':undefined,steps:s.stages.length-1,scene:{kind:'continuous',mode:'chapter',chapter:s.id},body:'',bridge:'',dummy:false,stages:s.stages.map((x,i)=>({...x,subtitle:s.id===4?springSubtitles[i]:undefined,body:stageBodies[s.id][i]})),notes:s.stages.map((x,i)=>`Stage ${i}: ${x.notes}`).join('\n\n')+(s.id===1?`\nCover authors and affiliation reproduced from ${authorSource}. Exact author spelling/order: Jongchan Mun; Sang Rok Jin. Paper results are not reused.`:'')}));
 const coverReplayNote=' Cover spring: actual stored double-spiral FEA loading frames are replayed forward and backward in the same 1.12-second presentation cycle as recorded walking. The enlarged inset and timing are explanatory presentation choices, not a coupled gait/FEA spring response or a solved unloading branch. PNU signature is the original official transparent PNG, aspect ratio preserved.';
 slides[0].stages[0].notes+=coverReplayNote;slides[0].notes+=coverReplayNote;
 if(slides.reduce((n,s)=>n+s.duration,0)!==720)throw Error('Expected twelve-minute allocation');

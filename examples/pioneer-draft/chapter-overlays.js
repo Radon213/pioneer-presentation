@@ -1,6 +1,6 @@
-import {buildArchivedSpringChart} from './archived-spring-chart.js?v=revision-20261029-30';
-import {buildDiagram} from './chapter-diagram-layer.js?v=revision-20261029-30';
-import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-30';
+import {buildArchivedSpringChart} from './archived-spring-chart.js?v=revision-20261029-31';
+import {buildDiagram} from './chapter-diagram-layer.js?v=revision-20261029-31';
+import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-31';
 // Short visual explanations. All quantitative FEA marks use the same archived solver case.
 const C={ink:'#1a3a7a',accent:'#a44725',muted:'#585950',line:'#b5b3ab',paper:'#fdfcf8'};
 const text=(x,y,s,z=26,c=C.ink,a='middle')=>`<text x="${x}" y="${y}" font-size="${z}" fill="${c}" text-anchor="${a}" stroke="${C.paper}" stroke-width="5" paint-order="stroke">${s}</text>`;
@@ -12,7 +12,7 @@ function feaLegend(fea){const l=fea.getLegend(),x=1290,y=180,h=185,w=18;let out=
 export function buildChapterOverlay(ctx){
  const {chapter:c,build:b,live,project,partPoint,point,frame,fea,human,gait}=ctx;let s='';
  if(c===1){if(!fea)return '';const p=project(fea.group.position);return text(p[0],p[1]+155,'Double-spiral spring',28)+text(p[0],p[1]+190,'FEA replay',23,C.muted);}
- if(c===4&&b===6)return buildArchivedSpringChart();
+ if(c===4)return ''; // The persistent native spring and dedicated figure panel own this chapter.
  const diagram=buildDiagram(c,b,{progress:1,reducedMotion:true});
  if(diagram)return diagram;
  if(c===2){

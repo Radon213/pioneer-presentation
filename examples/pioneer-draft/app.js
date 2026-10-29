@@ -1,8 +1,8 @@
 import {startPresentationBenchmark} from './performance-benchmark.js';
-import slides,{deckVersion} from './deck-data.js?v=revision-20261029-30';
-import {createPresentationNavigation} from './presentation-navigation.js?v=revision-20261029-30';
-import {getMotionRate,setMotionRate} from './motion-clock.js?v=revision-20261029-30';
-import {getLoadProgress,reportLoadStage} from './asset-loading.js?v=revision-20261029-30';
+import slides,{deckVersion} from './deck-data.js?v=revision-20261029-31';
+import {createPresentationNavigation} from './presentation-navigation.js?v=revision-20261029-31';
+import {getMotionRate,setMotionRate} from './motion-clock.js?v=revision-20261029-31';
+import {getLoadProgress,reportLoadStage} from './asset-loading.js?v=revision-20261029-31';
 const deck=document.querySelector('.deck'),announcer=document.querySelector('#announcer'),sections=[...deck.querySelectorAll('.slide')];
 startPresentationBenchmark(deck);
 const params=new URLSearchParams(location.search),staticMode=params.get('motion')==='static',previewMode=params.has('preview'),reduced=matchMedia('(prefers-reduced-motion: reduce)');
@@ -56,7 +56,10 @@ function updateUI(animate){
   prepare(incoming);incoming.hidden=false;incoming.style.opacity='0';incoming.style.zIndex='4';outgoing.hidden=false;outgoing.style.zIndex='3';outgoing.inert=true;
   t.animations.push(animateOpacity(outgoing,1,0,260),animateOpacity(incoming,0,1,420,140));deck.dataset.pageTransition='crossfading';
  }else if(enabled&&outgoing){
-  const current=incoming.querySelector('.stage-copy'),old=current.cloneNode(true);old.classList.add('outgoing-stage-copy');old.setAttribute('aria-hidden','true');old.inert=true;incoming.append(old);t.temporary.push(old);prepare(incoming);t.animations.push(...(page===2?[animateOpacity(old,1,0,180,340),animateOpacity(current,0,1,260,490)]:[animateOpacity(old,1,0,200),animateOpacity(current,0,1,320,110)]));
+  const current=incoming.querySelector('.stage-copy'),old=current.cloneNode(true);old.classList.add('outgoing-stage-copy');old.setAttribute('aria-hidden','true');old.inert=true;incoming.append(old);t.temporary.push(old);
+  const subtitle=incoming.querySelector('.chapter-subtitle'),nextSubtitle=slides[page-1].stages[step].subtitle||slides[page-1].subtitle;
+  if(subtitle&&subtitle.textContent!==nextSubtitle){const previous=subtitle.cloneNode(true);previous.style.position='absolute';previous.style.top=subtitle.offsetTop+'px';previous.style.left=subtitle.offsetLeft+'px';previous.style.width=subtitle.offsetWidth+'px';previous.style.margin='0';previous.setAttribute('aria-hidden','true');subtitle.parentElement.append(previous);t.temporary.push(previous);t.animations.push(animateOpacity(previous,1,0,200),animateOpacity(subtitle,0,1,320,110));}
+  prepare(incoming);t.animations.push(...(page===2?[animateOpacity(old,1,0,180,340),animateOpacity(current,0,1,260,490)]:[animateOpacity(old,1,0,200),animateOpacity(current,0,1,320,110)]));
  }else prepare(incoming);
  sections.forEach(el=>{const active=el===incoming;el.inert=!active;el.setAttribute('aria-hidden',String(!active));if(el!==incoming&&(!changed||!enabled||el!==outgoing))el.hidden=true;});incoming.hidden=false;
  rendered=page;Object.assign(deck.dataset,{page:String(page),step:String(step),animate:String(enabled)});document.title=`Pioneer · ${page}/${slides.length} · ${slides[page-1].title}`;announcer.textContent=`Chapter ${page} of ${slides.length}, stage ${step+1} of ${slides[page-1].steps+1}: ${slides[page-1].stages[step].caption}`;

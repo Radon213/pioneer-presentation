@@ -1,11 +1,11 @@
 {
   "schema": "pioneer-runtime-package-v1",
-  "runtimeBytes": 70064281,
+  "runtimeBytes": 70380843,
   "files": [
     {
       "path": "examples/pioneer-draft/app.js",
-      "bytes": 15306,
-      "sha256": "c35d3c5048c7316192268fb406cdad14758e111bcffbf97d57536bd79bb76759"
+      "bytes": 15936,
+      "sha256": "0b3f6d71c188a034b98f4270d20be01689af0b9051ef61fb618cd0a8f78446f1"
     },
     {
       "path": "examples/pioneer-draft/archived-spring-chart.js",
@@ -129,8 +129,8 @@
     },
     {
       "path": "examples/pioneer-draft/chapter-overlays.js",
-      "bytes": 12630,
-      "sha256": "63296d17aa66df54eed06b873d51c1b8a5a365a5c728894c72bc9a57a39c1496"
+      "bytes": 12676,
+      "sha256": "e0777b201f061be3c6c0f78117a42622ce81d23f6c2fe228eac65cd83ce14536"
     },
     {
       "path": "examples/pioneer-draft/clinical-knee-layer.js",
@@ -140,27 +140,27 @@
     {
       "path": "examples/pioneer-draft/continuous-human-layer.js",
       "bytes": 15653,
-      "sha256": "a28bff27337d9ad2e1d9bf4cdb610f3c46efcb1dcddc79a593c764ba5b5ec758"
+      "sha256": "3d8b2c04038d6eceb57f16df3305f3f666e2f3fb1f1211833b175f2e707e6a0c"
     },
     {
       "path": "examples/pioneer-draft/continuous-knee-viewer.js",
-      "bytes": 74049,
-      "sha256": "398be7021fd55e6291307ba841c1de5485cf5c4bcc206b09068da01d9f478db0"
+      "bytes": 75542,
+      "sha256": "7161bd0850018f13d6ebc81e4ebd1caca85de2d58aae8d5ddf18b9a5f10fb545"
     },
     {
       "path": "examples/pioneer-draft/deck-data.js",
-      "bytes": 30247,
-      "sha256": "d0d921c71ea7c5a610ea51ce340f55b72d57cecdad5ae26a5b69e517e6c2f475"
+      "bytes": 30615,
+      "sha256": "c75cc737d44a7879d411e59c3711cbd02e9172148b522e98797208ea05004833"
     },
     {
       "path": "examples/pioneer-draft/gait-binary-loader.js",
       "bytes": 3591,
-      "sha256": "b7633fdee81c1e01c661d31e07c4d3fbb646c30061cc661f6dfb7842558eb8a0"
+      "sha256": "cd322828620a68dc454e893b0cf75a4d758f0802b22aff7ea51cc631a36103d3"
     },
     {
       "path": "examples/pioneer-draft/gait-chapter-layer.js",
       "bytes": 12714,
-      "sha256": "008e079a932e7697ac1f84b93e1d46f268fdf44bd186c150ec56fa78482eaed1"
+      "sha256": "375535806f3ed5c79430e246d07fb6da44bfc82ab72b96a74652254422c9f83a"
     },
     {
       "path": "examples/pioneer-draft/hardware-reference.js",
@@ -169,8 +169,8 @@
     },
     {
       "path": "examples/pioneer-draft/index.html",
-      "bytes": 26250,
-      "sha256": "a960f355ee0f08235827bda0bf79ffa75d330ec3f844940f8b3767c6e0eb684b"
+      "bytes": 26315,
+      "sha256": "96f7eaf20b174bdac8d228edd8c1593c4eb5d63bb356d90cd283ac6418f15141"
     },
     {
       "path": "examples/pioneer-draft/motion-clock.js",
@@ -180,17 +180,17 @@
     {
       "path": "examples/pioneer-draft/myoassist-examples-layer.js",
       "bytes": 9888,
-      "sha256": "b502208380d805879cf4e4f96b66224434e0aaa91cdb02399f7545cf4ffa4601"
+      "sha256": "d5f49f68ee6c1769e96793a6d3132a44adea503d45b1f17afd79c61723a890cb"
     },
     {
       "path": "examples/pioneer-draft/myoleg80-muscle-layer.js",
       "bytes": 2220,
-      "sha256": "4f91738f3c0bca6e39d2559d18c4ea5d9fa5d6c6e3afb71df3bb18376d28e076"
+      "sha256": "00861ffc96c65f84b24f40aa00b30d9f0fad8875a6d238c48f68da36b1570b9b"
     },
     {
       "path": "examples/pioneer-draft/native-knee-comparison.js",
       "bytes": 8916,
-      "sha256": "774cda6f39c82a0e319f8d912292ceee9460704b94c3725fadff0f0a6a900f93"
+      "sha256": "b739a61765e5be5494e07c3d776d132dd9f8cbbc762ae712a010d31f49b0a468"
     },
     {
       "path": "examples/pioneer-draft/performance-benchmark.js",
@@ -215,17 +215,137 @@
     {
       "path": "examples/pioneer-draft/spring-analysis-data.js",
       "bytes": 4089,
-      "sha256": "768d23af5b1281d1e13ec40030cd2e7e0fbb6f07b6e30607520f62af3c107d0b"
+      "sha256": "5cbaa612347a49a527b8d8be313058f1964ff65ab87db35b91f8b891e8abe8df"
+    },
+    {
+      "path": "examples/pioneer-draft/spring-explanation-panel.js",
+      "bytes": 8105,
+      "sha256": "18c4cd86ce09bffee5d7cffb329c8826824eb559d07d70095dcafa7208e6103e"
     },
     {
       "path": "examples/pioneer-draft/spring-fea-layer.js",
       "bytes": 8574,
-      "sha256": "0bc8818384f0155a6b45098f64d2a503b117547c5e15542764a522541dafe3ea"
+      "sha256": "0634de74e7acc59fdbe1c5f4fcdae602596f8765ebf188dd6d4175d5a56aca6c"
+    },
+    {
+      "path": "examples/pioneer-draft/spring-math.js",
+      "bytes": 20384,
+      "sha256": "28cccbfcfab94e3fd99988ddc6f3583d9f43e7672c929fafd1b92ff11001baa1"
     },
     {
       "path": "examples/pioneer-draft/style.css",
-      "bytes": 11940,
-      "sha256": "8470a0fc2b3ed4a4ecbe2edbcb692f78856db672f61298dbd589729b9310d8dd"
+      "bytes": 13160,
+      "sha256": "665ef5e8f964f1a4d5eaf1d410f3291f133ce35afca1ca96b8705c9508ea658e"
+    },
+    {
+      "path": "examples/pioneer-draft/vendor/katex/LICENSE",
+      "bytes": 1107,
+      "sha256": "766ccc1f306c885aa45542a9846bbd0a505b27a0374f146778171c2254ce18e3"
+    },
+    {
+      "path": "examples/pioneer-draft/vendor/katex/fonts/KaTeX_AMS-Regular.woff2",
+      "bytes": 28076,
+      "sha256": "0cdd387c9590a1a9f9794560022dbb59654a7d86f187aa0c81495ad42d3a7308"
+    },
+    {
+      "path": "examples/pioneer-draft/vendor/katex/fonts/KaTeX_Caligraphic-Bold.woff2",
+      "bytes": 6912,
+      "sha256": "de7701e42cf1f4cf0b766c03fb27977207eee2f4fd5d76fa82188406da43ea4c"
+    },
+    {
+      "path": "examples/pioneer-draft/vendor/katex/fonts/KaTeX_Caligraphic-Regular.woff2",
+      "bytes": 6908,
+      "sha256": "5d53e70ad607c2352162dec9e0923fb54ecdafaccbf604cd8dcf7d00facb989b"
+    },
+    {
+      "path": "examples/pioneer-draft/vendor/katex/fonts/KaTeX_Fraktur-Bold.woff2",
+      "bytes": 11348,
+      "sha256": "74444efd593c005e3f4573b44524704c0af0a937fe911cca9e94068d0d140d3f"
+    },
+    {
+      "path": "examples/pioneer-draft/vendor/katex/fonts/KaTeX_Fraktur-Regular.woff2",
+      "bytes": 11316,
+      "sha256": "51814d270d06ff0255dba0799994fa4d8c84d11f09951d47595f4abb1f3602dc"
+    },
+    {
+      "path": "examples/pioneer-draft/vendor/katex/fonts/KaTeX_Main-Bold.woff2",
+      "bytes": 25324,
+      "sha256": "0f60d1b897938ec918c8ce073092411baf9438f6739465693ff18b0f9d20b021"
+    },
+    {
+      "path": "examples/pioneer-draft/vendor/katex/fonts/KaTeX_Main-BoldItalic.woff2",
+      "bytes": 16780,
+      "sha256": "99cd42a3c072d918f2f44984a807cf7aa16e13545fd0875fc07c6c65f99e715b"
+    },
+    {
+      "path": "examples/pioneer-draft/vendor/katex/fonts/KaTeX_Main-Italic.woff2",
+      "bytes": 16988,
+      "sha256": "97479ca6cce906abc961ecac96faa5f9ca2e61b8e7670d475826bcdee9a7c267"
+    },
+    {
+      "path": "examples/pioneer-draft/vendor/katex/fonts/KaTeX_Main-Regular.woff2",
+      "bytes": 26272,
+      "sha256": "c2342cd8b869e01752a9321dc17213fc40d4d04c79688c1d43f2cf316abd7866"
+    },
+    {
+      "path": "examples/pioneer-draft/vendor/katex/fonts/KaTeX_Math-BoldItalic.woff2",
+      "bytes": 16400,
+      "sha256": "dc47344dbb6cb5b655c8460d561f4df5f501b90c804ad3c6cec65fe322351ab1"
+    },
+    {
+      "path": "examples/pioneer-draft/vendor/katex/fonts/KaTeX_Math-Italic.woff2",
+      "bytes": 16440,
+      "sha256": "7af58c5ec8f132a2ddde9027c6d7814decce4d3b822a11192a42a20e2e973264"
+    },
+    {
+      "path": "examples/pioneer-draft/vendor/katex/fonts/KaTeX_SansSerif-Bold.woff2",
+      "bytes": 12216,
+      "sha256": "e99ae51144bf1232efcc1bfe5add36262c6866b0faab24fa75740e1b98577a62"
+    },
+    {
+      "path": "examples/pioneer-draft/vendor/katex/fonts/KaTeX_SansSerif-Italic.woff2",
+      "bytes": 12028,
+      "sha256": "00b26ac825e2095056396e0553b8ac26d3f8ad158c3826e28b4c45b385c4714a"
+    },
+    {
+      "path": "examples/pioneer-draft/vendor/katex/fonts/KaTeX_SansSerif-Regular.woff2",
+      "bytes": 10344,
+      "sha256": "68e8c73ef42afd3ccec58bf0fba302cce448938e7fc020a5e31f8a952eee1342"
+    },
+    {
+      "path": "examples/pioneer-draft/vendor/katex/fonts/KaTeX_Script-Regular.woff2",
+      "bytes": 9644,
+      "sha256": "036d4e95149b69ff9bcc0cd55771efeb25ffa3947293e69acd78d5ac328c684b"
+    },
+    {
+      "path": "examples/pioneer-draft/vendor/katex/fonts/KaTeX_Size1-Regular.woff2",
+      "bytes": 5468,
+      "sha256": "6b47c40166b6dbe21a5dfca7718413f2147fd2399be1ba605d8ad39cedf25dfe"
+    },
+    {
+      "path": "examples/pioneer-draft/vendor/katex/fonts/KaTeX_Size2-Regular.woff2",
+      "bytes": 5208,
+      "sha256": "d04c54219f9eaec6d4d4fd42dfb28785975a4794d6b2fc71e566b9cd6db842dd"
+    },
+    {
+      "path": "examples/pioneer-draft/vendor/katex/fonts/KaTeX_Size3-Regular.woff2",
+      "bytes": 3624,
+      "sha256": "73d591271b1604960cb10bb90fee021670af7297017e0e98480b332d11f51995"
+    },
+    {
+      "path": "examples/pioneer-draft/vendor/katex/fonts/KaTeX_Size4-Regular.woff2",
+      "bytes": 4928,
+      "sha256": "a4af7d414440a1c1790825cfb700cf9cf43b0f2c4b04f0ebc523011ad9853ec0"
+    },
+    {
+      "path": "examples/pioneer-draft/vendor/katex/fonts/KaTeX_Typewriter-Regular.woff2",
+      "bytes": 13568,
+      "sha256": "71d517d67827787cfabdf186914cc3358eda539e37931941f2b2fd4a21f68c0b"
+    },
+    {
+      "path": "examples/pioneer-draft/vendor/katex/katex.min.css",
+      "bytes": 23352,
+      "sha256": "19095127357ed6d29fe0a63a6b000c913a89f7f1963b765dd3715e97c9852e75"
     },
     {
       "path": "examples/pioneer-draft/visual-explanations.js",

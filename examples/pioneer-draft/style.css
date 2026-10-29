@@ -101,3 +101,10 @@ footer .source{flex:1;min-width:0}
 /* English-only headers reclaim the former translation row without moving the footer. */
 .chapter-slide header{height:200px}
 .chapter-subtitle{max-width:1600px}
+/* Persistent CAD on the left, Diagram Design figures beside it; one WebGL scene. */
+.spring-explanation{position:absolute;left:28%;width:34%;top:3%;bottom:3%;z-index:2;display:grid;grid-template-rows:minmax(0,1fr) auto auto;gap:13px;pointer-events:none;opacity:0;transition:opacity 280ms var(--ease);color:#2d3142}
+.spring-explanation[hidden]{display:none}.spring-explanation-figure{min-height:0}.spring-explanation-figure svg{width:100%;height:100%;display:block;font-family:'Playfair Display',Georgia,serif;overflow:visible}
+.spring-explanation-math{font-size:24px;min-height:52px;display:flex;align-items:center;justify-content:center}.spring-explanation-math .katex-display{margin:0}.spring-explanation-math .katex{font-size:1.05em}
+.spring-explanation-source{font-size:21px;line-height:1.35;color:#4f5d75;text-align:center;max-width:100%;text-wrap:pretty}
+.spring-explanation [data-reveal-curve]{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 850ms var(--ease)}.spring-explanation[data-settled=true] [data-reveal-curve]{stroke-dashoffset:0}
+@media(prefers-reduced-motion:reduce){.spring-explanation{transition:none}.spring-explanation [data-reveal-curve]{transition:none;stroke-dashoffset:0}}

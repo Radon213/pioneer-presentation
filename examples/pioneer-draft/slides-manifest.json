@@ -53,35 +53,30 @@
         "caption": "Joint degeneration can limit everyday movement in older adults.",
         "question": "",
         "notes": "The Pioneer proposal begins with older adults who need knee replacement because of joint degeneration. Keep the same person visible while approaching the knee. The joint-degeneration comparison is an explanatory illustration, and the generic musculoskeletal model is not an elderly patient-specific reconstruction. Introduce the muscles after explaining what replacement changes. 한국어: 수술을 고려하는 고령층과 관절 손상에서 출발한다. 근감소증은 다음 단계에서 노화의 맥락으로 자연스럽게 연결한다.",
-        "subtitle": "Joint degeneration can limit everyday movement",
         "body": "<p><strong>Joint degeneration</strong><br>can limit everyday movement.</p><p>The target is an <strong>older adult</strong><br>needing <strong>knee replacement</strong>.</p>"
       },
       {
         "caption": "Replacement changes the joint surfaces. Muscles still produce movement.",
         "question": "What happens when muscle strength also declines?",
         "notes": "Conventional total knee replacement changes damaged joint surfaces using metal components and a polyethylene insert. The surrounding muscles remain responsible for producing movement. Retain the same knee, its neighbouring bones and the muscle context while inserting the conventional components. The animated separation, five-plane femoral display preparation, tibial preparation, insertion, an insert-surface top view before reduction, and reduction are educational; it is not a validated patient fit. 한국어: 일반 인공관절의 표면 치환 역할을 보여주고, 여전히 움직임을 만드는 근육으로 시선을 이어간다.",
-        "subtitle": "Joint surfaces change; muscles still drive movement",
         "body": "<p>Replace the <strong>joint surfaces</strong>.</p><p>The <strong>muscles</strong><br>still produce movement.</p>"
       },
       {
         "caption": "Quadriceps strength can drop sharply during early recovery after knee replacement.",
         "question": "How could we support weakened muscles?",
         "notes": "Mizner et al. studied 20 patients with unilateral knee osteoarthritis, tested on average 10 days before and 27 days after primary total knee arthroplasty. Quadriceps strength decreased by 62% compared with the preoperative value. The audience graph normalizes preoperative strength to 100 and reconstructs the reported postoperative level as 38; these are relative values, not measured torque units, prevalence or fabricated individual data. No error bars are invented. This is a small 2005 study of early postoperative weakness, not a sarcopenia prevalence, long-term deficit, inevitable outcome for every patient or evidence that our device solves it. The Pioneer target still includes older adults with sarcopenia, but postoperative activation failure and muscle atrophy must not be conflated with the sarcopenia diagnosis. Source: https://pubmed.ncbi.nlm.nih.gov/15866968/ ; https://doi.org/10.2106/JBJS.D.01992. 한국어: 수술 전 약 10일과 수술 후 평균 27일에 측정한 20명 연구에서 대퇴사두근력이 수술 전보다 62% 감소했다. 수술 전=100, 수술 후=38로 정규화하여 표시한다. 62%는 환자 비율이나 장기적 근감소증 수치가 아니며 초기 수술 후 근력 저하이다. 우리 장치의 보조 효과를 보여주는 결과도 아니다.",
-        "subtitle": "Muscle strength can fall sharply in early recovery",
         "body": "<p>Joint replacement does not<br><strong>immediately restore strength</strong>.</p><p>Early recovery can involve<br><strong>substantial muscle weakness</strong>.</p>"
       },
       {
         "caption": "Assistance can be worn outside the body.",
         "question": "",
         "notes": "Show three actual open-source MyoAssist human–device models: HMEDI_L1 (hip assistance via cables), OpenExo_L1 (ankle assistance via a strut), and DephyExoBoot_L1 (ankle assistance via a boot). Preserve the source devices, their body attachments and the source human geometry. Canonical standing and source-keyframe motion are kinematic presentation replays, not trained assistance policies or evidence of a walking benefit. The examples illustrate external assistance and attachment locations; their appearance is not evidence of discomfort, clinical effectiveness or comparative superiority. 한국어: MyoAssist에서 실제 사람 모델에 장착된 HMEDI L1, OpenExo L1, Dephy ExoBoot L1을 보여준다. 기본 기립 자세와 원본 키프레임으로 구성한 기구학 재생이며 학습된 보조 보행이나 보조 효과 검증 결과가 아니다. 몸에 고정하여 힘을 전달하는 구조를 설명하고 외골격 전반의 불편함·열등성으로 확대하지 않는다.",
-        "subtitle": "Assistance can be worn outside the body",
         "body": "<p><strong>Wearable devices</strong><br>can support movement.</p><p>They transmit support through<br><strong>attachments to the body</strong>.</p>"
       },
       {
         "caption": "Could the implant also provide active support?",
         "question": "What mechanism could make this possible?",
         "notes": "Return to exactly the conventional knee-replacement components shown in the surgery step, then bring in the original BLDC motor model beside them. The composition introduces the idea of combining joint replacement and active assistance. Do not reveal the completed Pioneer assembly in this step or imply that the motor attaches directly to the conventional implant as shown. The arrangement is a research concept rather than a surgically or mechanically validated assembly. Carry the motor-to-joint idea into the Hardware chapter, where the actual mechanism and transmission are explained. 한국어: 2단계의 일반 인공관절에 기존 BLDC 모터를 더하는 개념으로 표현한다. 우리 완성품은 아직 공개하지 않고, 그 결합을 실제로 구현하려면 어떤 기구가 필요한지 다음 Hardware 장으로 이어간다.",
-        "subtitle": "Could the implant also provide active support?",
         "body": "<p>Combine <strong>joint replacement</strong><br>with a <strong>compact motor</strong>.</p><p>A research concept for<br><strong>active assistance</strong>.</p>"
       }
     ],
@@ -157,7 +152,7 @@
   },
   {
     "id": 4,
-    "title": "Nonlinear Spring",
+    "title": "Nonlinear Torsion Spring",
     "ko": "직렬 탄성요소를 비선형으로 설계한 이유",
     "lead": "A spring in the torque path links mechanical compliance to assistance control.",
     "duration": 165,
@@ -167,42 +162,49 @@
         "caption": "A series elastic actuator places a spring between the motor drive and the load.",
         "question": "What should this spring allow?",
         "notes": "SEA means series elastic actuator. The spring lies in the torque-transmission path between the motor-side drive and the output. Relative rotation deforms the spring and generates elastic torque. This gives the person a compliant interaction instead of an ideally rigid transmission. 한국어: 처음 듣는 청중을 위해 SEA의 위치와 역할을 먼저 정의한다.",
+        "subtitle": "Elasticity in the torque path",
         "body": "<p><strong>SEA</strong> means<br>series elastic actuator.</p><p>The spring lies <strong>in the torque path</strong>.</p>"
       },
       {
         "caption": "Low stiffness permits yielding, but useful torque can require more deflection.",
         "question": "Can one constant stiffness serve both needs?",
         "notes": "With a linear spring, low stiffness needs more relative deflection for the same torque, while high stiffness resists motion more strongly. This is a design trade-off rather than proof that every conventional SEA fails. We want yielding behavior at small loading and stronger torque transfer as deformation grows. 한국어: 낮은 강성과 큰 토크 전달 사이의 설계 상충을 설명한다.",
-        "body": "<p><strong>Low stiffness</strong> permits yielding.</p><p>Useful torque may require<br><strong>more deflection</strong>.</p>"
+        "subtitle": "One stiffness, two competing needs",
+        "body": "<p><strong>Soft</strong> enough to yield.</p><p><strong>Stiff</strong> enough to transmit torque<br>within limited travel.</p>"
       },
       {
         "caption": "The design seeks a stiffness that rises as the spring winds.",
         "question": "How can geometry change that stiffness?",
         "notes": "A nonlinear torque–deflection relationship is the mechanical objective. It changes how much added torque follows an added relative angle. This explains why a nonlinear spring is useful before showing the specific spiral geometry. No performance curve on this conceptual step is an experimental or learned result. 한국어: 목표 곡선의 개념과 검증된 특성곡선을 구분한다.",
+        "subtitle": "Compliant first, stiffer as winding grows",
         "body": "<p>Let stiffness <strong>rise with winding</strong>.</p><p>Balance yielding with<br><strong>torque transmission</strong>.</p>"
       },
       {
         "caption": "Two spiral units in series carry the same torque and share the total deflection.",
         "question": "Which unit deforms more first?",
         "notes": "In an ideal quasistatic serial pair, both springs transmit the same torque and their deflections add. The compliant unit deforms more initially; the stiffer unit also deforms, rather than waiting with zero torque. The axial source-CAD view exposes strip width and coil spacing; axial depth is a separate dimension. 한국어: 직렬 연결은 같은 토크이며 변위가 합쳐진다는 점을 분명히 한다.",
+        "subtitle": "Two spring units share one torque",
         "body": "<p>In series: <strong>same torque</strong>.</p><p><strong>Both springs deform</strong>;<br>their deflections add.</p>"
       },
       {
         "caption": "Strip width, axial depth and coil gap define the spiral geometry.",
         "question": "How can the design be examined through analysis?",
         "notes": "Identify strip width a, axial depth b and coil gap as separate dimensions. The native spring does not acquire nonlinearity from an invented variable-width profile. The historical concept uses turn approach and the winding limit to change additional compliance, with more added deflection then shared by the stiffer serial unit. This design illustration is not solved contact or a calibrated native spring law. Axial depth cannot be inferred from a top view alone. 한국어: 폭a·축방향 깊이b·코일 간격을 구분하고 실제 원본에 없는 가변 폭 형상을 주장하지 않는다. 다음 해석은 별도 대표형상이다.",
-        "body": "<p><strong>a</strong> — strip width</p><p><strong>b</strong> — axial depth</p><p><strong>g</strong> — coil gap</p>"
+        "subtitle": "Contact changes the free flexure",
+        "body": "<p>As the <strong>gap closes</strong>,<br>neighboring turns engage.</p><p>Less free flexure produces<br><strong>higher tangent stiffness</strong>.</p>"
       },
       {
         "caption": "The finite-element example uses a separate archived representative cartridge.",
         "question": "How reliable is its computed response?",
         "notes": "The actual FEA is a reconstructed two-arm representative geometry from the NAS, not the complete native compliant/stiff CAD assembly. Actual converged frames use circular inner-node motion and fixed outer attachments. The chosen full-envelope inter-arm contact model is frictionless and elastic. Displacements are shown at true scale. Source: assets/motion/spring-analysis-report.md ; assets/motion/spring-analysis-summary.json. 한국어: 실제 원본 스프링 시각화와 별도 대표 해석 형상을 명확히 분리한다.",
+        "subtitle": "Inspect deformation and stress",
         "body": "<p>Inspect <strong>actual FEA fields</strong>.</p><p>This is a <strong>separate representative cartridge</strong>.</p>"
       },
       {
         "caption": "Archived ANSYS design curves show the original computed torque–deflection response.",
         "question": "How should control prepare spring deformation?",
         "notes": "Original ANSYS CSV tables from the user-confirmed NAS backup are plotted with every finite torque point. P=2 mm, a=0.7 mm, b=10 mm spans 1.2–120 degrees; b=20 mm spans 0.45–45 degrees. Each panel has its own labelled axes. The original torque decrease is retained. These are archived prototype computations, not physical measurements or a calibrated law of the current weak/strong series pair. They are independent from the new 110-degree animation reconstruction; no point is synchronized to that animation. CSV headers, raw rows, exact paths and SHA256 are preserved in assets/motion/archived-spring-curves.json. 한국어: 보관된 원본 ANSYS 표를 그대로 표시하며 현재 직렬 스프링의 검증된 특성으로 주장하지 않는다.",
+        "subtitle": "Check the original computed response",
         "body": "<p><strong>Original ANSYS tables</strong><br>from the archived designs.</p><p>These prototypes are <strong>separate</strong><br>from the current series pair.</p>"
       }
     ],
