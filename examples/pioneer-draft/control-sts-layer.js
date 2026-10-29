@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {reportLoadStage} from './asset-loading.js?v=revision-20261029-50';
+import {reportLoadStage} from './asset-loading.js?v=revision-20261029-53';
 import {createShadedEdges} from './shaded-edges.js';
 
 /** Saved selected-student STS states only. A renderer, animation loop, solver,
@@ -18,7 +18,7 @@ export function decodeControlSTSBinary(buffer){
  return revive(manifest.data);
 }
 async function loadReplay(filename='control-sts',label='Sit-to-stand replay'){
- const gzip=typeof DecompressionStream==='function',url=new URL(`./assets/${filename}.bin${gzip?'.gz':''}?v=revision-20261029-50`,import.meta.url),started=performance.now();let loaded=0;
+ const gzip=typeof DecompressionStream==='function',url=new URL(`./assets/${filename}.bin${gzip?'.gz':''}?v=revision-20261029-53`,import.meta.url),started=performance.now();let loaded=0;
  const report=(phase,detail={})=>reportLoadStage(filename,phase,{label,phase,state:'running',...detail});
  report('download',{ratio:0});const response=await fetch(url);if(!response.ok)throw Error(`STS replay: HTTP ${response.status}`);
  const reader=response.body?.getReader(),chunks=[],total=Number(response.headers.get('content-length'))||0;
@@ -32,10 +32,12 @@ export async function createControlSTSLayer(scene,{gait,human}={}){
  if(!gait?.sourceGroup||!human?.sourceData)throw Error('STS replay requires the loaded native gait geometry and original human shafts.');
  const data=await loadReplay();if(data.schema!=='pioneer-control-sts-v1'||data.frames.length<2)throw Error('Invalid STS replay data.');
  const group=new THREE.Group();group.name='ActualLimitedSensingStudentSTS';
+ // Mesh assembly yields across frames; keep unfinished, unposed geometry hidden.
+ group.visible=false;
  const sourceGroup=new THREE.Group();sourceGroup.name='STSSource_Zup_to_Yup';sourceGroup.rotation.x=-Math.PI/2;group.add(sourceGroup);scene.add(group);
  group.userData={...data.provenance,loadingMetrics:data.loadingMetrics,independentRenderer:false,sourcePoseRepair:false};
  const ownedGeometries=new Set(),materials=new Set(),edgeHelpers=[],objects=[],cache=new Map(),unit=new THREE.Vector3(1,1,1),C=new THREE.Matrix4().makeRotationX(-Math.PI/2);
- const P=new THREE.Vector3(),Q=new THREE.Quaternion();let activeFrames=data.frames,attemptId='student',development=null,developmentPromise=null,developmentIndex=2,developmentHolding=false,progress=0,opacity=0,anatomyOpacity=1,implantOpacity=1,muscleOpacity=.82,chairOpacity=.68,disposed=false,frameA=data.frames[0],frameB=frameA,mix=0;
+ const P=new THREE.Vector3(),Q=new THREE.Quaternion();let activeFrames=data.frames,attemptId='student',development=null,developmentPromise=null,preloadRecording=null,preloadPromise=null,developmentIndex=2,developmentHolding=false,progress=0,opacity=0,anatomyOpacity=1,implantOpacity=1,muscleOpacity=.82,chairOpacity=.68,disposed=false,frameA=data.frames[0],frameB=frameA,mix=0;
  function geometryFor(g){
   if(g.stsMesh){if(cache.has(g.stsMesh))return cache.get(g.stsMesh);const raw=data.meshes[g.stsMesh],geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.BufferAttribute(raw.positions,3));geometry.setIndex(new THREE.BufferAttribute(raw.indices,1));geometry.computeVertexNormals();geometry.computeBoundingBox();ownedGeometries.add(geometry);cache.set(g.stsMesh,geometry);return geometry;}
   if(g.role==='chair'){const s=g.size,geometry=new THREE.BoxGeometry(2*s[0],2*s[1],2*s[2]);geometry.computeBoundingBox();ownedGeometries.add(geometry);return geometry;}
@@ -77,7 +79,7 @@ export async function createControlSTSLayer(scene,{gait,human}={}){
   updateMuscles();group.updateMatrixWorld(true);Object.assign(group.userData,{progress,sourceTime:THREE.MathUtils.lerp(frameA.t,frameB.t,mix),attemptId,developmentIndex,chairVisualCorrection:'chair_leg_3/4 +0.10m source X; recorded dynamics unchanged',sourceFrameIndices:[frameA.sourceIndex,frameB.sourceIndex],retainedNativeShaftCount:retainedBones.length,tendonSegments:muscles.count});
  }
  function setState(next={}){for(const k of ['opacity','anatomyOpacity','implantOpacity','muscleOpacity','chairOpacity'])if(next[k]!==undefined){const v=clamp(next[k]);if(k==='opacity')opacity=v;else if(k==='anatomyOpacity')anatomyOpacity=v;else if(k==='implantOpacity')implantOpacity=v;else if(k==='muscleOpacity')muscleOpacity=v;else chairOpacity=v;}if(next.progress!==undefined)setProgress(next.progress);refreshOpacity();}
- function getValues(){const A=frameA.values,B=frameB.values,out={telemetrySide:'left',motorPowerDefinition:data.provenance.motorPowerDefinition,developmentLabel:attemptId==='student'?'Successful student':development?.attempts.find(a=>a.id===attemptId)?.label,developmentIndex,developmentCount:3,developmentHolding,developmentPlaybackRate:attemptId==='student'?1:.75,sourceTime:THREE.MathUtils.lerp(frameA.t,frameB.t,mix)};for(const key of Object.keys(A))out[key]=typeof A[key]==='number'?THREE.MathUtils.lerp(A[key],B[key],mix):(mix<.5?A[key]:B[key]);return out;}
+ function getValues(){const A=frameA.values,B=frameB.values,out={telemetrySide:'left',motorPowerDefinition:data.provenance.motorPowerDefinition,developmentLabel:attemptId==='student'?'Successful student':attemptId==='preload'?'Successful preload control example':development?.attempts.find(a=>a.id===attemptId)?.label,developmentIndex,developmentCount:3,developmentHolding,developmentPlaybackRate:attemptId==='student'||attemptId==='preload'?1:.75,sourceTime:THREE.MathUtils.lerp(frameA.t,frameB.t,mix)};for(const key of Object.keys(A))out[key]=typeof A[key]==='number'?THREE.MathUtils.lerp(A[key],B[key],mix):(mix<.5?A[key]:B[key]);return out;}
  let fullBounds,developmentBounds;
  function computeReferenceBounds(includeDevelopment=false){let bounds=new THREE.Box3();const M=new THREE.Matrix4();for(const frame of [...data.frames,...(includeDevelopment?development?.attempts.flatMap(a=>a.frames)||[]:[])])for(const o of objects){if(frame.values.bareHuman&&o.geom.role==='implant')continue;if(!o.mesh.geometry.boundingBox)o.mesh.geometry.computeBoundingBox();P.fromArray(frame.p,o.index*3);if(o.mesh.userData.visualOffsetSourceM)P.x+=.1;M.copy(C).multiply(new THREE.Matrix4().compose(P,Q.fromArray(frame.q,o.index*4),unit));bounds.union(o.mesh.geometry.boundingBox.clone().applyMatrix4(M));}for(const f of data.frames)for(const side of ['left','right'])for(const role of ['femur','tibia']){const p=f.attachment[side][role].p;bounds.expandByPoint(new THREE.Vector3(...p).applyMatrix4(C));}return bounds;}
  function getReferenceBounds(){if(!fullBounds)fullBounds=computeReferenceBounds(false);return fullBounds.clone();}
@@ -102,14 +104,23 @@ export async function createControlSTSLayer(scene,{gait,human}={}){
   }).catch(error=>{developmentPromise=null;throw error;});
   return developmentPromise;
  }
+ async function ensurePreload(){
+  if(preloadRecording)return preloadRecording;
+  preloadPromise??=loadReplay('control-sts-preload','Successful high-preload sit-to-stand').then(value=>{
+   if(value.schema!=='pioneer-control-sts-preload-v1'||!value.provenance.taskSuccess||value.frames.length<2)throw Error('Invalid successful preload replay.');
+   for(const frame of value.frames)if(frame.p.length!==data.geoms.length*3||frame.q.length!==data.geoms.length*4)throw Error('Incompatible preload replay geometry.');
+   preloadRecording=value;return value;
+  }).catch(error=>{preloadPromise=null;throw error;});
+  return preloadPromise;
+ }
  function setAttempt(id='student'){
-  const attempt=id==='student'?null:development?.attempts.find(a=>a.id===id);
+  const attempt=id==='student'?null:id==='preload'&&preloadRecording?{...preloadRecording,id:'preload',label:'Successful preload control example'}:development?.attempts.find(a=>a.id===id);
   if(id!=='student'&&!attempt)throw Error(`STS attempt is not loaded: ${id}`);
   if(attemptId===id)return;
-  developmentHolding=false;attemptId=id;developmentIndex=id==='student'?2:development.attempts.indexOf(attempt);activeFrames=attempt?attempt.frames:data.frames;
+  developmentHolding=false;attemptId=id;developmentIndex=id==='student'?2:id==='preload'?-1:development.attempts.indexOf(attempt);activeFrames=attempt?attempt.frames:data.frames;
   setProgress(0);refreshOpacity();
  }
- function getAttempt(){return {id:attemptId,index:developmentIndex,count:3,label:attemptId==='student'?'Successful student':development?.attempts.find(a=>a.id===attemptId)?.label,durationSeconds:activeFrames.at(-1).t-activeFrames[0].t};}
+ function getAttempt(){return {id:attemptId,index:developmentIndex,count:3,label:attemptId==='student'?'Successful student':attemptId==='preload'?'Successful preload control example':development?.attempts.find(a=>a.id===attemptId)?.label,durationSeconds:activeFrames.at(-1).t-activeFrames[0].t};}
  function getDevelopmentDuration(){return development?development.attempts.reduce((sum,a)=>sum+(a.frames.at(-1).t-a.frames[0].t)/(a.provenance.playbackRate||.75)+(a.provenance.terminalHoldSeconds??1.5),0)+8:30.7466666667;}
  function setDevelopmentProgress(value){
   if(!development)return false;
@@ -123,7 +134,7 @@ export async function createControlSTSLayer(scene,{gait,human}={}){
   return false;
  }
  setProgress(0);refreshOpacity();
- return {ready:true,group,sourceGroup,data,source:data.provenance,durationSeconds:18,ensureDevelopment,setAttempt,getAttempt,getDevelopmentDuration,setDevelopmentProgress,setProgress,setState,setOpacity:value=>setState({opacity:value}),getValues,getBounds,getReferenceBounds,getDevelopmentBounds,getPoseBounds,getKneeAnchor,
+ return {ready:true,group,sourceGroup,data,source:data.provenance,durationSeconds:18,ensureDevelopment,ensurePreload,setAttempt,getAttempt,getDevelopmentDuration,setDevelopmentProgress,setProgress,setState,setOpacity:value=>setState({opacity:value}),getValues,getBounds,getReferenceBounds,getDevelopmentBounds,getPoseBounds,getKneeAnchor,
   dispose(){if(disposed)return;disposed=true;scene.remove(group);edgeHelpers.forEach(e=>e.dispose());ownedGeometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());}
  };
 }

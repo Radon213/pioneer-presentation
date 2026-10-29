@@ -19,7 +19,9 @@ export function sampleSpringExplanationMotion(timeSec=0,build=1){
  const contact=load>=.55;
  if(build===3){const series=seriesRegimeAtLoad(load);return {timeSec:Number(timeSec)||0,phase,load,merge,series,contact:series.contact,lowDeflectionDeg:35*series.weak,highDeflectionDeg:35*series.strong,weakDeflectionDeg:35*series.weak,normalizedTorque:series.tau,classification:'illustrative series stiffness dominance switch at contact'};}
  return {timeSec:Number(timeSec)||0,phase,load,merge,contact,contactFraction:.55,
-  lowDeflectionDeg:30*load,highDeflectionDeg:8*load,weakDeflectionDeg:54*load,
+  // Deliberately amplified only for the gap-closure teaching view. The intact
+  // CAD is warped continuously; this is not a predicted contact rotation.
+  lowDeflectionDeg:30*load,highDeflectionDeg:8*load,weakDeflectionDeg:(build===4?160:54)*load,
   normalizedTorque:build===4?conceptualContactResponse(load).torque:load,
-  classification:'illustrative synchronized elastic response'};
+  classification:build===4?'illustrative amplified winding; contact is not a solved field':'illustrative synchronized elastic response'};
 }

@@ -1,0 +1,790 @@
+{
+  "classification": "ACTUAL_RECORDED_MODEL_BASED_TEACHER_PRELOAD_EXAMPLE",
+  "sourceTrace": "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/p0_causal_execution_r1/p24_teacher_incumbent_confirmation_r1/actual_trace.npz",
+  "sourceTraceSHA256": "f2c6f64b75d77f7fea82dbfac4942b52bb907e59b4e05f07e62517ee28eae9c5",
+  "sourceModel": "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/runtime_p30_physics_student_r1/path48_15/chair22.xml",
+  "sourceModelSHA256": "264b1348b75070fd3fc04439db6fe4d3aebef194f63f69e1af629577d1277995",
+  "sourceWorld": 6,
+  "controller": "Explicit model-based assistance teacher with 6 Nm spring-torque target; frozen human muscle policy; not the learned limited-sensing student",
+  "sourceControllerMode": "teacher/preload target controller",
+  "teacherTargetTorqueNm": 6,
+  "durationSeconds": 18,
+  "frameCount": 452,
+  "sourceSampleHz": 100,
+  "displaySampleHz": 25,
+  "exactPeakSourceIndex": 342,
+  "exactPeakTimeSec": 3.43,
+  "peakSpringTorqueNm": 5.48840856552124,
+  "secondsAbove5Nm": 1.35,
+  "taskSuccess": true,
+  "completeDuration": true,
+  "finalQuietStandSeconds": 13.209999999999763,
+  "allRecordedHardwareGatesPassed": true,
+  "qualified": false,
+  "diagnosticOnly": true,
+  "pendingAudits": [
+    "substep equality-map staleness and native closed-loop residuals",
+    "device-chair collision clearance"
+  ],
+  "physicsSteps": 0,
+  "forwardDynamicsCalls": 0,
+  "offlineKinematicsCalls": 452,
+  "offlineTendonWrapCalls": 452,
+  "mujocoVersion": "3.4.0",
+  "poseRepair": false,
+  "sharedGeometrySource": "control-sts.bin",
+  "sharedGeometrySHA256": "bc7cf15035735bd151e84e3f8f62030a73eac154ef187b62820b0f47ef2f57a2",
+  "sharedMeshMaxDifferenceM": 0,
+  "sharedGeometryNameAndLocalTransformVerified": true,
+  "sharedNativeOwnershipCorrections": "Reuse the exact selected STS native subtree ownership; body poses come from this source trace, not gait or student poses.",
+  "telemetrySide": "left",
+  "motorPowerDefinition": "Last held applied motor-generated torque times saved drive-coordinate speed, output-referred. Not physical shaft output power.",
+  "telemetryAlignment": "POST-action qpos/qvel and same saved held control row. Time zero uses the stored initial fixture and repeats the first recorded control; no dynamics step.",
+  "simulationSpringLaw": "sign(delta)*6*(0.23577*abs(delta)/101.7+0.76423*expm1(0.20960*abs(delta))/expm1(0.20960*101.7)); delta in degrees",
+  "maximumSpringLawResidualNm": 8.311383128400962e-07,
+  "physicalSpringCalibration": false,
+  "evidenceLimit": "Nominal successful engineering simulation, not a clinical result, robustness trial, student result, or proof of assistance benefit.",
+  "searchSummary": {
+    "selectedStudentPeakNm": 3.7188191413879395,
+    "largestAuditedSourcePeakNm": 5.494632244110107,
+    "largestSource": "p15_standing_com_screen_r1/world6",
+    "selectedSourceReason": "Explicit teacher incumbent confirmation; 0.0063 Nm below prior screen maximum. No audited successful stored source at or above 6 Nm was found."
+  },
+  "protectedSourceHashes": {
+    "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/p0_causal_execution_r1/p24_teacher_incumbent_confirmation_r1/actual_trace.npz": "f2c6f64b75d77f7fea82dbfac4942b52bb907e59b4e05f07e62517ee28eae9c5",
+    "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/runtime_p30_physics_student_r1/path48_15/chair22.xml": "264b1348b75070fd3fc04439db6fe4d3aebef194f63f69e1af629577d1277995",
+    "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/p0_causal_execution_r1/p24_teacher_incumbent_confirmation_r1/recording.json": "8bd6acbf4336ba9d5aa667401a016bd47cd707a4756bd5ab32166eaa9b90e621",
+    "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/p0_causal_execution_r1/p24_teacher_incumbent_confirmation_r1/initial_fixture.npz": "9f87f4c22698695879f57ca86ef0c31ddb0d21b1581b714589ca3b712cf01561",
+    "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/p0_causal_execution_r1/p24_teacher_incumbent_confirmation_r1/CANDIDATE_POLICY_CONFIG.json": "b8f214d97601c7f386b5126faaafc481d4c06c646aeda641fe2eede0c2b1ebd5",
+    "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/p0_causal_execution_r1/p24_teacher_incumbent_confirmation_r1/independent_dwell_audit.json": "b28bcc58e2521c305790499703e369a0022f24e58dff43a407e702145ed73a1f",
+    "/home/arl/Documents/Pioneer/deploy/pioneer-presentation-pages-20261029/examples/pioneer-draft/assets/control-sts.bin": "bc7cf15035735bd151e84e3f8f62030a73eac154ef187b62820b0f47ef2f57a2",
+    "/home/arl/Documents/Pioneer/deploy/pioneer-presentation-pages-20261029/examples/pioneer-draft/assets/control-sts.bin.gz": "204c4f4905ea617e8244d9caf30c862ad408bbeea5c9cda114afc6bc038618d9"
+  },
+  "allProtectedSourcesUnchanged": true,
+  "geometryCompatibility": [
+    {
+      "name": "sacrum_geom_1",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "lumbar5_geom_1",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "lumbar4_geom_1",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "lumbar3_geom_1",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "lumbar2_geom_1",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "lumbar1_geom_1",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "torso_geom_1",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "torso_geom_2",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "torso_geom_3",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "torso_geom_4",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "torso_geom_5",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "torso_geom_6",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "torso_geom_7",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "torso_geom_8",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "torso_geom_9",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "torso_geom_10",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "torso_geom_11",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "torso_geom_12",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "torso_geom_13",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "hat_cervical",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "hat_jaw",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "hat_skull",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "pelvis_geom_1",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "pelvis_geom_2",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "pelvis_geom_3",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_condyle_right_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_sspsr3_20_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_fem_4_7_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_femur_stem_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_motor_cable_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_motor_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_motor_housing_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_condyle_left_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_lmsbm6_5_60_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_4x12_washer_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_20mm_m4_shcs_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_o_ring_shaft__visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_o_ring_stem__visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_link_3_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_jfm_0507_05_1_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_jfm_0507_05_2_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_joint3_shaft_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_helical_1m_21t_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_sspsr2_16_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_linkage_base_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_bearing_holder_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_body_c_cfs2_4_5__cut_extrude1_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_insert_left_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_insert_right_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_peek_bushing_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_link_1_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_jtm_0512_010_1_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_jtm_0512_010_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_insert_middle_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_tibial_base_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_root_Slider_Cover_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_root_TT_0365_02_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_4mm_m4_shcs_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_12mm_m5_shcs_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_guide1_e_crvs1020__mirror1_2_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_12mm_m5_shcs_1_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_mta05_13_h_zz_dbs_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_4mm_m3_shcs_1_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_4mm_m3_shcs_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_plate_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "tibia_r_geom_2",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "talus_r_geom_1",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "calcn_r_geom_1",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "toes_r_geom_1",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_part_49_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_jfm_0507_05_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_jfm_0507_05_3_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_squre_splined_bevel_gear_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_jsm_0508_05_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_weak_spring_top_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_strong_spring_bottom_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_12mm_m3_shcs_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_12mm_m3_shcs_1_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_motor_shaft_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_condyle_right_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_sspsr3_20_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_fem_4_7_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_femur_stem_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_motor_cable_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_motor_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_motor_housing_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_condyle_left_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_lmsbm6_5_60_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_4x12_washer_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_20mm_m4_shcs_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_o_ring_shaft__visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_o_ring_stem__visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_link_3_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_jfm_0507_05_1_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_jfm_0507_05_2_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_joint3_shaft_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_helical_1m_21t_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_sspsr2_16_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_linkage_base_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_bearing_holder_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_body_c_cfs2_4_5__cut_extrude1_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_insert_left_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_insert_right_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_peek_bushing_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_link_1_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_jtm_0512_010_1_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_jtm_0512_010_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_insert_middle_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_tibial_base_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_root_Slider_Cover_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_root_TT_0365_02_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_4mm_m4_shcs_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_12mm_m5_shcs_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_guide1_e_crvs1020__mirror1_2_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_12mm_m5_shcs_1_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_mta05_13_h_zz_dbs_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_4mm_m3_shcs_1_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_4mm_m3_shcs_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_plate_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "tibia_l_geom_2",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "talus_l_geom_1",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "calcn_l_geom_1",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "toes_l_geom_1",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_part_49_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_jfm_0507_05_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_jfm_0507_05_3_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_squre_splined_bevel_gear_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_jsm_0508_05_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_weak_spring_top_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_strong_spring_bottom_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_12mm_m3_shcs_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_12mm_m3_shcs_1_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_motor_shaft_visual",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_pos_5ecbody__pos_5ecbody__1__native_rebound_visual",
+      "frame": "native source body",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_pos_5ecbody__pos_5ecbody__1__native_rebound_visual",
+      "frame": "native source body",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_slpt6_25__1__native_rebound_visual",
+      "frame": "native source body",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_slpt6_25__1__native_rebound_visual",
+      "frame": "native source body",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_pos_5ecball__pos_5ecball__1__native_rebound_visual",
+      "frame": "native source body",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "aakj_r_pos_5ecball__pos_5ecball__1__native_rebound_visual",
+      "frame": "native source body",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "seat",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "chair_leg_1",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "chair_leg_2",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "chair_leg_3",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    },
+    {
+      "name": "chair_leg_4",
+      "frame": "source geom",
+      "localTransformsEqual": true
+    }
+  ],
+  "bytes": 3538840,
+  "gzipBytes": 1738391,
+  "binarySHA256": "e587aaad87690d73aa0a6e8591f929ce389828ac2c83aaba8a9c931ffd79d21c",
+  "gzipSHA256": "6238a3d5030b070a518ee36cf66dac4581a57672c32a6fce9428988d7e93449a"
+}
