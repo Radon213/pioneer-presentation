@@ -1,8 +1,8 @@
 # Pioneer — English speaker script
 
-1345 words · 12 minutes allocated · 6 chapters · 30 audience stages.
+1297 words · 12 minutes allocated · 6 chapters · 29 audience stages.
 
-**Bold words** carry the main emphasis. A **/** marks a short breath or pause; do not read the slash aloud. Keep the sentences simple and let the animation finish the explanation. The allocation averages about 112 spoken words per minute, including pauses. At 120 words per minute, the text takes about 11 minutes 13 seconds. Rehearse once and adjust pauses to your pace.
+**Bold words** carry the main emphasis. A **/** marks a short breath or pause; do not read the slash aloud. Keep the sentences simple and let the animation finish the explanation. The allocation averages about 108 spoken words per minute, including pauses. At 120 words per minute, the text takes about 10 minutes 49 seconds. Rehearse once and adjust pauses to your pace.
 
 ## Presenter mode
 
@@ -88,13 +88,9 @@ We connect **two springs in series**. Both carry the same torque, / and their an
 
 Here, / we focus on the **lower spiral**. As it winds, / the gaps between nearby turns become smaller. **Contact** reduces the length / that can bend freely, / so the response becomes **stiffer**. This enlarged motion explains the idea; / it is not a solved contact result.
 
-### 4-6 · 06:13–06:40 · 27 seconds
+### 4-6 · 06:13–07:00 · 47 seconds
 
 Analysis helps us inspect **deformation, stress, and torque**. The animation and this curve / come from **separate analyses**, / so we align them by angle for comparison. They are not one paired test. We still need to check / the material, contact, and boundary conditions / before making a **strength claim**.
-
-### 4-7 · 06:40–07:00 · 20 seconds
-
-These unit curves help estimate / the **combined response**. We add the two angles / at the **same torque**. The dashed part uses an approximation / beyond the upper spring data. This gives a **design estimate**, / not a measured law of the final device. How should control use / this **elastic state**?
 
 ## 5. Control
 
@@ -143,3 +139,4 @@ Finally, / this separate walking candidate stopped / at **twenty-seven point one
 ### 6-1 · 11:35–12:00 · 25 seconds
 
 The work connects **coupled knee motion**, / **nonlinear compliance**, / and control from local signals. We now have preliminary standing execution / and walking torque tracking in simulation. Next, / we will check coupling and sensing, / calibrate the spring, / and make fair task comparisons. The goal remains **support for older adults** / who need joint replacement and muscle assistance. Thank you.
+

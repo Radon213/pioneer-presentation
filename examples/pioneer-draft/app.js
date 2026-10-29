@@ -1,10 +1,10 @@
-import {createOverallLoadProgress} from './overall-load-progress.js?v=revision-20261029-64';
-import {typeStageCopy} from './copy-motion.js?v=revision-20261029-64';
+import {createOverallLoadProgress} from './overall-load-progress.js?v=revision-20261029-65';
+import {typeStageCopy} from './copy-motion.js?v=revision-20261029-65';
 import {startPresentationBenchmark} from './performance-benchmark.js';
-import slides,{deckVersion} from './deck-data.js?v=revision-20261029-64';
-import {createPresentationNavigation} from './presentation-navigation.js?v=revision-20261029-64';
-import {getMotionRate,setMotionRate} from './motion-clock.js?v=revision-20261029-64';
-import {getLoadProgress,reportLoadStage} from './asset-loading.js?v=revision-20261029-64';
+import slides,{deckVersion} from './deck-data.js?v=revision-20261029-65';
+import {createPresentationNavigation} from './presentation-navigation.js?v=revision-20261029-65';
+import {getMotionRate,setMotionRate} from './motion-clock.js?v=revision-20261029-65';
+import {getLoadProgress,reportLoadStage} from './asset-loading.js?v=revision-20261029-65';
 const deck=document.querySelector('.deck'),announcer=document.querySelector('#announcer'),sections=[...deck.querySelectorAll('.slide')];
 startPresentationBenchmark(deck);
 const params=new URLSearchParams(location.search),staticMode=params.get('motion')==='static',previewMode=params.has('preview'),reduced=matchMedia('(prefers-reduced-motion: reduce)');

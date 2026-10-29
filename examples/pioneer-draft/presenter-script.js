@@ -25,8 +25,8 @@ export const talk = [
     [20, `Our goal is to **start soft** / and **become stiffer** as winding grows. The curve is gentle at first, / then becomes steeper. The **slope is the stiffness**. How can we create that change / using the spring geometry?`],
     [30, `We connect **two springs in series**. Both carry the same torque, / and their angle changes add. At first, / the lower spring is **much softer**, / so it takes most of the motion. When contact makes it much stiffer, / extra motion shifts to the **upper spring**. The **softer spring** sets the combined stiffness / in each region.`],
     [22, `Here, / we focus on the **lower spiral**. As it winds, / the gaps between nearby turns become smaller. **Contact** reduces the length / that can bend freely, / so the response becomes **stiffer**. This enlarged motion explains the idea; / it is not a solved contact result.`],
-    [27, `Analysis helps us inspect **deformation, stress, and torque**. The animation and this curve / come from **separate analyses**, / so we align them by angle for comparison. They are not one paired test. We still need to check / the material, contact, and boundary conditions / before making a **strength claim**.`],
-    [20, `These unit curves help estimate / the **combined response**. We add the two angles / at the **same torque**. The dashed part uses an approximation / beyond the upper spring data. This gives a **design estimate**, / not a measured law of the final device. How should control use / this **elastic state**?`],
+    [47, `Analysis helps us inspect **deformation, stress, and torque**. The animation and this curve / come from **separate analyses**, / so we align them by angle for comparison. They are not one paired test. We still need to check / the material, contact, and boundary conditions / before making a **strength claim**.`],
+
   ],
   [
     [16, `Control must prepare the **spring state**, / not simply request knee torque. The input and output angles / set spring deformation and torque. The question is / **how much preload**, / and **when**.`],

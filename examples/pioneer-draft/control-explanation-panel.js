@@ -1,7 +1,7 @@
-import {controlTeachingFigure,updateTeachingCursor} from './control-teaching-figures.js?v=revision-20261029-64';
-import {CONTROL_INLINE_MATH as MATH} from './control-math.js?v=revision-20261029-64';
-import {preloadPlotMarkup,createPreloadPlotController} from './control-preload-plot.js?v=revision-20261029-64';
-import {createWalkingDisplaySeries,sampleWalkingTelemetry} from './control-walking-telemetry.js?v=revision-20261029-64';
+import {controlTeachingFigure,updateTeachingCursor} from './control-teaching-figures.js?v=revision-20261029-65';
+import {CONTROL_INLINE_MATH as MATH} from './control-math.js?v=revision-20261029-65';
+import {preloadPlotMarkup,createPreloadPlotController} from './control-preload-plot.js?v=revision-20261029-65';
+import {createWalkingDisplaySeries,sampleWalkingTelemetry} from './control-walking-telemetry.js?v=revision-20261029-65';
 // Diagram Design's repository grammar: neutral ink, thin orthogonal connectors,
 // 6 px editorial nodes and one coral focal path. The deck owns paper and serif type.
 const P={ink:'#2d3142',muted:'#4f5d75',accent:'#bf4520',paper:'#fdfcf8',rule:'rgba(45,49,66,.15)',tint:'rgba(191,69,32,.065)'};

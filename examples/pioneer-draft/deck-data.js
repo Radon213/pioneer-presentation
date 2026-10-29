@@ -1,6 +1,6 @@
-import {CONTROL_STAGES} from './control-chapter-content.js?v=revision-20261029-64';
+import {CONTROL_STAGES} from './control-chapter-content.js?v=revision-20261029-65';
 // Six large chapters; Control joins the simulation, teacher and limited-sensing execution story.
-export const deckVersion='revision-20261029-64';
+export const deckVersion='revision-20261029-65';
 const stage=(caption,question,notes)=>({caption,question,notes});
 const proposal='Pioneer_2022_proposal.pdf: PDF p11/printed p2 and PDF p40/printed p31';
 const interim='Moon, thesis interim presentation, 2024-12-10: slides3–15';
@@ -124,8 +124,9 @@ const springSubtitles=['Elasticity in the torque path','Low and high stiffness: 
 const controlSubtitles=CONTROL_STAGES.map(s=>s.subtitle);
 const controlStageDurations=CONTROL_STAGES.map(s=>s.duration);
 stageBodies[5]=CONTROL_STAGES.map(s=>s.body);takeaways[5]=CONTROL_STAGES.map(s=>s.takeaway);stageBodies[6]=['<p>Connect <strong>natural motion</strong>, <strong>nonlinear compliance</strong> and <strong>local-sensing control</strong>.</p><p>Next: verify <strong>models, sensing and fair task comparisons</strong>.</p>'];takeaways[6]=['Prepare timely support. Verify useful assistance.'];
+raw.find(s=>s.id===4).stages.pop();
 const slides=raw.map(s=>({...s,subtitle:s.id===1?'':s.title,title:headings[s.id]||s.title,authors:s.id===1?authors:undefined,affiliation:s.id===1?affiliation:undefined,affiliationLocation:s.id===1?'Busan, 46231, Korea':undefined,authorSource:s.id===1?authorSource:undefined,targetGroup:s.id===2?'Older adults':undefined,steps:s.stages.length-1,scene:{kind:'continuous',mode:'chapter',chapter:s.id},body:'',bridge:'',dummy:false,stages:s.stages.map((x,i)=>({...x,subtitle:s.id===3?hardwareSubtitles[i]:s.id===4?springSubtitles[i]:s.id===5?controlSubtitles[i]:x.subtitle,duration:s.id===5?controlStageDurations[i]:undefined,body:stageBodies[s.id][i].replaceAll('<br>',' '),takeaway:takeaways[s.id][i],layout:copyLayouts[s.id]?.[i]||{}})),notes:s.stages.map((x,i)=>`Stage ${i}: ${x.notes}`).join('\n\n')+(s.id===1?`\nCover authors and affiliation reproduced from ${authorSource}. Exact author spelling/order: Jongchan Mun; Sang Rok Jin. Paper results are not reused.`:'')}));
-slides[3].stages[6].notes+=' Series estimate: combined display is restricted to 0–120 degrees, with out-of-window curve segments clipped and cursor restricted to the visible polyline. Supplied curves plotted on identical 0–120 degree / 0–20 Nm axes. Common source-supported torque is 0.0593–1.0921 Nm. Beyond this, the upper unit is linearly extended from 45 degrees / 1.0921 Nm using the terminal OLS slope 0.0280801 Nm/degree; the inferred series response is dashed. Approximate series low/high slopes are 0.0079974 / 0.0260641 Nm/degree (0.458 / 1.493 Nm/rad). These are model estimates from prototype tables, not calibrated current hardware or validated allowable travel. Details: docs/spring-series-20261029.md.';
+
 const coverReplayNote=' Cover spring: actual stored double-spiral FEA loading frames are replayed forward and backward in the same 1.12-second presentation cycle as recorded walking. The enlarged inset and timing are explanatory presentation choices, not a coupled gait/FEA spring response or a solved unloading branch. PNU signature is the original official transparent PNG, aspect ratio preserved.';
 slides[0].stages[0].notes+=coverReplayNote;slides[0].notes+=coverReplayNote;
 if(slides.reduce((n,s)=>n+s.duration,0)!==720)throw Error('Expected twelve-minute allocation');
