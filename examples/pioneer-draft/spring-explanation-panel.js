@@ -1,8 +1,8 @@
-import {springResponsePoints,responseAtAngle} from './spring-plot-data.js?v=revision-20261029-62';
-import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-62';
-import {SPRING_MATH} from './spring-math.js?v=revision-20261029-62';
-import {SPRING_COMPARISON,SERIES_LINEAR_ESTIMATE} from './spring-series-data.js?v=revision-20261029-62';
-import {sampleSpringExplanationMotion,conceptualContactResponse,seriesRegimeAtLoad} from './spring-explanation-motion.js?v=revision-20261029-62';
+import {springResponsePoints,responseAtAngle} from './spring-plot-data.js?v=revision-20261029-64';
+import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-64';
+import {SPRING_MATH} from './spring-math.js?v=revision-20261029-64';
+import {SPRING_COMPARISON,SERIES_LINEAR_ESTIMATE} from './spring-series-data.js?v=revision-20261029-64';
+import {sampleSpringExplanationMotion,conceptualContactResponse,seriesRegimeAtLoad} from './spring-explanation-motion.js?v=revision-20261029-64';
 // Diagram Design example-architecture / example-process / example-line grammar:
 // retain their neutral nodes, single burnt-tangerine focus, thin connectors,
 // rounded orthogonal ports and line/area/dot hierarchy. Slide shell is untouched.
@@ -93,9 +93,10 @@ function archive(){
   out+=t(x+w,y+h+45,'Rotation (°)',23,P.muted,'end');
  }
  out+=t(76,22,'Torque (N·m)',23,P.muted,'start');
- const estimate=SERIES_LINEAR_ESTIMATE,cx=700,cy=145,cw=435,ch=420,ex=a=>cx+a/800*cw,ey=v=>cy+ch-v/20*ch;
+ const estimate=SERIES_LINEAR_ESTIMATE,cx=700,cy=145,cw=435,ch=420,ex=a=>cx+a/SERIES_LINEAR_ESTIMATE.axes.angleMax*cw,ey=v=>cy+ch-v/20*ch;
  out+=t(cx,38,'Combined series response',32,P.accent,'start')+t(cx,77,'Series estimate',25,P.ink,'start')+t(cx,111,'Torque (N·m)',23,P.muted,'start')+
- axis(cx,cy,cw,ch,{xmax:800,ymax:20,labels:true})+
+ axis(cx,cy,cw,ch,{xmax:estimate.axes.angleMax,ymax:20,labels:true})+
+ `<defs><clipPath id="spring-combined-window"><rect x="${cx}" y="${cy}" width="${cw}" height="${ch}"/></clipPath></defs><g data-series-angle-max="120" clip-path="url(#spring-combined-window)">`+
  `<path data-reveal-curve pathLength="1" d="${dataPath(estimate.measuredPoints,ex,ey)}" fill="none" stroke="${P.accent}" stroke-width="4"/>
  <path data-series-estimate d="${dataPath(estimate.extrapolatedPoints,ex,ey)}" fill="none" stroke="${P.accent}" stroke-width="3.5" stroke-dasharray="9 6"/>
  <circle data-composition-marker r="7" fill="${P.accent}" stroke="#fdfcf8" stroke-width="2"/>`;
@@ -104,13 +105,14 @@ function archive(){
   const fitSegment=kind==='high'?[.15,.45].map(u=>{const angleDeg=fit.angleRange[0]+u*(fit.angleRange[1]-fit.angleRange[0]);return {angleDeg,torqueNm:fit.kNmPerDeg*angleDeg+fit.interceptNm};}):fit.endpoints;
   out+=`<path data-fit-line="${kind}" d="${dataPath(fitSegment,ex,ey)}" stroke="${color}" stroke-width="2" fill="none"/>`;
  }
+ out+='</g>';
  out+=line('M535 292H620',P.muted,1.8)+t(575,278,'δ₁ + δ₂',26,P.ink)+
  t(cx+cw,624,'Total rotation (°)',24,P.muted,'end')+
  t(cx,655,`Low: ${estimate.stiffness.low.kNmPerDeg.toFixed(3)} N·m/°`,26,P.muted,'start')+
  t(cx,694,`High: ≈ ${estimate.stiffness.high.kNmPerDeg.toFixed(3)} N·m/°`,26,P.ink,'start')+
  t(76,685,'Raw curves: identical axes',24,P.muted,'start')+
  line('M700 734H748',P.accent,3,true)+t(762,742,'Linear upper-unit approximation',23,P.muted,'start');
- return svg(out,'Original two supplied responses have identical0 to120 degree and0 to20 Nm axes. Series calculation adds deflections at a common torque. Dashed continuation assumes a linear upper-unit response beyond its recorded range.').replace('720 500','1200 770');
+ return svg(out,'Original two supplied responses have identical0 to120 degree and0 to20 Nm axes. The combined chart is also limited to0 to120 degrees; values beyond this view are clipped without rescaling the source angles. Series calculation adds deflections at a common torque. Dashed continuation assumes a linear upper-unit response beyond its recorded range.').replace('720 500','1200 770');
 }
 function feaLegend(fea){if(!fea)return '';const curve=springResponsePoints,ymax=20,px=x=>680+x/120*450,py=y=>460-y/ymax*260;
  let out=t(600,15,'Deformation and torque response',36)+t(510,125,'Normalized stress',25,P.muted);
@@ -159,9 +161,13 @@ function updatePanelMotion(root,build,motion){
 function updateQuantitativeComposition(root,m){
  // The source estimate is rendered below when its two source branches overlap.
  const marker=root.querySelector('[data-composition-marker]');if(!marker)return;
- const data=SERIES_LINEAR_ESTIMATE.points;
+ const maxAngle=SERIES_LINEAR_ESTIMATE.axes.angleMax,source=SERIES_LINEAR_ESTIMATE.points,data=source.filter(p=>p.angleDeg<=maxAngle);
+ // The cursor follows only the visible 0–120 degree segment of the unchanged
+ // polyline. Interpolate its boundary exactly where that line crosses 120°.
+ const crossing=source.findIndex((p,i)=>i&&source[i-1].angleDeg<=maxAngle&&p.angleDeg>maxAngle);
+ if(crossing>0){const a=source[crossing-1],b=source[crossing],u=(maxAngle-a.angleDeg)/(b.angleDeg-a.angleDeg);data.push({angleDeg:maxAngle,torqueNm:a.torqueNm+u*(b.torqueNm-a.torqueNm)});}
  const index=Math.min(data.length-1,m.load*(data.length-1)),i=Math.floor(index),u=index-i,a=data[i],b=data[Math.min(data.length-1,i+1)];if(!a)return;const p={angleDeg:a.angleDeg+(b.angleDeg-a.angleDeg)*u,torqueNm:a.torqueNm+(b.torqueNm-a.torqueNm)*u};
- const x=700+p.angleDeg/800*435,y=565-p.torqueNm/20*420;
+ const x=700+p.angleDeg/maxAngle*435,y=565-p.torqueNm/20*420;
  marker.setAttribute('cx',x);marker.setAttribute('cy',y);
 }
 export function createSpringExplanationPanel(host){

@@ -57,11 +57,11 @@ test('preliminary results do not become an effort, robustness or PPO-benefit hea
  assert.doesNotMatch(publicText,/PPO (?:gain|improvement|benefit)|robust success|clinically validated/i);
  const result=control.stages[6];
  assert.match(audience(result),/nominal/i);
- assert.match(audience(result),/audits remain/i);
+ assert.match(result.notes,/actual left spring peak5.4884086Nm/);
  assert.match(result.notes,/diagnostic_only=true/);
  assert.match(result.notes,/qualified=false/);
  assert.match(result.notes,/noise=0/);
- assert.match(result.notes,/zero.neural.residual/i);
+ assert.match(result.notes,/full.state teacher p24\/world6/);
  assert.match(control.stages[7].notes,/different walking controller and experiment/i);
  assert.match(control.stages[9].notes,/26.9548206 W/);
 });

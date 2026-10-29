@@ -1,8 +1,8 @@
 # Pioneer — English speaker script
 
-1356 words · 12 minutes allocated · 6 chapters · 30 audience stages.
+1345 words · 12 minutes allocated · 6 chapters · 30 audience stages.
 
-**Bold words** carry the main emphasis. A **/** marks a short breath or pause; do not read the slash aloud. Keep the sentences simple and let the animation finish the explanation. The allocation averages about 113 spoken words per minute, including pauses. At 120 words per minute, the text takes about 11 minutes 18 seconds. Rehearse once and adjust pauses to your pace.
+**Bold words** carry the main emphasis. A **/** marks a short breath or pause; do not read the slash aloud. Keep the sentences simple and let the animation finish the explanation. The allocation averages about 112 spoken words per minute, including pauses. At 120 words per minute, the text takes about 11 minutes 13 seconds. Rehearse once and adjust pauses to your pace.
 
 ## Presenter mode
 
@@ -104,7 +104,7 @@ Control must prepare the **spring state**, / not simply request knee torque. The
 
 ### 5-2 · 07:16–07:36 · 20 seconds
 
-Our implant sits **inside the body**. / This makes sensors on the output shaft / or spring hard to place. The simulator can show these **hidden states**. A device must use **motor-side signals**. This is why we use / a teacher and a student.
+Here is our walking model, / with a closer view of the knee. The implant sits **inside the body**. Sensors on the output shaft / or spring are hard to place. We use **motor-side signals** / to estimate these **hidden states**. This motivates our teacher-student approach.
 
 ### 5-3 · 07:36–07:59 · 23 seconds
 
@@ -124,7 +124,7 @@ We train the standing student / to **imitate the teacher**. This graph shows tar
 
 ### 5-7 · 09:30–10:02 · 32 seconds
 
-Now compare the **spring torque over time**. These are actual teacher and student runs / using the same four-newton-metre setting. They differ from the six-newton-metre example earlier. The student can rise / and keep standing in this **nominal simulation**. This is a first execution result. It is **not a robustness test**. Model coupling, chair contact, / and sensing still need checks.
+Here we replay the same **teacher run** / at the **six-newton-metre setting**. The spring torque reaches / about **five point five newton metres**. It builds before the rise, / acts as the knee extends, / then falls as the body stands. Follow the moving point / and the body together.
 
 ### 5-8 · 10:02–10:34 · 32 seconds
 

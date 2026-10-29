@@ -8,11 +8,15 @@ export function createCoverKneeFocus(host){
  root.style.cssText='position:absolute;left:25%;top:14%;width:15%;height:66%;pointer-events:none;border-top:1px solid rgba(45,49,66,.25);border-bottom:1px solid rgba(45,49,66,.25);z-index:2;color:#bf4520;';
  root.innerHTML='<svg viewBox="0 0 160 260" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible" aria-hidden="true"><path data-knee-rest-arc d="M94 97 A38 38 0 0 1 94 173" fill="none" stroke="rgba(191,69,32,.17)" stroke-width="3"/><path data-knee-arc fill="none" stroke="#bf4520" stroke-width="3" stroke-linecap="round"/></svg><div style="position:absolute;top:-1.45em;left:0;width:100%;font-size:21px;text-align:center;white-space:nowrap">Knee flexion</div><div data-knee-angle style="position:absolute;bottom:.2em;left:0;width:100%;font-size:28px;text-align:center;font-variant-numeric:tabular-nums"></div>';
  host.append(root);const camera=new THREE.OrthographicCamera(-.1,.1,.14,-.14,.001,20),angle=root.querySelector('[data-knee-angle]');const arc=root.querySelector('[data-knee-arc]'),restArc=root.querySelector('[data-knee-rest-arc]');let lightsReady=false;camera.layers.set(1);
- return {render({active,renderer,scene,sourceCamera,gait,width,height}){
+ return {render({active,mode='cover',renderer,scene,sourceCamera,gait,width,height}){
   root.hidden=!active||!gait;if(root.hidden)return;
   if(!lightsReady){scene.traverse(object=>{if(object.isLight)object.layers.enable(1);});lightsReady=true;}
-  const x=width*.25,y=height*.20,w=width*.15,h=height*.66,half=.225;
-  const attachment=gait.getAttachment('left'),knee=attachment.kneeAnchor,target=knee.clone().addScaledVector(new THREE.Vector3(0,1,0).transformDirection(attachment.femur),.10);
+  const control=mode==='control',left=control?.31:.25,top=control?.10:.14,vw=control?.30:.15,vh=control?.80:.66;
+  Object.assign(root.style,{left:`${left*100}%`,top:`${top*100}%`,width:`${vw*100}%`,height:`${vh*100}%`});
+  root.dataset.mode=mode;root.querySelector('div').textContent=control?'Implanted knee':'Knee flexion';
+  angle.hidden=control;arc.style.display=control?'none':'';restArc.style.display=control?'none':'';
+  const x=width*left,y=height*(1-top-vh),w=width*vw,h=height*vh,half=control?.14:.225;
+  const attachment=gait.getAttachment('left'),knee=attachment.kneeAnchor,target=knee.clone().addScaledVector(new THREE.Vector3(0,1,0).transformDirection(attachment.femur),control?.015:.10);
   // Keep the familiar cover orientation and magnify its real left knee.
   camera.left=-half*w/h;camera.right=half*w/h;camera.top=half;camera.bottom=-half;camera.updateProjectionMatrix();
   camera.quaternion.copy(sourceCamera.quaternion);camera.position.copy(target).add(new THREE.Vector3(0,0,5).applyQuaternion(camera.quaternion));

@@ -98,7 +98,7 @@ export const SERIES_LINEAR_ESTIMATE=Object.freeze({
   points:estimatedPoints,
   measuredPoints:estimatedPoints.filter(p=>!p.extrapolated),
   extrapolatedPoints:estimatedPoints.filter((p,i)=>p.extrapolated||estimatedPoints[i+1]?.extrapolated),
-  axes:{angleMin:0,angleMax:800,angleStep:200,torqueMin:0,torqueMax:20,torqueStep:5},
+  axes:{angleMin:0,angleMax:120,angleStep:30,torqueMin:0,torqueMax:20,torqueStep:5},
   measuredTorqueMax:terminalStrong.torqueNm,
   approximationStart:estimatedPoints.find(p=>Math.abs(p.torqueNm-terminalStrong.torqueNm)<1e-12),
   upperSlopeNmPerDeg:terminalSlope,

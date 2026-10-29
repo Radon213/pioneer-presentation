@@ -17,7 +17,7 @@ test('spoken script covers every audience stage and keeps the twelve-minute chap
 });
 test('spoken results retain the limits of the saved standing and walking evidence',()=>{
  assert.match(spokenText(getTalkStage(5,5).text),/reinforcement-learning pilot did not show an added benefit/);
- assert.match(spokenText(getTalkStage(5,6).text),/not a robustness test/);
+ assert.match(spokenText(getTalkStage(5,6).text),/same teacher run/);
  assert.match(spokenText(getTalkStage(5,7).text),/different teacher/);
  assert.match(spokenText(getTalkStage(5,9).text),/cannot call this a completed walking result/);
  assert.match(spokenText(getTalkStage(4,5).text),/separate analyses/);
