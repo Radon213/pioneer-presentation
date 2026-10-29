@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {loadJSONWithProgress} from './asset-loading.js?v=revision-20261029-24';
+import {loadJSONWithProgress} from './asset-loading.js?v=revision-20261029-25';
 /** Original 80-muscle model paths, displayed with fusiform envelopes for legibility.
  * Envelope thickness is explanatory; no activation or segmented volume is claimed. */
 export async function createMyoLeg80MuscleLayer(scene,{human}){

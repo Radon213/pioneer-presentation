@@ -1,6 +1,6 @@
-import {buildArchivedSpringChart} from './archived-spring-chart.js?v=revision-20261029-24';
-import {buildDiagram} from './chapter-diagram-layer.js?v=revision-20261029-24';
-import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-24';
+import {buildArchivedSpringChart} from './archived-spring-chart.js?v=revision-20261029-25';
+import {buildDiagram} from './chapter-diagram-layer.js?v=revision-20261029-25';
+import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-25';
 // Short visual explanations. All quantitative FEA marks use the same archived solver case.
 const C={ink:'#1a3a7a',accent:'#a44725',muted:'#585950',line:'#b5b3ab',paper:'#fdfcf8'};
 const text=(x,y,s,z=26,c=C.ink,a='middle')=>`<text x="${x}" y="${y}" font-size="${z}" fill="${c}" text-anchor="${a}" stroke="${C.paper}" stroke-width="5" paint-order="stroke">${s}</text>`;
@@ -82,13 +82,14 @@ export function buildChapterOverlay(ctx){
   if(b===1){
    const pts=['j1','j2','j3','j4'].map(at);s+=path([...pts,pts[0]],C.ink,false,4);
    pts.forEach((p,i)=>s+=`<circle cx="${p[0]}" cy="${p[1]}" r="${i===1?8:6}" fill="${C.paper}" stroke="${C.ink}" stroke-width="2.5" ${i===1?'stroke-dasharray="3 3"':''}/>`);
-   const trace=Array.from({length:55},(_,i)=>project(point(ctx.history(.86*i/54).jointCenters.j2)));
-   s+=path(trace,C.accent,true,3)+dot(at('j2'),8)+text(800,65,'Moving centre · equivalent four-bar',34,C.ink);
+   const trace=Array.from({length:75},(_,i)=>project(point(ctx.history(.86*i/74).femoralReference))),reference=project(point(frame.femoralReference));
+   s+=path(trace,C.accent,true,3)+dot(reference,8)+text(350,65,'Femoral trajectory',34,C.ink);
+   s+=leader(reference,1260,410,'Link-fixed reference');
    return s;
   }
   if(b===2||b===3){
    const j=at('j3'),slider=at('slider'),p=at('pivot'),p0=ctx.history(0).jointCenters;
-   if(b===2){s+=dot(j,10)+arrow(project(point(p0.j3)),j)+leader(j,350,80,'Joint 3 ↓');s+=dot(slider,9)+arrow(project(point(p0.slider)),slider)+leader(slider,1190,395,'Slider retracts');}
+   if(b===2){s+=dot(j,10)+arrow(project(point(p0.j3)),j)+leader(j,350,80,'Joint 3 descends');s+=dot(slider,9)+arrow(project(point(p0.slider)),slider)+leader(slider,1190,395,'Slider retracts');}
    const pivot=point(frame.jointCenters.pivot),r=.031,theta=frame.pivotDeg*Math.PI/180;
    const onArc=a=>project(pivot.clone().add(point([r*Math.cos(a),0,-r*Math.sin(a)])));
    s+=dot(p,10,C.ink)+path([onArc(0),p,onArc(theta)],C.ink,false,2);
@@ -101,15 +102,15 @@ export function buildChapterOverlay(ctx){
   if(b===4){
    const motor=partPoint('motor::'),gear=partPoint('helical_1m_21t'),output=partPoint('link_3');
    if(motor)s+=leader(project(motor),330,75,'Motor',C.ink);
-   if(gear)s+=leader(project(gear),1150,100,'Gears',C.ink);
-   if(output)s+=leader(project(output),1130,440,'Joint motion');
+   if(gear)s+=leader(project(gear),1320,220,'Gears',C.ink);
+   if(output)s+=leader(project(output),1320,440,'Joint motion');
    return s;
   }
   if(b===5){
    const motor=partPoint('motor::'),spring=ctx.springPoint('weak'),output=partPoint('squre_splined_bevel_gear');
-   if(motor)s+=leader(project(motor),280,75,'BLDC motor',C.ink);
-   if(spring)s+=leader(project(spring),800,420,'Series spring');
-   if(output)s+=leader(project(output),1310,100,'Output shaft',C.ink);
+   if(motor)s+=leader(project(motor),320,80,'BLDC motor',C.ink);
+   if(spring)s+=leader(project(spring),1280,285,'Series spring');
+   if(output)s+=leader(project(output),320,450,'Output shaft',C.ink);
    return s;
   }
   return s;
