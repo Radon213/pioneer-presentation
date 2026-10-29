@@ -1,4 +1,4 @@
-import {reportLoadStage} from './asset-loading.js?v=revision-20261029-12';
+import {reportLoadStage} from './asset-loading.js?v=revision-20261029-17';
 import * as THREE from 'three';
 import {loadGaitBinary} from './gait-binary-loader.js';
 import {createShadedEdges} from './shaded-edges.js';
@@ -8,14 +8,14 @@ import {createShadedEdges} from './shaded-edges.js';
  * Source colours and side geometry stay intact; right meshes are already the
  * actual source reflection and must not be mirrored again.
  */
-export async function createGaitChapterLayer(scene){
+export async function createGaitChapterLayer(scene,{human}={}){
  const data=await loadGaitBinary();
  reportLoadStage('gait-meshes','Building walking meshes',{ratio:0});
  if(data.schema!=='pioneer-gait-chapter-v1'||data.frames.length<2)throw Error('Recorded gait asset schema is invalid.');
  const meshBuildStarted=performance.now();
  const group=new THREE.Group();group.name='ActualRecordedBilateralGait';
  const sourceGroup=new THREE.Group();sourceGroup.name='GaitSource_Zup_to_Yup';sourceGroup.rotation.x=-Math.PI/2;group.add(sourceGroup);scene.add(group);
- group.userData={source:data.provenance,classification:data.provenance.classification,sourceTraceSHA256:data.provenance.sourceTraceSHA256,measuredClinicalData:false,assistanceBenefit:false,independentRenderer:false,geometryCount:data.geoms.length,frameCount:data.frames.length,loadingMetrics:data.loadingMetrics};
+ group.userData={source:data.provenance,classification:data.provenance.classification,sourceTraceSHA256:data.provenance.sourceTraceSHA256,measuredClinicalData:false,assistanceBenefit:false,independentRenderer:false,retainedNativeShaftCount:4,geometryCount:data.geoms.length,frameCount:data.frames.length,loadingMetrics:data.loadingMetrics};
  const C=new THREE.Matrix4().makeRotationX(-Math.PI/2),Ci=C.clone().invert();
  const geometries=new Set(),materials=new Set(),cache=new Map(),objects=[],edgeHelpers=[];
  const unit=new THREE.Vector3(1,1,1),positionB=new THREE.Vector3(),quaternionB=new THREE.Quaternion();
@@ -37,7 +37,23 @@ export async function createGaitChapterLayer(scene){
   if(implant)edgeHelpers.push(createShadedEdges(mesh,{thresholdAngle:28,color:0x2e3932,opacity:.26}));
   if(index%16===0){reportLoadStage('gait-meshes','Building walking meshes',{ratio:(index+1)/data.geoms.length});await new Promise(requestAnimationFrame);}
  }
- reportLoadStage('gait-meshes','Walking meshes ready',{ratio:1,state:'ready'});
+ // Restore retained native shafts omitted by the device model's visual export.
+ // Bone-local placement is recovered from the native STS frame; every gait pose
+ // uses the saved femur/tibia body frames, with only the implant joint end hidden.
+ const retainedBones=[];
+ if(human){
+  const native=human.sourceData,af=human.attachmentData.frames.at(-1),nf=native.frames.at(-1),matrix=(v)=>new THREE.Matrix4().compose(new THREE.Vector3(...v.p),new THREE.Quaternion(...v.q),unit);
+  for(const side of ['left','right'])for(const role of ['femur','tibia']){
+   const name=`${role}_${side==='left'?'l':'r'}_geom_1`,index=native.geoms.findIndex(g=>g.name===name),raw=human.sourceGroup.getObjectByName(name);if(index<0||!raw)throw Error(`Missing native shaft ${name}`);
+   const local=matrix(af[side][role]).invert().multiply(new THREE.Matrix4().compose(new THREE.Vector3().fromArray(nf.p,index*3),new THREE.Quaternion().fromArray(nf.q,index*4),unit));
+   const material=new THREE.MeshStandardMaterial({color:0xc8c5b8,roughness:.76,side:THREE.DoubleSide});materials.add(material);
+   const clip={center:{value:new THREE.Vector3()},up:{value:new THREE.Vector3()}};
+   material.onBeforeCompile=shader=>{Object.assign(shader.uniforms,{uShaftKnee:clip.center,uShaftUp:clip.up});shader.vertexShader='varying vec3 vShaftWorld;\n'+shader.vertexShader;shader.vertexShader=shader.vertexShader.replace('#include <project_vertex>','#include <project_vertex>\nvShaftWorld=(modelMatrix*vec4(transformed,1.0)).xyz;');shader.fragmentShader='varying vec3 vShaftWorld;uniform vec3 uShaftKnee;uniform vec3 uShaftUp;\n'+shader.fragmentShader;shader.fragmentShader=shader.fragmentShader.replace('#include <color_fragment>',`#include <color_fragment>\nfloat h=dot(vShaftWorld-uShaftKnee,uShaftUp);if(${role==='femur'?'h<.055':'h>-.055'})discard;`);};
+   material.customProgramCacheKey=()=>`retained-gait-shaft-${role}`;
+   const mesh=new THREE.Mesh(raw.geometry,material);mesh.name=`Restored_${name}`;mesh.matrixAutoUpdate=false;sourceGroup.add(mesh);retainedBones.push({mesh,material,local,side,role,clip});
+  }
+ }
+ reportLoadStage('gait-meshes','Walking meshes ready' ,{ratio:1,state:'ready'});
  const muscleGeometry=new THREE.CylinderGeometry(1,1,1,8,1),muscleMaterial=new THREE.MeshStandardMaterial({color:0xffffff,roughness:.74,metalness:0,transparent:true,opacity:.88});geometries.add(muscleGeometry);materials.add(muscleMaterial);
  const capacity=Math.max(...data.frames.map(frame=>frame.tendons.reduce((n,p)=>n+Math.max(0,p.length/3-1),0)));
  const muscles=new THREE.InstancedMesh(muscleGeometry,muscleMaterial,capacity);muscles.name='RecordedGaitTendonWrapPaths';muscles.frustumCulled=false;sourceGroup.add(muscles);
@@ -57,12 +73,14 @@ export async function createGaitChapterLayer(scene){
  function refreshOpacity(){
   group.visible=opacity>.0001;
   for(const o of objects){const alpha=opacity*(o.geom.role==='implant'?implantOpacity:anatomyOpacity)*o.geom.rgba[3];o.material.opacity=alpha;o.material.transparent=alpha<.999;o.material.depthWrite=alpha>.97;o.mesh.visible=alpha>.0001;}
+  for(const bone of retainedBones){bone.mesh.visible=opacity*anatomyOpacity>.001;bone.material.opacity=opacity*anatomyOpacity;bone.material.transparent=bone.material.opacity<.999;bone.material.depthWrite=bone.material.opacity>.97;}
   muscleMaterial.opacity=opacity*anatomyOpacity*muscleOpacity*.88;muscles.visible=muscleMaterial.opacity>.0001;muscleMaterial.depthWrite=muscleMaterial.opacity>.97;
   edgeHelpers.forEach(edge=>edge.sync());Object.assign(group.userData,{opacity,implantOpacity,anatomyOpacity,muscleOpacity});
  }
  function setProgress(value){
   if(disposed)return;progress=THREE.MathUtils.clamp(Number(value)||0,0,1);const x=progress*(data.frames.length-1),i=Math.floor(x),j=Math.min(i+1,data.frames.length-1);mix=x-i;frameA=data.frames[i];frameB=data.frames[j];
   for(const o of objects){o.mesh.position.fromArray(frameA.p,o.index*3).lerp(positionB.fromArray(frameB.p,o.index*3),mix);o.mesh.quaternion.fromArray(frameA.q,o.index*4).slerp(quaternionB.fromArray(frameB.q,o.index*4),mix);}
+  for(const bone of retainedBones){const A=frameA.attachment[bone.side],B=frameB.attachment[bone.side],v=A[bone.role],w=B[bone.role];const M=new THREE.Matrix4().compose(new THREE.Vector3(...v.p).lerp(new THREE.Vector3(...w.p),mix),new THREE.Quaternion(...v.q).slerp(new THREE.Quaternion(...w.q),mix),unit);bone.mesh.matrix.copy(M.multiply(bone.local));const world=group.matrixWorld.clone().multiply(C);bone.clip.center.value.copy(new THREE.Vector3(...A.knee).lerp(new THREE.Vector3(...B.knee),mix).applyMatrix4(world));bone.clip.up.value.set(0,0,1).transformDirection(world);}
   updateMuscles();group.updateMatrixWorld(true);Object.assign(group.userData,{progress,sourceTime:THREE.MathUtils.lerp(frameA.t,frameB.t,mix),sourceFrameIndices:[frameA.sourceIndex,frameB.sourceIndex],tendonSegments:muscles.count});
  }
  const clamp=v=>THREE.MathUtils.clamp(Number(v)||0,0,1);

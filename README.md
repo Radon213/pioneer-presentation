@@ -1,6 +1,6 @@
 # Pioneer · ICCAS 2026 presentation
 
-Working source and public presentation with continuous Three.js scenes. Current slide revision: `revision-20261029-12`.
+Working source and public presentation with continuous Three.js scenes. Current slide revision: `revision-20261029-17`.
 
 - [Presentation](https://radon213.github.io/pioneer-presentation/examples/pioneer-draft/index.html)
 - Right / Space: next stage. Left: previous stage. Hold an arrow for fast navigation.
@@ -29,6 +29,8 @@ Third-party notices are in `THIRD_PARTY_NOTICES.md` and the corresponding source
 
 ## Background sequence
 
-The five Background builds follow joint degeneration, conventional replacement, age-related muscle capacity, three source-composed wearable examples, and a conventional replacement plus original Maxon motor concept. The completed Pioneer assembly is withheld in the last concept build.
+The five Background builds follow joint degeneration, conventional replacement, age-related muscle capacity, three source-composed wearable examples, and a conventional replacement plus source BLDC motor concept, including its shaft. The completed Pioneer assembly is withheld in the last concept build.
 
 HMEDI, OpenExo and Dephy ExoBoot retain their actual MyoAssist human attachments. Their small source-keyframe motion is a kinematic illustration, not a learned assistance result. The 4.42 MB compressed examples prepare on demand while the preceding Background stage is shown; they are absent from the cover download. Quantitative source/provenance and licenses are in `assets/myoassist-examples/`.
+
+The cover restores the four retained native femur/tibia shafts from the existing anatomy meshes and attaches them to the saved bilateral gait bone frames; source gait transforms remain unchanged. The Background surgery build separates the bones, shows explanatory femoral/tibial preparation, inserts the conventional components, presents the polyethylene insert from above, then returns and reduces the joint. This visual sequence is not a surgical planning result. The muscle build uses the original neutral paths from the 80-muscle `myo_sim` model (40 left-side paths); authored tapered display envelopes improve legibility without claiming segmented muscle volumes or activation results. The source count, license and tendon SHA256 are included in `assets/myoleg80-muscles.json`. This adds about 8.5 kB to the lazy muscle step and reuses the loaded native shaft geometries.

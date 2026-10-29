@@ -1,4 +1,4 @@
-import {loadJSONWithProgress} from './asset-loading.js?v=revision-20261029-12';
+import {loadJSONWithProgress} from './asset-loading.js?v=revision-20261029-17';
 import * as THREE from 'three';
 
 /** One-scene replay of the actual native-muscle STS reference.
@@ -10,7 +10,7 @@ export async function createContinuousHumanLayer(scene,{side='left'}={}){
  const [data,attachments]=await Promise.all([load('simulation-scene.json'),load('bilateral-sts-attachments.json')]);
  if(data.provenance.trace_sha256!==attachments.provenance.trace_sha256||data.frames.length!==attachments.frames.length)throw Error('Native replay and bilateral attachment sources differ.');
  const defaultSide=side==='right'?'right':'left';
- let focusLeft=0;
+ let focusLeft=0,anatomyFlexion=0,anatomySeparation=0,upperOpacity=1,anatomyInspect=0;
  const group=new THREE.Group();group.name='ActualRecordedBilateralSTS';
  group.userData={source:'assets/simulation-scene.json',attachmentSource:'assets/bilateral-sts-attachments.json',classification:attachments.classification,episode:data.provenance.episode_index,defaultSide,activeAssistance:false,registration:'Source bilateral CAD registration; native recorded movement with illustrative graft'};
  const C=new THREE.Matrix4().makeRotationX(-Math.PI/2),Ci=C.clone().invert();
@@ -106,16 +106,28 @@ export async function createContinuousHumanLayer(scene,{side='left'}={}){
   const descriptor=M=>{const position=new THREE.Vector3(),quaternion=new THREE.Quaternion(),scale=new THREE.Vector3();M.decompose(position,quaternion,scale);return{position,quaternion,matrix:M,scale};};
   return {side:s,kneeAnchor:knee,kneeAxis:axis,kneeRotation:rotation,hipAnchor:hip,nativeFlexionRad:THREE.MathUtils.lerp(A.nativeFlexionRad,B.nativeFlexionRad,frameMix),femur:descriptor(F),tibia:descriptor(T),cadToWorldFemur:F.clone().multiply(registrations[s].femur).multiply(Ci),cadToWorldTibia:T.clone().multiply(registrations[s].tibia).multiply(Ci),mirror:s==='right',reflectionIncludedInCADMatrices:true,sourceCADCoordinates:'original zero-pose GLB world, Y-up meters',classification:'actual native recorded body frames + source CAD registration; illustrative uncoupled graft'};
  }
+ function applyAnatomyPose(){
+  const A=currentAttachmentA.left,B=currentAttachmentB.left,k=new THREE.Vector3(...A.knee).lerp(new THREE.Vector3(...B.knee),frameMix),hip=new THREE.Vector3(...A.hip).lerp(new THREE.Vector3(...B.hip),frameMix),up=hip.sub(k).normalize(),axis=new THREE.Vector3(...A.axis).normalize(),q=new THREE.Quaternion().setFromAxisAngle(axis,anatomyFlexion);
+  for(const o of objects){const i=o.index;o.mesh.position.fromArray(currentFrameA.p,i*3).lerp(tempPosition.fromArray(currentFrameB.p,i*3),frameMix);o.mesh.quaternion.fromArray(currentFrameA.q,i*4).slerp(quatB.fromArray(currentFrameB.q,i*4),frameMix);
+   if(!o.mesh.name.includes('_l_geom'))continue;
+   if(o.mesh.name.startsWith('femur'))o.mesh.position.addScaledVector(up,.055*anatomySeparation);
+   else if(/^(tibia|fibula|talus|calcn|toes|patella)/.test(o.mesh.name)){o.mesh.position.sub(k).applyQuaternion(q).add(k).addScaledVector(up,-.055*anatomySeparation);o.mesh.quaternion.premultiply(q);}
+  }
+ }
  function refresh(){
-  if(disposed)return;group.updateMatrixWorld(true);group.visible=reveal>.0001;
+  if(disposed)return;applyAnatomyPose();group.updateMatrixWorld(true);group.visible=reveal>.0001;
   const sc=group.getWorldScale(new THREE.Vector3());
   for(const s of ['left','right']){clips[s].amount.value=s==='left'?replaceLeft:replaceRight;clips[s].center.value.copy(getAttachment(s).kneeAnchor);clips[s].radius.value=.052*Math.max(sc.x,sc.y,sc.z);}
-  for(const o of objects){const alpha=reveal*(o.isChair?chairReveal:1)*(o.mesh.name.includes('_r_geom')?1-focusLeft:1);o.material.opacity=o.baseAlpha*alpha;o.mesh.visible=alpha>.0001;const cut=o.limb==='left'?replaceLeft:(o.limb==='right'?replaceRight:0);o.material.depthWrite=alpha>.97&&cut<.001;}
+  for(const o of objects){const alpha=reveal*(1-anatomyInspect)*(o.mesh.name.startsWith('femur_l')?upperOpacity:1)*(o.isChair?chairReveal:1)*(o.mesh.name.includes('_r_geom')?1-focusLeft:1);o.material.opacity=o.baseAlpha*alpha;o.mesh.visible=alpha>.0001;const cut=o.limb==='left'?replaceLeft:(o.limb==='right'?replaceRight:0);o.material.depthWrite=alpha>.97&&cut<.001;}
   muscleMaterial.opacity=reveal*muscleReveal*.82;muscleMaterial.depthWrite=false;muscles.visible=muscleReveal>.0001&&reveal>.0001;
   Object.assign(group.userData,{reveal,replaceLeft,replaceRight,muscleReveal,chairReveal,resectionRadiusMeters:.052});
  }
  const clamp=v=>THREE.MathUtils.clamp(Number(v)||0,0,1);
  function setState(next={}){
+  if(next.anatomyInspect!==undefined)anatomyInspect=clamp(next.anatomyInspect);
+  if(next.upperOpacity!==undefined)upperOpacity=clamp(next.upperOpacity);
+  if(next.anatomyFlexion!==undefined)anatomyFlexion=Number(next.anatomyFlexion)||0;
+  if(next.anatomySeparation!==undefined)anatomySeparation=clamp(next.anatomySeparation);
   if(next.focusLeft!==undefined&&clamp(next.focusLeft)!==focusLeft){focusLeft=clamp(next.focusLeft);updateMuscles();}
   if(next.reveal!==undefined)reveal=clamp(next.reveal);if(next.muscles!==undefined)muscleReveal=clamp(next.muscles);if(next.chair!==undefined)chairReveal=clamp(next.chair);
   if(next.replace!==undefined){if(defaultSide==='left')replaceLeft=clamp(next.replace);else replaceRight=clamp(next.replace);}

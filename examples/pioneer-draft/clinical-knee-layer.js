@@ -42,6 +42,7 @@ export async function createClinicalKneeLayer(scene,{human}={}){
   // explanatory display planes are not patient-specific surgical resections.
   const femoralCut=fit*(FEMORAL_Z+femoralGeometry.boundingBox.max.z)-.003;
   const tibialCut=fit*TIBIAL_Z-.0015;
+  const inverse={femur:{value:new THREE.Matrix4()},tibia:{value:new THREE.Matrix4()}};
   const uniforms={highlight:{value:0},cut:{value:0},center:{value:human.kneeAnchor.clone()},up:{value:up.clone()}};
   const restored=[];
   human.group.traverse(o=>{
@@ -52,36 +53,44 @@ export async function createClinicalKneeLayer(scene,{human}={}){
       restored.push({material,previous,previousKey});
       material.onBeforeCompile=shader=>{
         previous?.(shader);
-        Object.assign(shader.uniforms,{uClinicalHighlight:uniforms.highlight,uClinicalCut:uniforms.cut,uClinicalCenter:uniforms.center,uClinicalUp:uniforms.up});
+        Object.assign(shader.uniforms,{uClinicalHighlight:uniforms.highlight,uClinicalCut:uniforms.cut,uClinicalCenter:uniforms.center,uClinicalUp:uniforms.up,uClinicalInverse:inverse[role]});
         shader.vertexShader='varying vec3 vClinicalWorld;\n'+shader.vertexShader;
         shader.vertexShader=shader.vertexShader.replace('#include <project_vertex>','#include <project_vertex>\nvClinicalWorld=(modelMatrix*vec4(transformed,1.0)).xyz;');
-        shader.fragmentShader='varying vec3 vClinicalWorld;\nuniform float uClinicalHighlight;\nuniform float uClinicalCut;\nuniform vec3 uClinicalCenter;\nuniform vec3 uClinicalUp;\n'+shader.fragmentShader;
+        shader.fragmentShader='varying vec3 vClinicalWorld;\nuniform float uClinicalHighlight;\nuniform float uClinicalCut;\nuniform vec3 uClinicalCenter;\nuniform vec3 uClinicalUp;\nuniform mat4 uClinicalInverse;\n'+shader.fragmentShader;
+        // Five-plane femoral preparation follows the cap's anterior/posterior
+        // walls and distal/chamfer envelope. Tibial preparation keeps the stem
+        // within the opaque retained shaft. These are teaching cuts, not a fit.
         const localClip=role==='femur'?
-          `float cutHeight=mix(-.075,${femoralCut.toFixed(8)},uClinicalCut); if(uClinicalCut>.0001 && h<cutHeight && radial<.068) discard;`:
+          `vec3 q=(uClinicalInverse*vec4(vClinicalWorld,1.0)).xyz; float distal=mix(-.075,-.014,uClinicalCut); float chamfer=mix(-.075,abs(q.x-.003)*.85-.027,uClinicalCut); bool wall=q.z<mix(-.075,.023,uClinicalCut) && (q.x<-.021 || q.x>.024); if(uClinicalCut>.0001 && q.z<.055 && (q.z<max(distal,chamfer) || wall))discard;`:
           `float cutHeight=mix(.070,${tibialCut.toFixed(8)},uClinicalCut); if(uClinicalCut>.0001 && h>cutHeight && radial<.068) discard;`;
         shader.fragmentShader=shader.fragmentShader.replace('#include <color_fragment>',`#include <color_fragment>
           vec3 deltaClinical=vClinicalWorld-uClinicalCenter;
           float h=dot(deltaClinical,uClinicalUp);
           float radial=length(deltaClinical-uClinicalUp*h);
           float endRegion=(1.0-smoothstep(.040,.062,abs(h)))*(1.0-smoothstep(.045,.064,radial));
-          diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.75,.27,.13),endRegion*uClinicalHighlight*.56);
+          diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.95,.055,.025),endRegion*uClinicalHighlight*.88);
           ${localClip}`);
       };
-      material.customProgramCacheKey=()=>`${previousKey?.call(material)||''}|clinical-TKA-local-${role}-v2-left-source-planes`;
+      material.customProgramCacheKey=()=>`${previousKey?.call(material)||''}|clinical-TKA-local-${role}-v3-five-plane-surgery`;
       material.needsUpdate=true;
     }
   });
   const featureEdges=[femoral,insert,plate].map(mesh=>createShadedEdges(mesh,{thresholdAngle:28,color:0x24302e,opacity:.52}));
-  let state={reveal:0,explode:0,highlight:0,cut:0};
+  let state={upperOpacity:1,reveal:0,explode:0,highlight:0,cut:0,separation:0,insertion:1};
   function setState(next={}){
     state={...state,...next};group.position.copy(human.kneeAnchor);group.quaternion.copy(human.kneeRotation).multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0),-Math.PI/2));
     group.visible=state.reveal>.0001;
     for(const m of[metal,trayMetal,polyethylene]){m.opacity=clamp(state.reveal);m.depthWrite=state.reveal>.85;}
-    femoral.position.set(0,0,FEMORAL_Z+state.explode*.055);
-    tibial.position.set(0,0,TIBIAL_Z);plate.position.set(0,0,-state.explode*.052);insert.position.set(0,0,state.explode*.015);
+    metal.opacity*=state.upperOpacity;metal.depthWrite=metal.opacity>.85;
+    femoral.position.set((1-state.insertion)*.10,0,FEMORAL_Z+state.explode*.055+state.separation*.055/fit);
+    tibial.position.set(-(1-state.insertion)*.10,.006/fit,TIBIAL_Z-state.separation*.055/fit);plate.position.set(0,0,-state.explode*.052);insert.position.set(0,0,state.explode*.015);
     uniforms.highlight.value=clamp(state.highlight);uniforms.cut.value=clamp(state.cut);uniforms.center.value.copy(human.kneeAnchor);up.set(0,1,0).applyQuaternion(human.kneeRotation).normalize();uniforms.up.value.copy(up);
-    group.updateMatrixWorld(true);featureEdges.forEach(e=>e.sync());
-    Object.assign(group.userData,{source:'aqnazar/TKA-implant-design',side:limb,sourceFemoralFile:femoralFile,commit:'5770570174487f0b59e3a5bbf684a958e21924b5',license:'Apache-2.0',sourceUnitScale:.001,presentationFitScale:fit,classification:'Actual academic conventional implant CAD / illustrative anatomical placement and resection',clinicalApprovedProduct:false,nativeKneeGeoms:[...nativeGeoms],resection:'Local uncapped explanatory articular-end planes',resectionFemoralHeightMeters:femoralCut,resectionTibialHeightMeters:tibialCut,shading:'authored surfaces with source crease/boundary edges',...state});
+    group.updateMatrixWorld(true);
+    const upper=new THREE.Matrix4().makeTranslation(...up.clone().multiplyScalar(.055*state.separation).toArray()).multiply(group.matrixWorld),lower=new THREE.Matrix4().makeTranslation(...up.clone().multiplyScalar(-.055*state.separation).toArray()).multiply(group.matrixWorld);
+    inverse.femur.value.copy(upper).invert();inverse.tibia.value.copy(lower).invert();
+    uniforms.center.value.addScaledVector(up,-.055*state.separation);
+    featureEdges.forEach(e=>e.sync());
+    Object.assign(group.userData,{source:'aqnazar/TKA-implant-design',side:limb,sourceFemoralFile:femoralFile,commit:'5770570174487f0b59e3a5bbf684a958e21924b5',license:'Apache-2.0',sourceUnitScale:.001,presentationFitScale:fit,classification:'Actual academic conventional implant CAD / illustrative anatomical placement and resection',clinicalApprovedProduct:false,nativeKneeGeoms:[...nativeGeoms],resection:'Five-plane femoral envelope and source-fitted tibial teaching resection; no surgical validation',resectionFemoralHeightMeters:femoralCut,resectionTibialHeightMeters:tibialCut,shading:'authored surfaces with source crease/boundary edges',...state});
   }
   function center(mesh){return mesh.geometry.boundingBox.getCenter(new THREE.Vector3()).applyMatrix4(mesh.matrixWorld);}
   setState();

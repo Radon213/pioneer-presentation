@@ -1,17 +1,17 @@
-import {getMotionRate} from './motion-clock.js?v=revision-20261029-12';
+import {getMotionRate} from './motion-clock.js?v=revision-20261029-17';
 import * as THREE from 'three';
 import {GLTFLoader} from '../pioneer-interactive/vendor/GLTFLoader.js';
 import {DRACOLoader} from '../pioneer-interactive/vendor/DRACOLoader.js';
 import {RoomEnvironment} from '../pioneer-interactive/vendor/RoomEnvironment.js';
-import {createContinuousHumanLayer} from './continuous-human-layer.js?v=revision-20261029-12';
-import {createClinicalKneeLayer} from './clinical-knee-layer.js?v=revision-20261029-12';
-import {createShadedEdges} from './shaded-edges.js?v=revision-20261029-12';
-import {createNativeKneeComparison} from './native-knee-comparison.js?v=revision-20261029-12';
-import {buildVisualExplanation} from './visual-explanations.js?v=revision-20261029-12';
-import {buildChapterOverlay} from './chapter-overlays.js?v=revision-20261029-12';
-import {createGaitChapterLayer} from './gait-chapter-layer.js?v=revision-20261029-12';
-import {createSpringFEALayer} from './spring-fea-layer.js?v=revision-20261029-12';
-import {loadJSONWithProgress,loadBinaryWithProgress,reportLoadStage} from './asset-loading.js?v=revision-20261029-12';
+import {createContinuousHumanLayer} from './continuous-human-layer.js?v=revision-20261029-17';
+import {createClinicalKneeLayer} from './clinical-knee-layer.js?v=revision-20261029-17';
+import {createShadedEdges} from './shaded-edges.js?v=revision-20261029-17';
+import {createNativeKneeComparison} from './native-knee-comparison.js?v=revision-20261029-17';
+import {buildVisualExplanation} from './visual-explanations.js?v=revision-20261029-17';
+import {buildChapterOverlay} from './chapter-overlays.js?v=revision-20261029-17';
+import {createGaitChapterLayer} from './gait-chapter-layer.js?v=revision-20261029-17';
+import {createSpringFEALayer} from './spring-fea-layer.js?v=revision-20261029-17';
+import {loadJSONWithProgress,loadBinaryWithProgress,reportLoadStage} from './asset-loading.js?v=revision-20261029-17';
 
 const ASSETS=new URL('../pioneer-interactive/assets/',import.meta.url);
 const VENDOR=new URL('../pioneer-interactive/vendor/',import.meta.url);
@@ -118,31 +118,33 @@ export async function createContinuousKneeViewer(host){
   const sectionLines=new THREE.LineSegments(new THREE.BufferGeometry(),new THREE.LineBasicMaterial({color:C.accent,transparent:true,opacity:.43,depthTest:false}));sectionLines.renderOrder=15;scene.add(sectionLines);
   let live=null,raf=0,transition=null,last=0,initialized=false,disposed=false,page=1,step=0,cutDimensions=null,chapter=0,build=0,gaitClock=0,suspended=false;
   let gait=null,fea=null,chapterToken=0;status.hidden=false;status.textContent='Loading recorded bilateral gait…';
-  try{gait=await createGaitChapterLayer(scene);gait.setOpacity(0);host.dataset.gaitGeometryCount=String(gait.group.userData.geometryCount);host.dataset.gaitVisualRecovery='6 original native POS5/SLPT subtrees rebound once to saved body poses';}catch(e){console.warn('Recorded gait unavailable',e);}
+  try{gait=await createGaitChapterLayer(scene,{human});gait.setOpacity(0);host.dataset.gaitGeometryCount=String(gait.group.userData.geometryCount);host.dataset.gaitRestoredNativeBones=String(gait.group.userData.retainedNativeShaftCount);host.dataset.gaitVisualRecovery='6 original native POS5/SLPT subtrees rebound once to saved body poses';}catch(e){console.warn('Recorded gait unavailable',e);}
   status.hidden=true;let feaPromise=null;
   const ensureFEA=()=>feaPromise??=(createSpringFEALayer(scene).then(layer=>{fea=layer;fea.setOpacity(0);return layer;}));
   // This concept reuses the original Maxon mesh, without exposing the complete
   // Pioneer assembly. It is a visual addition, not a direct-drive surgical fit.
   const conceptMotor=new THREE.Group();conceptMotor.name='Concept_ConventionalTKA_Plus_OriginalMaxon';scene.add(conceptMotor);
   const conceptMaterials=[],conceptEdges=[];
-  for(const p of parts.filter(p=>['motor','motor_cable'].includes(partKey(p.name)))){
+  for(const p of parts.filter(p=>['motor','motor_cable','motor_shaft'].includes(partKey(p.name)))){
     const mats=p.materials.map(m=>{const c=m.clone();c.clippingPlanes=[];c.transparent=false;c.opacity=1;conceptMaterials.push(c);return c;});
     const mesh=new THREE.Mesh(p.mesh.geometry,Array.isArray(p.mesh.material)?mats:mats[0]);mesh.name=`CONCEPT_MAXON::${p.name}`;mesh.matrixAutoUpdate=false;mesh.matrix.copy(p.sourceWorldZero);conceptMotor.add(mesh);
     conceptEdges.push(createShadedEdges(mesh,{thresholdAngle:28,opacity:.46}));
   }
   conceptMotor.updateMatrixWorld(true);const motorBox=new THREE.Box3().setFromObject(conceptMotor),motorCenter=motorBox.getCenter(new THREE.Vector3());
   for(const mesh of conceptMotor.children)mesh.matrix.premultiply(new THREE.Matrix4().makeTranslation(-motorCenter.x,-motorCenter.y,-motorCenter.z));
-  conceptMotor.visible=false;let myoExamples=null,myoPromise=null,myoPrefetchTimer=0;
-  const ensureMyoExamples=()=>myoPromise??=import('./myoassist-examples-layer.js?v=revision-20261029-12').then(m=>m.createMyoAssistExamplesLayer(scene)).then(layer=>{myoExamples=layer;layer.setReveal(0);return layer;}).catch(error=>{myoPromise=null;throw error;});
+  conceptMotor.visible=false;let myo80=null,myo80Promise=null,backgroundClock=0;
+  const ensureMyo80=()=>myo80Promise??=(import('./myoleg80-muscle-layer.js?v=revision-20261029-17').then(m=>m.createMyoLeg80MuscleLayer(scene,{human})).then(layer=>myo80=layer));
+  let myoExamples=null,myoPromise=null,myoPrefetchTimer=0;
+  const ensureMyoExamples=()=>myoPromise??=import('./myoassist-examples-layer.js?v=revision-20261029-17').then(m=>m.createMyoAssistExamplesLayer(scene)).then(layer=>{myoExamples=layer;layer.setReveal(0);return layer;}).catch(error=>{myoPromise=null;throw error;});
   function backgroundRotation(){const target=new THREE.Vector3(),direction=new THREE.Vector3(1.3,.14,-.4).normalize();return new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(direction,target,UP));}
   function backgroundState(st,to){
     human.group.position.set(0,0,0);human.setState({motionProgress:1});
     const a=human.getAttachment('left'),knee=a.kneeAnchor,hip=a.hipAnchor,rotation=backgroundRotation(),right=new THREE.Vector3(1,0,0).applyQuaternion(rotation);
-    Object.assign(to,{phase:0,stemCut:0,section:0,attach:0,leftInsertion:0,rightInsertion:0,rightReveal:0,nativeCut:0,nativeCutLeft:0,nativeCutRight:0,nativeComparisonOpacity:0,humanReveal:1,muscles:st===2?1:.35,motionProgress:1,chair:0,gait:0,fea:0,clinicalReveal:st>=1?1:0,clinicalCut:st>=1?1:0,clinicalHighlight:st===0?.9:0,clinicalExplode:0,bgExamples:st===3?1:0,bgMotor:st===4?1:0,bgFocus:st===1||st===2||st===4?1:0,opacities:parts.map(()=>0)});
+    Object.assign(to,{phase:0,stemCut:0,section:0,attach:0,leftInsertion:0,rightInsertion:0,rightReveal:0,nativeCut:0,nativeCutLeft:0,nativeCutRight:0,nativeComparisonOpacity:0,humanReveal:1,muscles:st===2?0:st===1?0:.12,motionProgress:1,chair:0,gait:0,fea:0,clinicalReveal:st>=1?1:0,clinicalCut:st>=1?1:0,clinicalHighlight:st===0?.9:0,clinicalExplode:0,bgExamples:st===3?1:0,bgMotor:st===4?1:0,bgSurgery:st>=1?1:0,bgWiggle:0,bgMuscle80:st===2?1:0,bgFocus:st!==3?1:0,opacities:parts.map(()=>0)});
     to.rotation.copy(rotation);let height;
-    if(st===0){to.target.copy(hip).add(new THREE.Vector3(0,.04,0)).addScaledVector(right,.1);height=1.9;}
-    else if(st===1){to.target.copy(knee).add(new THREE.Vector3(0,.07,0)).addScaledVector(right,.025);height=.52;}
-    else if(st===2){to.target.copy(knee).lerp(hip,.48).addScaledVector(right,.12);height=.77;}
+    if(st===0){to.target.copy(knee).addScaledVector(right,.035);height=.36;}
+    else if(st===1){to.target.copy(knee).add(new THREE.Vector3(0,.005,0)).addScaledVector(right,.035);height=.47;}
+    else if(st===2){to.target.copy(knee).lerp(hip,.42).addScaledVector(right,.19);height=.74;}
     else if(st===3&&myoExamples){
       myoExamples.group.position.set(0,0,0);myoExamples.group.quaternion.identity();const bounds=myoExamples.getBounds(),size=bounds.getSize(new THREE.Vector3());to.target.copy(bounds.getCenter(new THREE.Vector3()));height=Math.max(size.y*1.2,size.x/camera.aspect*1.15);to.rotation.setFromRotationMatrix(new THREE.Matrix4().lookAt(to.target.clone().add(new THREE.Vector3(.45,.08,1)),to.target,UP));
     }else{to.target.copy(knee).add(new THREE.Vector3(0,.025,0)).addScaledVector(right,.095);height=.36;}
@@ -259,7 +261,7 @@ export async function createContinuousKneeViewer(host){
   function endState(pg,st){
     if(gait)gait.group.position.set(0,0,0);
     if(human)human.group.position.set(0,0,0);
-    const s={coverInset:0,bgExamples:0,bgMotor:0,bgFocus:0,phase:fixedPhase(pg,st),explodeWeak:0,explodeStrong:0,spreadStrong:0,coilInspection:(pg===12&&st>=2)||pg===13||pg===16||pg===17?1:0,deform:0,section:0,transverse:0,stemCut:pg>=6&&pg<=10?1:0,nativeComparisonOpacity:chapter===3&&build===0?1:0,humanReveal:0,nativeCut:0,nativeCutLeft:0,nativeCutRight:0,muscles:0,motionProgress:1,chair:0,attach:0,leftInsertion:0,rightInsertion:0,rightReveal:0,clinicalReveal:0,clinicalCut:0,clinicalHighlight:0,clinicalExplode:0,deviceScale:1,devicePosition:new THREE.Vector3(),deviceRotation:new THREE.Quaternion(),opacities:parts.map(p=>opacityFor(p,pg,st)),target:new THREE.Vector3(),rotation:new THREE.Quaternion(),distance:1};
+    const s={coverInset:0,bgExamples:0,bgMotor:0,bgFocus:0,bgSurgery:1,bgWiggle:0,bgMuscle80:0,phase:fixedPhase(pg,st),explodeWeak:0,explodeStrong:0,spreadStrong:0,coilInspection:(pg===12&&st>=2)||pg===13||pg===16||pg===17?1:0,deform:0,section:0,transverse:0,stemCut:pg>=6&&pg<=10?1:0,nativeComparisonOpacity:chapter===3&&build===0?1:0,humanReveal:0,nativeCut:0,nativeCutLeft:0,nativeCutRight:0,muscles:0,motionProgress:1,chair:0,attach:0,leftInsertion:0,rightInsertion:0,rightReveal:0,clinicalReveal:0,clinicalCut:0,clinicalHighlight:0,clinicalExplode:0,deviceScale:1,devicePosition:new THREE.Vector3(),deviceRotation:new THREE.Quaternion(),opacities:parts.map(p=>opacityFor(p,pg,st)),target:new THREE.Vector3(),rotation:new THREE.Quaternion(),distance:1};
     if(chapter===3)s.stemCut=0;
     if(human)human.setState({motionProgress:1});
     if(pg===2&&human&&clinical){
@@ -418,18 +420,32 @@ export async function createContinuousKneeViewer(host){
   function applyState(s,renderNow=true){
     const bgRight=new THREE.Vector3(1,0,0).applyQuaternion(backgroundRotation());
     if(human)human.group.position.set(-4*(s.bgExamples||0),0,0);
-    live=s;Object.assign(host.dataset,{attachmentActive:String(s.attach>.95),leftPlacement:s.leftInsertion.toFixed(4),rightPlacement:s.rightInsertion.toFixed(4),rightReveal:s.rightReveal.toFixed(4)});human?.setState({reveal:s.humanReveal,replace:s.nativeCut,replaceLeft:s.nativeCutLeft,replaceRight:s.nativeCutRight,muscles:s.muscles,motionProgress:s.motionProgress,chair:s.chair,focusLeft:s.bgFocus||0});const frame=pose(s);
+    const surgery=chapter===2&&build===1?(s.bgSurgery??1):1;
+    const rise=(a,b)=>smooth(clamp((surgery-a)/(b-a))),separation=chapter===2&&build===1?rise(.03,.14)*(1-rise(.89,1)):0;
+    const clinicalReveal=chapter===2&&build===1?rise(.24,.29):s.clinicalReveal,clinicalCut=chapter===2&&build===1?rise(.14,.24):s.clinicalCut,insertion=chapter===2&&build===1?rise(.30,.46):1;
+    const inspect=chapter===2&&build===1?rise(.48,.59)*(1-rise(.79,.88)):0;
+    s.bgInspect=inspect;live=s;Object.assign(host.dataset,{attachmentActive:String(s.attach>.95),leftPlacement:s.leftInsertion.toFixed(4),rightPlacement:s.rightInsertion.toFixed(4),rightReveal:s.rightReveal.toFixed(4)});human?.setState({reveal:s.humanReveal,replace:s.nativeCut,replaceLeft:s.nativeCutLeft,replaceRight:s.nativeCutRight,muscles:s.muscles,motionProgress:s.motionProgress,chair:s.chair,focusLeft:s.bgFocus||0,anatomyFlexion:s.bgWiggle||0,anatomySeparation:separation,anatomyInspect:inspect,upperOpacity:1-inspect});const frame=pose(s);
     for(let i=0;i<parts.length;i++){const p=parts[i],opacity=clamp(s.opacities[i]);p.opacity=opacity;p.mesh.visible=opacity>.002;for(const m of p.materials){m.opacity=opacity;m.depthWrite=opacity>.7;}}
     const weakAngle=THREE.MathUtils.degToRad(12*clamp(s.deform/.65));
     const strongAngle=THREE.MathUtils.degToRad(4*(.2*s.deform+.8*clamp((s.deform-.35)/.65)));warp(weak,weakAngle);warp(strong,strongAngle);
     const inspection=s.coilInspection>.5;
     for(const p of[weak,strong])if(p.inspection!==inspection){p.inspection=inspection;p.geometry.setIndex(inspection?p.topIndices:p.fullIndices);p.geometry.computeVertexNormals();}
-    clinical?.setState({reveal:s.clinicalReveal,cut:s.clinicalCut,highlight:s.clinicalHighlight,explode:s.clinicalExplode});
+    clinical?.setState({reveal:clinicalReveal,cut:clinicalCut,highlight:s.clinicalHighlight,explode:s.clinicalExplode,separation,insertion,upperOpacity:1-inspect});
+    myo80?.setReveal(s.bgMuscle80||0);
+    host.dataset.surgeryInsertTopView=inspect.toFixed(4);host.dataset.surgeryPhase=String(surgery);host.dataset.surgerySeparation=String(separation);host.dataset.backgroundMuscleModel=(s.bgMuscle80||0)>.99?'myoleg80: 80 source muscles; 40 left paths':'native22';
     if(myoExamples){myoExamples.setReveal((s.bgExamples||0)>.0001?1:0);myoExamples.group.position.set(4*(1-(s.bgExamples||0)),0,0);}
     conceptMotor.visible=(s.bgMotor||0)>.0001;
-    if(human&&conceptMotor.visible){conceptMotor.position.copy(human.kneeAnchor).addScaledVector(bgRight,.17+.38*(1-s.bgMotor)).addScaledVector(UP,.03);conceptMotor.quaternion.setFromAxisAngle(new THREE.Vector3(0,0,1),-.34);conceptMotor.updateMatrixWorld(true);conceptEdges.forEach(e=>e.sync());}
+    if(human&&conceptMotor.visible){conceptMotor.position.copy(human.kneeAnchor).addScaledVector(bgRight,.17+.38*(1-s.bgMotor)).addScaledVector(UP,.03);// Motor's long source axis is +Y. Keep it upright in camera space and
+      // expose its shaft/cap in a clean three-quarter view, independent of spring.
+      conceptMotor.quaternion.copy(backgroundRotation()).multiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(.22,0,-.18)));conceptMotor.updateMatrixWorld(true);conceptEdges.forEach(e=>e.sync());}
     Object.assign(host.dataset,{backgroundScene:chapter===2?'persistent-anatomy-and-conventional-TKA':'inactive',backgroundExamples:myoExamples&&s.bgExamples>.99?'HMEDI / OpenExo / Dephy ExoBoot':'off',backgroundConceptMotor:String(conceptMotor.visible),backgroundFullPioneerVisible:String(chapter===2&&parts.some(p=>p.mesh.visible))});
-    camera.quaternion.copy(s.rotation);camera.position.copy(s.target).add(new THREE.Vector3(0,0,s.distance).applyQuaternion(s.rotation));
+    const viewRotation=s.rotation.clone(),viewTarget=s.target.clone();let viewDistance=s.distance;
+    if(inspect>.001&&clinical){
+      const a=human.getAttachment('left'),up=new THREE.Vector3(0,1,0).applyQuaternion(a.kneeRotation),front=new THREE.Vector3(1,0,0).applyQuaternion(a.kneeRotation),side=a.kneeAxis;
+      const target=clinical.componentCenters.insert,direction=up.clone().multiplyScalar(.95).addScaledVector(front,.26).addScaledVector(side,.12).normalize(),top=new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(target.clone().add(direction),target,front));
+      viewTarget.lerp(target,inspect);viewRotation.slerp(top,inspect);viewDistance=THREE.MathUtils.lerp(s.distance,.24/(2*Math.tan(THREE.MathUtils.degToRad(16))),inspect);
+    }
+    camera.quaternion.copy(viewRotation);camera.position.copy(viewTarget).add(new THREE.Vector3(0,0,viewDistance).applyQuaternion(viewRotation));
     inspectionLight.intensity=1.5*s.coilInspection;inspectionLight.position.copy(camera.position);inspectionLight.target.position.copy(s.target);host.dataset.springDisplay=inspection?'original coil face subset; carrier hidden; no generated caps':'complete original source mesh';host.dataset.rightVisible=String(rightAssembly.visible);
     setPlanes(s);
     for(const p of parts)p.edges.sync();for(const p of rightParts)p.edges.sync();
@@ -471,7 +487,8 @@ export async function createContinuousKneeViewer(host){
     renderer.setScissorTest(false);drawOverlay();
   }
   function resize(){const w=host.clientWidth,h=host.clientHeight;if(w<2||h<2)return;renderer.setSize(w,h,false);camera.aspect=w*FIGURE_WIDTH/h;camera.updateProjectionMatrix();if(live)render();}
-  function interpolate(a,b,u){const s={...b,target:a.target.clone().lerp(b.target,u),rotation:a.rotation.clone().slerp(b.rotation,u),devicePosition:a.devicePosition.clone().lerp(b.devicePosition,u),deviceRotation:a.deviceRotation.clone().slerp(b.deviceRotation,u),opacities:a.opacities.map((v,i)=>THREE.MathUtils.lerp(v,b.opacities[i],u))};for(const k of['phase','explodeWeak','explodeStrong','spreadStrong','coilInspection','deform','section','transverse','stemCut','distance','nativeComparisonOpacity','humanReveal','nativeCut','nativeCutLeft','nativeCutRight','muscles','motionProgress','chair','attach','leftInsertion','rightInsertion','rightReveal','clinicalReveal','clinicalCut','clinicalHighlight','clinicalExplode','deviceScale','gait','fea','feaAngle','coverInset','bgExamples','bgMotor','bgFocus'])s[k]=THREE.MathUtils.lerp(a[k]??0,b[k]??0,u);
+  function interpolate(a,b,u){const s={...b,target:a.target.clone().lerp(b.target,u),rotation:a.rotation.clone().slerp(b.rotation,u),devicePosition:a.devicePosition.clone().lerp(b.devicePosition,u),deviceRotation:a.deviceRotation.clone().slerp(b.deviceRotation,u),opacities:a.opacities.map((v,i)=>THREE.MathUtils.lerp(v,b.opacities[i],u))};for(const k of['phase','explodeWeak','explodeStrong','spreadStrong','coilInspection','deform','section','transverse','stemCut','distance','nativeComparisonOpacity','humanReveal','nativeCut','nativeCutLeft','nativeCutRight','muscles','motionProgress','chair','attach','leftInsertion','rightInsertion','rightReveal','clinicalReveal','clinicalCut','clinicalHighlight','clinicalExplode','deviceScale','gait','fea','feaAngle','coverInset','bgExamples','bgMotor','bgFocus','bgSurgery','bgWiggle','bgMuscle80'])s[k]=THREE.MathUtils.lerp(a[k]??0,b[k]??0,u);
+    if(chapter===2&&build===1)s.bgSurgery=u<.5?Math.cbrt(u/4):1-Math.cbrt((1-u)/4);
     // Pull back before introducing full human–device models; retract them before
     // approaching the knee again. This prevents oversized passing bodies.
     if(chapter===2&&(build===3||build===4)){
@@ -490,9 +507,13 @@ export async function createContinuousKneeViewer(host){
       const phase=(gaitClock/(gait?.durationSeconds||1.12))%1,angle=55*(1-Math.cos(2*Math.PI*phase)),springFrame=fea.setAngle(angle);
       Object.assign(host.dataset,{coverSpringPhase:phase.toFixed(5),coverSpringAngleDeg:angle.toFixed(3),coverSpringFrameIndex:String(springFrame.frameIndex),coverSpringActualAngleDeg:String(springFrame.actualAngleDeg??0),coverSpringReplay:'Stored loading frames forward/reverse, timed visually to gait; not computed gait response'});
     }
+    if(chapter===2&&build===0&&autoplayAllowed()){
+      backgroundClock+=dt*getMotionRate();const t=clamp(backgroundClock/5.4),wiggle=t<1?Math.sin(t*6*Math.PI)*.15*Math.sin(Math.PI*t):0;
+      applyState({...live,bgWiggle:wiggle,clinicalHighlight:t<1?.70+.30*Math.abs(Math.sin(t*6*Math.PI)):.85},false);
+    }
     if(chapter===2&&build===3&&myoExamples&&autoplayAllowed())myoExamples.setProgress((now/3500)%1);
     render();
-    if(transition||chapter&&live?.gait>.001&&autoplayAllowed()||chapter===2&&build===3&&autoplayAllowed())raf=requestAnimationFrame(tick);else{raf=0;last=0;}
+    if(transition||chapter&&live?.gait>.001&&autoplayAllowed()||chapter===2&&(build===3||build===0&&backgroundClock<5.4)&&autoplayAllowed())raf=requestAnimationFrame(tick);else{raf=0;last=0;}
   }
   function setStory(nextPage,nextStep=0,animate=true){
     if(![1,2,3,4,5,6,7,8,9,10,11,12,13,16,17,18,19,28].includes(Number(nextPage))){pause();return;}
@@ -509,6 +530,7 @@ export async function createContinuousKneeViewer(host){
     clearTimeout(myoPrefetchTimer);
     const requestToken=++chapterToken,c=Number(nextChapter),b=Math.max(0,Math.min(mapping[c].length-1,Number(nextBuild)||0));
     if(c===1||c===4&&b===5){status.hidden=false;status.textContent='Preparing solved spring fields…';await ensureFEA();status.hidden=true;if(requestToken!==chapterToken)return;}
+    if(c===2&&b===2){status.hidden=false;status.textContent='Preparing MyoLeg 80-muscle anatomy…';await ensureMyo80();status.hidden=true;if(requestToken!==chapterToken)return;}
     if(c===2&&b===3){status.hidden=false;status.textContent='Preparing three MyoAssist wearable examples…';await ensureMyoExamples();status.hidden=true;if(requestToken!==chapterToken)return;}
     const previous=live?cloneState(live):null,oldOverlay=initialized&&animate&&!reduced()&&c!==2?overlay.cloneNode(true):null;pause();if(oldOverlay){outgoingOverlay=oldOverlay;oldOverlay.removeAttribute('id');host.append(oldOverlay);} suspended=false;chapter=c;build=b;[page,step]=mapping[c][b];const to=endState(page,step);to.gait=0;to.fea=0;to.feaAngle=0;
     if(c===1||c===8||c===6&&b!==2||c===7){
@@ -527,15 +549,15 @@ export async function createContinuousKneeViewer(host){
     if(c===6&&b===2){to.humanReveal=0;to.rightReveal=0;}
     if(c===4&&b<=1||c===5){to.opacities=parts.map(()=>0);to.nativeComparisonOpacity=0;to.humanReveal=0;to.rightReveal=0;to.clinicalReveal=0;}
     if(c===7){to.gait=0;to.opacities=parts.map(()=>0);to.humanReveal=0;to.rightReveal=0;to.clinicalReveal=0;}
-    if(c===2)backgroundState(b,to);
+    if(c===2){backgroundState(b,to);backgroundClock=0;if(b===1&&previous&&animate)previous.bgSurgery=0;}
     camera.aspect=host.clientWidth*FIGURE_WIDTH/Math.max(1,host.clientHeight);camera.updateProjectionMatrix();
     Object.assign(host.dataset,{chapter:String(c),build:String(b),page:String(c),storyScene:String(page),storyStep:String(step),continuity:'one-scene-one-renderer',cameraStartsFrom:'current-interpolated-state',sourceModel:'persistent-original-CAD-with-corrected-subtree-ownership-and-recorded-gait'});
     if(previous&&initialized&&animate&&!reduced()){
-      transition={from:previous,to,elapsed:0,duration:c===2?(b===3||b===4?1.55:1.3):c===4&&b===5?4.8:2.2};last=performance.now();host.dataset.animation='running';host.dataset.transitionProgress='0';applyState(previous,false);raf=requestAnimationFrame(tick);
-    }else{applyState(to,false);host.dataset.animation='idle';host.dataset.transitionProgress='1';resize();if((to.gait>.001||c===2&&b===3)&&autoplayAllowed())raf=requestAnimationFrame(tick);}
+      transition={from:previous,to,elapsed:0,duration:c===2?(b===1?10.2:b===3||b===4?1.55:1.3):c===4&&b===5?4.8:2.2};last=performance.now();host.dataset.animation='running';host.dataset.transitionProgress='0';applyState(previous,false);raf=requestAnimationFrame(tick);
+    }else{applyState(to,false);host.dataset.animation='idle';host.dataset.transitionProgress='1';resize();if((to.gait>.001||c===2&&(b===3||b===0))&&autoplayAllowed())raf=requestAnimationFrame(tick);}
     initialized=true;
     if(c===2&&b===2)myoPrefetchTimer=setTimeout(()=>{if(!disposed&&chapter===2&&build===2)ensureMyoExamples().catch(error=>console.warn('Wearable examples will retry on entry',error));},1400);
   }
   const observer=new ResizeObserver(resize);observer.observe(host);setStory(1,0,false);
-  return{ready:true,setStory,setChapter,resize,pause,warmSources:ensureFEA,dispose(){disposed=true;clearTimeout(myoPrefetchTimer);pause();observer.disconnect();overlay.remove();status.remove();renderer.dispose();env.dispose();clinical?.dispose();nativeComparison?.dispose();gait?.dispose();fea?.dispose();myoExamples?.dispose();conceptEdges.forEach(e=>e.dispose());conceptMaterials.forEach(m=>m.dispose());scene.remove(conceptMotor);human?.dispose();for(const p of parts){p.edges?.dispose();p.geometry?.dispose();p.materials.forEach(m=>m.dispose());}for(const p of rightParts){p.edges?.dispose();p.materials.forEach(m=>m.dispose());}sectionLines.geometry.dispose();sectionLines.material.dispose();renderer.domElement.remove();}};
+  return{ready:true,setStory,setChapter,resize,pause,warmSources:ensureFEA,dispose(){disposed=true;clearTimeout(myoPrefetchTimer);pause();observer.disconnect();overlay.remove();status.remove();renderer.dispose();env.dispose();clinical?.dispose();myo80?.dispose();nativeComparison?.dispose();gait?.dispose();fea?.dispose();myoExamples?.dispose();conceptEdges.forEach(e=>e.dispose());conceptMaterials.forEach(m=>m.dispose());scene.remove(conceptMotor);human?.dispose();for(const p of parts){p.edges?.dispose();p.geometry?.dispose();p.materials.forEach(m=>m.dispose());}for(const p of rightParts){p.edges?.dispose();p.materials.forEach(m=>m.dispose());}sectionLines.geometry.dispose();sectionLines.material.dispose();renderer.domElement.remove();}};
 }

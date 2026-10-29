@@ -1,6 +1,6 @@
-import {buildArchivedSpringChart} from './archived-spring-chart.js?v=revision-20261029-12';
-import {buildDiagram} from './chapter-diagram-layer.js?v=revision-20261029-12';
-import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-12';
+import {buildArchivedSpringChart} from './archived-spring-chart.js?v=revision-20261029-17';
+import {buildDiagram} from './chapter-diagram-layer.js?v=revision-20261029-17';
+import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-17';
 // Short visual explanations. All quantitative FEA marks use the same archived solver case.
 const C={ink:'#1a3a7a',accent:'#a44725',muted:'#585950',line:'#b5b3ab',paper:'#fdfcf8'};
 const text=(x,y,s,z=26,c=C.ink,a='middle')=>`<text x="${x}" y="${y}" font-size="${z}" fill="${c}" text-anchor="${a}" stroke="${C.paper}" stroke-width="5" paint-order="stroke">${s}</text>`;
@@ -25,10 +25,11 @@ export function buildChapterOverlay(ctx){
   };
   const knee=human?.getAttachment('left')?.kneeAnchor;
   if(b===0&&knee)s+=label(project(knee),'Joint surfaces');
-  if(b===1){
+  if(b===1&&(live.bgSurgery??1)>.97){
    const centers=partPoint('clinical');
    if(centers?.insert)s+=label(project(centers.insert),'Replaced joint surfaces',200,-62);
   }
+  if(b===1&&(live.bgInspect||0)>.95){const p=partPoint('clinical')?.insert;if(p)s+=label(project(p),'Polyethylene insert',230,95,C.ink);}
   if(b===2){
    const a=human?.getAttachment('left');
    if(a?.hipAnchor&&a?.kneeAnchor){
@@ -37,13 +38,13 @@ export function buildChapterOverlay(ctx){
    }
    // Pooled estimate for TKA populations, not a rate for all older adults.
    // The interval is uncertainty across the meta-analysis, not muscle-force loss.
-   const x=1050,y=324,w=430,max=40,value=20.1,lo=13.6,hi=28.8;
+   const x=920,y=310,w=570,max=40,value=20.1,lo=13.6,hi=28.8;
    const q=v=>x+w*v/max;
-   s+=text(x+w/2,225,'Sarcopenia in TKA populations',36,C.ink);
+   s+=text(x+w/2,180,'Sarcopenia in TKA populations',42,C.ink);
    s+=`<path d="M${x} ${y+28}H${x+w}" fill="none" stroke="${C.line}" stroke-width="2"/>`;
-   for(const v of[0,10,20,30,40])s+=`<path d="M${q(v)} ${y+24}v8" stroke="${C.line}" stroke-width="2"/>`+text(q(v),y+55,`${v}%`,27,C.muted);
+   for(const v of[0,10,20,30,40])s+=`<path d="M${q(v)} ${y+24}v8" stroke="${C.line}" stroke-width="2"/>`+text(q(v),y+65,`${v}%`,32,C.muted);
    s+=`<path d="M${q(lo)} ${y}H${q(hi)}M${q(lo)} ${y-9}v18M${q(hi)} ${y-9}v18" fill="none" stroke="${C.accent}" stroke-width="4"/><circle cx="${q(value)}" cy="${y}" r="8" fill="${C.accent}"/>`;
-   s+=text(q(value),y-30,'20.1%',44,C.accent)+text(x+w/2,420,'95% CI 13.6–28.8%',30,C.muted)+text(x+w/2,455,'Sumbal et al., 2024',27,C.muted);
+   s+=text(q(value),y-30,'20.1%',62,C.accent)+text(x+w/2,430,'95% CI 13.6–28.8%',35,C.muted)+text(x+w/2,455,'Sumbal et al., 2024',27,C.muted);
   }
   if(b===3){
    if((live.bgExamples||0)<.98)return '';
@@ -60,7 +61,7 @@ export function buildChapterOverlay(ctx){
    if((live.bgMotor||0)<.98)return '';
    const joint=project(ctx.conceptPoints.joint),motor=project(ctx.conceptPoints.motor);
    const y=Math.min(445,Math.max(joint[1],motor[1])+95);
-   s+=text(joint[0],y,'Joint replacement',38,C.ink)+text(motor[0],y,'Maxon motor',38,C.ink);
+   s+=label(joint,'Joint replacement',-230,80,C.ink)+arrow([1320,motor[1]-12],[motor[0]+25,motor[1]],C.ink)+text(1340,motor[1]-20,'BLDC Motor',36,C.ink,'start');
    s+=text((joint[0]+motor[0])/2,(joint[1]+motor[1])/2+9,'+',66,C.accent);
   }
   return s;
