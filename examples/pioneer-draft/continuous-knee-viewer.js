@@ -1,19 +1,19 @@
-import {createSpringExplanationPanel} from './spring-explanation-panel.js?v=revision-20261029-32';
-import {addFemoralReference} from './hardware-reference.js?v=revision-20261029-32';
-import {getMotionRate} from './motion-clock.js?v=revision-20261029-32';
+import {createSpringExplanationPanel} from './spring-explanation-panel.js?v=revision-20261029-33';
+import {addFemoralReference} from './hardware-reference.js?v=revision-20261029-33';
+import {getMotionRate} from './motion-clock.js?v=revision-20261029-33';
 import * as THREE from 'three';
 import {GLTFLoader} from '../pioneer-interactive/vendor/GLTFLoader.js';
 import {DRACOLoader} from '../pioneer-interactive/vendor/DRACOLoader.js';
 import {RoomEnvironment} from '../pioneer-interactive/vendor/RoomEnvironment.js';
-import {createContinuousHumanLayer} from './continuous-human-layer.js?v=revision-20261029-32';
-import {createClinicalKneeLayer} from './clinical-knee-layer.js?v=revision-20261029-32';
-import {createShadedEdges} from './shaded-edges.js?v=revision-20261029-32';
-import {createNativeKneeComparison} from './native-knee-comparison.js?v=revision-20261029-32';
-import {buildVisualExplanation} from './visual-explanations.js?v=revision-20261029-32';
-import {buildChapterOverlay} from './chapter-overlays.js?v=revision-20261029-32';
-import {createGaitChapterLayer} from './gait-chapter-layer.js?v=revision-20261029-32';
-import {createSpringFEALayer} from './spring-fea-layer.js?v=revision-20261029-32';
-import {loadJSONWithProgress,loadBinaryWithProgress,reportLoadStage} from './asset-loading.js?v=revision-20261029-32';
+import {createContinuousHumanLayer} from './continuous-human-layer.js?v=revision-20261029-33';
+import {createClinicalKneeLayer} from './clinical-knee-layer.js?v=revision-20261029-33';
+import {createShadedEdges} from './shaded-edges.js?v=revision-20261029-33';
+import {createNativeKneeComparison} from './native-knee-comparison.js?v=revision-20261029-33';
+import {buildVisualExplanation} from './visual-explanations.js?v=revision-20261029-33';
+import {buildChapterOverlay} from './chapter-overlays.js?v=revision-20261029-33';
+import {createGaitChapterLayer} from './gait-chapter-layer.js?v=revision-20261029-33';
+import {createSpringFEALayer} from './spring-fea-layer.js?v=revision-20261029-33';
+import {loadJSONWithProgress,loadBinaryWithProgress,reportLoadStage} from './asset-loading.js?v=revision-20261029-33';
 
 const ASSETS=new URL('../pioneer-interactive/assets/',import.meta.url);
 const VENDOR=new URL('../pioneer-interactive/vendor/',import.meta.url);
@@ -139,9 +139,9 @@ export async function createContinuousKneeViewer(host){
   conceptMotor.updateMatrixWorld(true);const motorBox=new THREE.Box3().setFromObject(conceptMotor),motorCenter=motorBox.getCenter(new THREE.Vector3());
   for(const mesh of conceptMotor.children)mesh.matrix.premultiply(new THREE.Matrix4().makeTranslation(-motorCenter.x,-motorCenter.y,-motorCenter.z));
   conceptMotor.visible=false;let myo80=null,myo80Promise=null,backgroundClock=0;
-  const ensureMyo80=()=>myo80Promise??=(import('./myoleg80-muscle-layer.js?v=revision-20261029-32').then(m=>m.createMyoLeg80MuscleLayer(scene,{human})).then(layer=>myo80=layer));
+  const ensureMyo80=()=>myo80Promise??=(import('./myoleg80-muscle-layer.js?v=revision-20261029-33').then(m=>m.createMyoLeg80MuscleLayer(scene,{human})).then(layer=>myo80=layer));
   let myoExamples=null,myoPromise=null,myoPrefetchTimer=0;
-  const ensureMyoExamples=()=>myoPromise??=import('./myoassist-examples-layer.js?v=revision-20261029-32').then(m=>m.createMyoAssistExamplesLayer(scene)).then(layer=>{myoExamples=layer;layer.setReveal(0);return layer;}).catch(error=>{myoPromise=null;throw error;});
+  const ensureMyoExamples=()=>myoPromise??=import('./myoassist-examples-layer.js?v=revision-20261029-33').then(m=>m.createMyoAssistExamplesLayer(scene)).then(layer=>{myoExamples=layer;layer.setReveal(0);return layer;}).catch(error=>{myoPromise=null;throw error;});
   function backgroundRotation(){const target=new THREE.Vector3(),direction=new THREE.Vector3(1.3,.14,-.4).normalize();return new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(direction,target,UP));}
   function backgroundState(st,to){
     human.group.position.set(0,0,0);human.setState({motionProgress:1});
@@ -313,9 +313,9 @@ export async function createContinuousKneeViewer(host){
     if(chapter===4){
       // Keep the complete native assembly across the chapter. Never swap its
       // index buffer, clip its carrier or invent native deformation for a plot.
-      s.springDock=1;s.phase=live&&['3','4'].includes(host.dataset.chapter)?live.phase:.25;
-      s.explodeWeak=build===3?.8:build===4?.35:0;s.explodeStrong=build===3?.8:build===4?.35:0;s.spreadStrong=0;s.coilInspection=0;s.deform=0;s.section=0;s.transverse=0;s.stemCut=0;
-      s.opacities=parts.map(p=>isSpring(p.name)||partKey(p.name)==='jsm_0508_05'?1:0);
+      s.springDock=build===5?0:1;s.phase=live&&['3','4'].includes(host.dataset.chapter)?live.phase:.25;
+      s.explodeWeak=build===3?.8:build===4?.35:0;s.explodeStrong=build===3?.8:build===4?.35:0;s.spreadStrong=build===3?.8:build===4?.6:0;s.coilInspection=0;s.deform=0;s.section=0;s.transverse=0;s.stemCut=0;
+      s.opacities=parts.map(p=>build!==5&&isSpring(p.name)?1:0);
     }
     pose(s);
     let height,direction=new THREE.Vector3(.65,.18,.77),up=UP.clone();
@@ -358,7 +358,7 @@ export async function createContinuousKneeViewer(host){
       // Keep the shaft vertical on screen. Each semantic step has its own
       // camera / intact axial exploded assembly, with no geometry clipping.
       const views=[[1,-.35,.067],[.9,-.50,.067],[.55,-.85,.067],[1,-.23,.105],[.65,-.70,.088],[1,-.4,.067],[.85,-.5,.067]];
-      const [side,axial,h]=views[build];direction.copy(normal).multiplyScalar(side).addScaledVector(axis,axial);up.copy(axis).negate();height=h;
+      const [side,axial,h]=views[build];direction.copy(normal).multiplyScalar(side).addScaledVector(axis,axial);up.copy(axis).negate();height=h;if(build===3||build===4){direction.copy(axis).negate().addScaledVector(normal,.06);up.copy(normal);height=build===3?.078:.068;}
     }
     // Preserve source geometry; the orthographic field follows these framing controls.
     s.distance=height/(2*Math.tan(THREE.MathUtils.degToRad(16)));
@@ -513,7 +513,7 @@ export async function createContinuousKneeViewer(host){
     const inset=s.coverInset||0,right=new THREE.Vector3(1,0,0).applyQuaternion(s.rotation);
     if(gait)gait.group.position.copy(right).multiplyScalar(-.42*inset);
     if(fea){
-      if(chapter===4){fea.group.position.copy(s.target).addScaledVector(right,projectionHeight*camera.aspect*.49).addScaledVector(new THREE.Vector3(0,1,0).applyQuaternion(s.rotation),projectionHeight*.23);fea.group.scale.setScalar(.82);fea.group.quaternion.copy(s.rotation);}
+      if(chapter===4){fea.group.position.copy(s.target).addScaledVector(right,projectionHeight*camera.aspect*(-.30)).addScaledVector(new THREE.Vector3(0,1,0).applyQuaternion(s.rotation),projectionHeight*.07);fea.group.scale.setScalar(1.85);fea.group.quaternion.copy(s.rotation);}
       else{fea.group.position.copy(s.target).addScaledVector(right,.68).multiplyScalar(inset);fea.group.scale.setScalar(1+34*inset);fea.group.quaternion.identity().slerp(s.rotation,inset);}
     }
     if(chapter===4)Object.assign(host.dataset,{springPersistent:'complete same native CAD assembly',springDock:String(s.springDock),nativeSpringClipping:'none',nativeSpringDeformation:'none',springAssemblySeparation:String(s.explodeWeak),springChapterPurpose:'why nonlinear stiffness -> how geometry creates it'});
@@ -554,6 +554,7 @@ export async function createContinuousKneeViewer(host){
   }
   function resize(){const w=host.clientWidth,h=host.clientHeight;if(w<2||h<2)return;renderer.setSize(w,h,false);camera.aspect=w*FIGURE_WIDTH/h;updateOrthographicProjection();if(live)render();}
   function interpolate(a,b,u){const s={...b,target:a.target.clone().lerp(b.target,u),rotation:a.rotation.clone().slerp(b.rotation,u),devicePosition:a.devicePosition.clone().lerp(b.devicePosition,u),deviceRotation:a.deviceRotation.clone().slerp(b.deviceRotation,u),opacities:a.opacities.map((v,i)=>THREE.MathUtils.lerp(v,b.opacities[i],u))};for(const k of['phase','springDock','driveExplode','explodeWeak','explodeStrong','spreadStrong','coilInspection','deform','section','transverse','stemCut','distance','nativeComparisonOpacity','humanReveal','nativeCut','nativeCutLeft','nativeCutRight','muscles','motionProgress','chair','attach','leftInsertion','rightInsertion','rightReveal','clinicalReveal','clinicalCut','clinicalHighlight','clinicalExplode','deviceScale','gait','fea','feaAngle','coverInset','bgExamples','bgMotor','bgFocus','bgSurgery','bgWiggle','bgMuscle80','bgChart'])s[k]=THREE.MathUtils.lerp(a[k]??0,b[k]??0,u);
+    if(chapter===4&&build===3){const separate=ease(clamp(u/.45)),rotate=ease(clamp((u-.45)/.55));for(const k of ['explodeWeak','explodeStrong','spreadStrong'])s[k]=THREE.MathUtils.lerp(a[k]||0,b[k]||0,separate);s.rotation.copy(a.rotation).slerp(b.rotation,rotate);}
     if(chapter===2&&build===2)s.bgChart=autoplayAllowed()?(u<.5?Math.cbrt(u/4):1-Math.cbrt((1-u)/4)):1;
     if(chapter===2&&build===1)s.bgSurgery=u<.5?Math.cbrt(u/4):1-Math.cbrt((1-u)/4);
     // Pull back before introducing full human–device models; retract them before
@@ -619,7 +620,7 @@ export async function createContinuousKneeViewer(host){
     if(c===2&&(b===2||b===3)){to.opacities=parts.map(()=>0);to.humanReveal=.85;to.muscles=.85;to.chair=0;to.rightReveal=0;to.clinicalReveal=0;to.clinicalCut=0;}
     if(c===3){if(enteringHardware)hardwareClock=0;else if(previous)to.phase=previous.phase;}
     if(c===3&&b===0){to.opacities=parts.map(()=>0);to.humanReveal=0;to.rightReveal=0;to.clinicalReveal=0;to.clinicalCut=0;}
-    if(c===4){springClock=0;to.fea=b===5?1:0;to.feaAngle=0;}
+    if(c===4){springClock=0;to.fea=b===5?1:0;to.feaAngle=b===5&&!autoplayAllowed()?110:0;}
     if(c===5&&b===2)to.deform=.12;
     if(c===6&&b===2){to.humanReveal=0;to.rightReveal=0;}
     if(c===5){to.opacities=parts.map(()=>0);to.nativeComparisonOpacity=0;to.humanReveal=0;to.rightReveal=0;to.clinicalReveal=0;}
@@ -628,7 +629,7 @@ export async function createContinuousKneeViewer(host){
     camera.aspect=host.clientWidth*FIGURE_WIDTH/Math.max(1,host.clientHeight);camera.updateProjectionMatrix();
     Object.assign(host.dataset,{chapter:String(c),build:String(b),page:String(c),storyScene:String(page),storyStep:String(step),continuity:'one-scene-one-renderer',cameraStartsFrom:'current-interpolated-state',sourceModel:'persistent-original-CAD-with-corrected-subtree-ownership-and-recorded-gait'});
     if(previous&&initialized&&animate&&!reduced()){
-      transition={from:previous,to,elapsed:0,duration:c===2?(b===1?10.2:b===2?2.2:b===3||b===4?1.55:1.3):c===4&&b===5?4.8:2.2};last=performance.now();host.dataset.animation='running';host.dataset.transitionProgress='0';applyState(previous,false);raf=requestAnimationFrame(tick);
+      transition={from:previous,to,elapsed:0,duration:c===2?(b===1?10.2:b===2?2.2:b===3||b===4?1.55:1.3):c===4&&(b===3||b===5)?4.8:2.2};last=performance.now();host.dataset.animation='running';host.dataset.transitionProgress='0';applyState(previous,false);raf=requestAnimationFrame(tick);
     }else if(c===2&&b===2&&autoplayAllowed()){
       // A directly opened chart also enters gently after the loading screen;
       // its animation shares the navigation clock, including held-key speed.

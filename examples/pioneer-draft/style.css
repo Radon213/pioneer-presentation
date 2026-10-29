@@ -106,5 +106,18 @@ footer .source{flex:1;min-width:0}
 .spring-explanation[hidden]{display:none}.spring-explanation-figure{min-height:0}.spring-explanation-figure svg{width:100%;height:100%;display:block;font-family:'Playfair Display',Georgia,serif;overflow:visible}
 .spring-explanation-math{font-size:24px;min-height:52px;display:flex;align-items:center;justify-content:center}.spring-explanation-math .katex-display{margin:0}.spring-explanation-math .katex{font-size:1.05em}
 .spring-explanation-source{font-size:21px;line-height:1.35;color:#4f5d75;text-align:center;max-width:100%;text-wrap:pretty}
-.spring-explanation [data-reveal-curve]{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 850ms var(--ease)}.spring-explanation[data-settled=true] [data-reveal-curve]{stroke-dashoffset:0}
-@media(prefers-reduced-motion:reduce){.spring-explanation{transition:none}.spring-explanation [data-reveal-curve]{transition:none;stroke-dashoffset:0}}
+/* Keyframe drawing also runs on direct entry, where insertion and settlement
+   otherwise coalesce into one frame and skip a CSS transition. */
+.spring-explanation [data-reveal-curve]{stroke-dasharray:1;stroke-dashoffset:1}
+.spring-explanation[data-settled=true] [data-reveal-curve]{animation:spring-curve-draw 1500ms cubic-bezier(.3,0,.2,1) both}
+.spring-explanation [data-reveal-point]{opacity:0}.spring-explanation[data-settled=true] [data-reveal-point]{animation:spring-point-in 500ms 1100ms both}
+.spring-explanation[data-build="5"]{left:0;width:62%}
+.spring-explanation[data-settled=true] .coil-closing{animation:spring-coil-close 1400ms 200ms both}
+.spring-explanation[data-settled=true] .contact-appears{animation:spring-point-in 500ms 1200ms both}
+@keyframes spring-curve-draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes spring-point-in{from{opacity:0}to{opacity:1}}
+@keyframes spring-coil-close{from{transform:translateY(35px)}to{transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.spring-explanation{transition:none}.spring-explanation [data-reveal-curve]{animation:none!important;stroke-dashoffset:0}.spring-explanation [data-reveal-point],.spring-explanation .contact-appears{animation:none!important;opacity:1}.spring-explanation .coil-closing{animation:none!important}}
+
+.spring-explanation [data-reveal-area]{opacity:0}.spring-explanation[data-settled=true] [data-reveal-area]{animation:spring-point-in 700ms 900ms both}
+@media(prefers-reduced-motion:reduce){.spring-explanation [data-reveal-area]{animation:none!important;opacity:1}}
