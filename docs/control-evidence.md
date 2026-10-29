@@ -4,7 +4,7 @@ Updated 2026-10-29. This document records source scope for the presentation; it 
 
 ## Narrative and timing
 
-Control joins the old Control, Simulation and Reinforcement Learning chapters. Eight stages allocate 250 s: 25, 25, 30, 35, 30, 35, 40, 30. The deck has six chapters, 29 visible states and a planned 720 s allocation. The first four chapters remain intact. Conclusion becomes chapter 6.
+Control joins the old Control, Simulation and Reinforcement Learning chapters. Nine stages allocate 250 s: 22, 22, 27, 34, 27, 33, 35, 25, 25. The deck has six chapters, 30 visible states and a planned 720 s allocation. The first four chapters remain intact. Conclusion becomes chapter 6.
 
 1. Control the Spring State: relative device angles → deformation → elastic torque.
 2. Evaluate Human–Implant Interaction: separate human-muscle and motor pathways, coupled by physics.
@@ -13,7 +13,8 @@ Control joins the old Control, Simulation and Reinforcement Learning chapters. E
 5. Operate with Device-Side Sensing: declared permitted signals and physics observer.
 6. Transfer the Strategy to a Student: behavior cloning into recurrent spring-target corrections.
 7. Preliminary Sit-to-Stand Evaluation: nominal execution replay, no headline benefit percentage.
-8. Toward Continuous Walking Assistance: a separate failed walking candidate explains the next problem.
+8. Repeat Assistance During Walking: the actual walking candidate and its paired torque record.
+9. Anticipate the Drive Limits: retain that model and focus on the terminal shaft-power exceedance.
 
 ## Sit-to-stand sources
 
@@ -54,4 +55,10 @@ Root:
 
 Use one persistent Three.js scene with next-driven camera/element emphasis. Use the true stored STS trajectory for the result and show its original time, including any playback speed. A conceptual spring loading sequence must be labeled as a target illustration or separated from recorded telemetry. Keep equations in rendered LaTeX. Diagrams should closely follow Diagram Design's neutral paper/ink/coral repository examples. Keep the cream academic slide shell, existing serif fonts, authors and source colors.
 
-Walking figure: the displayed source excerpt is 26.95–27.19 s (last240ms), with signed gear-output-equivalent motor requests/applied torques and absolute source shaft power. It is not synchronized to the unrelated reference gait model. The power bar spans0–30W and marks25W, so the actual26.95W terminal value remains visible beyond the limit.
+Walking figures now use the full saved 100 Hz record and an exact saved-state FK export from the same candidate. The first walking stage replays the full interval with a four-second moving chart window; the next focuses on 25.5–27.19 s with the same model retained. Display markers and pose transforms interpolate continuously; they do not add simulated samples or change the terminal exceedance. The actual 26.95 W terminal value remains visible beyond the 25 W limit.
+
+## Revision 38 visual changes
+
+The detached native spring front shot is replaced by a conceptual animated torsion diagram, integrating relative angle, torque and stored energy within the same figure. Equations sit inside the relevant nodes rather than below the whole diagram. The recorded STS model accompanies the task sequence and development snapshots. Development clips are separate saved controller configurations, not a plotted PPO improvement curve. The rear two chair legs use the prior approved render-only +0.10 m source-X correction, preserving seat height and saved dynamics.
+
+The Prepare/Assist/Release introduction replays the first six seconds of the same student record. Phase divisions follow the source's descriptive seated/rising/standing boundaries at 0.94 and 4.79 s. Its elastic-state curve is explicitly conceptual, not a measured spring channel.

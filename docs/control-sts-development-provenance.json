@@ -1,0 +1,85 @@
+{
+  "classification": "ACTUAL_RECORDED_CONTROLLER_DEVELOPMENT_SNAPSHOTS",
+  "notLearningCurve": true,
+  "notSameCheckpointComparison": true,
+  "poseRepair": false,
+  "dynamicsCalls": 0,
+  "chairVisualCorrection": {
+    "geoms": [
+      "chair_leg_3",
+      "chair_leg_4"
+    ],
+    "translationSourceM": [
+      0.1,
+      0,
+      0
+    ],
+    "scope": "Visual only; original physical rollout and source files preserved."
+  },
+  "attempts": [
+    {
+      "id": "early",
+      "label": "Early strategy",
+      "sourceTrace": "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/p0_causal_execution_r1/p5_momentum_screen_r1/actual_trace.npz",
+      "sourceTraceSHA256": "95fc9e044eb950c46eb09972f33c0e29af8abae425749ef552d82674a2626d15",
+      "sourceModel": "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/runtime_p5_momentum_screen_r1/path48_15/chair22.xml",
+      "sourceModelSHA256": "264b1348b75070fd3fc04439db6fe4d3aebef194f63f69e1af629577d1277995",
+      "sourceWorld": 0,
+      "sourceIndexRange": [
+        0,
+        358
+      ],
+      "durationSeconds": 3.58,
+      "sourceSampleHz": 100,
+      "displaySampleHz": 25,
+      "frameCount": 91,
+      "terminalFailureReason": 128,
+      "taskSuccess": false,
+      "qualified": false,
+      "physicsSteps": 0,
+      "offlineKinematicsCalls": 91,
+      "sharedMeshMaxDifferenceM": 0,
+      "allProtectedSourcesUnchanged": true,
+      "protectedSourceHashes": {
+        "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/p0_causal_execution_r1/p5_momentum_screen_r1/actual_trace.npz": "95fc9e044eb950c46eb09972f33c0e29af8abae425749ef552d82674a2626d15",
+        "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/runtime_p5_momentum_screen_r1/path48_15/chair22.xml": "264b1348b75070fd3fc04439db6fe4d3aebef194f63f69e1af629577d1277995",
+        "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/p0_causal_execution_r1/p5_momentum_screen_r1/recording.json": "22dbf30526f666ebbce4f338b0b5bce14e10c4d28af1d39a9bfa5d766f4406eb",
+        "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/p0_causal_execution_r1/p5_momentum_screen_r1/independent_dwell_audit.json": "e4f6f511a43fc6d882b2503a5a95879962f60b197684223f07fdaa0c85fa6a14"
+      }
+    },
+    {
+      "id": "unstable",
+      "label": "Stand-up, then loss of balance",
+      "sourceTrace": "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/p0_causal_execution_r1/p13_momentum_duration_screen_r2_0/actual_trace.npz",
+      "sourceTraceSHA256": "d8db1ffc1c0894cee2e9cd7851d02f9da1b38a3424ee047b2492940c24fec6f1",
+      "sourceModel": "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/runtime_p13_momentum_duration_r1/path48_15/chair22.xml",
+      "sourceModelSHA256": "264b1348b75070fd3fc04439db6fe4d3aebef194f63f69e1af629577d1277995",
+      "sourceWorld": 2,
+      "sourceIndexRange": [
+        0,
+        531
+      ],
+      "durationSeconds": 5.3100000000000005,
+      "sourceSampleHz": 100,
+      "displaySampleHz": 25,
+      "frameCount": 134,
+      "terminalFailureReason": 256,
+      "taskSuccess": false,
+      "qualified": false,
+      "physicsSteps": 0,
+      "offlineKinematicsCalls": 134,
+      "sharedMeshMaxDifferenceM": 0,
+      "allProtectedSourcesUnchanged": true,
+      "protectedSourceHashes": {
+        "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/p0_causal_execution_r1/p13_momentum_duration_screen_r2_0/actual_trace.npz": "d8db1ffc1c0894cee2e9cd7851d02f9da1b38a3424ee047b2492940c24fec6f1",
+        "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/runtime_p13_momentum_duration_r1/path48_15/chair22.xml": "264b1348b75070fd3fc04439db6fe4d3aebef194f63f69e1af629577d1277995",
+        "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/p0_causal_execution_r1/p13_momentum_duration_screen_r2_0/recording.json": "8d8f85ca713f11c24936b404f2f2c996de309a6d6158b35b515dc2421330c916",
+        "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/p0_causal_execution_r1/p13_momentum_duration_screen_r2_0/independent_dwell_audit.json": "4a5e78902f15a330159b56f2eca0c42cf5b7d907293e182de244776629cff989"
+      }
+    }
+  ],
+  "bytes": 1744680,
+  "gzipBytes": 891928,
+  "binarySHA256": "4c80572e1b2ce2a961b60469e23c4f7bd0de6f679402093cce989ad496f9acfa",
+  "gzipSHA256": "877509663fd92397c929e61f4bd3a3bb3597d3c8690602c1ed2428d5b7f28be8"
+}

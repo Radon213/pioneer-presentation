@@ -1,6 +1,6 @@
-import {buildArchivedSpringChart} from './archived-spring-chart.js?v=revision-20261029-37';
-import {buildDiagram} from './chapter-diagram-layer.js?v=revision-20261029-37';
-import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-37';
+import {buildArchivedSpringChart} from './archived-spring-chart.js?v=revision-20261029-39';
+import {buildDiagram} from './chapter-diagram-layer.js?v=revision-20261029-39';
+import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-39';
 // Short visual explanations. All quantitative FEA marks use the same archived solver case.
 const C={ink:'#1a3a7a',accent:'#a44725',muted:'#585950',line:'#b5b3ab',paper:'#fdfcf8'};
 const text=(x,y,s,z=26,c=C.ink,a='middle')=>`<text x="${x}" y="${y}" font-size="${z}" fill="${c}" text-anchor="${a}" stroke="${C.paper}" stroke-width="5" paint-order="stroke">${s}</text>`;
