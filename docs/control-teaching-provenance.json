@@ -1,0 +1,16 @@
+{
+  "schema": "pioneer-control-teaching-v1",
+  "sourceHashes": {
+    "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/p32_student_PPO_physics_pilot_r1/selected_best_checkpoint_audit/actual_trace.npz": "eb0b0fca8dba749c0cfa74ccbd5a03a4f1d29501fbb761971bd4ab1e2cc7da65",
+    "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/p0_causal_execution_r1/p24_teacher_incumbent_confirmation_r1/actual_trace.npz": "f2c6f64b75d77f7fea82dbfac4942b52bb907e59b4e05f07e62517ee28eae9c5",
+    "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/p0_causal_execution_r1/p22_teacher_timing_search_r1/actual_trace.npz": "9279e3e57ae5c3d8f47c6d102c2b48351a7d29afb4e94f78a07089a9125cfeb0",
+    "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/p0_causal_execution_r1/p22_teacher_timing_search_r1/COMPARISON.json": "fef5299b6ff5c41a5c18689d435374761ef832a1accff33a1990bf2f35c59d10",
+    "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/p30_physics_student_distillation_r1/progress.jsonl": "ede36679d11a3522b412cdcc23092eb83fef7b0711c6cdb1c27ebca3ad94f37a",
+    "/home/arl/Documents/Pioneer/work/aakj-direct-torque-2026-10-27/tracking_teacher_r1/final30_moments/moments.npz": "11fa47e98d6104245a9b4c79977eab32d4420042ccdcf193254b5e580929271e",
+    "/home/arl/Documents/Pioneer/work/aakj-direct-torque-2026-10-27/tracking_teacher_r1/final30/rollouts.npz": "18ab5add0928e5de0ca204dc121ffdde44ba621dd197661a6f461c7fa11acad7",
+    "/home/arl/Documents/Pioneer/work/aakj-direct-torque-2026-10-27/fixed_gait_torque_oracle_r1/optimal_profile_left.csv": "4988db3410160a24943725a30649f0ac5d202b7f45220de12402f655f7aefd5c",
+    "/home/arl/Documents/Pioneer/work/aakj-direct-torque-2026-10-27/fixed_gait_torque_oracle_r1/real480_r4.json": "8f6284404d396b697252080df900113b38e6dbd78c11139651ab937ab6e3f1fa"
+  },
+  "sourcesUnchanged": true,
+  "newPhysicsSteps": 0
+}

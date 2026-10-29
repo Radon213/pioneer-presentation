@@ -1,3 +1,5 @@
+Current revision: see `control-teaching56.md` for the ten-stage source-backed chapter. The narrative below records the earlier nine-stage revision.
+
 # Control chapter: evidence and presentation contract
 
 Updated 2026-10-29. This document records source scope for the presentation; it does not modify or rerun the research simulations.

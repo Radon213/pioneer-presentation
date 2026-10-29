@@ -12,3 +12,9 @@
 @keyframes control-memory-update{0%,100%{opacity:.2}40%,65%{opacity:.65}}
 @media(prefers-reduced-motion:reduce){.control-sample-packet{display:none}.control-history-sample,.control-memory-cell{animation:none}}
 @media print{.control-sample-packet{display:none}.control-history-sample,.control-memory-cell{animation:none}}
+/* Source-backed teaching diagrams keep the slide's paper and serif voice. */
+.control-explanation[data-build="1"]{left:0;width:62%;top:4%;bottom:4%}
+.control-explanation[data-build="9"]{left:30%;width:32%;top:2%;bottom:2%}
+.teaching-draw{animation:teaching-line-enter 1.6s cubic-bezier(.16,1,.3,1) both}
+@keyframes teaching-line-enter{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@media(prefers-reduced-motion:reduce){.teaching-draw{animation:none}}

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {reportLoadStage} from './asset-loading.js?v=revision-20261029-55';
+import {reportLoadStage} from './asset-loading.js?v=revision-20261029-58';
 import {createShadedEdges} from './shaded-edges.js';
 
 /** Saved walking candidate states only. The controller failed the 25 W test at 27.19 s. A renderer, animation loop, solver,
@@ -17,9 +17,9 @@ export function decodeControlWalkingBinary(buffer){
  };
  return revive(manifest.data);
 }
-async function loadReplay(){
- const gzip=typeof DecompressionStream==='function',url=new URL(`./assets/control-walking.bin${gzip?'.gz':''}`,import.meta.url),started=performance.now();let loaded=0;
- const report=(phase,detail={})=>reportLoadStage('control-walking',phase,{label:'Walking candidate replay',phase,state:'running',...detail});
+async function loadReplay(filename,loadLabel){
+ const gzip=typeof DecompressionStream==='function',url=new URL(`./assets/${filename}.bin${gzip?'.gz':''}`,import.meta.url),started=performance.now();let loaded=0;
+ const report=(phase,detail={})=>reportLoadStage(filename,phase,{label:loadLabel,phase,state:'running',...detail});
  report('download',{ratio:0});const response=await fetch(url);if(!response.ok)throw Error(`Walking replay: HTTP ${response.status}`);
  const reader=response.body?.getReader(),chunks=[],total=Number(response.headers.get('content-length'))||0;
  if(reader){while(true){const {done,value}=await reader.read();if(done)break;chunks.push(value);loaded+=value.byteLength;report('download',{loadedBytes:loaded,totalBytes:total||null,ratio:total?Math.min(1,loaded/total):null});}}
@@ -28,10 +28,10 @@ async function loadReplay(){
  const data=decodeControlWalkingBinary(buffer);data.loadingMetrics={observedBodyBytes:loaded,decodedBytes:buffer.byteLength,loadMs:performance.now()-started};report('ready',{state:'complete',ratio:1,...data.loadingMetrics});return data;
 }
 
-export async function createControlWalkingLayer(scene,{gait,human}={}){
+export async function createControlWalkingLayer(scene,{gait,human,filename='control-walking',label='Walking candidate replay'}={}){
  if(!gait?.sourceGroup||!human?.sourceData)throw Error('Walking replay requires the loaded native gait geometry and original human shafts.');
- const data=await loadReplay();if(data.schema!=='pioneer-control-walking-v1'||data.frames.length<2)throw Error('Invalid Walking replay data.');
- const group=new THREE.Group();group.name='ActualRecordedWalkingCandidate';
+ const data=await loadReplay(filename,label);if(data.schema!=='pioneer-control-walking-v1'||data.frames.length<2)throw Error('Invalid Walking replay data.');
+ const group=new THREE.Group();group.name=filename;group.visible=false;
  const sourceGroup=new THREE.Group();sourceGroup.name='WalkingSource_Zup_to_Yup';sourceGroup.rotation.x=-Math.PI/2;group.add(sourceGroup);scene.add(group);
  group.userData={...data.provenance,loadingMetrics:data.loadingMetrics,independentRenderer:false,sourcePoseRepair:false};
  const ownedGeometries=new Set(),materials=new Set(),edgeHelpers=[],objects=[],cache=new Map(),unit=new THREE.Vector3(1,1,1),C=new THREE.Matrix4().makeRotationX(-Math.PI/2);

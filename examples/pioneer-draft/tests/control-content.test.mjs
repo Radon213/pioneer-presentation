@@ -14,8 +14,8 @@ test('the complete talk retains its twelve-minute, under-thirty-state contract',
 });
 
 test('Control advances from spring-state preparation to a nominal result and walking challenge',()=>{
- assert.equal(control.stages.length,9);
- assert.equal(control.duration,250);
+ assert.equal(control.stages.length,10);
+ assert.equal(control.duration,275);
  assert.equal(control.stages.reduce((sum,s)=>sum+s.duration,0),control.duration);
  assert.match(audience(control.stages[0]),/spring.*state|elastic state/i);
  assert.match(audience(control.stages[1]),/human|person/i);
@@ -61,5 +61,5 @@ test('preliminary results do not become an effort, robustness or PPO-benefit hea
  assert.match(result.notes,/noise=0/);
  assert.match(result.notes,/zero.neural.residual/i);
  assert.match(control.stages[7].notes,/different walking controller and experiment/i);
- assert.match(control.stages[8].notes,/26.9548206 W/);
+ assert.match(control.stages[9].notes,/26.9548206 W/);
 });

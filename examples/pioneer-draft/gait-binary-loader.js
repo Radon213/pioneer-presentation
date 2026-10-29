@@ -1,4 +1,4 @@
-import {reportLoadStage} from './asset-loading.js?v=revision-20261029-55';
+import {reportLoadStage} from './asset-loading.js?v=revision-20261029-58';
 
 /** Decode a small manifest and create zero-copy views over one aligned buffer.
  * Mesh positions retain the exact Float32 values previously sent to the GPU;

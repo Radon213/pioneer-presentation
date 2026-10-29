@@ -1,5 +1,5 @@
-import slides from './deck-data.js?v=revision-20261029-55';
-import {getTalkStage} from './presenter-script.js?v=revision-20261029-55';
+import slides from './deck-data.js?v=revision-20261029-58';
+import {getTalkStage,countSpokenWords,scriptParts} from './presenter-script.js?v=revision-20261029-58';
 const $=selector=>document.querySelector(selector);
 const audienceSession=new URLSearchParams(location.search).get('audience');
 const channel=typeof BroadcastChannel==='function'?new BroadcastChannel(`pioneer-draft-presenter${audienceSession?':'+audienceSession:''}`):null;
@@ -9,7 +9,16 @@ let elapsed=0,started=0,running=false,lastState=0,current=null,stageStarted=0,st
 function elapsedNow(){return elapsed+(running?(performance.now()-started)/1000:0);}
 function toggleTimer(){if(running){elapsed=elapsedNow();stageElapsed+=performance.now()-stageStarted;}else{started=performance.now();stageStarted=started;}running=!running;$('#pause').textContent=running?'Pause timer':elapsed?'Resume timer':'Start timer';}
 function resetTimer(){elapsed=0;started=performance.now();stageStarted=started;stageElapsed=0;paintClock();}
-function setParagraphs(element,text){element.replaceChildren(...text.split(/(?<=[.!?])\s+(?=[A-Z])/).reduce((groups,sentence,index)=>{if(index%2===0)groups.push(sentence);else groups[groups.length-1]+=' '+sentence;return groups;},[]).map(text=>{const p=document.createElement('p');p.textContent=text;return p;}));}
+function setSpokenText(element, text) {
+ element.replaceChildren(...scriptParts(text).map(part=>{
+  if(!part.strong)return document.createTextNode(part.text);
+  const strong=document.createElement('strong');strong.textContent=part.text;return strong;
+ }));
+}
+function setParagraphs(element,text){
+ const sentences=text.split(/(?<=[.!?])\s+(?=(?:\*\*)?[A-Z])/);
+ element.replaceChildren(...sentences.reduce((groups,sentence,index)=>{if(index%2===0)groups.push(sentence);else groups[groups.length-1]+=' '+sentence;return groups;},[]).map(text=>{const p=document.createElement('p');setSpokenText(p,text);return p;}));
+}
 function receive(data){
  if(data?.type!=='state'||!Number.isInteger(data.page)||!Number.isInteger(data.step))return;
  const slide=slides[data.page-1],stage=slide?.stages[data.step],spoken=getTalkStage(data.page,data.step);if(!stage||!spoken)return;
@@ -18,13 +27,13 @@ function receive(data){
  current={key,page:data.page,step:data.step,seconds:spoken.seconds};stageStarted=performance.now();stageElapsed=0;$('#reference').open=false;
  $('#position').textContent=`${data.page}-${data.step+1} · Chapter ${data.page} / ${slides.length} · Stage ${data.step+1} / ${slide.stages.length}`;
  $('#allocation').textContent=`Target ${spoken.seconds} s`;
- $('#title').textContent=slide.title;$('#subtitle').textContent=stage.subtitle||slide.subtitle||'';setParagraphs($('#script'),spoken.text);$('#script').classList.toggle('is-long',spoken.text.trim().split(/\s+/).length>60);
+ $('#title').textContent=slide.title;$('#subtitle').textContent=stage.subtitle||slide.subtitle||'';setParagraphs($('#script'),spoken.text);$('#script').classList.toggle('is-long',countSpokenWords(spoken.text)>60);
  $('#reference-text').textContent=data.slide?.notes||stage.notes;
  const nextPage=data.step<slide.steps?data.page:data.page+1,nextStep=data.step<slide.steps?data.step+1:0;
  const nextSlide=slides[nextPage-1],nextStage=nextSlide?.stages[nextStep],nextSpoken=getTalkStage(nextPage,nextStep);
  $('#next-position').textContent=nextStage?`${nextPage}-${nextStep+1} · ${nextSpoken.seconds} s`:'';
  $('#next-title').textContent=nextStage?(nextStage.subtitle||nextSlide.subtitle||nextSlide.title):'End of presentation';
- $('#next-script').textContent=nextSpoken?nextSpoken.text.split(/(?<=[.!?])\s+/).slice(0,2).join(' '):'Thank you.';
+ setSpokenText($('#next-script'),nextSpoken?nextSpoken.text.split(/(?<=[.!?])\s+(?=(?:\*\*)?[A-Z])/).slice(0,2).join(' '):'Thank you.');
  paintClock();
 }
 function paintClock(){

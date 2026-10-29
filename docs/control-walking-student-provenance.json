@@ -1,0 +1,1001 @@
+{
+  "classification": "ACTUAL_RECORDED_WALKING_SENSOR_STUDENT",
+  "sourceTrace": "/home/arl/Documents/Pioneer/work/aakj-direct-torque-2026-10-27/tracking_teacher_r1/final30/rollouts.npz",
+  "sourceTraceSHA256": "18ab5add0928e5de0ca204dc121ffdde44ba621dd197661a6f461c7fa11acad7",
+  "sourceModel": "/home/arl/Documents/Pioneer/work/aakj-spring-material-2026-10-27/weak_active_blender_rgba.xml",
+  "sourceModelSHA256": "cbca4947da1f9a1784b0e7e88ca15d619faa13a960e6f357bf531369fe9a0da2",
+  "sourceWorld": 6,
+  "sourceWindowSeconds": [
+    20.01,
+    27.990000000000002
+  ],
+  "durationSeconds": 7.98,
+  "frameCount": 201,
+  "displaySampleHz": 25,
+  "sourceSampleHz": 50,
+  "controller": "Learned six-state observer with fixed tracking teacher control law; not the STS GRU residual actor",
+  "nominalCompleteSeconds": 30,
+  "matchedSpeedQualified": false,
+  "measuredClinicalData": false,
+  "assistanceBenefit": false,
+  "qualified": false,
+  "physicsSteps": 0,
+  "offlineKinematicsCalls": 201,
+  "offlineTendonWrapCalls": 201,
+  "forwardDynamicsCalls": 0,
+  "mujocoVersion": "3.4.0",
+  "coordinates": "Source Z-up metres. Subtract actual pelvis X only for an in-place camera frame; preserve every relative pose.",
+  "sharedGeometrySource": "gait-chapter-native-rebound.bin",
+  "sharedGeometrySHA256": "63aa5e7ac63f0a3240895b1455932a279a9c51a3a6c230f8192d876147a21450",
+  "sharedGeometryCompatibilityMaxDifferenceM": 5.21540641784668e-08,
+  "telemetrySide": "left",
+  "telemetryAlignment": "Saved 50 Hz post-step state; commands and metrics at matching 100 Hz index.",
+  "motorPowerDefinition": "Absolute saved motor-generated torque times saved referred-drive speed; not shaft endpoint power.",
+  "protectedSourceHashes": {
+    "/home/arl/Documents/Pioneer/work/aakj-direct-torque-2026-10-27/tracking_teacher_r1/final30/rollouts.npz": "18ab5add0928e5de0ca204dc121ffdde44ba621dd197661a6f461c7fa11acad7",
+    "/home/arl/Documents/Pioneer/work/aakj-direct-torque-2026-10-27/tracking_teacher_r1/final30/report.json": "920688737f1da236e5eae6a2bebea5622141b4f3575fa77aac1d7f58cdf6b684",
+    "/home/arl/Documents/Pioneer/work/aakj-spring-material-2026-10-27/weak_active_blender_rgba.xml": "cbca4947da1f9a1784b0e7e88ca15d619faa13a960e6f357bf531369fe9a0da2",
+    "/home/arl/Documents/Pioneer/deploy/pioneer-presentation-pages-20261029/examples/pioneer-draft/assets/gait-chapter-native-rebound.bin": "63aa5e7ac63f0a3240895b1455932a279a9c51a3a6c230f8192d876147a21450"
+  },
+  "allProtectedSourcesUnchanged": true,
+  "geometryCompatibility": [
+    {
+      "geom": "sacrum_geom_1",
+      "maxVertexDifferenceM": 5.21540641784668e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 192,
+      "retainedTriangleCount": 380
+    },
+    {
+      "geom": "lumbar5_geom_1",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 212,
+      "retainedTriangleCount": 424
+    },
+    {
+      "geom": "lumbar4_geom_1",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 212,
+      "retainedTriangleCount": 424
+    },
+    {
+      "geom": "lumbar3_geom_1",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 212,
+      "retainedTriangleCount": 424
+    },
+    {
+      "geom": "lumbar2_geom_1",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 212,
+      "retainedTriangleCount": 424
+    },
+    {
+      "geom": "lumbar1_geom_1",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 212,
+      "retainedTriangleCount": 424
+    },
+    {
+      "geom": "torso_geom_1",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 212,
+      "retainedTriangleCount": 424
+    },
+    {
+      "geom": "torso_geom_2",
+      "maxVertexDifferenceM": 4.95638232678175e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 212,
+      "retainedTriangleCount": 424
+    },
+    {
+      "geom": "torso_geom_3",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 212,
+      "retainedTriangleCount": 424
+    },
+    {
+      "geom": "torso_geom_4",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 212,
+      "retainedTriangleCount": 424
+    },
+    {
+      "geom": "torso_geom_5",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 212,
+      "retainedTriangleCount": 424
+    },
+    {
+      "geom": "torso_geom_6",
+      "maxVertexDifferenceM": 4.936009645462036e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 212,
+      "retainedTriangleCount": 424
+    },
+    {
+      "geom": "torso_geom_7",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 212,
+      "retainedTriangleCount": 424
+    },
+    {
+      "geom": "torso_geom_8",
+      "maxVertexDifferenceM": 4.98257577419281e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 212,
+      "retainedTriangleCount": 424
+    },
+    {
+      "geom": "torso_geom_9",
+      "maxVertexDifferenceM": 4.936009645462036e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 212,
+      "retainedTriangleCount": 424
+    },
+    {
+      "geom": "torso_geom_10",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 212,
+      "retainedTriangleCount": 424
+    },
+    {
+      "geom": "torso_geom_11",
+      "maxVertexDifferenceM": 4.98257577419281e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 212,
+      "retainedTriangleCount": 424
+    },
+    {
+      "geom": "torso_geom_12",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 212,
+      "retainedTriangleCount": 424
+    },
+    {
+      "geom": "torso_geom_13",
+      "maxVertexDifferenceM": 5.21540641784668e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 10953,
+      "retainedTriangleCount": 21216
+    },
+    {
+      "geom": "hat_cervical",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 1360,
+      "retainedTriangleCount": 2689
+    },
+    {
+      "geom": "hat_jaw",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 1459,
+      "retainedTriangleCount": 2916
+    },
+    {
+      "geom": "hat_skull",
+      "maxVertexDifferenceM": 5.21540641784668e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 3305,
+      "retainedTriangleCount": 6589
+    },
+    {
+      "geom": "pelvis_geom_1",
+      "maxVertexDifferenceM": 5.21540641784668e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 192,
+      "retainedTriangleCount": 380
+    },
+    {
+      "geom": "pelvis_geom_2",
+      "maxVertexDifferenceM": 5.21540641784668e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 122,
+      "retainedTriangleCount": 246
+    },
+    {
+      "geom": "pelvis_geom_3",
+      "maxVertexDifferenceM": 5.21540641784668e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 122,
+      "retainedTriangleCount": 246
+    },
+    {
+      "geom": "aakj_r_condyle_right_visual",
+      "maxVertexDifferenceM": 5.21540641784668e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 21342,
+      "retainedTriangleCount": 42692
+    },
+    {
+      "geom": "aakj_r_sspsr3_20_visual",
+      "maxVertexDifferenceM": 5.21540641784668e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 40284,
+      "retainedTriangleCount": 80552
+    },
+    {
+      "geom": "aakj_r_fem_4_7_visual",
+      "maxVertexDifferenceM": 4.9942173063755035e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 1682,
+      "retainedTriangleCount": 3364
+    },
+    {
+      "geom": "aakj_r_femur_stem_visual",
+      "maxVertexDifferenceM": 5.21540641784668e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 11222,
+      "retainedTriangleCount": 22452
+    },
+    {
+      "geom": "aakj_r_motor_cable_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 3997,
+      "retainedTriangleCount": 7990
+    },
+    {
+      "geom": "aakj_r_motor_visual",
+      "maxVertexDifferenceM": 5.21540641784668e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 11615,
+      "retainedTriangleCount": 23222
+    },
+    {
+      "geom": "aakj_r_motor_housing_visual",
+      "maxVertexDifferenceM": 5.21540641784668e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 4407,
+      "retainedTriangleCount": 8862
+    },
+    {
+      "geom": "aakj_r_condyle_left_visual",
+      "maxVertexDifferenceM": 5.21540641784668e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 21496,
+      "retainedTriangleCount": 43000
+    },
+    {
+      "geom": "aakj_r_lmsbm6_5_60_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 1642,
+      "retainedTriangleCount": 3280
+    },
+    {
+      "geom": "aakj_r_4x12_washer_visual",
+      "maxVertexDifferenceM": 4.98257577419281e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 232,
+      "retainedTriangleCount": 464
+    },
+    {
+      "geom": "aakj_r_20mm_m4_shcs_visual",
+      "maxVertexDifferenceM": 4.98257577419281e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 361,
+      "retainedTriangleCount": 718
+    },
+    {
+      "geom": "aakj_r_o_ring_shaft__visual",
+      "maxVertexDifferenceM": 5.005858838558197e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 3364,
+      "retainedTriangleCount": 6728
+    },
+    {
+      "geom": "aakj_r_o_ring_stem__visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 3364,
+      "retainedTriangleCount": 6728
+    },
+    {
+      "geom": "aakj_r_link_3_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 2644,
+      "retainedTriangleCount": 5312
+    },
+    {
+      "geom": "aakj_r_jfm_0507_05_1_visual",
+      "maxVertexDifferenceM": 4.9942173063755035e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 1276,
+      "retainedTriangleCount": 2552
+    },
+    {
+      "geom": "aakj_r_jfm_0507_05_2_visual",
+      "maxVertexDifferenceM": 4.9942173063755035e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 1276,
+      "retainedTriangleCount": 2552
+    },
+    {
+      "geom": "aakj_r_joint3_shaft_visual",
+      "maxVertexDifferenceM": 4.936009645462036e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 524,
+      "retainedTriangleCount": 1044
+    },
+    {
+      "geom": "aakj_r_helical_1m_21t_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 4709,
+      "retainedTriangleCount": 9434
+    },
+    {
+      "geom": "aakj_r_sspsr2_16_visual",
+      "maxVertexDifferenceM": 5.005858838558197e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 35796,
+      "retainedTriangleCount": 71576
+    },
+    {
+      "geom": "aakj_r_linkage_base_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 2178,
+      "retainedTriangleCount": 4368
+    },
+    {
+      "geom": "aakj_r_bearing_holder_visual",
+      "maxVertexDifferenceM": 5.005858838558197e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 2209,
+      "retainedTriangleCount": 4422
+    },
+    {
+      "geom": "aakj_r_body_c_cfs2_4_5__cut_extrude1_visual",
+      "maxVertexDifferenceM": null,
+      "sourceGeometryShared": false,
+      "sourceVertexCount": 24195,
+      "retainedTriangleCount": 42118
+    },
+    {
+      "geom": "aakj_r_insert_left_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 1846,
+      "retainedTriangleCount": 3688
+    },
+    {
+      "geom": "aakj_r_insert_right_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 1885,
+      "retainedTriangleCount": 3766
+    },
+    {
+      "geom": "aakj_r_peek_bushing_visual",
+      "maxVertexDifferenceM": 4.9942173063755035e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 348,
+      "retainedTriangleCount": 696
+    },
+    {
+      "geom": "aakj_r_link_1_visual",
+      "maxVertexDifferenceM": 4.9534719437360764e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 234,
+      "retainedTriangleCount": 464
+    },
+    {
+      "geom": "aakj_r_jtm_0512_010_1_visual",
+      "maxVertexDifferenceM": 5.00003807246685e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 232,
+      "retainedTriangleCount": 464
+    },
+    {
+      "geom": "aakj_r_jtm_0512_010_visual",
+      "maxVertexDifferenceM": 5.00003807246685e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 232,
+      "retainedTriangleCount": 464
+    },
+    {
+      "geom": "aakj_r_insert_middle_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 360,
+      "retainedTriangleCount": 724
+    },
+    {
+      "geom": "aakj_r_tibial_base_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 4648,
+      "retainedTriangleCount": 9328
+    },
+    {
+      "geom": "aakj_r_root_Slider_Cover_visual",
+      "maxVertexDifferenceM": 4.98257577419281e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 350,
+      "retainedTriangleCount": 700
+    },
+    {
+      "geom": "aakj_r_root_TT_0365_02_visual",
+      "maxVertexDifferenceM": 4.9942173063755035e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 232,
+      "retainedTriangleCount": 464
+    },
+    {
+      "geom": "aakj_r_4mm_m4_shcs_visual",
+      "maxVertexDifferenceM": 4.98257577419281e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 361,
+      "retainedTriangleCount": 718
+    },
+    {
+      "geom": "aakj_r_12mm_m5_shcs_visual",
+      "maxVertexDifferenceM": 4.98257577419281e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 361,
+      "retainedTriangleCount": 718
+    },
+    {
+      "geom": "aakj_r_guide1_e_crvs1020__mirror1_2_visual",
+      "maxVertexDifferenceM": null,
+      "sourceGeometryShared": false,
+      "sourceVertexCount": 5128,
+      "retainedTriangleCount": 4704
+    },
+    {
+      "geom": "aakj_r_12mm_m5_shcs_1_visual",
+      "maxVertexDifferenceM": 4.98257577419281e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 361,
+      "retainedTriangleCount": 718
+    },
+    {
+      "geom": "aakj_r_mta05_13_h_zz_dbs_visual",
+      "maxVertexDifferenceM": 4.9942173063755035e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 3712,
+      "retainedTriangleCount": 7424
+    },
+    {
+      "geom": "aakj_r_4mm_m3_shcs_1_visual",
+      "maxVertexDifferenceM": 4.98257577419281e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 361,
+      "retainedTriangleCount": 718
+    },
+    {
+      "geom": "aakj_r_4mm_m3_shcs_visual",
+      "maxVertexDifferenceM": 4.98257577419281e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 361,
+      "retainedTriangleCount": 718
+    },
+    {
+      "geom": "aakj_r_plate_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 1838,
+      "retainedTriangleCount": 3700
+    },
+    {
+      "geom": "tibia_r_geom_2",
+      "maxVertexDifferenceM": 4.98257577419281e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 122,
+      "retainedTriangleCount": 240
+    },
+    {
+      "geom": "talus_r_geom_1",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 99,
+      "retainedTriangleCount": 194
+    },
+    {
+      "geom": "calcn_r_geom_1",
+      "maxVertexDifferenceM": 5.21540641784668e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 1000,
+      "retainedTriangleCount": 1955
+    },
+    {
+      "geom": "toes_r_geom_1",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 958,
+      "retainedTriangleCount": 1840
+    },
+    {
+      "geom": "aakj_r_part_49_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 15068,
+      "retainedTriangleCount": 30132
+    },
+    {
+      "geom": "aakj_r_jfm_0507_05_visual",
+      "maxVertexDifferenceM": 5.005858838558197e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 1276,
+      "retainedTriangleCount": 2552
+    },
+    {
+      "geom": "aakj_r_jfm_0507_05_3_visual",
+      "maxVertexDifferenceM": 5.005858838558197e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 1276,
+      "retainedTriangleCount": 2552
+    },
+    {
+      "geom": "aakj_r_squre_splined_bevel_gear_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 6055,
+      "retainedTriangleCount": 12106
+    },
+    {
+      "geom": "aakj_r_jsm_0508_05_visual",
+      "maxVertexDifferenceM": 5.005858838558197e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 1276,
+      "retainedTriangleCount": 2552
+    },
+    {
+      "geom": "aakj_r_weak_spring_top_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 2003,
+      "retainedTriangleCount": 4014
+    },
+    {
+      "geom": "aakj_r_strong_spring_bottom_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 1867,
+      "retainedTriangleCount": 3742
+    },
+    {
+      "geom": "aakj_r_12mm_m3_shcs_visual",
+      "maxVertexDifferenceM": 4.96511347591877e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 361,
+      "retainedTriangleCount": 718
+    },
+    {
+      "geom": "aakj_r_12mm_m3_shcs_1_visual",
+      "maxVertexDifferenceM": 4.997127689421177e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 361,
+      "retainedTriangleCount": 718
+    },
+    {
+      "geom": "aakj_r_motor_shaft_visual",
+      "maxVertexDifferenceM": 4.98257577419281e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 3076,
+      "retainedTriangleCount": 6148
+    },
+    {
+      "geom": "aakj_condyle_right_visual",
+      "maxVertexDifferenceM": 5.21540641784668e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 21342,
+      "retainedTriangleCount": 42692
+    },
+    {
+      "geom": "aakj_sspsr3_20_visual",
+      "maxVertexDifferenceM": 5.21540641784668e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 40284,
+      "retainedTriangleCount": 80552
+    },
+    {
+      "geom": "aakj_fem_4_7_visual",
+      "maxVertexDifferenceM": 4.9942173063755035e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 1682,
+      "retainedTriangleCount": 3364
+    },
+    {
+      "geom": "aakj_femur_stem_visual",
+      "maxVertexDifferenceM": 5.21540641784668e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 11222,
+      "retainedTriangleCount": 22452
+    },
+    {
+      "geom": "aakj_motor_cable_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 3997,
+      "retainedTriangleCount": 7990
+    },
+    {
+      "geom": "aakj_motor_visual",
+      "maxVertexDifferenceM": 5.21540641784668e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 11615,
+      "retainedTriangleCount": 23222
+    },
+    {
+      "geom": "aakj_motor_housing_visual",
+      "maxVertexDifferenceM": 5.21540641784668e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 4407,
+      "retainedTriangleCount": 8862
+    },
+    {
+      "geom": "aakj_condyle_left_visual",
+      "maxVertexDifferenceM": 5.21540641784668e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 21496,
+      "retainedTriangleCount": 43000
+    },
+    {
+      "geom": "aakj_lmsbm6_5_60_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 1642,
+      "retainedTriangleCount": 3280
+    },
+    {
+      "geom": "aakj_4x12_washer_visual",
+      "maxVertexDifferenceM": 4.98257577419281e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 232,
+      "retainedTriangleCount": 464
+    },
+    {
+      "geom": "aakj_20mm_m4_shcs_visual",
+      "maxVertexDifferenceM": 4.98257577419281e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 361,
+      "retainedTriangleCount": 718
+    },
+    {
+      "geom": "aakj_o_ring_shaft__visual",
+      "maxVertexDifferenceM": 5.005858838558197e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 3364,
+      "retainedTriangleCount": 6728
+    },
+    {
+      "geom": "aakj_o_ring_stem__visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 3364,
+      "retainedTriangleCount": 6728
+    },
+    {
+      "geom": "aakj_link_3_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 2644,
+      "retainedTriangleCount": 5312
+    },
+    {
+      "geom": "aakj_jfm_0507_05_1_visual",
+      "maxVertexDifferenceM": 4.9942173063755035e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 1276,
+      "retainedTriangleCount": 2552
+    },
+    {
+      "geom": "aakj_jfm_0507_05_2_visual",
+      "maxVertexDifferenceM": 4.9942173063755035e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 1276,
+      "retainedTriangleCount": 2552
+    },
+    {
+      "geom": "aakj_joint3_shaft_visual",
+      "maxVertexDifferenceM": 4.936009645462036e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 524,
+      "retainedTriangleCount": 1044
+    },
+    {
+      "geom": "aakj_helical_1m_21t_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 4709,
+      "retainedTriangleCount": 9434
+    },
+    {
+      "geom": "aakj_sspsr2_16_visual",
+      "maxVertexDifferenceM": 5.005858838558197e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 35796,
+      "retainedTriangleCount": 71576
+    },
+    {
+      "geom": "aakj_linkage_base_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 2178,
+      "retainedTriangleCount": 4368
+    },
+    {
+      "geom": "aakj_bearing_holder_visual",
+      "maxVertexDifferenceM": 5.005858838558197e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 2209,
+      "retainedTriangleCount": 4422
+    },
+    {
+      "geom": "aakj_body_c_cfs2_4_5__cut_extrude1_visual",
+      "maxVertexDifferenceM": null,
+      "sourceGeometryShared": false,
+      "sourceVertexCount": 24195,
+      "retainedTriangleCount": 42118
+    },
+    {
+      "geom": "aakj_insert_left_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 1846,
+      "retainedTriangleCount": 3688
+    },
+    {
+      "geom": "aakj_insert_right_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 1885,
+      "retainedTriangleCount": 3766
+    },
+    {
+      "geom": "aakj_peek_bushing_visual",
+      "maxVertexDifferenceM": 4.9942173063755035e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 348,
+      "retainedTriangleCount": 696
+    },
+    {
+      "geom": "aakj_link_1_visual",
+      "maxVertexDifferenceM": 4.9534719437360764e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 234,
+      "retainedTriangleCount": 464
+    },
+    {
+      "geom": "aakj_jtm_0512_010_1_visual",
+      "maxVertexDifferenceM": 5.00003807246685e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 232,
+      "retainedTriangleCount": 464
+    },
+    {
+      "geom": "aakj_jtm_0512_010_visual",
+      "maxVertexDifferenceM": 5.00003807246685e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 232,
+      "retainedTriangleCount": 464
+    },
+    {
+      "geom": "aakj_insert_middle_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 360,
+      "retainedTriangleCount": 724
+    },
+    {
+      "geom": "aakj_tibial_base_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 4648,
+      "retainedTriangleCount": 9328
+    },
+    {
+      "geom": "aakj_root_Slider_Cover_visual",
+      "maxVertexDifferenceM": 4.98257577419281e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 350,
+      "retainedTriangleCount": 700
+    },
+    {
+      "geom": "aakj_root_TT_0365_02_visual",
+      "maxVertexDifferenceM": 4.9942173063755035e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 232,
+      "retainedTriangleCount": 464
+    },
+    {
+      "geom": "aakj_4mm_m4_shcs_visual",
+      "maxVertexDifferenceM": 4.98257577419281e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 361,
+      "retainedTriangleCount": 718
+    },
+    {
+      "geom": "aakj_12mm_m5_shcs_visual",
+      "maxVertexDifferenceM": 4.98257577419281e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 361,
+      "retainedTriangleCount": 718
+    },
+    {
+      "geom": "aakj_guide1_e_crvs1020__mirror1_2_visual",
+      "maxVertexDifferenceM": null,
+      "sourceGeometryShared": false,
+      "sourceVertexCount": 5128,
+      "retainedTriangleCount": 4704
+    },
+    {
+      "geom": "aakj_12mm_m5_shcs_1_visual",
+      "maxVertexDifferenceM": 4.98257577419281e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 361,
+      "retainedTriangleCount": 718
+    },
+    {
+      "geom": "aakj_mta05_13_h_zz_dbs_visual",
+      "maxVertexDifferenceM": 4.9942173063755035e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 3712,
+      "retainedTriangleCount": 7424
+    },
+    {
+      "geom": "aakj_4mm_m3_shcs_1_visual",
+      "maxVertexDifferenceM": 4.98257577419281e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 361,
+      "retainedTriangleCount": 718
+    },
+    {
+      "geom": "aakj_4mm_m3_shcs_visual",
+      "maxVertexDifferenceM": 4.98257577419281e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 361,
+      "retainedTriangleCount": 718
+    },
+    {
+      "geom": "aakj_plate_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 1838,
+      "retainedTriangleCount": 3700
+    },
+    {
+      "geom": "tibia_l_geom_2",
+      "maxVertexDifferenceM": 4.98257577419281e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 122,
+      "retainedTriangleCount": 240
+    },
+    {
+      "geom": "talus_l_geom_1",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 99,
+      "retainedTriangleCount": 194
+    },
+    {
+      "geom": "calcn_l_geom_1",
+      "maxVertexDifferenceM": 5.21540641784668e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 1000,
+      "retainedTriangleCount": 1955
+    },
+    {
+      "geom": "toes_l_geom_1",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 958,
+      "retainedTriangleCount": 1840
+    },
+    {
+      "geom": "aakj_part_49_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 15068,
+      "retainedTriangleCount": 30132
+    },
+    {
+      "geom": "aakj_jfm_0507_05_visual",
+      "maxVertexDifferenceM": 5.005858838558197e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 1276,
+      "retainedTriangleCount": 2552
+    },
+    {
+      "geom": "aakj_jfm_0507_05_3_visual",
+      "maxVertexDifferenceM": 5.005858838558197e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 1276,
+      "retainedTriangleCount": 2552
+    },
+    {
+      "geom": "aakj_squre_splined_bevel_gear_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 6055,
+      "retainedTriangleCount": 12106
+    },
+    {
+      "geom": "aakj_jsm_0508_05_visual",
+      "maxVertexDifferenceM": 5.005858838558197e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 1276,
+      "retainedTriangleCount": 2552
+    },
+    {
+      "geom": "aakj_weak_spring_top_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 2003,
+      "retainedTriangleCount": 4014
+    },
+    {
+      "geom": "aakj_strong_spring_bottom_visual",
+      "maxVertexDifferenceM": 5.029141902923584e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 1867,
+      "retainedTriangleCount": 3742
+    },
+    {
+      "geom": "aakj_12mm_m3_shcs_visual",
+      "maxVertexDifferenceM": 4.96511347591877e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 361,
+      "retainedTriangleCount": 718
+    },
+    {
+      "geom": "aakj_12mm_m3_shcs_1_visual",
+      "maxVertexDifferenceM": 4.997127689421177e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 361,
+      "retainedTriangleCount": 718
+    },
+    {
+      "geom": "aakj_motor_shaft_visual",
+      "maxVertexDifferenceM": 4.98257577419281e-08,
+      "sourceGeometryShared": true,
+      "sourceVertexCount": 3076,
+      "retainedTriangleCount": 6148
+    }
+  ],
+  "newSourceMeshCount": 4,
+  "nativeFacePartitions": [
+    {
+      "geom": "aakj_r_body_c_cfs2_4_5__cut_extrude1_visual",
+      "removedNativeSourceFaces": 6372,
+      "nativeSourceTrianglePartitionVerified": true
+    },
+    {
+      "geom": "aakj_r_guide1_e_crvs1020__mirror1_2_visual",
+      "removedNativeSourceFaces": 5568,
+      "nativeSourceTrianglePartitionVerified": true
+    },
+    {
+      "geom": "aakj_body_c_cfs2_4_5__cut_extrude1_visual",
+      "removedNativeSourceFaces": 6372,
+      "nativeSourceTrianglePartitionVerified": true
+    },
+    {
+      "geom": "aakj_guide1_e_crvs1020__mirror1_2_visual",
+      "removedNativeSourceFaces": 5568,
+      "nativeSourceTrianglePartitionVerified": true
+    }
+  ],
+  "outputBytes": 3413752,
+  "gzipBytes": 1866101,
+  "binarySHA256": "007aa0e757cca9b2064fcb7980f526fd0d327eae8999c29952c7f0f6d6bc24d6",
+  "gzipSHA256": "af3769a681ec0757295521b8ad6edfd58f7332882c531d54c31575c2b22bc8ab"
+}

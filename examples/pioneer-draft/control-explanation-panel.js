@@ -1,6 +1,7 @@
-import {CONTROL_INLINE_MATH as MATH} from './control-math.js?v=revision-20261029-55';
-import {preloadPlotMarkup,createPreloadPlotController} from './control-preload-plot.js?v=revision-20261029-55';
-import {createWalkingDisplaySeries,sampleWalkingTelemetry} from './control-walking-telemetry.js?v=revision-20261029-55';
+import {controlTeachingFigure,updateTeachingCursor} from './control-teaching-figures.js?v=revision-20261029-58';
+import {CONTROL_INLINE_MATH as MATH} from './control-math.js?v=revision-20261029-58';
+import {preloadPlotMarkup,createPreloadPlotController} from './control-preload-plot.js?v=revision-20261029-58';
+import {createWalkingDisplaySeries,sampleWalkingTelemetry} from './control-walking-telemetry.js?v=revision-20261029-58';
 // Diagram Design's repository grammar: neutral ink, thin orthogonal connectors,
 // 6 px editorial nodes and one coral focal path. The deck owns paper and serif type.
 const P={ink:'#2d3142',muted:'#4f5d75',accent:'#bf4520',paper:'#fdfcf8',rule:'rgba(45,49,66,.15)',tint:'rgba(191,69,32,.065)'};
@@ -22,7 +23,7 @@ function elasticState(){return svg('elastic-state','Relative motion stores elast
  path('M548 340H892 M548 340V126',P.muted,1.5)+text(908,350,'δ',30,P.muted)+text(548,104,'τs',29,P.muted)+
  `<path d="${Array.from({length:81},(_,i)=>{const u=i/80;return `${i?'L':'M'}${548+336*u} ${340-214*u*u*(1.15-.15*u)}`;}).join(' ')}" fill="none" stroke="${P.accent}" stroke-width="3.2"/><path data-control-elastic-guide fill="none" stroke="${P.rule}" stroke-width="1.4"/><circle data-control-elastic-dot cx="548" cy="340" r="8" fill="${P.accent}" stroke="${P.paper}" stroke-width="2"/>`+
  formula('torque',592,364,280,58,33)+text(720,458,'Stored elastic energy',27,P.muted)+`<rect x="552" y="480" width="336" height="12" fill="rgba(45,49,66,.07)" rx="2"/><rect data-control-energy x="552" y="480" width="0" height="12" fill="${P.accent}" rx="2"/>`+
- formula('energy',560,508,320,58,27)+text(480,598,'Conceptual relationship · not a measured trajectory',21,P.muted),960,610);}
+ formula('energy',540,502,360,96,27),960,640);}
 function benchmark(){return svg('benchmark','One coupled simulation','Muscle and motor commands act on the same human and implant dynamics.',
  text(250,54,'Two control paths',34)+arrow('M128 206V266Q128 274 136 274H214Q222 274 222 282V330')+arrow('M372 206V266Q372 274 364 274H286Q278 274 278 282V330',true)+
  rect(20,100,216,106)+rect(264,100,216,106,true)+text(128,146,'Muscles',29)+text(128,181,'22 actuators',24,P.muted)+text(372,146,'Implants',29)+text(372,181,'Two motors',24,P.muted)+
@@ -70,7 +71,7 @@ function walking(terminal=false){return svg(terminal?'walking-limit':'walking-cy
  (terminal?text(250,628,'Recorded peak —',25,P.accent,'middle','data-control-value="rawpeak"'):'')+
  text(250,657,'—',23,P.muted,'middle','data-control-value="walking"'),500,700);}
 
-const FIGURES=[elasticState,benchmark,()=>evaluation(true),teacher,sensing,student,()=>evaluation(false),()=>walking(false),()=>walking(true)];
+const FIGURES=[elasticState,benchmark,()=>evaluation(true),teacher,sensing,student,()=>evaluation(false),()=>walking(false),()=>walking(false),()=>walking(true)];
 const finite=v=>Number.isFinite(v);
 const fmt=(v,unit,d=1)=>finite(v)?`${(Math.abs(v)<.5*10**-d?0:v).toFixed(d)}${unit?' '+unit:''}`:'—';
 export function createControlExplanationPanel(host){
@@ -82,17 +83,18 @@ export function createControlExplanationPanel(host){
  const set=(name,value)=>{const el=refs[name];if(el&&el.textContent!==value)el.textContent=value;};
  function setSeries(series){if(series===seriesRef)return;displaySeries=createWalkingDisplaySeries(series,{torqueWindowSec:.24,powerWindowSec:.5});seriesRef=series;}
 
- return {update({active,build=0,settled=false,progress=0,entry=null,telemetry={}}){root.hidden=!active;if(!active){clearTransition();return;}const b=Math.max(0,Math.min(8,build|0));if(current!==b){clearTransition();if(current>=0&&!reducedMotion()&&root.cloneNode){outgoing=root.cloneNode(true);outgoing.classList.add('control-explanation-outgoing');outgoing.setAttribute('aria-hidden','true');outgoing.removeAttribute('aria-label');host.append(outgoing);outAnimation=outgoing.animate?.([{opacity:1},{opacity:0}],{duration:180,easing:'ease-out',fill:'forwards'});if(outAnimation)outAnimation.onfinish=()=>{outgoing?.remove();outgoing=null;};}current=b;root.dataset.build=String(b);root.innerHTML=`<div class="control-explanation-figure">${FIGURES[b]()}</div>`;seriesRef=null;displaySeries=null;lastPowerBucket=-1;limitSeen=false;cache();preload=createPreloadPlotController(root);if(!reducedMotion())inAnimation=root.animate?.([{opacity:0},{opacity:1}],{duration:280,delay:60,easing:'cubic-bezier(.2,.6,.2,1)',fill:'backwards'});}
+ return {update({active,build=0,settled=false,progress=0,entry=null,teaching=null,telemetry={}}){root.hidden=!active;if(!active){clearTransition();return;}const b=Math.max(0,Math.min(9,build|0));if(current!==b){clearTransition();if(current>=0&&!reducedMotion()&&root.cloneNode){outgoing=root.cloneNode(true);outgoing.classList.add('control-explanation-outgoing');outgoing.setAttribute('aria-hidden','true');outgoing.removeAttribute('aria-label');host.append(outgoing);outAnimation=outgoing.animate?.([{opacity:1},{opacity:0}],{duration:180,easing:'ease-out',fill:'forwards'});if(outAnimation)outAnimation.onfinish=()=>{outgoing?.remove();outgoing=null;};}current=b;root.dataset.build=String(b);root.innerHTML=`<div class="control-explanation-figure">${controlTeachingFigure(b,teaching)||FIGURES[b]()}</div>`;seriesRef=null;displaySeries=null;lastPowerBucket=-1;limitSeen=false;cache();preload=createPreloadPlotController(root);if(!reducedMotion())inAnimation=root.animate?.([{opacity:0},{opacity:1}],{duration:280,delay:60,easing:'cubic-bezier(.2,.6,.2,1)',fill:'backwards'});}
  root.dataset.settled=String(settled);root.style.opacity=String(entry?.incomingOpacity??1);root.style.transform=entry?`translateY(${entry.incomingY}px)`:'';if(entry){inAnimation?.cancel();inAnimation=null;}root.dataset.entryOpacity=String(entry?.incomingOpacity??1);
  if(b===0){const t=reducedMotion()?1.3:finite(telemetry.elapsedSec)?telemetry.elapsedSec:progress*8;const a=26+24*Math.sin(t*.8),o=9+12*Math.sin(t*.8-.6),d=Math.max(.01,Math.min(1,(a-o)/48));refs.input?.setAttribute('transform',`rotate(${a} 240 276)`);refs.output?.setAttribute('transform',`rotate(${o} 240 276)`);const u=d,x=548+336*u,y=340-214*(u*u*(1.15-.15*u));refs['elastic-dot']?.setAttribute('cx',x);refs['elastic-dot']?.setAttribute('cy',y);refs['elastic-guide']?.setAttribute('d',`M548 ${y}H${x}V340`);refs.energy?.setAttribute('width',336*d*d);let cd='';for(let i=0;i<=100;i++){const u=i/100,aa=(o+(a-o)*u)*Math.PI/180+u*Math.PI*4,rr=52*(.2+.8*u);cd+=`${i?'L':'M'}${(240+rr*Math.cos(aa)).toFixed(2)} ${(276+rr*Math.sin(aa)).toFixed(2)} `;}refs.coil?.setAttribute('d',cd);}
  if(b===3){const i=finite(telemetry.developmentIndex)?Math.min(2,telemetry.developmentIndex):0;for(const item of root.querySelectorAll('[data-control-attempt]'))item.style.opacity=Number(item.dataset.controlAttempt)===i?'1':'.32';set('development',telemetry.developmentLabel||'Development sequence');}
- if(b===2||b===6){
+ if(b===2){
   preload?.update(telemetry,'sts');
   const bucket=Math.floor(((telemetry.elapsedSec??0)+1e-7)*5);
   if(bucket!==lastPowerBucket){lastPowerBucket=bucket;set('power',telemetry.resetting?'—':fmt(telemetry.motorPowerW,'W'));}
   set('phase',telemetry.resetting?'Return to start · presentation reset':`${fmt(telemetry.timeSec,'s')} · ${telemetry.phaseLabel||'Sit-to-stand'}`);
  }
- if(b===7||b===8){
+ updateTeachingCursor(root,b,telemetry,teaching);
+ if(b===9){
   setSeries(telemetry.series);
   if(displaySeries){
    const time=telemetry.timeSec??seriesRef.timeSec[0],raw=sampleWalkingTelemetry(seriesRef,time),mean=sampleWalkingTelemetry(displaySeries,time),past=sampleWalkingTelemetry(seriesRef,Math.max(seriesRef.timeSec[0],time-.12)),rate=(Math.abs(raw.springDeflectionDeg)-Math.abs(past.springDeflectionDeg))/.12;

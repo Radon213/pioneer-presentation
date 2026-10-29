@@ -1,4 +1,4 @@
-import {loadBinaryWithProgress,reportLoadStage} from './asset-loading.js?v=revision-20261029-55';
+import {loadBinaryWithProgress,reportLoadStage} from './asset-loading.js?v=revision-20261029-58';
 export function decodeSourceBones(buffer){
  const view=new DataView(buffer),bytes=new Uint8Array(buffer);
  if(new TextDecoder().decode(bytes.subarray(0,8))!=='PCDB1LE\0')throw Error('Invalid source CAD bone signature');
