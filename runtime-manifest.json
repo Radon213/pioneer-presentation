@@ -1,11 +1,11 @@
 {
   "schema": "pioneer-runtime-package-v1",
-  "runtimeBytes": 122670596,
+  "runtimeBytes": 122670837,
   "files": [
     {
       "path": "examples/pioneer-draft/app.js",
       "bytes": 17263,
-      "sha256": "6db24337326c2634f0aebc6abfd1022b6d53189177cb3f259c099f8ddc51ef92"
+      "sha256": "3893f1c288390be9108fd4da02f2d9c9e2bd416437d02320eb770b23bc614843"
     },
     {
       "path": "examples/pioneer-draft/archived-spring-chart.js",
@@ -200,7 +200,7 @@
     {
       "path": "examples/pioneer-draft/chapter-overlays.js",
       "bytes": 10786,
-      "sha256": "77498b1cd6e44c1165ece4ef774c5619372167dad16a445f58bb885705e421ee"
+      "sha256": "a060ed5286c756e11386d716fdb3d4c4bc95caccc6a58cef53fbbd8b8b06ddcb"
     },
     {
       "path": "examples/pioneer-draft/clinical-knee-layer.js",
@@ -210,12 +210,12 @@
     {
       "path": "examples/pioneer-draft/continuous-human-layer.js",
       "bytes": 17398,
-      "sha256": "339d7dddd544c081d353443a080d8d80f67449bddba887e6c052b6f8a42f71ff"
+      "sha256": "eab1bb06abed23eddd66dfe4ee324a6d631f1d86a4cf574dc49840fc89c86ebc"
     },
     {
       "path": "examples/pioneer-draft/continuous-knee-viewer.js",
       "bytes": 99831,
-      "sha256": "3d4ea8a055220951155a7bcee4e85588a606b16c1b83c7f36922602f7a5c845f"
+      "sha256": "1bab53f13a159c218915f338e80a7f24f3997434889ffd30bba20788e75ced3e"
     },
     {
       "path": "examples/pioneer-draft/control-entry-motion.js",
@@ -225,7 +225,7 @@
     {
       "path": "examples/pioneer-draft/control-explanation-panel.js",
       "bytes": 17151,
-      "sha256": "f79d3ceece96b5779392caef742887944f4ce6c44c668f29325e996ccf4d8b19"
+      "sha256": "088b8005e97618170137b0796a75882d80bdd9a8e2df3f5cc40b2fa0744832af"
     },
     {
       "path": "examples/pioneer-draft/control-explanation.css",
@@ -250,7 +250,7 @@
     {
       "path": "examples/pioneer-draft/control-preload-plot.js",
       "bytes": 4625,
-      "sha256": "67d52b7a26424a0881d6f47b12360b94714a2c3d8705c8a0950fc83912bb305f"
+      "sha256": "e972eaef9106f2a2d1459fdf390a51b87121a7cccf64205a31250062377ebc03"
     },
     {
       "path": "examples/pioneer-draft/control-sts-cycle.js",
@@ -260,12 +260,12 @@
     {
       "path": "examples/pioneer-draft/control-sts-layer.js",
       "bytes": 19258,
-      "sha256": "029feb54e0ddd7576b97522a1d120a52609b0366a7097f43e5c11adc1782cb80"
+      "sha256": "f2c58b6d9ced6446af561b27f75fe3eb5bdf984c1aca8c0c1f3281c7f766b82c"
     },
     {
       "path": "examples/pioneer-draft/control-walking-layer.js",
       "bytes": 14024,
-      "sha256": "cf52c652c61cb6e5a5c4518c7d1e1debde1fef491e37be390839f7dd481730ab"
+      "sha256": "ddc69b8de07ef642a7b2c4bb33f7b28e9565e844974437472225af0eb184ab33"
     },
     {
       "path": "examples/pioneer-draft/control-walking-telemetry.js",
@@ -285,22 +285,22 @@
     {
       "path": "examples/pioneer-draft/deck-data.js",
       "bytes": 40968,
-      "sha256": "9ca84e4880d907dd9fae22eb8ee99e2d5c3c255eacebcd8dda4954ecf2768d81"
+      "sha256": "4d6a146e8ddbbf8851a56a40507d62866c5fcd27e907d4e921706b37946e85ed"
     },
     {
       "path": "examples/pioneer-draft/gait-binary-loader.js",
       "bytes": 3591,
-      "sha256": "a2e4b9edf73ba99bc60251c050c596448f7fc17d782e781a4058466910c3de04"
+      "sha256": "61d325fc9466eaf24c7edef0c5f7597dd2a4c9d3cb285b4829773ee7d7764f35"
     },
     {
       "path": "examples/pioneer-draft/gait-chapter-layer.js",
       "bytes": 12222,
-      "sha256": "7444bf53a3af1be403519d0ac640749031919a911ac25654dd9dff6fc945cf2d"
+      "sha256": "d101fd866074b69a729e6d70059c3c99a4e54e035d69b35d7d7c6d0a829766d9"
     },
     {
       "path": "examples/pioneer-draft/gait-source-bones.js",
       "bytes": 1544,
-      "sha256": "6a04196aa43bba444806f25835c9878f30bd08c681dc81e29e506ab9c291bfb0"
+      "sha256": "072856bb8b59b6b93f055413b37e33171b450caedd1790eda696cc8128c09bd9"
     },
     {
       "path": "examples/pioneer-draft/hardware-reference.js",
@@ -310,7 +310,7 @@
     {
       "path": "examples/pioneer-draft/index.html",
       "bytes": 32602,
-      "sha256": "9d1dd8014d78832b0c99c1983e42dabffbd411235bd81beccbe91ca6ad60d62c"
+      "sha256": "992927c8190d361105dfdb81acc375a668a424558651046555881e632b4390bb"
     },
     {
       "path": "examples/pioneer-draft/motion-clock.js",
@@ -320,17 +320,17 @@
     {
       "path": "examples/pioneer-draft/myoassist-examples-layer.js",
       "bytes": 9888,
-      "sha256": "ac8d9f68b60adceed003442b35a874331a21839edee74c897a0a42c8e62b46d9"
+      "sha256": "15ef5bfcb91c113400ca987d20629d544f216b460766d9c91f0899508896c149"
     },
     {
       "path": "examples/pioneer-draft/myoleg80-muscle-layer.js",
       "bytes": 2220,
-      "sha256": "881acc4cfa049ef0654dd7cfca53023d469e08dabacc974ce9d0d6be04c8fc94"
+      "sha256": "7075cc012490d1b340ef3a02fcffa686ecb19706deb56e9dc5beb26bb27bef41"
     },
     {
       "path": "examples/pioneer-draft/native-knee-comparison.js",
       "bytes": 10116,
-      "sha256": "7acead018f1ad63faa2bf84f69c5a59072926b080c1829b519bd0868791225e2"
+      "sha256": "78738905d8b84c265a6dca1a2feef50ca2b3f51b91f2dbe25432114d3d1782df"
     },
     {
       "path": "examples/pioneer-draft/overall-load-progress.js",
@@ -354,18 +354,18 @@
     },
     {
       "path": "examples/pioneer-draft/presenter.css",
-      "bytes": 3798,
-      "sha256": "c57e50405e59dbc0fecb841d63ead36f34639405288341cd346fb8db3ca90f60"
+      "bytes": 3956,
+      "sha256": "67d12f4156ea919c496c1cf15723753520785d6ea3205b0a7cb3f6f7cef7145f"
     },
     {
       "path": "examples/pioneer-draft/presenter.html",
       "bytes": 2187,
-      "sha256": "51fdb507ae3dfe77c2ea65e2c97edb7069874d022535bacbc0673cb9555446b7"
+      "sha256": "bec26a082b0718889e8d4e409efabe5bfbaf28a64a214948eddb5dfd2e62cbe1"
     },
     {
       "path": "examples/pioneer-draft/presenter.js",
-      "bytes": 5548,
-      "sha256": "f31adcbca3306e49c043d1cb3a5d0d0e22f692192268ddd95f7fd8d4f1f19e95"
+      "bytes": 5631,
+      "sha256": "9b9801b0bbb0255e6a58862ca683ee868eab802d177bff6d429484ff6c9381cb"
     },
     {
       "path": "examples/pioneer-draft/shaded-edges.js",
@@ -375,7 +375,7 @@
     {
       "path": "examples/pioneer-draft/spring-analysis-data.js",
       "bytes": 4089,
-      "sha256": "b189063a3aeddbd8526320e3ae84bb29b0d96b280b55d92c88bf55974a53591c"
+      "sha256": "95a2f0b7015523ed6e5396f6bab6014b16d8f4ed8a3a693e352e82172eb045a6"
     },
     {
       "path": "examples/pioneer-draft/spring-drive-winding.js",
@@ -390,7 +390,7 @@
     {
       "path": "examples/pioneer-draft/spring-explanation-panel.js",
       "bytes": 19416,
-      "sha256": "94998ffc94bc870d4ff62cf4e6db8562ccaadf057f53cd69f013cecad8fa1cdb"
+      "sha256": "452772278ee20451a9b8782f4fc549457a051714a04decc0ef8fca7f350f9fff"
     },
     {
       "path": "examples/pioneer-draft/spring-face-accent.js",
@@ -400,7 +400,7 @@
     {
       "path": "examples/pioneer-draft/spring-fea-layer.js",
       "bytes": 8574,
-      "sha256": "7a062750de2804652a5d129aec96afac9d2dc0115f84f5fce018b37f7463ffcf"
+      "sha256": "de38c260e76ad04cd001b175ea746e838702fb96fcdd77776174bef59d25596b"
     },
     {
       "path": "examples/pioneer-draft/spring-math.js",

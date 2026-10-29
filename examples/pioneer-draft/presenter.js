@@ -1,5 +1,5 @@
-import slides from './deck-data.js?v=revision-20261029-54';
-import {getTalkStage} from './presenter-script.js?v=revision-20261029-54';
+import slides from './deck-data.js?v=revision-20261029-55';
+import {getTalkStage} from './presenter-script.js?v=revision-20261029-55';
 const $=selector=>document.querySelector(selector);
 const audienceSession=new URLSearchParams(location.search).get('audience');
 const channel=typeof BroadcastChannel==='function'?new BroadcastChannel(`pioneer-draft-presenter${audienceSession?':'+audienceSession:''}`):null;
@@ -18,7 +18,7 @@ function receive(data){
  current={key,page:data.page,step:data.step,seconds:spoken.seconds};stageStarted=performance.now();stageElapsed=0;$('#reference').open=false;
  $('#position').textContent=`${data.page}-${data.step+1} · Chapter ${data.page} / ${slides.length} · Stage ${data.step+1} / ${slide.stages.length}`;
  $('#allocation').textContent=`Target ${spoken.seconds} s`;
- $('#title').textContent=slide.title;$('#subtitle').textContent=stage.subtitle||slide.subtitle||'';setParagraphs($('#script'),spoken.text);
+ $('#title').textContent=slide.title;$('#subtitle').textContent=stage.subtitle||slide.subtitle||'';setParagraphs($('#script'),spoken.text);$('#script').classList.toggle('is-long',spoken.text.trim().split(/\s+/).length>60);
  $('#reference-text').textContent=data.slide?.notes||stage.notes;
  const nextPage=data.step<slide.steps?data.page:data.page+1,nextStep=data.step<slide.steps?data.step+1:0;
  const nextSlide=slides[nextPage-1],nextStage=nextSlide?.stages[nextStep],nextSpoken=getTalkStage(nextPage,nextStep);
