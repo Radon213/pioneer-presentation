@@ -1,6 +1,6 @@
-import {buildArchivedSpringChart} from './archived-spring-chart.js?v=revision-20261029-36';
-import {buildDiagram} from './chapter-diagram-layer.js?v=revision-20261029-36';
-import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-36';
+import {buildArchivedSpringChart} from './archived-spring-chart.js?v=revision-20261029-37';
+import {buildDiagram} from './chapter-diagram-layer.js?v=revision-20261029-37';
+import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-37';
 // Short visual explanations. All quantitative FEA marks use the same archived solver case.
 const C={ink:'#1a3a7a',accent:'#a44725',muted:'#585950',line:'#b5b3ab',paper:'#fdfcf8'};
 const text=(x,y,s,z=26,c=C.ink,a='middle')=>`<text x="${x}" y="${y}" font-size="${z}" fill="${c}" text-anchor="${a}" stroke="${C.paper}" stroke-width="5" paint-order="stroke">${s}</text>`;
@@ -13,7 +13,7 @@ export function buildChapterOverlay(ctx){
  const {chapter:c,build:b,live,project,partPoint,point,frame,fea,human,gait}=ctx;let s='';
  if(c===1){if(!fea)return '';const p=project(fea.group.position);return text(p[0],p[1]+155,'Double-spiral spring',28)+text(p[0],p[1]+190,'FEA replay',23,C.muted);}
  if(c===5)return '';
- if(c===6)return b===0?text(320,90,'Motion → compliance → control',30)+text(1280,90,'Preliminary simulation',27,C.muted):text(320,90,'Device-side sensing',30)+text(1280,90,'Further validation',30,C.accent);
+ if(c===6)return ''; // The main conclusion copy already carries this message.
  if(c===4)return ''; // The persistent native spring and dedicated figure panel own this chapter.
  const diagram=buildDiagram(c,b,{progress:1,reducedMotion:true});
  if(diagram)return diagram;

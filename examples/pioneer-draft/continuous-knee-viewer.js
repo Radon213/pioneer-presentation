@@ -1,20 +1,20 @@
-import {createControlExplanationPanel} from './control-explanation-panel.js?v=revision-20261029-36';
-import {createSpringExplanationPanel} from './spring-explanation-panel.js?v=revision-20261029-36';
-import {addFemoralReference} from './hardware-reference.js?v=revision-20261029-36';
-import {getMotionRate} from './motion-clock.js?v=revision-20261029-36';
+import {createControlExplanationPanel} from './control-explanation-panel.js?v=revision-20261029-37';
+import {createSpringExplanationPanel} from './spring-explanation-panel.js?v=revision-20261029-37';
+import {addFemoralReference} from './hardware-reference.js?v=revision-20261029-37';
+import {getMotionRate} from './motion-clock.js?v=revision-20261029-37';
 import * as THREE from 'three';
 import {GLTFLoader} from '../pioneer-interactive/vendor/GLTFLoader.js';
 import {DRACOLoader} from '../pioneer-interactive/vendor/DRACOLoader.js';
 import {RoomEnvironment} from '../pioneer-interactive/vendor/RoomEnvironment.js';
-import {createContinuousHumanLayer} from './continuous-human-layer.js?v=revision-20261029-36';
-import {createClinicalKneeLayer} from './clinical-knee-layer.js?v=revision-20261029-36';
-import {createShadedEdges} from './shaded-edges.js?v=revision-20261029-36';
-import {createNativeKneeComparison} from './native-knee-comparison.js?v=revision-20261029-36';
-import {buildVisualExplanation} from './visual-explanations.js?v=revision-20261029-36';
-import {buildChapterOverlay} from './chapter-overlays.js?v=revision-20261029-36';
-import {createGaitChapterLayer} from './gait-chapter-layer.js?v=revision-20261029-36';
-import {createSpringFEALayer} from './spring-fea-layer.js?v=revision-20261029-36';
-import {loadJSONWithProgress,loadBinaryWithProgress,reportLoadStage} from './asset-loading.js?v=revision-20261029-36';
+import {createContinuousHumanLayer} from './continuous-human-layer.js?v=revision-20261029-37';
+import {createClinicalKneeLayer} from './clinical-knee-layer.js?v=revision-20261029-37';
+import {createShadedEdges} from './shaded-edges.js?v=revision-20261029-37';
+import {createNativeKneeComparison} from './native-knee-comparison.js?v=revision-20261029-37';
+import {buildVisualExplanation} from './visual-explanations.js?v=revision-20261029-37';
+import {buildChapterOverlay} from './chapter-overlays.js?v=revision-20261029-37';
+import {createGaitChapterLayer} from './gait-chapter-layer.js?v=revision-20261029-37';
+import {createSpringFEALayer} from './spring-fea-layer.js?v=revision-20261029-37';
+import {loadJSONWithProgress,loadBinaryWithProgress,reportLoadStage} from './asset-loading.js?v=revision-20261029-37';
 
 const ASSETS=new URL('../pioneer-interactive/assets/',import.meta.url);
 const VENDOR=new URL('../pioneer-interactive/vendor/',import.meta.url);
@@ -127,7 +127,7 @@ export async function createContinuousKneeViewer(host){
   let gait=null,fea=null,chapterToken=0;status.hidden=false;status.textContent='Loading recorded bilateral gait…';
   try{gait=await createGaitChapterLayer(scene,{human});gait.setOpacity(0);host.dataset.gaitGeometryCount=String(gait.group.userData.geometryCount);host.dataset.gaitRestoredNativeBones=String(gait.group.userData.retainedNativeShaftCount);host.dataset.gaitVisualRecovery='6 original native POS5/SLPT subtrees rebound once to saved body poses';}catch(e){console.warn('Recorded gait unavailable',e);}
   status.hidden=true;let sts=null,stsPromise=null,walkingDiagnostic=null,walkingPromise=null;
-  const ensureSTS=()=>stsPromise??=import('./control-sts-layer.js?v=revision-20261029-36').then(m=>m.createControlSTSLayer(scene,{gait,human})).then(layer=>{sts=layer;sts.setOpacity(0);return layer;});
+  const ensureSTS=()=>stsPromise??=import('./control-sts-layer.js?v=revision-20261029-37').then(m=>m.createControlSTSLayer(scene,{gait,human})).then(layer=>{sts=layer;sts.setOpacity(0);return layer;});
   const ensureWalkingDiagnostic=()=>walkingPromise??=loadJSONWithProgress(new URL('assets/control-walking-diagnostic.json',import.meta.url),{key:'walking-diagnostic',label:'Recorded actuator-limit diagnostic'}).then(data=>walkingDiagnostic=data);
   status.hidden=true;let feaPromise=null;
   const ensureFEA=()=>feaPromise??=(createSpringFEALayer(scene).then(layer=>{fea=layer;fea.setOpacity(0);return layer;}));
@@ -143,9 +143,9 @@ export async function createContinuousKneeViewer(host){
   conceptMotor.updateMatrixWorld(true);const motorBox=new THREE.Box3().setFromObject(conceptMotor),motorCenter=motorBox.getCenter(new THREE.Vector3());
   for(const mesh of conceptMotor.children)mesh.matrix.premultiply(new THREE.Matrix4().makeTranslation(-motorCenter.x,-motorCenter.y,-motorCenter.z));
   conceptMotor.visible=false;let myo80=null,myo80Promise=null,backgroundClock=0;
-  const ensureMyo80=()=>myo80Promise??=(import('./myoleg80-muscle-layer.js?v=revision-20261029-36').then(m=>m.createMyoLeg80MuscleLayer(scene,{human})).then(layer=>myo80=layer));
+  const ensureMyo80=()=>myo80Promise??=(import('./myoleg80-muscle-layer.js?v=revision-20261029-37').then(m=>m.createMyoLeg80MuscleLayer(scene,{human})).then(layer=>myo80=layer));
   let myoExamples=null,myoPromise=null,myoPrefetchTimer=0;
-  const ensureMyoExamples=()=>myoPromise??=import('./myoassist-examples-layer.js?v=revision-20261029-36').then(m=>m.createMyoAssistExamplesLayer(scene)).then(layer=>{myoExamples=layer;layer.setReveal(0);return layer;}).catch(error=>{myoPromise=null;throw error;});
+  const ensureMyoExamples=()=>myoPromise??=import('./myoassist-examples-layer.js?v=revision-20261029-37').then(m=>m.createMyoAssistExamplesLayer(scene)).then(layer=>{myoExamples=layer;layer.setReveal(0);return layer;}).catch(error=>{myoPromise=null;throw error;});
   function backgroundRotation(){const target=new THREE.Vector3(),direction=new THREE.Vector3(1.3,.14,-.4).normalize();return new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(direction,target,UP));}
   function backgroundState(st,to){
     human.group.position.set(0,0,0);human.setState({motionProgress:1});

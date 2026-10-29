@@ -1,4 +1,4 @@
-import {CONTROL_MATH} from './control-math.js?v=revision-20261029-36';
+import {CONTROL_MATH} from './control-math.js?v=revision-20261029-37';
 // Diagram Design example-architecture and example-process primitives:
 // 6 px nodes, masked labels, orthogonal ports, neutral strokes and one coral focus.
 // The academic deck's paper, serif family and scene remain owned by its shell.

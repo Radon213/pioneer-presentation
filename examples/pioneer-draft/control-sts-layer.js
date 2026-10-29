@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {reportLoadStage} from './asset-loading.js?v=revision-20261029-36';
+import {reportLoadStage} from './asset-loading.js?v=revision-20261029-37';
 import {createShadedEdges} from './shaded-edges.js';
 
 /** Saved selected-student STS states only. A renderer, animation loop, solver,
