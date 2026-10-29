@@ -1,4 +1,4 @@
-import {loadJSONWithProgress} from './asset-loading.js?v=revision-20261029-45';
+import {loadJSONWithProgress} from './asset-loading.js?v=revision-20261029-46';
 import * as THREE from 'three';
 
 /** One-scene replay of the actual native-muscle STS reference.
@@ -10,7 +10,7 @@ export async function createContinuousHumanLayer(scene,{side='left'}={}){
  const [data,attachments]=await Promise.all([load('simulation-scene.json'),load('bilateral-sts-attachments.json')]);
  if(data.provenance.trace_sha256!==attachments.provenance.trace_sha256||data.frames.length!==attachments.frames.length)throw Error('Native replay and bilateral attachment sources differ.');
  const defaultSide=side==='right'?'right':'left';
- let focusLeft=0,anatomyFlexion=0,anatomySeparation=0,upperOpacity=1,anatomyInspect=0;
+ let focusLeft=0,anatomyFlexion=0,anatomySeparation=0,upperOpacity=1,anatomyInspect=0,surfaceInspection=0;
  const group=new THREE.Group();group.name='ActualRecordedBilateralSTS';
  group.userData={source:'assets/simulation-scene.json',attachmentSource:'assets/bilateral-sts-attachments.json',classification:attachments.classification,episode:data.provenance.episode_index,defaultSide,activeAssistance:false,registration:'Source bilateral CAD registration; native recorded movement with illustrative graft'};
  const C=new THREE.Matrix4().makeRotationX(-Math.PI/2),Ci=C.clone().invert();
@@ -118,12 +118,13 @@ export async function createContinuousHumanLayer(scene,{side='left'}={}){
   if(disposed)return;applyAnatomyPose();group.updateMatrixWorld(true);group.visible=reveal>.0001;
   const sc=group.getWorldScale(new THREE.Vector3());
   for(const s of ['left','right']){clips[s].amount.value=s==='left'?replaceLeft:replaceRight;clips[s].center.value.copy(getAttachment(s).kneeAnchor);clips[s].radius.value=.052*Math.max(sc.x,sc.y,sc.z);}
-  for(const o of objects){const alpha=reveal*(1-anatomyInspect)*(o.mesh.name.startsWith('femur_l')?upperOpacity:1)*(o.isChair?chairReveal:1)*(o.mesh.name.includes('_r_geom')?1-focusLeft:1);o.material.opacity=o.baseAlpha*alpha;o.mesh.visible=alpha>.0001;const cut=o.limb==='left'?replaceLeft:(o.limb==='right'?replaceRight:0);o.material.depthWrite=alpha>.97&&cut<.001;}
-  muscleMaterial.opacity=reveal*muscleReveal*.82;muscleMaterial.depthWrite=false;muscles.visible=muscleReveal>.0001&&reveal>.0001;
+  for(const o of objects){const surfaceVisibility=/^(tibia_l|fibula_l)_geom/.test(o.mesh.name)?1:1-surfaceInspection;const alpha=reveal*surfaceVisibility*(1-anatomyInspect)*(o.mesh.name.startsWith('femur_l')?upperOpacity:1)*(o.isChair?chairReveal:1)*(o.mesh.name.includes('_r_geom')?1-focusLeft:1);o.material.opacity=o.baseAlpha*alpha;o.mesh.visible=alpha>.0001;const cut=o.limb==='left'?replaceLeft:(o.limb==='right'?replaceRight:0);o.material.depthWrite=alpha>.97&&cut<.001;}
+  muscleMaterial.opacity=reveal*muscleReveal*.82*(1-surfaceInspection);muscleMaterial.depthWrite=false;muscles.visible=muscleReveal>.0001&&reveal>.0001;
   Object.assign(group.userData,{reveal,replaceLeft,replaceRight,muscleReveal,chairReveal,resectionRadiusMeters:.052});
  }
  const clamp=v=>THREE.MathUtils.clamp(Number(v)||0,0,1);
  function setState(next={}){
+  if(next.surfaceInspection!==undefined)surfaceInspection=clamp(next.surfaceInspection);
   if(next.anatomyInspect!==undefined)anatomyInspect=clamp(next.anatomyInspect);
   if(next.upperOpacity!==undefined)upperOpacity=clamp(next.upperOpacity);
   if(next.anatomyFlexion!==undefined)anatomyFlexion=Number(next.anatomyFlexion)||0;
@@ -135,6 +136,23 @@ export async function createContinuousHumanLayer(scene,{side='left'}={}){
   if(next.motionProgress!==undefined&&clamp(next.motionProgress)!==motionProgress)applyFrame(next.motionProgress);refresh();
  }
  function setMotionPhase(p){if(clamp(p)!==motionProgress)applyFrame(p);refresh();}
+ // Pick vertices on the supplied tibial plateau once, then follow their exact
+ // bone transform. These leaders identify the actual surface, not an offset
+ // marker floating at the knee-frame origin.
+ let surfaceVertices=null;
+ function getJointSurfaceLandmarks(){
+  group.updateMatrixWorld(true);const bone=objects.find(o=>o.mesh.name==='tibia_l_geom_1')?.mesh;if(!bone)return null;
+  if(!surfaceVertices){
+   const attachment=getAttachment('left'),proximal=attachment.hipAnchor.clone().sub(attachment.kneeAnchor).normalize(),forward=new THREE.Vector3(1,0,0).applyQuaternion(attachment.kneeRotation),axis=attachment.kneeAxis;
+   const positions=bone.geometry.getAttribute('position'),inverse=bone.matrixWorld.clone().invert();
+   surfaceVertices=[-.020,.020].map(offset=>{
+    const seed=attachment.kneeAnchor.clone().addScaledVector(proximal,-.022).addScaledVector(forward,-.010).addScaledVector(axis,offset).applyMatrix4(inverse),candidate=new THREE.Vector3(),best=new THREE.Vector3();let distance=Infinity;
+    for(let i=0;i<positions.count;i++){candidate.fromBufferAttribute(positions,i);const d=candidate.distanceToSquared(seed);if(d<distance){distance=d;best.copy(candidate);}}return best;
+   });
+  }
+  const medial=surfaceVertices[0].clone().applyMatrix4(bone.matrixWorld),lateral=surfaceVertices[1].clone().applyMatrix4(bone.matrixWorld);
+  return{medial,lateral,center:medial.clone().add(lateral).multiplyScalar(.5),source:'actual native tibial plateau vertices'};
+ }
  function getBounds(){group.updateMatrixWorld(true);const box=new THREE.Box3();for(const o of objects)if(!o.isChair||chairReveal>.001)box.expandByObject(o.mesh);return box;}
  let motionBounds=null;
  function getMotionBounds(){
@@ -142,7 +160,7 @@ export async function createContinuousHumanLayer(scene,{side='left'}={}){
   group.updateMatrixWorld(true);return motionBounds.clone().applyMatrix4(group.matrixWorld);
  }
  applyFrame(1);refresh();
- return {ready:true,group,sourceGroup:source,defaultSide,side:defaultSide,sourceEpisode:data.provenance.episode_index,sourceData:data,attachmentData:attachments,mechanismLookupRangeRad:attachments.mechanismLookupRangeRad,partRoles,getPartRole,getAttachment,setMotionPhase,getMotionBounds,
+ return {ready:true,group,sourceGroup:source,defaultSide,side:defaultSide,sourceEpisode:data.provenance.episode_index,sourceData:data,attachmentData:attachments,mechanismLookupRangeRad:attachments.mechanismLookupRangeRad,partRoles,getPartRole,getAttachment,getJointSurfaceLandmarks,setMotionPhase,getMotionBounds,
   get sourceFrame(){return group.userData.frameTime;},get kneeAnchor(){return getAttachment().kneeAnchor;},get kneeAxis(){return getAttachment().kneeAxis;},get kneeRotation(){return getAttachment().kneeRotation;},
   nativeKneeGeoms:[`femur_${defaultSide==='left'?'l':'r'}_geom_1`,`tibia_${defaultSide==='left'?'l':'r'}_geom_1`],nativeKneeGeomsBySide:{left:['femur_l_geom_1','tibia_l_geom_1'],right:['femur_r_geom_1','tibia_r_geom_1']},registration:attachments.classification,
   setReveal:alpha=>setState({reveal:alpha}),setNativeKneeCut:amount=>setState({replace:amount}),setState,getBounds,resize:refresh,

@@ -34,11 +34,18 @@ export async function createClinicalKneeLayer(scene,{human}={}){
   const plate=new THREE.Mesh(plateGeometry,trayMetal);plate.name='Conventional_Tibial_Metal_Baseplate';tibial.add(plate);
   // Preserve both tibial source origins and their +90° correction. One common
   // presentation fit scale is separate from the exact STL mm->m conversion.
-  const fit=.9;group.scale.setScalar(fit);
+  // A 68 mm mediolateral tray matches the retained source tibial plateau
+  // (about 69 mm), instead of the former oversized 72 mm tray. Uniform scaling
+  // retains the supplied component geometry and its matched contact surfaces.
+  const fit=.85;group.scale.setScalar(fit);
   // The tibial footprint is aligned to the retained bone cross-section centroid.
   // Source surfaces are sampled at 0.25 mm spacing to retain articular contact.
   // Retain a 0.05 mm display clearance rather than interpenetrating the meshes.
-  const TIBIAL_POSTERIOR=-.01055,ARTICULAR_LIFT=.002918,FEMORAL_Z=-.0199,TIBIAL_Z=-.0511+ARTICULAR_LIFT/fit;
+  const TIBIAL_POSTERIOR=-.01055,ARTICULAR_LIFT=.002918;
+  const TIBIAL_CUT=-.0275,TIBIAL_Z=TIBIAL_CUT/fit-.005;
+  // Translate both registered components together. Their original relative
+  // articular registration is retained while the tray sits on a thinner cut.
+  const FEMORAL_Z=TIBIAL_Z+(-.0199-(-.0511+ARTICULAR_LIFT/.9));
   const up=new THREE.Vector3(0,1,0).applyQuaternion(human.kneeRotation).normalize();
   // The source cap reaches above the old -14 mm cut. Resect only the local
   // articular ends, leaving the complete shaft and surrounding anatomy. These
@@ -46,7 +53,28 @@ export async function createClinicalKneeLayer(scene,{human}={}){
   const femoralCut=fit*(FEMORAL_Z+femoralGeometry.boundingBox.max.z)-.003;
   // The baseplate underside is source z=5 mm. Raise the teaching resection
   // to that face, retaining more proximal tibial bone beneath the plate.
-  const tibialCut=fit*(TIBIAL_Z+.005)-.0001;
+  const tibialCut=fit*(TIBIAL_Z+.005);
+  // The shader clips the supplied bone at this exact plane. Fill its true
+  // intersection contour so the retained tibia meets the tray underside as a
+  // solid cut surface, rather than a hollow/open edge beneath the implant.
+  let cutCap=null;
+  group.position.copy(human.kneeAnchor);group.quaternion.copy(human.kneeRotation).multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0),-Math.PI/2));group.updateMatrixWorld(true);human.group.updateMatrixWorld(true);
+  const nativeTibia=human.group.getObjectByName(`tibia_${limb}_geom_1`);
+  if(nativeTibia){
+    const transform=group.matrixWorld.clone().invert().multiply(nativeTibia.matrixWorld),positions=nativeTibia.geometry.getAttribute('position'),indices=nativeTibia.geometry.index,segments=[],height=tibialCut/fit;
+    const vertex=i=>new THREE.Vector3().fromBufferAttribute(positions,i).applyMatrix4(transform);
+    for(let i=0;i<(indices?.count||positions.count);i+=3){
+      const triangle=[0,1,2].map(j=>vertex(indices?indices.getX(i+j):i+j)),hits=[];
+      for(let j=0;j<3;j++){const a=triangle[j],b=triangle[(j+1)%3],da=a.z-height,db=b.z-height;if(da*db<0)hits.push(a.clone().lerp(b,da/(da-db)));}
+      if(hits.length===2)segments.push(hits);
+    }
+    const loops=[];while(segments.length){const segment=segments.pop(),loop=[segment[0],segment[1]];let searching=true;
+      while(searching&&segments.length){searching=false;const tail=loop.at(-1);for(let i=0;i<segments.length;i++){const pair=segments[i],end=pair.findIndex(p=>p.distanceToSquared(tail)<1e-10);if(end>=0){loop.push(pair[1-end]);segments.splice(i,1);searching=true;break;}}if(loop.at(-1).distanceToSquared(loop[0])<1e-10)break;}
+      if(loop.length>=4&&loop.at(-1).distanceToSquared(loop[0])<1e-10){loop.pop();loops.push(loop);}
+    }
+    const outline=loops.sort((a,b)=>b.length-a.length)[0];
+    if(outline){const polygon=outline.map(p=>new THREE.Vector2(p.x,p.y)),faces=THREE.ShapeUtils.triangulateShape(polygon,[]),geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(outline.flatMap(p=>[p.x,p.y,height]),3));geometry.setIndex(faces.flat());geometry.computeVertexNormals();const material=new THREE.MeshStandardMaterial({color:0xd1cebf,roughness:.75,side:THREE.DoubleSide,transparent:true,opacity:0});cutCap=new THREE.Mesh(geometry,material);cutCap.name='Actual_Tibial_Resection_Contour_Cap';cutCap.userData={classification:'flat teaching cut through the original tibial mesh',sourceContour:true,planeMeters:tibialCut,outlineVertices:outline.length};group.add(cutCap);}
+  }
   const inverse={femur:{value:new THREE.Matrix4()},tibia:{value:new THREE.Matrix4()}};
   const uniforms={highlight:{value:0},cut:{value:0},center:{value:human.kneeAnchor.clone()},up:{value:up.clone()}};
   const restored=[];
@@ -90,15 +118,16 @@ export async function createClinicalKneeLayer(scene,{human}={}){
     metal.opacity*=state.upperOpacity;metal.depthWrite=metal.opacity>.85;
     femoral.position.set(0,0,FEMORAL_Z+state.explode*.055+state.separation*.055/fit-(1-state.femoralInsertion)*.065/fit);
     tibial.position.set(TIBIAL_POSTERIOR/fit,.006/fit,TIBIAL_Z-state.separation*.055/fit+(1-state.tibialInsertion)*.065/fit);plate.position.set(0,0,-state.explode*.052);insert.position.set(0,0,state.explode*.015);
+    if(cutCap){cutCap.position.z=-state.separation*.055/fit;cutCap.material.opacity=clamp(state.reveal*state.cut*state.upperOpacity);cutCap.visible=cutCap.material.opacity>.001;cutCap.material.depthWrite=cutCap.material.opacity>.85;}
     uniforms.highlight.value=clamp(state.highlight);uniforms.cut.value=clamp(state.cut);uniforms.center.value.copy(human.kneeAnchor);up.set(0,1,0).applyQuaternion(human.kneeRotation).normalize();uniforms.up.value.copy(up);
     group.updateMatrixWorld(true);
     const upper=new THREE.Matrix4().makeTranslation(...up.clone().multiplyScalar(.055*state.separation).toArray()).multiply(group.matrixWorld),lower=new THREE.Matrix4().makeTranslation(...up.clone().multiplyScalar(-.055*state.separation).toArray()).multiply(group.matrixWorld);
     inverse.femur.value.copy(upper).invert();inverse.tibia.value.copy(lower).invert();
     uniforms.center.value.addScaledVector(up,-.055*state.separation);
     featureEdges.forEach(e=>e.sync());
-    Object.assign(group.userData,{source:'aqnazar/TKA-implant-design',side:limb,sourceFemoralFile:femoralFile,commit:'5770570174487f0b59e3a5bbf684a958e21924b5',license:'Apache-2.0',sourceUnitScale:.001,presentationFitScale:fit,classification:'Actual academic conventional implant CAD / illustrative anatomical placement and resection',clinicalApprovedProduct:false,nativeKneeGeoms:[...nativeGeoms],resection:'Five-plane femoral envelope and source-fitted tibial teaching resection; no surgical validation',tibialPosteriorDisplayOffsetMeters:TIBIAL_POSTERIOR,articularDisplayLiftMeters:ARTICULAR_LIFT,nominalDisplayClearanceMeters:.00005,resectionFemoralHeightMeters:femoralCut,resectionTibialHeightMeters:tibialCut,shading:'authored surfaces with source crease/boundary edges',...state});
+    Object.assign(group.userData,{source:'aqnazar/TKA-implant-design',side:limb,sourceFemoralFile:femoralFile,commit:'5770570174487f0b59e3a5bbf684a958e21924b5',license:'Apache-2.0',sourceUnitScale:.001,presentationFitScale:fit,classification:'Actual academic conventional implant CAD / illustrative anatomical placement and resection',clinicalApprovedProduct:false,nativeKneeGeoms:[...nativeGeoms],resection:'Five-plane femoral envelope and source-fitted tibial teaching resection; no surgical validation',tibialPosteriorDisplayOffsetMeters:TIBIAL_POSTERIOR,articularDisplayLiftMeters:ARTICULAR_LIFT,nominalDisplayClearanceMeters:0,sourceTibialResectionCap:!!cutCap,resectionFemoralHeightMeters:femoralCut,resectionTibialHeightMeters:tibialCut,shading:'authored surfaces with source crease/boundary edges',...state});
   }
   function center(mesh){return mesh.geometry.boundingBox.getCenter(new THREE.Vector3()).applyMatrix4(mesh.matrixWorld);}
   setState();
-  return{ready:true,group,kneeAnchor:human.kneeAnchor.clone(),get componentCenters(){return{femoral:center(femoral),insert:center(insert),plate:center(plate)};},setState,getBounds(){return new THREE.Box3().setFromObject(group);},dispose(){scene.remove(group);featureEdges.forEach(e=>e.dispose());for(const r of restored){r.material.onBeforeCompile=r.previous;r.material.customProgramCacheKey=r.previousKey;r.material.needsUpdate=true;}femoralGeometry.dispose();insertGeometry.dispose();plateGeometry.dispose();metal.dispose();trayMetal.dispose();polyethylene.dispose();}};
+  return{ready:true,group,kneeAnchor:human.kneeAnchor.clone(),get componentCenters(){return{femoral:center(femoral),insert:center(insert),plate:center(plate)};},setState,getBounds(){return new THREE.Box3().setFromObject(group);},dispose(){scene.remove(group);featureEdges.forEach(e=>e.dispose());for(const r of restored){r.material.onBeforeCompile=r.previous;r.material.customProgramCacheKey=r.previousKey;r.material.needsUpdate=true;}femoralGeometry.dispose();insertGeometry.dispose();plateGeometry.dispose();metal.dispose();trayMetal.dispose();polyethylene.dispose();cutCap?.geometry.dispose();cutCap?.material.dispose();}};
 }

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {createShadedEdges} from './shaded-edges.js?v=revision-20261029-45';
+import {createShadedEdges} from './shaded-edges.js?v=revision-20261029-46';
 
 /** Actual source bone surfaces, with an explicitly qualitative joint motion.
  *
@@ -58,7 +58,11 @@ export async function createNativeKneeComparison(scene,{human,side='left',clipRa
   // the lateral side. Side-aware sign keeps posterior (-Z) rollback bilateral.
   flexQ.setFromAxisAngle(flexAxis,flexion);yawQ.setFromAxisAngle(yawAxis,pivot*(limb==='left'?1:-1));
   motionMatrix.makeTranslation(yawPivot.x,0,yawPivot.z-rollback).multiply(new THREE.Matrix4().makeRotationFromQuaternion(yawQ)).multiply(new THREE.Matrix4().makeTranslation(-yawPivot.x,0,-yawPivot.z)).multiply(new THREE.Matrix4().makeRotationFromQuaternion(flexQ));
-  femurPivot.matrixAutoUpdate=false;femurPivot.matrix.copy(motionMatrix);femurPivot.matrixWorldNeedsUpdate=true;
+  femurPivot.matrixAutoUpdate=false;
+  if(override.worldRigidDelta){
+   group.updateWorldMatrix(true,false);femurPivot.matrix.copy(group.matrixWorld).premultiply(override.worldRigidDelta).premultiply(group.matrixWorld.clone().invert());
+  }else femurPivot.matrix.copy(motionMatrix);
+  femurPivot.matrixWorldNeedsUpdate=true;
   lastFlexion=flexion;lastPivot=pivot;lastRollback=rollback;
   Object.assign(group.userData,{phase,schematicFlexionRad:flexion,schematicPivotRad:pivot,schematicRollbackM:rollback,defaultAuthoredRange:'0..90 deg flexion; 0..8 deg axial pivot; values illustrative, not universal native-knee measurements'});
   syncClipping();edges.forEach(e=>e.sync());

@@ -1,6 +1,6 @@
 {
-  "source_blend": "work/slider-frame-repair-20261029/source-package/AAKJ_ver3_native_rebound.blend",
-  "export": "Original native glTF triangle ownership corrected. POSBody/Ball/SLPT/E-LBBH6L removed from old composites and rebound to source joint frames. No vendor meshes, shape, constraint or dynamics changes.",
+  "source_blend": "work/hardware-ownership46/source-package/AAKJ_ver3_native_rebound.blend",
+  "export": "Original native glTF triangle ownership corrected. POSBody/Ball/SLPT removed from old composites and rebound to source joint frames. No vendor meshes, shape, constraint or dynamics changes.",
   "meshes": [
     {
       "name": "12mm_m3_shcs::visual0",
@@ -221,10 +221,82 @@
       "parentLink": "e_lbbh6l__1_"
     },
     {
+      "name": "guide2_e_crvs1020__lpattern3__1_::visual0",
+      "category": "structure",
+      "source": "Original native source glTF named subtree",
+      "parentLink": "guide2_e_crvs1020__lpattern3__1_"
+    },
+    {
+      "name": "guide2_e_crvs1020__lpattern3_1__1_::visual0",
+      "category": "structure",
+      "source": "Original native source glTF named subtree",
+      "parentLink": "guide2_e_crvs1020__lpattern3_1__1_"
+    },
+    {
+      "name": "cbstssr2_5__1_::visual0",
+      "category": "structure",
+      "source": "Original native source glTF named subtree",
+      "parentLink": "cbstssr2_5__1_"
+    },
+    {
+      "name": "cbstssr2_5__2_::visual0",
+      "category": "structure",
+      "source": "Original native source glTF named subtree",
+      "parentLink": "cbstssr2_5__2_"
+    },
+    {
+      "name": "cbstssr2_5__3_::visual0",
+      "category": "structure",
+      "source": "Original native source glTF named subtree",
+      "parentLink": "cbstssr2_5__3_"
+    },
+    {
+      "name": "cbstssr2_5__4_::visual0",
+      "category": "structure",
+      "source": "Original native source glTF named subtree",
+      "parentLink": "cbstssr2_5__4_"
+    },
+    {
+      "name": "cbstssr2_5__5_::visual0",
+      "category": "structure",
+      "source": "Original native source glTF named subtree",
+      "parentLink": "cbstssr2_5__5_"
+    },
+    {
+      "name": "cbstssr2_5__6_::visual0",
+      "category": "structure",
+      "source": "Original native source glTF named subtree",
+      "parentLink": "cbstssr2_5__6_"
+    },
+    {
+      "name": "cbstssr2_5__7_::visual0",
+      "category": "structure",
+      "source": "Original native source glTF named subtree",
+      "parentLink": "cbstssr2_5__7_"
+    },
+    {
+      "name": "cbstssr2_5__8_::visual0",
+      "category": "structure",
+      "source": "Original native source glTF named subtree",
+      "parentLink": "cbstssr2_5__8_"
+    },
+    {
       "name": "pos_5ecball__pos_5ecball__1_::visual0",
       "category": "structure",
       "source": "Original native source glTF named subtree",
       "parentLink": "pos_5ecball__pos_5ecball__1_"
+    },
+    {
+      "name": "guide1_e_crvs1020__mirror1_1__1_::visual0",
+      "category": "structure",
+      "source": "Original native source glTF named subtree",
+      "parentLink": "guide1_e_crvs1020__mirror1_1__1_"
+    },
+    {
+      "name": "guide1_e_crvs1020__mirror1_3__1_::visual0",
+      "category": "structure",
+      "source": "Original native source glTF named subtree",
+      "parentLink": "guide1_e_crvs1020__mirror1_3__1_"
     }
   ],
   "animation": {
@@ -256,8 +328,8 @@
   "recovery": {
     "method": "native named source subtree ownership repair",
     "supersedes": "aakj-v3-complete.glb vendor-addition approach; do not use that asset",
-    "sourceURDF": "work/slider-frame-repair-20261029/source-package/corrected-source-native/aakj_ver_3/urdf/aakj_ver_3_native_rebound.urdf",
-    "contract": "work/slider-frame-repair-20261029/source-package/native-subtrees.json",
+    "sourceURDF": "work/hardware-ownership46/source-package/corrected-source-native/aakj_ver_3/urdf/aakj_ver_3_native_rebound.urdf",
+    "contract": "work/hardware-ownership46/source-package/native-subtrees.json",
     "newParts": [
       {
         "name": "pos_5ecbody__pos_5ecbody__1_::visual0",
@@ -359,6 +431,336 @@
         ]
       },
       {
+        "name": "guide2_e_crvs1020__lpattern3__1_::visual0",
+        "targetLink": "guide2_e_crvs1020__lpattern3__1_",
+        "sourceCompositeLink": "body_c_cfs2_4_5__cut_extrude1",
+        "sourceRootName": "GUIDE2_E-CRVS1020__LPattern3",
+        "sourceTriangles": 2152,
+        "targetFromCompositeLocalMatrix": [
+          [
+            0.9999999999999999,
+            -1.761564589620612e-08,
+            5.080250308897453e-18,
+            5.124129156935154e-11
+          ],
+          [
+            1.761564589620612e-08,
+            0.9999999999999999,
+            -6.814249997697066e-17,
+            2.612661459139992e-09
+          ],
+          [
+            -5.080249108523303e-18,
+            6.814250006646256e-17,
+            1.0,
+            4.159235505319171e-20
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "name": "guide2_e_crvs1020__lpattern3_1__1_::visual0",
+        "targetLink": "guide2_e_crvs1020__lpattern3_1__1_",
+        "sourceCompositeLink": "body_c_cfs2_4_5__cut_extrude1",
+        "sourceRootName": "GUIDE2_E-CRVS1020__LPattern3_1",
+        "sourceTriangles": 2152,
+        "targetFromCompositeLocalMatrix": [
+          [
+            0.9999999999999999,
+            -1.761564589620612e-08,
+            5.080250308897453e-18,
+            5.124129156935154e-11
+          ],
+          [
+            1.761564589620612e-08,
+            0.9999999999999999,
+            -6.814249997697066e-17,
+            2.612661459139992e-09
+          ],
+          [
+            -5.080249108523303e-18,
+            6.814250006646256e-17,
+            1.0,
+            4.159235505319171e-20
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "name": "cbstssr2_5__1_::visual0",
+        "targetLink": "cbstssr2_5__1_",
+        "sourceCompositeLink": "body_c_cfs2_4_5__cut_extrude1",
+        "sourceRootName": "CBSTSSR2-5",
+        "sourceTriangles": 2820,
+        "targetFromCompositeLocalMatrix": [
+          [
+            0.9999999999999999,
+            -1.761564589620612e-08,
+            5.080250308897453e-18,
+            5.124129156935154e-11
+          ],
+          [
+            1.761564589620612e-08,
+            0.9999999999999999,
+            -6.814249997697066e-17,
+            2.612661459139992e-09
+          ],
+          [
+            -5.080249108523303e-18,
+            6.814250006646256e-17,
+            1.0,
+            4.159235505319171e-20
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "name": "cbstssr2_5__2_::visual0",
+        "targetLink": "cbstssr2_5__2_",
+        "sourceCompositeLink": "body_c_cfs2_4_5__cut_extrude1",
+        "sourceRootName": "CBSTSSR2-5",
+        "sourceTriangles": 2820,
+        "targetFromCompositeLocalMatrix": [
+          [
+            0.9999999999999999,
+            -1.761564589620612e-08,
+            5.080250308897453e-18,
+            5.124129156935154e-11
+          ],
+          [
+            1.761564589620612e-08,
+            0.9999999999999999,
+            -6.814249997697066e-17,
+            2.612661459139992e-09
+          ],
+          [
+            -5.080249108523303e-18,
+            6.814250006646256e-17,
+            1.0,
+            4.159235505319171e-20
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "name": "cbstssr2_5__3_::visual0",
+        "targetLink": "cbstssr2_5__3_",
+        "sourceCompositeLink": "body_c_cfs2_4_5__cut_extrude1",
+        "sourceRootName": "CBSTSSR2-5",
+        "sourceTriangles": 2820,
+        "targetFromCompositeLocalMatrix": [
+          [
+            0.9999999999999999,
+            -1.761564589620612e-08,
+            5.080250308897453e-18,
+            5.124129156935154e-11
+          ],
+          [
+            1.761564589620612e-08,
+            0.9999999999999999,
+            -6.814249997697066e-17,
+            2.612661459139992e-09
+          ],
+          [
+            -5.080249108523303e-18,
+            6.814250006646256e-17,
+            1.0,
+            4.159235505319171e-20
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "name": "cbstssr2_5__4_::visual0",
+        "targetLink": "cbstssr2_5__4_",
+        "sourceCompositeLink": "body_c_cfs2_4_5__cut_extrude1",
+        "sourceRootName": "CBSTSSR2-5",
+        "sourceTriangles": 2820,
+        "targetFromCompositeLocalMatrix": [
+          [
+            0.9999999999999999,
+            -1.761564589620612e-08,
+            5.080250308897453e-18,
+            5.124129156935154e-11
+          ],
+          [
+            1.761564589620612e-08,
+            0.9999999999999999,
+            -6.814249997697066e-17,
+            2.612661459139992e-09
+          ],
+          [
+            -5.080249108523303e-18,
+            6.814250006646256e-17,
+            1.0,
+            4.159235505319171e-20
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "name": "cbstssr2_5__5_::visual0",
+        "targetLink": "cbstssr2_5__5_",
+        "sourceCompositeLink": "body_c_cfs2_4_5__cut_extrude1",
+        "sourceRootName": "CBSTSSR2-5",
+        "sourceTriangles": 2820,
+        "targetFromCompositeLocalMatrix": [
+          [
+            0.9999999999999999,
+            -1.761564589620612e-08,
+            5.080250308897453e-18,
+            -4.206616652235873e-11
+          ],
+          [
+            1.761564589620612e-08,
+            0.9999999999999999,
+            -6.814249997697066e-17,
+            4.2002217589404145e-10
+          ],
+          [
+            -5.080249108523303e-18,
+            6.814250006646256e-17,
+            1.0,
+            4.159235448981571e-20
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "name": "cbstssr2_5__6_::visual0",
+        "targetLink": "cbstssr2_5__6_",
+        "sourceCompositeLink": "body_c_cfs2_4_5__cut_extrude1",
+        "sourceRootName": "CBSTSSR2-5",
+        "sourceTriangles": 2820,
+        "targetFromCompositeLocalMatrix": [
+          [
+            0.9999999999999999,
+            -1.761564589620612e-08,
+            5.080250308897453e-18,
+            -4.206616652235873e-11
+          ],
+          [
+            1.761564589620612e-08,
+            0.9999999999999999,
+            -6.814249997697066e-17,
+            4.2002217589404145e-10
+          ],
+          [
+            -5.080249108523303e-18,
+            6.814250006646256e-17,
+            1.0,
+            4.159235448981571e-20
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "name": "cbstssr2_5__7_::visual0",
+        "targetLink": "cbstssr2_5__7_",
+        "sourceCompositeLink": "body_c_cfs2_4_5__cut_extrude1",
+        "sourceRootName": "CBSTSSR2-5",
+        "sourceTriangles": 2820,
+        "targetFromCompositeLocalMatrix": [
+          [
+            0.9999999999999999,
+            -1.761564589620612e-08,
+            5.080250308897453e-18,
+            -4.206616652235873e-11
+          ],
+          [
+            1.761564589620612e-08,
+            0.9999999999999999,
+            -6.814249997697066e-17,
+            4.2002217589404145e-10
+          ],
+          [
+            -5.080249108523303e-18,
+            6.814250006646256e-17,
+            1.0,
+            4.159235448981571e-20
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "name": "cbstssr2_5__8_::visual0",
+        "targetLink": "cbstssr2_5__8_",
+        "sourceCompositeLink": "body_c_cfs2_4_5__cut_extrude1",
+        "sourceRootName": "CBSTSSR2-5",
+        "sourceTriangles": 2820,
+        "targetFromCompositeLocalMatrix": [
+          [
+            0.9999999999999999,
+            -1.761564589620612e-08,
+            5.080250308897453e-18,
+            -4.206616652235873e-11
+          ],
+          [
+            1.761564589620612e-08,
+            0.9999999999999999,
+            -6.814249997697066e-17,
+            4.2002217589404145e-10
+          ],
+          [
+            -5.080249108523303e-18,
+            6.814250006646256e-17,
+            1.0,
+            4.159235448981571e-20
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      {
         "name": "pos_5ecball__pos_5ecball__1_::visual0",
         "targetLink": "pos_5ecball__pos_5ecball__1_",
         "sourceCompositeLink": "guide1_e_crvs1020__mirror1_2",
@@ -390,6 +792,72 @@
             1.0
           ]
         ]
+      },
+      {
+        "name": "guide1_e_crvs1020__mirror1_1__1_::visual0",
+        "targetLink": "guide1_e_crvs1020__mirror1_1__1_",
+        "sourceCompositeLink": "guide1_e_crvs1020__mirror1_2",
+        "sourceRootName": "GUIDE1_E-CRVS1020__Mirror1_1",
+        "sourceTriangles": 1176,
+        "targetFromCompositeLocalMatrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            9.330745809171027e-11
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            2.1926392832459507e-09
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            5.63376e-28
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "name": "guide1_e_crvs1020__mirror1_3__1_::visual0",
+        "targetLink": "guide1_e_crvs1020__mirror1_3__1_",
+        "sourceCompositeLink": "guide1_e_crvs1020__mirror1_2",
+        "sourceRootName": "GUIDE1_E-CRVS1020__Mirror1_3",
+        "sourceTriangles": 1176,
+        "targetFromCompositeLocalMatrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            9.330745809171027e-11
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            2.1926392832459507e-09
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            5.63376e-28
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
       }
     ],
     "originalTotalTrianglesPreserved": true,
@@ -399,11 +867,6 @@
       "pos_5ecbody__pos_5ecbody__1_": 8.954194418720776e-09,
       "pos_5ecball__pos_5ecball__1_": 8.750723773698823e-09
     },
-    "maxRodAxisCrossProduct": 0.0,
-    "sliderBindingValidation": {
-      "poses": 263,
-      "maxRelativeTransformError": 3.095856904167249e-13,
-      "maxDisplacementMismatchM": 4.547473508864641e-13
-    }
+    "maxRodAxisCrossProduct": 0.0
   }
 }

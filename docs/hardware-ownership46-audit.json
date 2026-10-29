@@ -1,0 +1,185 @@
+{
+  "originalTriangles": 680404,
+  "outputTriangles": 680404,
+  "deviceGLBMeshes": 66,
+  "unaffectedOriginalGeometryPreserved": true,
+  "originalMaterialsPreserved": true,
+  "originalActionsPreserved": true,
+  "vendorGeometryAdded": false,
+  "duplicateSourceTrianglesAdded": false,
+  "maxZeroWorldVertexRoundtripM": 1.041250292910165e-09,
+  "max263SliderRelativeTransformError": 3.095856904167249e-13,
+  "max263SliderDisplacementMismatchM": 4.547473508864641e-13,
+  "classification": "source-preserving presentation and Blender derivative; source originals and research dynamics untouched",
+  "originalSourceZIP": "/home/arl/.codex/attachments/39715d26-c266-4317-b0aa-93c03d27ed20/AAKJ ver.3 (1).zip",
+  "originalSourceZIPSHA256": "f72d3d61d184490dcf9633bb237e03df79c570732de95a333a798bbfe02815a1",
+  "components": {
+    "guide2_e_crvs1020__lpattern3__1_": {
+      "rigidReference": "tibial_base",
+      "maxRelativeMatrixError263Poses": 0
+    },
+    "guide2_e_crvs1020__lpattern3_1__1_": {
+      "rigidReference": "tibial_base",
+      "maxRelativeMatrixError263Poses": 0
+    },
+    "cbstssr2_5__1_": {
+      "rigidReference": "e_lbbh6l__1_",
+      "maxRelativeMatrixError263Poses": 3.0958915986367685e-13
+    },
+    "cbstssr2_5__2_": {
+      "rigidReference": "e_lbbh6l__1_",
+      "maxRelativeMatrixError263Poses": 3.0958915986367685e-13
+    },
+    "cbstssr2_5__3_": {
+      "rigidReference": "e_lbbh6l__1_",
+      "maxRelativeMatrixError263Poses": 3.0958915986367685e-13
+    },
+    "cbstssr2_5__4_": {
+      "rigidReference": "e_lbbh6l__1_",
+      "maxRelativeMatrixError263Poses": 3.0958915986367685e-13
+    },
+    "cbstssr2_5__5_": {
+      "rigidReference": "tibial_base",
+      "maxRelativeMatrixError263Poses": 0
+    },
+    "cbstssr2_5__6_": {
+      "rigidReference": "tibial_base",
+      "maxRelativeMatrixError263Poses": 0
+    },
+    "cbstssr2_5__7_": {
+      "rigidReference": "tibial_base",
+      "maxRelativeMatrixError263Poses": 0
+    },
+    "cbstssr2_5__8_": {
+      "rigidReference": "tibial_base",
+      "maxRelativeMatrixError263Poses": 0
+    },
+    "guide1_e_crvs1020__mirror1_1__1_": {
+      "rigidReference": "e_lbbh6l__1_",
+      "maxRelativeMatrixError263Poses": 1.2799900028781508e-12
+    },
+    "guide1_e_crvs1020__mirror1_3__1_": {
+      "rigidReference": "e_lbbh6l__1_",
+      "maxRelativeMatrixError263Poses": 1.2799900028781508e-12
+    }
+  },
+  "sourceSubtrees": [
+    {
+      "sourceFile": "BODY_C_CFS2_4_5__Cut_Extrude1.gltf",
+      "sourceRootNode": 187,
+      "sourceRootName": "POS 5ECBody__POS 5ECBody",
+      "targetLink": "pos_5ecbody__pos_5ecbody__1_",
+      "triangles": 4376
+    },
+    {
+      "sourceFile": "BODY_C_CFS2_4_5__Cut_Extrude1.gltf",
+      "sourceRootNode": 284,
+      "sourceRootName": "SLPT6-25",
+      "targetLink": "slpt6_25__1_",
+      "triangles": 1996
+    },
+    {
+      "sourceFile": "BODY_C_CFS2_4_5__Cut_Extrude1.gltf",
+      "sourceRootNode": 357,
+      "sourceRootName": "E-LBBH6L",
+      "targetLink": "e_lbbh6l__1_",
+      "triangles": 3944
+    },
+    {
+      "sourceFile": "BODY_C_CFS2_4_5__Cut_Extrude1.gltf",
+      "sourceRootNode": 24,
+      "sourceRootName": "GUIDE2_E-CRVS1020__LPattern3",
+      "targetLink": "guide2_e_crvs1020__lpattern3__1_",
+      "triangles": 2152
+    },
+    {
+      "sourceFile": "BODY_C_CFS2_4_5__Cut_Extrude1.gltf",
+      "sourceRootNode": 208,
+      "sourceRootName": "GUIDE2_E-CRVS1020__LPattern3_1",
+      "targetLink": "guide2_e_crvs1020__lpattern3_1__1_",
+      "triangles": 2152
+    },
+    {
+      "sourceFile": "BODY_C_CFS2_4_5__Cut_Extrude1.gltf",
+      "sourceRootNode": 115,
+      "sourceRootName": "CBSTSSR2-5",
+      "targetLink": "cbstssr2_5__1_",
+      "triangles": 2820
+    },
+    {
+      "sourceFile": "BODY_C_CFS2_4_5__Cut_Extrude1.gltf",
+      "sourceRootNode": 260,
+      "sourceRootName": "CBSTSSR2-5",
+      "targetLink": "cbstssr2_5__2_",
+      "triangles": 2820
+    },
+    {
+      "sourceFile": "BODY_C_CFS2_4_5__Cut_Extrude1.gltf",
+      "sourceRootNode": 333,
+      "sourceRootName": "CBSTSSR2-5",
+      "targetLink": "cbstssr2_5__3_",
+      "triangles": 2820
+    },
+    {
+      "sourceFile": "BODY_C_CFS2_4_5__Cut_Extrude1.gltf",
+      "sourceRootNode": 387,
+      "sourceRootName": "CBSTSSR2-5",
+      "targetLink": "cbstssr2_5__4_",
+      "triangles": 2820
+    },
+    {
+      "sourceFile": "BODY_C_CFS2_4_5__Cut_Extrude1.gltf",
+      "sourceRootNode": 91,
+      "sourceRootName": "CBSTSSR2-5",
+      "targetLink": "cbstssr2_5__5_",
+      "triangles": 2820
+    },
+    {
+      "sourceFile": "BODY_C_CFS2_4_5__Cut_Extrude1.gltf",
+      "sourceRootNode": 163,
+      "sourceRootName": "CBSTSSR2-5",
+      "targetLink": "cbstssr2_5__6_",
+      "triangles": 2820
+    },
+    {
+      "sourceFile": "BODY_C_CFS2_4_5__Cut_Extrude1.gltf",
+      "sourceRootNode": 309,
+      "sourceRootName": "CBSTSSR2-5",
+      "targetLink": "cbstssr2_5__7_",
+      "triangles": 2820
+    },
+    {
+      "sourceFile": "BODY_C_CFS2_4_5__Cut_Extrude1.gltf",
+      "sourceRootNode": 461,
+      "sourceRootName": "CBSTSSR2-5",
+      "targetLink": "cbstssr2_5__8_",
+      "triangles": 2820
+    },
+    {
+      "sourceFile": "GUIDE1_E_CRVS1020__Mirror1_2.gltf",
+      "sourceRootNode": 117,
+      "sourceRootName": "POS 5ECBall__POS 5ECBall",
+      "targetLink": "pos_5ecball__pos_5ecball__1_",
+      "triangles": 5568
+    },
+    {
+      "sourceFile": "GUIDE1_E_CRVS1020__Mirror1_2.gltf",
+      "sourceRootNode": 78,
+      "sourceRootName": "GUIDE1_E-CRVS1020__Mirror1_1",
+      "targetLink": "guide1_e_crvs1020__mirror1_1__1_",
+      "triangles": 1176
+    },
+    {
+      "sourceFile": "GUIDE1_E_CRVS1020__Mirror1_2.gltf",
+      "sourceRootNode": 124,
+      "sourceRootName": "GUIDE1_E-CRVS1020__Mirror1_3",
+      "targetLink": "guide1_e_crvs1020__mirror1_3__1_",
+      "triangles": 1176
+    }
+  ],
+  "springFastenersPresent": [
+    "12mm_m3_shcs::visual0",
+    "12mm_m3_shcs_1::visual0"
+  ],
+  "rollerMateCorrection": "Both original GUIDE2 roller cages fixed to outer tibial race; source URDF had grouped them with translating inner race. This is a display/derivative correction requested by the user; no dynamics rerun."
+}

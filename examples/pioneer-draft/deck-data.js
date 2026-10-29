@@ -1,5 +1,5 @@
 // Six large chapters; Control joins the simulation, teacher and limited-sensing execution story.
-export const deckVersion='revision-20261029-45';
+export const deckVersion='revision-20261029-46';
 const stage=(caption,question,notes)=>({caption,question,notes});
 const proposal='Pioneer_2022_proposal.pdf: PDF p11/printed p2 and PDF p40/printed p31';
 const interim='Moon, thesis interim presentation, 2024-12-10: slides3–15';
@@ -97,13 +97,29 @@ const stageBodies={
  `<p>Verify <strong>coupling</strong> and <strong>sensing</strong>.</p><p>Establish <strong>reproducible assistance</strong><br>under the target conditions.</p>`
 ]
 };
+const takeaways={
+1:['Natural motion. Timely support.'],
+2:['Aging affects both joints and muscles.','Replacement restores joint surfaces.','Muscle weakness can remain.','Assistance needs a force path.','Bring assistance into the implant.'],
+3:['The knee is more than a hinge.','Recreate the motion with a linkage.','One mechanism couples the motions.','Rotation follows a medial pivot.','Add power through the same mechanism.','Put compliance in the torque path.'],
+4:['Store energy before delivering support.','One fixed stiffness is a compromise.','Let stiffness grow with winding.','The deflections add in series.','Contact increases stiffness.','Inspect the deformation and response.','Geometry shapes the response.'],
+5:['Prepare the spring state.','Evaluate the coupled system.','Preload before the rise.','Develop movement, then assistance.','Infer the state from local signals.','Imitate, then execute through the drive.','Nominal standing is a first step.','Prepare support on every step.','Prepare earlier to respect the limits.'],
+6:['Connect motion, compliance and control.','Establish reproducible assistance.']
+};
+// Copy measures follow the actual visual for each stage (1920 × 1080 canvas).
+const copyLayouts={
+2:[{left:1160,width:630,top:310},{left:1160,width:630,top:330},{left:1250,width:555,top:340},{left:1260,width:540,top:390},{left:1160,width:630,top:345}],
+3:[{left:1140,width:650,top:340},{left:1190,width:610,top:350},{left:1220,width:580,top:320},{left:1220,width:580,top:340},{left:1150,width:650,top:365},{left:1160,width:640,top:350}],
+4:[{left:1245,width:560,top:320},{left:1255,width:550,top:340},{left:1255,width:550,top:350},{left:1250,width:555,top:330},{left:1250,width:555,top:345},{left:1290,width:510,top:320},{left:1250,width:555,top:340}],
+5:[{left:1270,width:530,top:340},{left:1260,width:540,top:345},{left:1260,width:540,top:350},{left:1250,width:550,top:340},{left:1260,width:540,top:335},{left:1260,width:540,top:335},{left:1260,width:540,top:320},{left:1270,width:530,top:340},{left:1270,width:530,top:345}],
+6:[{left:1230,width:570,top:360},{left:1230,width:570,top:360}]
+};
 const authors=[{name:'Jongchan Mun',affiliation:'1',corresponding:false},{name:'Sang Rok Jin',affiliation:'1',corresponding:true}];
 const affiliation='School of Mechanical Engineering, Pusan National University';
 const authorSource='/mnt/arl/NAS관리/백업/학회/2026년도/26.10.27~30 ICCAS/문종찬/논문/main.tex:19–23';
 const springSubtitles=['Elasticity in the torque path','One stiffness, two competing needs','Compliant first, stiffer as winding grows','Two spring units share one torque','Contact changes the free flexure','Inspect deformation and stress','Torque–rotation response'];
 const controlSubtitles=['Control the Spring State','Evaluate Human–Implant Interaction','Prepare, Assist, Release','From Failed Rises to Nominal Standing','Operate with Device-Side Sensing','Transfer the Strategy to a Student','Preliminary Sit-to-Stand Evaluation','Repeat Assistance During Walking','Anticipate the Drive Limits'];
 const controlStageDurations=[22,22,27,34,27,33,35,25,25];
-const slides=raw.map(s=>({...s,subtitle:s.id===1?'':s.title,title:headings[s.id]||s.title,authors:s.id===1?authors:undefined,affiliation:s.id===1?affiliation:undefined,affiliationLocation:s.id===1?'Busan, 46231, Korea':undefined,authorSource:s.id===1?authorSource:undefined,targetGroup:s.id===2?'Older adults':undefined,steps:s.stages.length-1,scene:{kind:'continuous',mode:'chapter',chapter:s.id},body:'',bridge:'',dummy:false,stages:s.stages.map((x,i)=>({...x,subtitle:s.id===4?springSubtitles[i]:s.id===5?controlSubtitles[i]:undefined,duration:s.id===5?controlStageDurations[i]:undefined,body:stageBodies[s.id][i]})),notes:s.stages.map((x,i)=>`Stage ${i}: ${x.notes}`).join('\n\n')+(s.id===1?`\nCover authors and affiliation reproduced from ${authorSource}. Exact author spelling/order: Jongchan Mun; Sang Rok Jin. Paper results are not reused.`:'')}));
+const slides=raw.map(s=>({...s,subtitle:s.id===1?'':s.title,title:headings[s.id]||s.title,authors:s.id===1?authors:undefined,affiliation:s.id===1?affiliation:undefined,affiliationLocation:s.id===1?'Busan, 46231, Korea':undefined,authorSource:s.id===1?authorSource:undefined,targetGroup:s.id===2?'Older adults':undefined,steps:s.stages.length-1,scene:{kind:'continuous',mode:'chapter',chapter:s.id},body:'',bridge:'',dummy:false,stages:s.stages.map((x,i)=>({...x,subtitle:s.id===4?springSubtitles[i]:s.id===5?controlSubtitles[i]:x.subtitle,duration:s.id===5?controlStageDurations[i]:undefined,body:stageBodies[s.id][i].replaceAll('<br>',' '),takeaway:takeaways[s.id][i],layout:copyLayouts[s.id]?.[i]||{}})),notes:s.stages.map((x,i)=>`Stage ${i}: ${x.notes}`).join('\n\n')+(s.id===1?`\nCover authors and affiliation reproduced from ${authorSource}. Exact author spelling/order: Jongchan Mun; Sang Rok Jin. Paper results are not reused.`:'')}));
 const coverReplayNote=' Cover spring: actual stored double-spiral FEA loading frames are replayed forward and backward in the same 1.12-second presentation cycle as recorded walking. The enlarged inset and timing are explanatory presentation choices, not a coupled gait/FEA spring response or a solved unloading branch. PNU signature is the original official transparent PNG, aspect ratio preserved.';
 slides[0].stages[0].notes+=coverReplayNote;slides[0].notes+=coverReplayNote;
 if(slides.reduce((n,s)=>n+s.duration,0)!==720)throw Error('Expected twelve-minute allocation');

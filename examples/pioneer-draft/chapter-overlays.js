@@ -1,6 +1,7 @@
-import {buildArchivedSpringChart} from './archived-spring-chart.js?v=revision-20261029-45';
-import {buildDiagram} from './chapter-diagram-layer.js?v=revision-20261029-45';
-import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-45';
+import {buildBackgroundOverlay} from './background-overlay.js?v=revision-20261029-46';
+import {buildArchivedSpringChart} from './archived-spring-chart.js?v=revision-20261029-46';
+import {buildDiagram} from './chapter-diagram-layer.js?v=revision-20261029-46';
+import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-46';
 // Short visual explanations. All quantitative FEA marks use the same archived solver case.
 const C={ink:'#1a3a7a',accent:'#a44725',muted:'#585950',line:'#b5b3ab',paper:'#fdfcf8'};
 const text=(x,y,s,z=26,c=C.ink,a='middle')=>`<text x="${x}" y="${y}" font-size="${z}" fill="${c}" text-anchor="${a}" stroke="${C.paper}" stroke-width="5" paint-order="stroke">${s}</text>`;
@@ -11,62 +12,14 @@ function conceptCurve(x,y,w,h,d){const pts=Array.from({length:61},(_,i)=>{const 
 function feaLegend(fea){const l=fea.getLegend(),x=1290,y=180,h=185,w=18;let out=text(x-8,y-38,'von Mises',25,C.muted)+text(x-8,y-8,'MPa',23,C.muted);for(let i=0;i<40;i++){const color=springFEAColor(1-i/39).getStyle();out+=`<rect x="${x}" y="${y+i*h/40}" width="${w}" height="${h/40+1}" fill="${color}"/>`;}return out+text(x+40,y+10,Number(l.max).toFixed(0),23,C.muted,'start')+text(x+40,y+h,'0',23,C.muted,'start');}
 export function buildChapterOverlay(ctx){
  const {chapter:c,build:b,live,project,partPoint,point,frame,fea,human,gait}=ctx;let s='';
- if(c===1){if(!fea)return '';const p=project(fea.group.position);return text(p[0],p[1]+155,'Double-spiral spring',28)+text(p[0],p[1]+190,'FEA replay',23,C.muted);}
+ if(c===1){if(!fea)return '';const p=project(fea.group.position);return text(p[0],p[1]+155,'Double-spiral spring',28);}
  if(c===5)return '';
  if(c===6)return ''; // The main conclusion copy already carries this message.
+ if(c===4&&b===0){const a=partPoint('motor_shaft'),o=partPoint('squre_splined_bevel_gear');let labels='';for(const [p,label,dy]of[[a,'θᵢₙ',-55],[o,'θₒᵤₜ = 0°',55]])if(p){const q=project(p),labelY=Math.max(42,Math.min(490,q[1]+dy));labels+=text(Math.max(85,q[0]-150),labelY,label,31,C.accent)+arrow([Math.max(110,q[0]-115),labelY+10],[q[0]-10,q[1]],C.accent);}return labels;}
  if(c===4)return ''; // The persistent native spring and dedicated figure panel own this chapter.
  const diagram=buildDiagram(c,b,{progress:1,reducedMotion:true});
  if(diagram)return diagram;
- if(c===2){
-  // Keep these marks attached to anatomy; the right column carries the argument.
-  // Figure coordinates follow the camera, rather than becoming a second caption column.
-  const label=(p,name,dx=200,dy=-48,color=C.accent)=>{
-   if(!p)return '';
-   const x=Math.max(dx<0?340:110,Math.min(1040,p[0]+dx)),y=Math.max(112,Math.min(450,p[1]+dy));
-   return arrow([x+(dx<0?16:-16),y+8],[p[0]+14,p[1]],color)+text(x,y,name,40,color,dx<0?'end':'start');
-  };
-  const knee=human?.getAttachment('left')?.kneeAnchor;
-  if(b===0&&knee)s+=label(project(knee),'Joint surfaces');
-  if(b===1&&(live.bgInspect||0)>.95){const p=partPoint('clinical')?.insert;if(p){const q=project(p);s+=text(1450,490,'Polyethylene insert',34,C.ink,'end')+arrow([1220,460],[q[0]+180,q[1]+65],C.ink);}}
-  if(b===2){
-   const p=Math.max(0,Math.min(1,live.bgChart??1)),smooth=t=>t*t*(3-2*t),phase=(a,b)=>Math.max(0,Math.min(1,(p-a)/(b-a)));
-   const fade=(a,b,content)=>`<g opacity="${smooth(phase(a,b)).toFixed(4)}">${content}</g>`;
-   const grow=(a,b)=>1-Math.pow(1-phase(a,b),3);
-   const a=human?.getAttachment('left');
-   if(a?.hipAnchor&&a?.kneeAnchor){const thigh=a.hipAnchor.clone().lerp(a.kneeAnchor,.56);s+=fade(.06,.28,label(project(thigh),'Thigh muscles',-440,10));}
-   // Every frame follows one scalar timeline; rebuilt SVG nodes never restart
-   // CSS animations. Labels fade while each bar extends from its fixed origin.
-   const x=970,w=480,pre=grow(.24,.65),post=grow(.46,.88);
-   s+=fade(.06,.28,text(1220,135,'Quadriceps strength',44,C.ink)+text(1220,178,'Preoperative level = 100',29,C.muted));
-   s+=fade(.16,.35,text(x,218,'Before TKA',33,C.ink,'start'));
-   s+=`<g data-strength-bar="pre" data-progress="${pre.toFixed(4)}" transform="translate(${x} 235) scale(${pre.toFixed(5)} 1)"><rect width="${w}" height="34" fill="${C.ink}"/></g>`;
-   s+=fade(.62,.76,text(x+w+20,263,'100',36,C.ink,'start'));
-   s+=fade(.36,.53,text(x,318,'≈1 month after TKA',33,C.ink,'start'));
-   s+=`<g data-strength-bar="post" data-progress="${post.toFixed(4)}" transform="translate(${x} 335) scale(${post.toFixed(5)} 1)"><rect width="${w*.38}" height="34" fill="${C.accent}"/></g>`;
-   s+=fade(.85,.96,text(x+w*.38+20,363,'38',36,C.accent,'start'))+fade(.86,1,text(1370,375,'−62%',64,C.accent));
-   s+=fade(.10,.30,text(1220,438,'n = 20 · mean 27 days after TKA',27,C.muted)+text(1220,475,'Mizner et al., JBJS, 2005',27,C.muted));
-  }
-
-  if(b===3){
-   if((live.bgExamples||0)<.98)return '';
-   // The layer provides one real world-space label anchor per attached model.
-   const labels=ctx.myoExamples?.labels||[];
-   for(const item of labels){
-    const anchor=item.position||item.anchor;
-    if(!anchor)continue;
-    const p=project(anchor);
-    s+=text(p[0],28,item.name,38,C.ink);
-   }
-  }
-  if(b===4&&ctx.conceptPoints){
-   if((live.bgMotor||0)<.98)return '';
-   const joint=project(ctx.conceptPoints.joint),motor=project(ctx.conceptPoints.motor);
-   const y=Math.min(445,Math.max(joint[1],motor[1])+95);
-   s+=label(joint,'Joint replacement',-230,80,C.ink)+arrow([1320,motor[1]-12],[motor[0]+25,motor[1]],C.ink)+text(1340,motor[1]-20,'BLDC Motor',36,C.ink,'start');
-   s+=text((joint[0]+motor[0])/2,(joint[1]+motor[1])/2+9,'+',66,C.accent);
-  }
-  return s;
- }
+ if(c===2)return buildBackgroundOverlay(ctx);
  if(c===3){
   const dot=(p,r=8,color=C.accent)=>`<circle cx="${p[0]}" cy="${p[1]}" r="${r}" fill="${C.paper}" stroke="${color}" stroke-width="3"/>`;
   const path=(pts,color=C.accent,dash=false,width=3)=>`<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${color}" stroke-width="${width}" stroke-linecap="round" stroke-linejoin="round" ${dash?'stroke-dasharray="6 6"':''}/>`;
@@ -80,6 +33,8 @@ export function buildChapterOverlay(ctx){
   if(b===0){
    const n=ctx.nativeLandmarks;if(!n)return '';
    const m=project(n.medial),l=project(n.lateral),trail=[];
+   const trace=Array.from({length:75},(_,i)=>project(point(ctx.history(.86*i/74).femoralReference))),reference=project(point(frame.femoralReference));
+   s+=path(trace,C.accent,true,3)+dot(reference,8)+leader(reference,1160,430,'Femoral trajectory');
    // Qualitative lateral rollback cue. Anchors are source bone surfaces, not
    // measured contact points from the cadaveric GIF in the interim talk.
    s+=dot(m,9,C.ink)+leader(m,380,95,'Medial side',C.ink);
@@ -108,9 +63,10 @@ export function buildChapterOverlay(ctx){
   }
   if(b===4){
    const motor=partPoint('motor::'),gear=partPoint('helical_1m_21t'),output=partPoint('link_3');
-   if(motor)s+=leader(project(motor),330,75,'Motor',C.ink);
-   if(gear)s+=leader(project(gear),1320,220,'Gears',C.ink);
-   if(output)s+=leader(project(output),1320,440,'Joint motion');
+   const zoom=ctx.hardwareZoomProgress??1;
+   if(gear){const p=project(gear);s+=leader(p,Math.min(1330,p[0]+300),Math.max(100,p[1]-110),'Gears',C.ink);}
+   if(zoom>.6&&motor){const p=project(motor);s+=leader(p,Math.max(240,p[0]-230),Math.max(75,p[1]-55),'Motor',C.ink);}
+   if(zoom>.6&&output){const p=project(output);s+=leader(p,Math.min(1340,p[0]+300),Math.min(465,p[1]+70),'Joint motion');}
    return s;
   }
   if(b===5){
