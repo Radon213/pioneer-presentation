@@ -1,4 +1,4 @@
-import {reportLoadStage} from './asset-loading.js?v=revision-20261029-27';
+import {reportLoadStage} from './asset-loading.js?v=revision-20261029-28';
 import * as THREE from 'three';
 import {loadGaitBinary} from './gait-binary-loader.js';
 import {createShadedEdges} from './shaded-edges.js';
