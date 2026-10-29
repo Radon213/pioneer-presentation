@@ -1,17 +1,17 @@
-import {getMotionRate} from './motion-clock.js?v=revision-20261029-17';
+import {getMotionRate} from './motion-clock.js?v=revision-20261029-19';
 import * as THREE from 'three';
 import {GLTFLoader} from '../pioneer-interactive/vendor/GLTFLoader.js';
 import {DRACOLoader} from '../pioneer-interactive/vendor/DRACOLoader.js';
 import {RoomEnvironment} from '../pioneer-interactive/vendor/RoomEnvironment.js';
-import {createContinuousHumanLayer} from './continuous-human-layer.js?v=revision-20261029-17';
-import {createClinicalKneeLayer} from './clinical-knee-layer.js?v=revision-20261029-17';
-import {createShadedEdges} from './shaded-edges.js?v=revision-20261029-17';
-import {createNativeKneeComparison} from './native-knee-comparison.js?v=revision-20261029-17';
-import {buildVisualExplanation} from './visual-explanations.js?v=revision-20261029-17';
-import {buildChapterOverlay} from './chapter-overlays.js?v=revision-20261029-17';
-import {createGaitChapterLayer} from './gait-chapter-layer.js?v=revision-20261029-17';
-import {createSpringFEALayer} from './spring-fea-layer.js?v=revision-20261029-17';
-import {loadJSONWithProgress,loadBinaryWithProgress,reportLoadStage} from './asset-loading.js?v=revision-20261029-17';
+import {createContinuousHumanLayer} from './continuous-human-layer.js?v=revision-20261029-19';
+import {createClinicalKneeLayer} from './clinical-knee-layer.js?v=revision-20261029-19';
+import {createShadedEdges} from './shaded-edges.js?v=revision-20261029-19';
+import {createNativeKneeComparison} from './native-knee-comparison.js?v=revision-20261029-19';
+import {buildVisualExplanation} from './visual-explanations.js?v=revision-20261029-19';
+import {buildChapterOverlay} from './chapter-overlays.js?v=revision-20261029-19';
+import {createGaitChapterLayer} from './gait-chapter-layer.js?v=revision-20261029-19';
+import {createSpringFEALayer} from './spring-fea-layer.js?v=revision-20261029-19';
+import {loadJSONWithProgress,loadBinaryWithProgress,reportLoadStage} from './asset-loading.js?v=revision-20261029-19';
 
 const ASSETS=new URL('../pioneer-interactive/assets/',import.meta.url);
 const VENDOR=new URL('../pioneer-interactive/vendor/',import.meta.url);
@@ -49,7 +49,9 @@ export async function createContinuousKneeViewer(host){
   renderer.localClippingEnabled=true;renderer.domElement.setAttribute('aria-label','The same Pioneer knee implant, progressively revealed from the complete joint to the original nonlinear spring');
   renderer.domElement.style.cssText='position:absolute;inset:0;width:100%;height:100%;';host.prepend(renderer.domElement);
   const scene=new THREE.Scene();scene.background=new THREE.Color(C.paper);
-  const camera=new THREE.PerspectiveCamera(32,1,.0001,10);
+  const camera=new THREE.OrthographicCamera(-1,1,1,-1,.0001,30);camera.aspect=1;
+  let projectionHeight=1;
+  function updateOrthographicProjection(){const half=projectionHeight/2;camera.left=-half*camera.aspect;camera.right=half*camera.aspect;camera.top=half;camera.bottom=-half;camera.updateProjectionMatrix();}
   const envScene=new RoomEnvironment(),pmrem=new THREE.PMREMGenerator(renderer),env=pmrem.fromScene(envScene,.04).texture;
   scene.environment=env;envScene.dispose();pmrem.dispose();
   scene.add(new THREE.HemisphereLight(0xffffff,0x8d887e,.6));
@@ -133,13 +135,15 @@ export async function createContinuousKneeViewer(host){
   conceptMotor.updateMatrixWorld(true);const motorBox=new THREE.Box3().setFromObject(conceptMotor),motorCenter=motorBox.getCenter(new THREE.Vector3());
   for(const mesh of conceptMotor.children)mesh.matrix.premultiply(new THREE.Matrix4().makeTranslation(-motorCenter.x,-motorCenter.y,-motorCenter.z));
   conceptMotor.visible=false;let myo80=null,myo80Promise=null,backgroundClock=0;
-  const ensureMyo80=()=>myo80Promise??=(import('./myoleg80-muscle-layer.js?v=revision-20261029-17').then(m=>m.createMyoLeg80MuscleLayer(scene,{human})).then(layer=>myo80=layer));
+  const ensureMyo80=()=>myo80Promise??=(import('./myoleg80-muscle-layer.js?v=revision-20261029-19').then(m=>m.createMyoLeg80MuscleLayer(scene,{human})).then(layer=>myo80=layer));
   let myoExamples=null,myoPromise=null,myoPrefetchTimer=0;
-  const ensureMyoExamples=()=>myoPromise??=import('./myoassist-examples-layer.js?v=revision-20261029-17').then(m=>m.createMyoAssistExamplesLayer(scene)).then(layer=>{myoExamples=layer;layer.setReveal(0);return layer;}).catch(error=>{myoPromise=null;throw error;});
+  const ensureMyoExamples=()=>myoPromise??=import('./myoassist-examples-layer.js?v=revision-20261029-19').then(m=>m.createMyoAssistExamplesLayer(scene)).then(layer=>{myoExamples=layer;layer.setReveal(0);return layer;}).catch(error=>{myoPromise=null;throw error;});
   function backgroundRotation(){const target=new THREE.Vector3(),direction=new THREE.Vector3(1.3,.14,-.4).normalize();return new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(direction,target,UP));}
   function backgroundState(st,to){
     human.group.position.set(0,0,0);human.setState({motionProgress:1});
-    const a=human.getAttachment('left'),knee=a.kneeAnchor,hip=a.hipAnchor,rotation=backgroundRotation(),right=new THREE.Vector3(1,0,0).applyQuaternion(rotation);
+    const a=human.getAttachment('left'),knee=a.kneeAnchor,hip=a.hipAnchor,rotation=backgroundRotation();
+    if(st===0){const up=hip.clone().sub(knee).normalize(),forward=new THREE.Vector3(1,0,0).applyQuaternion(a.kneeRotation),direction=a.kneeAxis.clone().negate().addScaledVector(forward,.16).addScaledVector(up,.03).normalize();rotation.setFromRotationMatrix(new THREE.Matrix4().lookAt(knee.clone().add(direction),knee,up));}
+    const right=new THREE.Vector3(1,0,0).applyQuaternion(rotation);
     Object.assign(to,{phase:0,stemCut:0,section:0,attach:0,leftInsertion:0,rightInsertion:0,rightReveal:0,nativeCut:0,nativeCutLeft:0,nativeCutRight:0,nativeComparisonOpacity:0,humanReveal:1,muscles:st===2?0:st===1?0:.12,motionProgress:1,chair:0,gait:0,fea:0,clinicalReveal:st>=1?1:0,clinicalCut:st>=1?1:0,clinicalHighlight:st===0?.9:0,clinicalExplode:0,bgExamples:st===3?1:0,bgMotor:st===4?1:0,bgSurgery:st>=1?1:0,bgWiggle:0,bgMuscle80:st===2?1:0,bgFocus:st!==3?1:0,opacities:parts.map(()=>0)});
     to.rotation.copy(rotation);let height;
     if(st===0){to.target.copy(knee).addScaledVector(right,.035);height=.36;}
@@ -325,7 +329,7 @@ export async function createContinuousKneeViewer(host){
       direction.copy(joint.axis).transformDirection(joint.node.matrixWorld).normalize();
       height=.135;up.copy(UP);
     }
-    // Same perspective lens and source geometry throughout; only framing changes.
+    // Preserve source geometry; the orthographic field follows these framing controls.
     s.distance=height/(2*Math.tan(THREE.MathUtils.degToRad(16)));
     const position=s.target.clone().add(direction.normalize().multiplyScalar(s.distance));
     s.rotation.setFromRotationMatrix(new THREE.Matrix4().lookAt(position,s.target,up));
@@ -430,7 +434,7 @@ export async function createContinuousKneeViewer(host){
     const strongAngle=THREE.MathUtils.degToRad(4*(.2*s.deform+.8*clamp((s.deform-.35)/.65)));warp(weak,weakAngle);warp(strong,strongAngle);
     const inspection=s.coilInspection>.5;
     for(const p of[weak,strong])if(p.inspection!==inspection){p.inspection=inspection;p.geometry.setIndex(inspection?p.topIndices:p.fullIndices);p.geometry.computeVertexNormals();}
-    clinical?.setState({reveal:clinicalReveal,cut:clinicalCut,highlight:s.clinicalHighlight,explode:s.clinicalExplode,separation,insertion,upperOpacity:1-inspect});
+    clinical?.setState({reveal:clinicalReveal,cut:clinicalCut,highlight:s.clinicalHighlight,explode:s.clinicalExplode,separation,insertion,femoralInsertion:chapter===2&&build===1?rise(.30,.38):1,tibialInsertion:chapter===2&&build===1?rise(.38,.46):1,tibialReveal:chapter===2&&build===1?rise(.35,.39):1,upperOpacity:1-inspect});
     myo80?.setReveal(s.bgMuscle80||0);
     host.dataset.surgeryInsertTopView=inspect.toFixed(4);host.dataset.surgeryPhase=String(surgery);host.dataset.surgerySeparation=String(separation);host.dataset.backgroundMuscleModel=(s.bgMuscle80||0)>.99?'myoleg80: 80 source muscles; 40 left paths':'native22';
     if(myoExamples){myoExamples.setReveal((s.bgExamples||0)>.0001?1:0);myoExamples.group.position.set(4*(1-(s.bgExamples||0)),0,0);}
@@ -442,10 +446,12 @@ export async function createContinuousKneeViewer(host){
     const viewRotation=s.rotation.clone(),viewTarget=s.target.clone();let viewDistance=s.distance;
     if(inspect>.001&&clinical){
       const a=human.getAttachment('left'),up=new THREE.Vector3(0,1,0).applyQuaternion(a.kneeRotation),front=new THREE.Vector3(1,0,0).applyQuaternion(a.kneeRotation),side=a.kneeAxis;
-      const target=clinical.componentCenters.insert,direction=up.clone().multiplyScalar(.95).addScaledVector(front,.26).addScaledVector(side,.12).normalize(),top=new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(target.clone().add(direction),target,front));
-      viewTarget.lerp(target,inspect);viewRotation.slerp(top,inspect);viewDistance=THREE.MathUtils.lerp(s.distance,.24/(2*Math.tan(THREE.MathUtils.degToRad(16))),inspect);
+      const target=clinical.componentCenters.insert,direction=up.clone(),top=new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(target.clone().add(direction),target,front));
+      viewTarget.lerp(target,inspect);viewRotation.slerp(top,inspect);viewDistance=THREE.MathUtils.lerp(s.distance,.105/(2*Math.tan(THREE.MathUtils.degToRad(16))),inspect);
     }
-    camera.quaternion.copy(viewRotation);camera.position.copy(viewTarget).add(new THREE.Vector3(0,0,viewDistance).applyQuaternion(viewRotation));
+    projectionHeight=2*viewDistance*Math.tan(THREE.MathUtils.degToRad(16));updateOrthographicProjection();
+    camera.quaternion.copy(viewRotation);camera.position.copy(viewTarget).add(new THREE.Vector3(0,0,5).applyQuaternion(viewRotation));
+    host.dataset.cameraProjection='orthographic';host.dataset.orthographicHeightMeters=projectionHeight.toFixed(6);
     inspectionLight.intensity=1.5*s.coilInspection;inspectionLight.position.copy(camera.position);inspectionLight.target.position.copy(s.target);host.dataset.springDisplay=inspection?'original coil face subset; carrier hidden; no generated caps':'complete original source mesh';host.dataset.rightVisible=String(rightAssembly.visible);
     setPlanes(s);
     for(const p of parts)p.edges.sync();for(const p of rightParts)p.edges.sync();
@@ -486,7 +492,7 @@ export async function createContinuousKneeViewer(host){
     renderer.setViewport(0,0,w*FIGURE_WIDTH,H);renderer.setScissor(0,0,w*FIGURE_WIDTH,H);renderer.setScissorTest(true);renderer.render(scene,camera);
     renderer.setScissorTest(false);drawOverlay();
   }
-  function resize(){const w=host.clientWidth,h=host.clientHeight;if(w<2||h<2)return;renderer.setSize(w,h,false);camera.aspect=w*FIGURE_WIDTH/h;camera.updateProjectionMatrix();if(live)render();}
+  function resize(){const w=host.clientWidth,h=host.clientHeight;if(w<2||h<2)return;renderer.setSize(w,h,false);camera.aspect=w*FIGURE_WIDTH/h;updateOrthographicProjection();if(live)render();}
   function interpolate(a,b,u){const s={...b,target:a.target.clone().lerp(b.target,u),rotation:a.rotation.clone().slerp(b.rotation,u),devicePosition:a.devicePosition.clone().lerp(b.devicePosition,u),deviceRotation:a.deviceRotation.clone().slerp(b.deviceRotation,u),opacities:a.opacities.map((v,i)=>THREE.MathUtils.lerp(v,b.opacities[i],u))};for(const k of['phase','explodeWeak','explodeStrong','spreadStrong','coilInspection','deform','section','transverse','stemCut','distance','nativeComparisonOpacity','humanReveal','nativeCut','nativeCutLeft','nativeCutRight','muscles','motionProgress','chair','attach','leftInsertion','rightInsertion','rightReveal','clinicalReveal','clinicalCut','clinicalHighlight','clinicalExplode','deviceScale','gait','fea','feaAngle','coverInset','bgExamples','bgMotor','bgFocus','bgSurgery','bgWiggle','bgMuscle80'])s[k]=THREE.MathUtils.lerp(a[k]??0,b[k]??0,u);
     if(chapter===2&&build===1)s.bgSurgery=u<.5?Math.cbrt(u/4):1-Math.cbrt((1-u)/4);
     // Pull back before introducing full human–device models; retract them before

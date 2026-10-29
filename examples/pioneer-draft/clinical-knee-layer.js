@@ -76,14 +76,15 @@ export async function createClinicalKneeLayer(scene,{human}={}){
     }
   });
   const featureEdges=[femoral,insert,plate].map(mesh=>createShadedEdges(mesh,{thresholdAngle:28,color:0x24302e,opacity:.52}));
-  let state={upperOpacity:1,reveal:0,explode:0,highlight:0,cut:0,separation:0,insertion:1};
+  let state={femoralInsertion:1,tibialInsertion:1,tibialReveal:1,upperOpacity:1,reveal:0,explode:0,highlight:0,cut:0,separation:0,insertion:1};
   function setState(next={}){
     state={...state,...next};group.position.copy(human.kneeAnchor);group.quaternion.copy(human.kneeRotation).multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0),-Math.PI/2));
     group.visible=state.reveal>.0001;
     for(const m of[metal,trayMetal,polyethylene]){m.opacity=clamp(state.reveal);m.depthWrite=state.reveal>.85;}
+    for(const m of[trayMetal,polyethylene]){m.opacity*=state.tibialReveal;m.depthWrite=m.opacity>.85;}
     metal.opacity*=state.upperOpacity;metal.depthWrite=metal.opacity>.85;
-    femoral.position.set((1-state.insertion)*.10,0,FEMORAL_Z+state.explode*.055+state.separation*.055/fit);
-    tibial.position.set(-(1-state.insertion)*.10,.006/fit,TIBIAL_Z-state.separation*.055/fit);plate.position.set(0,0,-state.explode*.052);insert.position.set(0,0,state.explode*.015);
+    femoral.position.set(0,0,FEMORAL_Z+state.explode*.055+state.separation*.055/fit-(1-state.femoralInsertion)*.065/fit);
+    tibial.position.set(0,.006/fit,TIBIAL_Z-state.separation*.055/fit+(1-state.tibialInsertion)*.065/fit);plate.position.set(0,0,-state.explode*.052);insert.position.set(0,0,state.explode*.015);
     uniforms.highlight.value=clamp(state.highlight);uniforms.cut.value=clamp(state.cut);uniforms.center.value.copy(human.kneeAnchor);up.set(0,1,0).applyQuaternion(human.kneeRotation).normalize();uniforms.up.value.copy(up);
     group.updateMatrixWorld(true);
     const upper=new THREE.Matrix4().makeTranslation(...up.clone().multiplyScalar(.055*state.separation).toArray()).multiply(group.matrixWorld),lower=new THREE.Matrix4().makeTranslation(...up.clone().multiplyScalar(-.055*state.separation).toArray()).multiply(group.matrixWorld);

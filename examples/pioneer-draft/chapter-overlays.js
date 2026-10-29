@@ -1,6 +1,6 @@
-import {buildArchivedSpringChart} from './archived-spring-chart.js?v=revision-20261029-17';
-import {buildDiagram} from './chapter-diagram-layer.js?v=revision-20261029-17';
-import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-17';
+import {buildArchivedSpringChart} from './archived-spring-chart.js?v=revision-20261029-19';
+import {buildDiagram} from './chapter-diagram-layer.js?v=revision-20261029-19';
+import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-19';
 // Short visual explanations. All quantitative FEA marks use the same archived solver case.
 const C={ink:'#1a3a7a',accent:'#a44725',muted:'#585950',line:'#b5b3ab',paper:'#fdfcf8'};
 const text=(x,y,s,z=26,c=C.ink,a='middle')=>`<text x="${x}" y="${y}" font-size="${z}" fill="${c}" text-anchor="${a}" stroke="${C.paper}" stroke-width="5" paint-order="stroke">${s}</text>`;
@@ -25,11 +25,7 @@ export function buildChapterOverlay(ctx){
   };
   const knee=human?.getAttachment('left')?.kneeAnchor;
   if(b===0&&knee)s+=label(project(knee),'Joint surfaces');
-  if(b===1&&(live.bgSurgery??1)>.97){
-   const centers=partPoint('clinical');
-   if(centers?.insert)s+=label(project(centers.insert),'Replaced joint surfaces',200,-62);
-  }
-  if(b===1&&(live.bgInspect||0)>.95){const p=partPoint('clinical')?.insert;if(p)s+=label(project(p),'Polyethylene insert',230,95,C.ink);}
+  if(b===1&&(live.bgInspect||0)>.95){const p=partPoint('clinical')?.insert;if(p){const q=project(p);s+=text(1450,490,'Polyethylene insert',34,C.ink,'end')+arrow([1220,460],[q[0]+180,q[1]+65],C.ink);}}
   if(b===2){
    const a=human?.getAttachment('left');
    if(a?.hipAnchor&&a?.kneeAnchor){
