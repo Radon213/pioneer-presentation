@@ -1,6 +1,6 @@
-import {CONTROL_INLINE_MATH as MATH} from './control-math.js?v=revision-20261029-44';
-import {preloadPlotMarkup,createPreloadPlotController} from './control-preload-plot.js?v=revision-20261029-44';
-import {createWalkingDisplaySeries,sampleWalkingTelemetry} from './control-walking-telemetry.js?v=revision-20261029-44';
+import {CONTROL_INLINE_MATH as MATH} from './control-math.js?v=revision-20261029-45';
+import {preloadPlotMarkup,createPreloadPlotController} from './control-preload-plot.js?v=revision-20261029-45';
+import {createWalkingDisplaySeries,sampleWalkingTelemetry} from './control-walking-telemetry.js?v=revision-20261029-45';
 // Diagram Design's repository grammar: neutral ink, thin orthogonal connectors,
 // 6 px editorial nodes and one coral focal path. The deck owns paper and serif type.
 const P={ink:'#2d3142',muted:'#4f5d75',accent:'#bf4520',paper:'#fdfcf8',rule:'rgba(45,49,66,.15)',tint:'rgba(191,69,32,.065)'};
@@ -63,7 +63,7 @@ function evaluation(intro=false){return svg(intro?'preload-sequence':'evaluation
  path('M66 556H460',P.rule,1.2)+text(250,598,'—',25,P.muted,'middle','data-control-value="phase"')+
  text(250,638,'40 cm chair · nominal simulation',22,P.muted),500,700);}
 function walking(terminal=false){return svg(terminal?'walking-limit':'walking-cycle','Spring preload during walking','The point follows the walking record on the same simulation spring law. Power is averaged for display and its raw peak is retained.',
- text(250,42,terminal?'Preload and drive limits':'Preload for the next step',31)+preloadPlotMarkup()+
+ text(250,42,terminal?'Preload and drive limits':'Preload for the next step',31)+preloadPlotMarkup({footer:false})+
  text(66,521,'Mean shaft power',23,P.muted,'start')+text(460,521,'—',27,P.accent,'end','data-control-value="walkingpower"')+
  `<rect x="66" y="543" width="394" height="15" rx="2" fill="rgba(45,49,66,.07)"/><rect data-control-power-bar x="66" y="543" width="0" height="15" rx="2" fill="${P.accent}"/>`+
  path('M394.3 535V567',P.ink,1.4)+text(66,589,'0.5 s mean · 5 Hz',21,P.muted,'start')+text(394.3,589,'25 W limit',22,P.muted)+

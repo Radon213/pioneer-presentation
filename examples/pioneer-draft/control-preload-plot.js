@@ -1,19 +1,19 @@
-import {PRELOAD_CURVE,preloadOperatingPoint,preloadTorqueNm} from './control-preload-data.js?v=revision-20261029-44';
+import {PRELOAD_CURVE,preloadOperatingPoint,preloadTorqueNm} from './control-preload-data.js?v=revision-20261029-45';
 const C={ink:'#2d3142',muted:'#4f5d75',accent:'#bf4520',paper:'#fdfcf8',rule:'rgba(45,49,66,.15)'};
 const x=d=>66+(d+40)/145*394,y=t=>340-(t+1)/12*210;
 const text=(a,b,s,size=23,anchor='middle',color=C.muted,extra='')=>`<text x="${a}" y="${b}" font-size="${size}" text-anchor="${anchor}" fill="${color}" ${extra}>${s}</text>`;
 const curve=rows=>rows.map((p,i)=>`${i?'L':'M'}${x(p.deltaDeg).toFixed(3)} ${y(p.torqueNm).toFixed(3)}`).join(' ');
-export function preloadPlotMarkup(){
+export function preloadPlotMarkup({footer=true}={}){
  const normal=PRELOAD_CURVE.filter(p=>p.deltaDeg<=101.7),extension=PRELOAD_CURVE.filter(p=>p.deltaDeg>=101.5&&p.deltaDeg<=105);
  return text(250,91,'Prepare the spring',27,'middle',C.accent,'data-preload-phase')+
- text(66,118,'Spring torque τs (N·m)',23,'start')+
+ text(66,118,footer?'Spring torque τs (N·m)':'Simulated spring torque (N·m)',23,'start')+
  [0,3,6,9].map(t=>`<path d="M66 ${y(t)}H460" stroke="${C.rule}"/>`+text(54,y(t)+7,t,21,'end')).join('')+
  `<path d="M66 130V340H460" fill="none" stroke="${C.muted}" stroke-width="1.4"/><path d="M${x(0)} 130V340" stroke="${C.rule}"/>`+
  `<path data-preload-area fill="${C.accent}" opacity=".12"/><path d="${curve(normal)}" fill="none" stroke="${C.ink}" stroke-width="2.5"/><path d="${curve(extension)}" fill="none" stroke="${C.muted}" stroke-width="2" stroke-dasharray="5 4"/>`+
  `<path data-preload-trail fill="none" stroke="${C.accent}" stroke-width="4" opacity=".48"/><path data-preload-guide fill="none" stroke="${C.muted}" stroke-width="1" stroke-dasharray="3 4"/><circle data-preload-halo cx="${x(0)}" cy="${y(0)}" r="15" fill="${C.accent}" opacity=".13"/><circle data-preload-dot cx="${x(0)}" cy="${y(0)}" r="7" fill="${C.accent}" stroke="${C.paper}" stroke-width="2"/>`+
  [-40,0,50,100].map(d=>text(x(d),370,d,21)).join('')+text(263,401,'Spring deflection δ (deg)',24)+
  text(66,443,'δ —',29,'start',C.ink,'data-preload-value="delta"')+text(460,443,'τs —',29,'end',C.accent,'data-preload-value="torque"')+
- text(250,478,'Shaded area: stored elastic energy',21)+text(250,676,'Simulation spring law',20);
+ text(250,478,'Shaded area: stored elastic energy',21)+(footer?text(250,676,'Simulation spring law',20):'');
 }
 export function createPreloadPlotController(root){
  const refs={};for(const key of ['phase','area','trail','guide','halo','dot'])refs[key]=root.querySelector(`[data-preload-${key}]`);

@@ -1,5 +1,5 @@
-import {springResponsePoints,responseAtAngle} from './spring-plot-data.js?v=revision-20261029-44';
-import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-44';
+import {springResponsePoints,responseAtAngle} from './spring-plot-data.js?v=revision-20261029-45';
+import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-45';
 import {SPRING_MATH} from './spring-math.js';
 import {ARCHIVED_SPRING_CURVES} from './archived-spring-chart.js';
 // Diagram Design example-architecture / example-process / example-line grammar:
