@@ -1,4 +1,4 @@
-import {loadJSONWithProgress,reportLoadStage} from './asset-loading.js?v=revision-20261029-60';
+import {loadJSONWithProgress,reportLoadStage} from './asset-loading.js?v=revision-20261029-61';
 // Quantitative scalars stay in JSON at source precision. Large display fields
 // are typed binary views; no millions-of-number JSON.parse or boxed row arrays.
 let pending=null;

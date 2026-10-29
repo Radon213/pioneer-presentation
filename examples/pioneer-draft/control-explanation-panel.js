@@ -1,7 +1,7 @@
-import {controlTeachingFigure,updateTeachingCursor} from './control-teaching-figures.js?v=revision-20261029-60';
-import {CONTROL_INLINE_MATH as MATH} from './control-math.js?v=revision-20261029-60';
-import {preloadPlotMarkup,createPreloadPlotController} from './control-preload-plot.js?v=revision-20261029-60';
-import {createWalkingDisplaySeries,sampleWalkingTelemetry} from './control-walking-telemetry.js?v=revision-20261029-60';
+import {controlTeachingFigure,updateTeachingCursor} from './control-teaching-figures.js?v=revision-20261029-61';
+import {CONTROL_INLINE_MATH as MATH} from './control-math.js?v=revision-20261029-61';
+import {preloadPlotMarkup,createPreloadPlotController} from './control-preload-plot.js?v=revision-20261029-61';
+import {createWalkingDisplaySeries,sampleWalkingTelemetry} from './control-walking-telemetry.js?v=revision-20261029-61';
 // Diagram Design's repository grammar: neutral ink, thin orthogonal connectors,
 // 6 px editorial nodes and one coral focal path. The deck owns paper and serif type.
 const P={ink:'#2d3142',muted:'#4f5d75',accent:'#bf4520',paper:'#fdfcf8',rule:'rgba(45,49,66,.15)',tint:'rgba(191,69,32,.065)'};
@@ -58,18 +58,13 @@ function student(){let memory='';for(let r=0;r<8;r++)for(let c=0;c<8;c++)memory+
  rect(612,324,168,176)+text(696,366,'Spring target',25)+path('M636 452H756 M636 452V390',P.rule,1.3)+path('M636 446L668 426L700 414L732 396L756 396',P.muted,2.1)+text(696,482,'0–6 N·m',22,P.muted)+
  rect(836,324,112,176)+text(892,372,'Servo',25)+`<circle cx="892" cy="416" r="23" fill="none" stroke="${P.muted}" stroke-width="2"/>`+path('M892 396V416H908',P.muted,2)+text(892,482,'100 Hz',21,P.muted)+
  formula('memory',16,532,472,52,26)+formula('target',500,532,448,52,22),960,610);}
-function evaluation(intro=false){return svg(intro?'preload-sequence':'evaluation','Spring preload during sit-to-stand','The point follows the recorded spring deflection on the implemented nonlinear torque law. Shading indicates the elastic state; the reverse reset is presentation-only.',
- text(250,42,intro?'Prepare before rising':'Preload through the rise',32)+preloadPlotMarkup()+
- text(66,526,'Command power',24,P.muted,'start')+text(460,526,'—',27,P.ink,'end','data-control-value="power"')+
- path('M66 556H460',P.rule,1.2)+text(250,598,'—',25,P.muted,'middle','data-control-value="phase"')+
- text(250,638,'40 cm chair · nominal simulation',22,P.muted),500,700);}
-function walking(terminal=false){return svg(terminal?'walking-limit':'walking-cycle','Spring preload during walking','The point follows the walking record on the same simulation spring law. Power is averaged for display and its raw peak is retained.',
- text(250,42,terminal?'Preload and drive limits':'Preload for the next step',31)+preloadPlotMarkup({footer:false})+
- text(66,521,'Mean shaft power',23,P.muted,'start')+text(460,521,'—',27,P.accent,'end','data-control-value="walkingpower"')+
- `<rect x="66" y="543" width="394" height="15" rx="2" fill="rgba(45,49,66,.07)"/><rect data-control-power-bar x="66" y="543" width="0" height="15" rx="2" fill="${P.accent}"/>`+
- path('M394.3 535V567',P.ink,1.4)+text(66,589,'0.5 s mean · 5 Hz',21,P.muted,'start')+text(394.3,589,'25 W limit',22,P.muted)+
- (terminal?text(250,628,'Recorded peak —',25,P.accent,'middle','data-control-value="rawpeak"'):'')+
- text(250,657,'—',23,P.muted,'middle','data-control-value="walking"'),500,700);}
+function evaluation(intro=false){return svg(intro?'preload-sequence':'evaluation','Spring preload during sit-to-stand','The point follows recorded spring deflection on the nonlinear simulation law. Shading indicates stored elastic energy. Source, chair height and command power are in speaker notes; reverse playback is presentation reset.',preloadPlotMarkup(),500,620);}
+function walking(terminal=false){return svg(terminal?'walking-limit':'walking-cycle','Spring preload and drive limit','Recorded spring state and causal mean shaft power. The 25 W limit and 26.95 W raw peak remain visible; display filtering, five-Hz readout and replay details are in speaker notes.',
+ preloadPlotMarkup({terminal:true})+
+ text(66,456,'Mean shaft power',24,P.muted,'start')+text(460,456,'—',29,P.accent,'end','data-control-value="walkingpower"')+
+ `<rect x="66" y="482" width="394" height="16" rx="2" fill="rgba(45,49,66,.07)"/><rect data-control-power-bar x="66" y="482" width="0" height="16" rx="2" fill="${P.accent}"/>`+
+ path('M394.3 473V508',P.ink,1.4)+text(394.3,540,'25 W limit',24,P.muted)+
+ text(250,599,'Recorded peak —',28,P.accent,'middle','data-control-value="rawpeak"'),500,630);}
 
 const FIGURES=[elasticState,benchmark,()=>evaluation(true),teacher,sensing,student,()=>evaluation(false),()=>walking(false),()=>walking(false),()=>walking(true)];
 const finite=v=>Number.isFinite(v);
@@ -103,7 +98,7 @@ export function createControlExplanationPanel(host){
    const bucket=Math.floor(((telemetry.elapsedSec??time)+1e-7)*5),atEnd=time>=seriesRef.timeSec.at(-1)-1e-5;
    if(bucket!==lastPowerBucket||atEnd){set('walkingpower',fmt(power,'W',1));lastPowerBucket=bucket;}
    if(raw.motorPowerW>seriesRef.powerLimitW)limitSeen=true;
-   set('rawpeak',`Recorded peak: ${fmt(displaySeries.rawPeak.motorPowerW,'W',2)}`);
+   set('rawpeak',`Peak: ${fmt(displaySeries.rawPeak.motorPowerW,'W',2)}`);
    set('walking',`${fmt(time,'s',1)} · 1×${limitSeen?' · raw limit exceeded':''}`);
   }
  }

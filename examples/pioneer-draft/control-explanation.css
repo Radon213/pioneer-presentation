@@ -23,3 +23,6 @@
 @keyframes teaching-sample-transfer{0%{transform:translateX(0);opacity:0}10%{opacity:1}60%{transform:translateX(44px);opacity:1}70%,100%{transform:translateX(44px);opacity:0}}
 @media(prefers-reduced-motion:reduce){.teaching-flow-token{display:none}}
 @media print{.teaching-flow-token{display:none}}
+
+/* Give the six replay panels one readable chart, with room between axes and legend. */
+.control-explanation:is([data-build="2"],[data-build="3"],[data-build="6"],[data-build="7"],[data-build="8"],[data-build="9"]){left:29%;width:35%;top:4%;bottom:4%}
