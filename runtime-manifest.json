@@ -1,6 +1,6 @@
 {
   "schema": "pioneer-runtime-package-v1",
-  "runtimeBytes": 117370381,
+  "runtimeBytes": 117370561,
   "files": [
     {
       "path": "examples/pioneer-draft/app.js",
@@ -269,8 +269,8 @@
     },
     {
       "path": "examples/pioneer-draft/deck-data.js",
-      "bytes": 40169,
-      "sha256": "39cbcd5b2f1e11a48062ae983d280f6cede8a300f012f5b782e1502d722b6049"
+      "bytes": 40259,
+      "sha256": "645d6166d772cce4bf23e4e7df0ca224cce571d85aef739c7feea276c5c38722"
     },
     {
       "path": "examples/pioneer-draft/gait-binary-loader.js",
@@ -294,8 +294,8 @@
     },
     {
       "path": "examples/pioneer-draft/index.html",
-      "bytes": 31875,
-      "sha256": "4d6d3d83892071f4424a44ab0e36876a3a58730f0f1d079e7138cc699fdc757d"
+      "bytes": 31965,
+      "sha256": "5d4c60bce1abae26bff5099db3f0bc7352c139d4ab416d17eace3c730367069b"
     },
     {
       "path": "examples/pioneer-draft/motion-clock.js",
