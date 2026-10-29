@@ -1,6 +1,6 @@
-import {CONTROL_STAGES} from './control-chapter-content.js?v=revision-20261029-58';
+import {CONTROL_STAGES} from './control-chapter-content.js?v=revision-20261029-59';
 // Six large chapters; Control joins the simulation, teacher and limited-sensing execution story.
-export const deckVersion='revision-20261029-58';
+export const deckVersion='revision-20261029-59';
 const stage=(caption,question,notes)=>({caption,question,notes});
 const proposal='Pioneer_2022_proposal.pdf: PDF p11/printed p2 and PDF p40/printed p31';
 const interim='Moon, thesis interim presentation, 2024-12-10: slides3–15';

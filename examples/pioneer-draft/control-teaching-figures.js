@@ -1,4 +1,4 @@
-import {TEACHING_MATH} from './control-teaching-math.js?v=revision-20261029-58';
+import {TEACHING_MATH} from './control-teaching-math.js?v=revision-20261029-59';
 const C={ink:'#2d3142',muted:'#4f5d75',accent:'#bf4520',paper:'#fdfcf8',rule:'#c6c8ca',tint:'#f7eee8'};
 const esc=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
 const text=(x,y,s,n=26,color=C.ink,anchor='start',attrs='')=>`<text x="${x}" y="${y}" font-size="${n}" fill="${color}" text-anchor="${anchor}" ${attrs}>${esc(s)}</text>`;

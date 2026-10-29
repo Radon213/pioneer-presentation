@@ -1,8 +1,8 @@
-import {springResponsePoints,responseAtAngle} from './spring-plot-data.js?v=revision-20261029-58';
-import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-58';
-import {SPRING_MATH} from './spring-math.js?v=revision-20261029-58';
-import {SPRING_COMPARISON,SERIES_LINEAR_ESTIMATE} from './spring-series-data.js?v=revision-20261029-58';
-import {sampleSpringExplanationMotion,conceptualContactResponse,seriesRegimeAtLoad} from './spring-explanation-motion.js?v=revision-20261029-58';
+import {springResponsePoints,responseAtAngle} from './spring-plot-data.js?v=revision-20261029-59';
+import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-59';
+import {SPRING_MATH} from './spring-math.js?v=revision-20261029-59';
+import {SPRING_COMPARISON,SERIES_LINEAR_ESTIMATE} from './spring-series-data.js?v=revision-20261029-59';
+import {sampleSpringExplanationMotion,conceptualContactResponse,seriesRegimeAtLoad} from './spring-explanation-motion.js?v=revision-20261029-59';
 // Diagram Design example-architecture / example-process / example-line grammar:
 // retain their neutral nodes, single burnt-tangerine focus, thin connectors,
 // rounded orthogonal ports and line/area/dot hierarchy. Slide shell is untouched.
