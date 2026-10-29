@@ -1,5 +1,6 @@
-import {reportLoadStage} from './asset-loading.js?v=revision-20261029-48';
+import {reportLoadStage} from './asset-loading.js?v=revision-20261029-49';
 import * as THREE from 'three';
+import {loadSourceBones} from './gait-source-bones.js?v=revision-20261029-49';
 import {loadGaitBinary} from './gait-binary-loader.js';
 import {createShadedEdges} from './shaded-edges.js';
 
@@ -9,7 +10,7 @@ import {createShadedEdges} from './shaded-edges.js';
  * actual source reflection and must not be mirrored again.
  */
 export async function createGaitChapterLayer(scene,{human}={}){
- const data=await loadGaitBinary();
+ const [data,sourceBones]=await Promise.all([loadGaitBinary(),loadSourceBones()]);
  reportLoadStage('gait-meshes','Building walking meshes',{ratio:0});
  if(data.schema!=='pioneer-gait-chapter-v1'||data.frames.length<2)throw Error('Recorded gait asset schema is invalid.');
  const meshBuildStarted=performance.now();
@@ -33,26 +34,21 @@ export async function createGaitChapterLayer(scene,{human}={}){
  }
  for(const [index,geom] of data.geoms.entries()){
   const implant=geom.role==='implant',material=new THREE.MeshStandardMaterial({color:new THREE.Color(...geom.rgba.slice(0,3)),roughness:implant?.38:.69,metalness:implant?.42:0,opacity:geom.rgba[3],transparent:geom.rgba[3]<1,side:THREE.DoubleSide});materials.add(material);
-  const mesh=new THREE.Mesh(geometryFor(geom),material);mesh.name=geom.name;mesh.userData={sourceGeomId:geom.id,sourceMesh:geom.mesh,sourceRGBA:[...geom.rgba],role:geom.role,side:geom.side,sourceReflectedGeometry:geom.side==='right'};sourceGroup.add(mesh);objects.push({mesh,material,geom,index});
+  const mesh=new THREE.Mesh(geometryFor(geom),material);mesh.name=geom.name;mesh.userData={sourceGeomId:geom.id,sourceMesh:geom.mesh,sourceRGBA:[...geom.rgba],role:geom.role,side:geom.side,sourceReflectedGeometry:geom.side==='right'};if(geom.side==='left')mesh.layers.enable(1);sourceGroup.add(mesh);objects.push({mesh,material,geom,index});
   if(implant)edgeHelpers.push(createShadedEdges(mesh,{thresholdAngle:28,color:0x2e3932,opacity:.26}));
   if(index%16===0){reportLoadStage('gait-meshes','Building walking meshes',{ratio:(index+1)/data.geoms.length});await new Promise(requestAnimationFrame);}
  }
- // Restore retained native shafts omitted by the device model's visual export.
- // Bone-local placement is recovered from the native STS frame; every gait pose
- // uses the saved femur/tibia body frames, with only the implant joint end hidden.
- const retainedBones=[];
- if(human){
-  const native=human.sourceData,af=human.attachmentData.frames.at(-1),nf=native.frames.at(-1),matrix=(v)=>new THREE.Matrix4().compose(new THREE.Vector3(...v.p),new THREE.Quaternion(...v.q),unit);
-  for(const side of ['left','right'])for(const role of ['femur','tibia']){
-   const name=`${role}_${side==='left'?'l':'r'}_geom_1`,index=native.geoms.findIndex(g=>g.name===name),raw=human.sourceGroup.getObjectByName(name);if(index<0||!raw)throw Error(`Missing native shaft ${name}`);
-   const local=matrix(af[side][role]).invert().multiply(new THREE.Matrix4().compose(new THREE.Vector3().fromArray(nf.p,index*3),new THREE.Quaternion().fromArray(nf.q,index*4),unit));
-   const material=new THREE.MeshStandardMaterial({color:0xc8c5b8,roughness:.76,side:THREE.DoubleSide});materials.add(material);
-   const clip={center:{value:new THREE.Vector3()},up:{value:new THREE.Vector3()}};
-   material.onBeforeCompile=shader=>{Object.assign(shader.uniforms,{uShaftKnee:clip.center,uShaftUp:clip.up});shader.vertexShader='varying vec3 vShaftWorld;\n'+shader.vertexShader;shader.vertexShader=shader.vertexShader.replace('#include <project_vertex>','#include <project_vertex>\nvShaftWorld=(modelMatrix*vec4(transformed,1.0)).xyz;');shader.fragmentShader='varying vec3 vShaftWorld;uniform vec3 uShaftKnee;uniform vec3 uShaftUp;\n'+shader.fragmentShader;shader.fragmentShader=shader.fragmentShader.replace('#include <color_fragment>',`#include <color_fragment>\nfloat h=dot(vShaftWorld-uShaftKnee,uShaftUp);if(${role==='femur'?'h<.055':'h>-.055'})discard;`);};
-   material.customProgramCacheKey=()=>`retained-gait-shaft-${role}`;
-   const mesh=new THREE.Mesh(raw.geometry,material);mesh.name=`Restored_${name}`;mesh.matrixAutoUpdate=false;sourceGroup.add(mesh);retainedBones.push({mesh,material,local,side,role,clip});
-  }
+ // Exact source XML group-1 bone visuals. The original exporter omitted
+ // group 1; do not substitute native STS bones or invent a world-up cut plane.
+ const retainedBones=[],boneGeometry=new Map();
+ for(const spec of sourceBones.bones){
+  let geometry=boneGeometry.get(spec.mesh);
+  if(!geometry){const raw=sourceBones.meshes[spec.mesh];geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.BufferAttribute(raw.positions,3));geometry.setIndex(new THREE.BufferAttribute(raw.indices,1));geometry.computeVertexNormals();geometry.computeBoundingBox();geometries.add(geometry);boneGeometry.set(spec.mesh,geometry);}
+  const material=new THREE.MeshStandardMaterial({color:new THREE.Color(...spec.rgba.slice(0,3)),roughness:.69,side:THREE.DoubleSide});materials.add(material);
+  const [w,x,y,z]=spec.quaternionWXYZ,local=new THREE.Matrix4().compose(new THREE.Vector3(...spec.position),new THREE.Quaternion(x,y,z,w),new THREE.Vector3(spec.reflectX?-1:1,1,1));
+  const mesh=new THREE.Mesh(geometry,material);mesh.name=spec.name;mesh.matrixAutoUpdate=false;if(spec.side==='left')mesh.layers.enable(1);mesh.userData={sourceModel:sourceBones.provenance.sourceModel,exactSourceCADBone:true,sourceGeom:spec.name,sourceReflection:spec.reflectX,clipping:false};sourceGroup.add(mesh);retainedBones.push({mesh,material,local,side:spec.side,role:spec.role});
  }
+ Object.assign(group.userData,{nativeBoneSource:sourceBones.provenance.sourceModel,nativeBoneModelSHA256:sourceBones.provenance.sourceModelSHA256,nativeBoneGeometry:'exact source group-1 CAD; no clipping; bilateral shared meshes',nativeBoneTriangles:Object.values(sourceBones.meshes).reduce((n,m)=>n+2*m.triangles,0)});
  reportLoadStage('gait-meshes','Walking meshes ready' ,{ratio:1,state:'ready'});
  const muscleGeometry=new THREE.CylinderGeometry(1,1,1,8,1),muscleMaterial=new THREE.MeshStandardMaterial({color:0xffffff,roughness:.74,metalness:0,transparent:true,opacity:.88});geometries.add(muscleGeometry);materials.add(muscleMaterial);
  const capacity=Math.max(...data.frames.map(frame=>frame.tendons.reduce((n,p)=>n+Math.max(0,p.length/3-1),0)));
@@ -80,7 +76,8 @@ export async function createGaitChapterLayer(scene,{human}={}){
  function setProgress(value){
   if(disposed)return;progress=THREE.MathUtils.clamp(Number(value)||0,0,1);const x=progress*(data.frames.length-1),i=Math.floor(x),j=Math.min(i+1,data.frames.length-1);mix=x-i;frameA=data.frames[i];frameB=data.frames[j];
   for(const o of objects){o.mesh.position.fromArray(frameA.p,o.index*3).lerp(positionB.fromArray(frameB.p,o.index*3),mix);o.mesh.quaternion.fromArray(frameA.q,o.index*4).slerp(quaternionB.fromArray(frameB.q,o.index*4),mix);}
-  for(const bone of retainedBones){const A=frameA.attachment[bone.side],B=frameB.attachment[bone.side],v=A[bone.role],w=B[bone.role];const M=new THREE.Matrix4().compose(new THREE.Vector3(...v.p).lerp(new THREE.Vector3(...w.p),mix),new THREE.Quaternion(...v.q).slerp(new THREE.Quaternion(...w.q),mix),unit);bone.mesh.matrix.copy(M.multiply(bone.local));const world=group.matrixWorld.clone().multiply(C);bone.clip.center.value.copy(new THREE.Vector3(...A.knee).lerp(new THREE.Vector3(...B.knee),mix).applyMatrix4(world));bone.clip.up.value.set(0,0,1).transformDirection(world);}
+  for(const bone of retainedBones){const A=frameA.attachment[bone.side][bone.role],B=frameB.attachment[bone.side][bone.role];bone.mesh.matrix.compose(new THREE.Vector3(...A.p).lerp(new THREE.Vector3(...B.p),mix),new THREE.Quaternion(...A.q).slerp(new THREE.Quaternion(...B.q),mix),unit).multiply(bone.local);}
+
   updateMuscles();group.updateMatrixWorld(true);Object.assign(group.userData,{progress,sourceTime:THREE.MathUtils.lerp(frameA.t,frameB.t,mix),sourceFrameIndices:[frameA.sourceIndex,frameB.sourceIndex],tendonSegments:muscles.count});
  }
  const clamp=v=>THREE.MathUtils.clamp(Number(v)||0,0,1);

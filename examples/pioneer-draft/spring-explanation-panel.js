@@ -1,8 +1,8 @@
-import {springResponsePoints,responseAtAngle} from './spring-plot-data.js?v=revision-20261029-48';
-import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-48';
-import {SPRING_MATH} from './spring-math.js?v=revision-20261029-48';
-import {SPRING_COMPARISON,SERIES_LINEAR_ESTIMATE} from './spring-series-data.js?v=revision-20261029-48';
-import {sampleSpringExplanationMotion,conceptualContactResponse} from './spring-explanation-motion.js?v=revision-20261029-48';
+import {springResponsePoints,responseAtAngle} from './spring-plot-data.js?v=revision-20261029-49';
+import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-49';
+import {SPRING_MATH} from './spring-math.js?v=revision-20261029-49';
+import {SPRING_COMPARISON,SERIES_LINEAR_ESTIMATE} from './spring-series-data.js?v=revision-20261029-49';
+import {sampleSpringExplanationMotion,conceptualContactResponse} from './spring-explanation-motion.js?v=revision-20261029-49';
 // Diagram Design example-architecture / example-process / example-line grammar:
 // retain their neutral nodes, single burnt-tangerine focus, thin connectors,
 // rounded orthogonal ports and line/area/dot hierarchy. Slide shell is untouched.
@@ -19,7 +19,7 @@ function sea(){return svg(
  '<text data-winding-input="true" x="42" y="207" fill="'+P.accent+'" font-size="46">θᵢₙ = 0°</text>'+
  line('M42 239H382',P.rule,1.5)+
  t(42,308,'Output held',28,P.muted,'start')+
- t(42,363,'θₒᵤₜ = 0°',42)+
+ t(42,363,'θₒᵤₜ = 0°',46,P.ink,'start')+
  t(565,90,'Torque',28,P.accent)+
  '<rect x="539" y="125" width="52" height="270" fill="rgba(191,69,32,.08)"/>'+
  '<rect data-winding-bar="true" x="539" y="395" width="52" height="0" fill="'+P.accent+'"/>'+
@@ -41,11 +41,8 @@ function tradeoff(){return svg(
  <circle data-trade-low r="8" fill="${P.accent}" stroke="#fdfcf8" stroke-width="2"/>
  <circle data-trade-high r="8" fill="${P.ink}" stroke="#fdfcf8" stroke-width="2"/>`+
  t(275,103,'High stiffness',29,P.ink,'start')+t(436,280,'Low stiffness',29,P.accent)+
- t(648,377,'Deflection',27,P.muted,'end')+
- line('M82 410H650',P.rule,1.4)+
- t(82,452,'Low stiffness',28,P.accent,'start')+t(82,489,'Compliant interaction',24,P.ink,'start')+t(82,525,'Needs more travel',24,P.muted,'start')+
- t(390,452,'High stiffness',28,P.ink,'start')+t(390,489,'Torque with less travel',24,P.ink,'start')+t(390,525,'Less compliant interaction',24,P.muted,'start'),
- 'Low stiffness permits compliant interaction but requires more angular travel. High stiffness produces torque with less travel but yields less to motion. Both dots carry the same conceptual torque.').replace('720 500','720 560');}
+ t(648,377,'Deflection',27,P.muted,'end'),
+ 'Low stiffness permits compliant interaction but requires more angular travel. High stiffness produces torque with less travel but yields less to motion. Both dots carry the same conceptual torque.').replace('720 500','720 440');}
 function nonlinear(){const pts=Array.from({length:65},(_,i)=>{const x=i/64;return [90+550*x,420-320*(.14*x+.86*x**4)];});return svg(
  t(90,53,'Torque',27,P.muted,'start')+axis(90,80,560,340)+
  `<polygon data-reveal-area points="90,420 ${pts.map(p=>p.join(',')).join(' ')} 640,420" fill="rgba(191,69,32,.06)"/>
@@ -171,7 +168,7 @@ export function createSpringExplanationPanel(host){
  const root=document.createElement('div');root.className='spring-explanation';root.hidden=true;root.setAttribute('aria-label','Nonlinear torsion spring explanation');host.append(root);let current=-1;
  return {update({active,build,settled,fea,winding,springMotion,timeSec}){root.hidden=!active;if(!active)return;if(current!==build){current=build;const figures=[sea,tradeoff,nonlinear,serial,contactCurve,()=>feaLegend(fea),archive];root.innerHTML=`<div class="spring-explanation-figure">${figures[build]()}</div><div class="spring-explanation-math">${SPRING_MATH[build]}</div><p class="spring-explanation-source">${SOURCES[build]}</p>`;root.dataset.build=String(build);
  root.querySelector('.spring-explanation-source').hidden=true;
- if(build===0){root.style.left='29%';root.style.width='33%';root.style.top='10%';root.style.bottom='10%';root.style.display='flex';root.style.flexDirection='column';root.style.justifyContent='center';root.style.alignContent='center';root.querySelector('.spring-explanation-figure').style.aspectRatio='720 / 500';root.style.gap='0';const source=root.querySelector('.spring-explanation-source');source.hidden=true;root.querySelector('.spring-explanation-math').style.cssText='order:-1;font-size:35px;min-height:76px;margin:0 0 12px;';}
+ if(build===0){root.style.left='29%';root.style.width='33%';root.style.top='10%';root.style.bottom='10%';root.style.alignContent='center';root.querySelector('.spring-explanation-figure').style.aspectRatio='720 / 500';root.style.gap='0';const source=root.querySelector('.spring-explanation-source');source.hidden=true;root.querySelector('.spring-explanation-math').style.cssText='order:-1;font-size:35px;min-height:76px;margin:0 0 12px;';}
  else{root.style.removeProperty('left');root.style.removeProperty('width');root.style.removeProperty('top');root.style.removeProperty('bottom');root.style.removeProperty('grid-template-rows');root.style.removeProperty('gap');root.style.removeProperty('align-content');root.style.removeProperty('display');root.style.removeProperty('flex-direction');root.style.removeProperty('justify-content');}}
 
  root.style.opacity=settled?'1':'0';root.dataset.settled=String(settled);

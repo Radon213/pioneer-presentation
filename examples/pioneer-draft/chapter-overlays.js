@@ -1,7 +1,7 @@
-import {buildBackgroundOverlay} from './background-overlay.js?v=revision-20261029-48';
-import {buildArchivedSpringChart} from './archived-spring-chart.js?v=revision-20261029-48';
-import {buildDiagram} from './chapter-diagram-layer.js?v=revision-20261029-48';
-import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-48';
+import {buildBackgroundOverlay} from './background-overlay.js?v=revision-20261029-49';
+import {buildArchivedSpringChart} from './archived-spring-chart.js?v=revision-20261029-49';
+import {buildDiagram} from './chapter-diagram-layer.js?v=revision-20261029-49';
+import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-49';
 // Short visual explanations. All quantitative FEA marks use the same archived solver case.
 const C={ink:'#1a3a7a',accent:'#a44725',muted:'#585950',line:'#b5b3ab',paper:'#fdfcf8'};
 const text=(x,y,s,z=26,c=C.ink,a='middle')=>`<text x="${x}" y="${y}" font-size="${z}" fill="${c}" text-anchor="${a}" stroke="${C.paper}" stroke-width="5" paint-order="stroke">${s}</text>`;
@@ -33,16 +33,10 @@ export function buildChapterOverlay(ctx){
    return '<g data-hardware-leader="true">'+path([p,end],color,false,1.5)+text(x,y,label,32,color)+'</g>';
   };
   if(b===0){
-   const n=ctx.nativeLandmarks;if(!n)return '';
-   const m=project(n.medial),l=project(n.lateral),trail=[];
    const trace=Array.from({length:75},(_,i)=>project(point(ctx.history(.86*i/74).femoralReference))),reference=project(point(frame.femoralReference));
-   s+=path(trace,C.accent,true,4)+dot(reference,8)+leader(reference,1120,405,'Femoral trajectory');
-   // Qualitative lateral rollback cue. Anchors are source bone surfaces, not
-   // measured contact points from the cadaveric GIF in the interim talk.
-   s+=dot(m,9,C.ink)+leader(m,470,110,'Medial side',C.ink);
-   s+=arrow(project(n.lateralStart),l)+dot(l,7)+leader(l,1140,330,'Roll + glide');
-   return s;
+   return path(trace,C.accent,true,4)+leader(reference,1320,100,'Rotation + translation');
   }
+
   if(b===1){
    const pts=['j1','j2','j3','j4'].map(at);s+=path([...pts,pts[0]],C.ink,false,4);
    pts.forEach((p,i)=>s+=`<circle cx="${p[0]}" cy="${p[1]}" r="${i===1?8:6}" fill="${C.paper}" stroke="${C.ink}" stroke-width="2.5" ${i===1?'stroke-dasharray="3 3"':''}/>`);

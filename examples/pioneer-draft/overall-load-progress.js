@@ -3,7 +3,7 @@
 const clamp=x=>Math.max(0,Math.min(1,Number(x)||0));
 export function createOverallLoadProgress(){
  const complete=new Map();let peak=0;
- const weights=new Map([['presentation-fonts',4],['cad-model',25],['cad-metadata',3],['cad-kinematics',3],['simulation-scene.json',8],['bilateral-sts-attachments.json',2],['gait',24],['gait-meshes',12]]);
+ const weights=new Map([['presentation-fonts',4],['cad-model',25],['cad-metadata',3],['cad-kinematics',3],['simulation-scene.json',8],['bilateral-sts-attachments.json',2],['gait',18],['gait-source-bones',8],['gait-meshes',10]]);
  return {
   update(row){
    if(row.key==='presentation'){

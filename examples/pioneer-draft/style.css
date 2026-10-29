@@ -103,7 +103,7 @@ footer .source{flex:1;min-width:0}
 .chapter-subtitle{max-width:1600px}
 /* Persistent CAD on the left, Diagram Design figures beside it; one WebGL scene. */
 .spring-explanation{position:absolute;left:28%;width:34%;top:3%;bottom:3%;z-index:2;display:grid;grid-template-rows:minmax(0,1fr) auto auto;gap:13px;pointer-events:none;opacity:0;transition:opacity 280ms var(--ease);color:#2d3142}
-.spring-explanation[hidden]{display:none}.spring-explanation-figure{min-height:0}.spring-explanation-figure svg{width:100%;height:100%;display:block;font-family:'Playfair Display',Georgia,serif;overflow:visible}
+.spring-explanation[hidden]{display:none!important}.spring-explanation-figure{min-height:0}.spring-explanation-figure svg{width:100%;height:100%;display:block;font-family:'Playfair Display',Georgia,serif;overflow:visible}
 .spring-explanation-math{font-size:24px;min-height:52px;display:flex;align-items:center;justify-content:center}.spring-explanation-math .katex-display{margin:0}.spring-explanation-math .katex{font-size:1.05em}
 .spring-explanation-source{font-size:21px;line-height:1.35;color:#4f5d75;text-align:center;max-width:100%;text-wrap:pretty}
 /* Keyframe drawing also runs on direct entry, where insertion and settlement

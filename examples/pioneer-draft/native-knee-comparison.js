@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {createShadedEdges} from './shaded-edges.js?v=revision-20261029-48';
+import {createShadedEdges} from './shaded-edges.js?v=revision-20261029-49';
 
 /** Actual source bone surfaces, with an explicitly qualitative joint motion.
  *
@@ -76,9 +76,20 @@ export async function createNativeKneeComparison(scene,{human,side='left',clipRa
  // Camera bounds describe the inspected joint region, not the cropped-away
  // long shafts. The source geometry remains complete and can be uncropped.
  function getBounds(){syncClipping();return new THREE.Box3(new THREE.Vector3(-clipRadius,-clipRadius,-clipRadius),new THREE.Vector3(clipRadius,clipRadius,clipRadius)).applyMatrix4(group.matrixWorld);}
+ // Camera fitting uses only bone surfaces that survive the local inspection
+ // box, rather than the diagonal of an empty cube. Include the whole trajectory
+ // so the tracked reference is never lost during an axial orbit.
+ function getProjectedInspectionBounds(rotation,extraPoints=[]){
+  group.updateWorldMatrix(true,true);const inverse=group.matrixWorld.clone().invert(),view=rotation.clone().invert(),bounds=new THREE.Box3(),p=new THREE.Vector3(),local=new THREE.Vector3();
+  for(const mesh of Object.values(bones)){const points=mesh.geometry.attributes.position;
+   for(let i=0;i<points.count;i++){p.fromBufferAttribute(points,i).applyMatrix4(mesh.matrixWorld);local.copy(p).applyMatrix4(inverse);if(Math.max(Math.abs(local.x),Math.abs(local.y),Math.abs(local.z))<=clipRadius+.00001)bounds.expandByPoint(p.applyQuaternion(view));}
+  }
+  for(const p of extraPoints)bounds.expandByPoint(new THREE.Vector3(...p).applyQuaternion(view));
+  return bounds;
+ }
  function setOpacity(value){opacity=THREE.MathUtils.clamp(Number(value)||0,0,1);group.visible=opacity>.001;for(const material of materialSet){material.opacity=opacity;material.transparent=opacity<.999;material.depthWrite=opacity>.97;}edges.forEach(edge=>edge.sync());group.userData.opacity=opacity;}
  setPhase(0);
- return {ready:true,group,bones,setPhase,setOpacity,getLandmarks,getBounds,update:syncClipping,get worldBounds(){return getBounds();},
+ return {ready:true,group,bones,setPhase,setOpacity,getLandmarks,getBounds,getProjectedInspectionBounds,update:syncClipping,get worldBounds(){return getBounds();},
   dispose(){if(disposed)return;disposed=true;scene.remove(group);edges.forEach(e=>e.dispose());geometrySet.forEach(g=>g.dispose());materialSet.forEach(m=>m.dispose());}
  };
 }

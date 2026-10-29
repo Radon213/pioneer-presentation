@@ -1,0 +1,64 @@
+{
+  "sourceModel": "/home/arl/Documents/Pioneer/work/aakj-spring-material-2026-10-27/weak_active_blender_rgba.xml",
+  "sourceModelSHA256": "cbca4947da1f9a1784b0e7e88ca15d619faa13a960e6f357bf531369fe9a0da2",
+  "sourceFilesSHA256": {
+    "/home/arl/Documents/Pioneer/work/aakj-spring-material-2026-10-27/weak_active_blender_rgba.xml": "cbca4947da1f9a1784b0e7e88ca15d619faa13a960e6f357bf531369fe9a0da2",
+    "/home/arl/Documents/Pioneer/work/aakj-ultimate-drive-2026-10-26/models/assets/cad_original_femur_left.obj": "da51af71258694f632ee9503bea47a990652a72f77d3aa1d4cc81399f121942a",
+    "/home/arl/Documents/Pioneer/work/aakj-ultimate-drive-2026-10-26/models/assets/cad_original_femur_right.obj": "b8a27441e9a24f7f56dbdf65a35bc46c5febe9aa6f63abe7d4cfd3233f016e86",
+    "/home/arl/Documents/Pioneer/work/aakj-ultimate-drive-2026-10-26/models/assets/cad_original_tibia_left.obj": "38e9295380e282f0bbad676b8ebb3526b1a45c689a89d63a2079676404d6ae22",
+    "/home/arl/Documents/Pioneer/work/aakj-ultimate-drive-2026-10-26/models/assets/cad_original_tibia_right.obj": "31029e668d21d3974bd553b5bbaaf50b88b13326d7787cb7dfd45edffcbea8de"
+  },
+  "mirrorChecks": {
+    "femur": {
+      "vertexSetMaxErrorM": 0.0,
+      "sameTrianglesAt1e7Grid": true,
+      "rightMeshReorderingOnly": true
+    },
+    "tibia": {
+      "vertexSetMaxErrorM": 0.0,
+      "sameTrianglesAt1e7Grid": true,
+      "rightMeshReorderingOnly": true
+    }
+  },
+  "classification": "Exact source XML group-1 CAD bone visuals; saved bone-body transforms; no clipping or geometry change",
+  "omissionCause": "Original gait exporter selected group 0 anatomy and group 2 device visuals, excluding these group 1 bones",
+  "physicsSteps": 0,
+  "meshes": {
+    "femur": {
+      "vertices": 211842,
+      "triangles": 423680,
+      "bounds": [
+        [
+          -0.01950574852526188,
+          -0.025559062138199806,
+          0.2865205705165863
+        ],
+        [
+          0.07112015038728714,
+          0.021214988082647324,
+          0.4555739164352417
+        ]
+      ]
+    },
+    "tibia": {
+      "vertices": 218529,
+      "triangles": 437054,
+      "bounds": [
+        [
+          -0.03779539838433266,
+          -0.034916091710329056,
+          -0.38439106941223145
+        ],
+        [
+          0.03788531944155693,
+          0.025702230632305145,
+          -0.008999980986118317
+        ]
+      ]
+    }
+  },
+  "binaryBytes": 15496512,
+  "gzipBytes": 7918897,
+  "researchSourcesUnchanged": true,
+  "sharedBilateralBuffers": true
+}

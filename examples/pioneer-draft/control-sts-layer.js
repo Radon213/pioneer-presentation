@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {reportLoadStage} from './asset-loading.js?v=revision-20261029-48';
+import {reportLoadStage} from './asset-loading.js?v=revision-20261029-49';
 import {createShadedEdges} from './shaded-edges.js';
 
 /** Saved selected-student STS states only. A renderer, animation loop, solver,
@@ -18,7 +18,7 @@ export function decodeControlSTSBinary(buffer){
  return revive(manifest.data);
 }
 async function loadReplay(filename='control-sts',label='Sit-to-stand replay'){
- const gzip=typeof DecompressionStream==='function',url=new URL(`./assets/${filename}.bin${gzip?'.gz':''}?v=revision-20261029-48`,import.meta.url),started=performance.now();let loaded=0;
+ const gzip=typeof DecompressionStream==='function',url=new URL(`./assets/${filename}.bin${gzip?'.gz':''}?v=revision-20261029-49`,import.meta.url),started=performance.now();let loaded=0;
  const report=(phase,detail={})=>reportLoadStage(filename,phase,{label,phase,state:'running',...detail});
  report('download',{ratio:0});const response=await fetch(url);if(!response.ok)throw Error(`STS replay: HTTP ${response.status}`);
  const reader=response.body?.getReader(),chunks=[],total=Number(response.headers.get('content-length'))||0;
