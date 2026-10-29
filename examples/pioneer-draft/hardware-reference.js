@@ -1,6 +1,6 @@
 // URDF coordinates are metres, Z proximal. glTF uses [URDF x, z, -y].
 // This point is rigidly carried by the femoral J2–J3 body, not by J2 itself.
-export function addFemoralReference(frames,neutralURDF=[0,0,.012]){
+export function addFemoralReference(frames,neutralURDF=[0,0,.021]){
  const zero=frames[0].transformsURDF.condyle_right;
  const d=neutralURDF.map((v,i)=>v-zero[i][3]);
  const local=[0,1,2].map(j=>d.reduce((sum,v,i)=>sum+zero[i][j]*v,0));

@@ -5,8 +5,8 @@ import {addFemoralReference} from '../hardware-reference.js';
 const frames=JSON.parse(fs.readFileSync(new URL('../assets/motion/mechanism-motion.json',import.meta.url))).frames;
 const ref=addFemoralReference(frames);
 const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-10,`${a} != ${b}`);
-test('femoral reference starts at neutral URDF +Z 12 mm, independently of J2',()=>{
- frames[0].femoralReference.forEach((v,i)=>near(v,[0,.012,0][i]));
+test('femoral reference starts at neutral URDF +Z 21 mm, independently of J2',()=>{
+ frames[0].femoralReference.forEach((v,i)=>near(v,[0,.021,0][i]));
  assert.ok(Math.hypot(...frames[0].femoralReference.map((v,i)=>v-frames[0].jointCenters.j2[i]))>.01);
 });
 test('reference stays rigidly bound to the J2–J3 body throughout source replay',()=>{
