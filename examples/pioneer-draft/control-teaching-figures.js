@@ -1,13 +1,19 @@
-import {TEACHING_MATH} from './control-teaching-math.js?v=revision-20261029-59';
+import {TEACHING_MATH} from './control-teaching-math.js?v=revision-20261029-60';
 const C={ink:'#2d3142',muted:'#4f5d75',accent:'#bf4520',paper:'#fdfcf8',rule:'#c6c8ca',tint:'#f7eee8'};
 const esc=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
 const text=(x,y,s,n=26,color=C.ink,anchor='start',attrs='')=>`<text x="${x}" y="${y}" font-size="${n}" fill="${color}" text-anchor="${anchor}" ${attrs}>${esc(s)}</text>`;
 const path=(d,color=C.muted,w=2,attrs='')=>`<path d="${d}" fill="none" stroke="${color}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" ${attrs}/>`;
-const arrow=d=>path(d,C.muted,2,'marker-end="url(#teaching-arrow)"');
-const box=(x,y,w,h,accent=false)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="${C.paper}" stroke="${accent?C.accent:C.rule}" stroke-width="1.5"/>`;
+const arrow=(d,focus=false)=>path(d,focus?C.accent:C.muted,focus?2.2:1.8,`marker-end="url(#teaching-${focus?'accent':'arrow'})"`);
+const box=(x,y,w,h,accent=false)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="${C.paper}"/><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="${accent?'rgba(191,69,32,.065)':'rgba(45,49,66,.018)'}" stroke="${accent?C.accent:'rgba(45,49,66,.25)'}" stroke-width="${accent?2.1:1.4}"/>`;
 const math=(key,x,y,w,h,n=27)=>`<foreignObject x="${x}" y="${y}" width="${w}" height="${h}"><div xmlns="http://www.w3.org/1999/xhtml" class="control-inline-math" style="font-size:${n}px">${TEACHING_MATH[key]}</div></foreignObject>`;
-const svg=(id,desc,body,w=960,h=650)=>`<svg viewBox="0 0 ${w} ${h}" role="img" aria-labelledby="${id}-title ${id}-desc"><title id="${id}-title">${id.replaceAll('-',' ')}</title><desc id="${id}-desc">${esc(desc)}</desc><defs><marker id="teaching-arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0L10 4L0 8Z" fill="${C.muted}"/></marker></defs>${body}</svg>`;
-function encoder(x,y){return `<circle cx="${x}" cy="${y}" r="24" fill="none" stroke="${C.muted}" stroke-width="2"/>`+path(`M${x} ${y}l15 -16`)+`<circle cx="${x}" cy="${y}" r="3" fill="${C.ink}"/>`;}
+const svg=(id,desc,body,w=960,h=650)=>`<svg viewBox="0 0 ${w} ${h}" role="img" aria-labelledby="${id}-title ${id}-desc"><title id="${id}-title">${id.replaceAll('-',' ')}</title><desc id="${id}-desc">${esc(desc)}</desc><defs><marker id="teaching-arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0L10 4L0 8Z" fill="${C.muted}"/></marker><marker id="teaching-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><path d="M0 0L8 3L0 6Z" fill="${C.accent}"/></marker></defs>${body}</svg>`;
+// Restore the original diagram vocabulary: sampled signals, frame history,
+// recurrent memory and a small motor clock rather than text-only cards.
+function wave(x,y,w,h,phase=0,color=C.muted){return path(Array.from({length:33},(_,i)=>`${i?'L':'M'}${x+i*w/32} ${y-h*Math.sin(i/32*Math.PI*2+phase)*.35}`).join(' '),color,1.8);}
+function history(x,y){return Array.from({length:18},(_,i)=>{const c=Math.floor(i/6),r=i%6;return `<rect x="${x+c*30}" y="${y+r*18}" width="20" height="10" rx="1" fill="${r===2&&c===2?C.accent:C.muted}" opacity="${.18+.12*c}" class="control-history-sample" style="--frame:${c}"/>`;}).join('');}
+function memory(x,y,step=10,size=6){return Array.from({length:64},(_,i)=>{const c=i%8,r=Math.floor(i/8);return `<rect class="control-memory-cell" style="--cell:${(r+c)%5}" x="${x+c*step}" y="${y+r*step}" width="${size}" height="${size}" fill="${C.accent}" opacity="${.15+(r+c)%5*.12}"/>`;}).join('');}
+function servo(x,y){return `<circle cx="${x}" cy="${y}" r="25" fill="none" stroke="${C.muted}" stroke-width="2"/>`+path(`M${x} ${y-19}V${y}h17`,C.muted,2);}
+function signalNode(x,y){return box(x,y,260,236)+text(x+130,y+42,'Device signals',29,C.ink,'middle')+text(x+20,y+92,'Encoder',23,C.muted)+wave(x+134,y+84,106,34)+text(x+20,y+143,'Current proxy',21,C.muted)+wave(x+170,y+136,70,32,.7)+text(x+20,y+192,'Cue / request',21,C.muted)+path(`M${x+192} ${y+188}h12v-22h18v22h18`,C.muted,1.8);}
 function plot({x=65,y=160,w=390,h=240,xmin=0,xmax=8,ymin=0,ymax=6,xticks=[0,2,4,6,8],yticks=[0,3,6],xlabel='Time (s)',ylabel='Spring torque (N·m)',series=[]}){
  const px=v=>x+w*(v-xmin)/(xmax-xmin),py=v=>y+h-h*(v-ymin)/(ymax-ymin);
  let body=text(x,y-24,ylabel,23)+yticks.map(v=>path(`M${x} ${py(v)}H${x+w}`,C.rule,.8)+text(x-12,py(v)+7,v,21,C.muted,'end')).join('')+path(`M${x} ${y}V${y+h}H${x+w}`,C.muted,1.2)+xticks.map(v=>text(px(v),y+h+32,v,21,C.muted,'middle')).join('')+text(x+w/2,y+h+68,xlabel,24,C.muted,'middle');
@@ -17,13 +23,13 @@ function plot({x=65,y=160,w=390,h=240,xmin=0,xmax=8,ymin=0,ymax=6,xticks=[0,2,4,
 const key=(x,y,name,color,dash=false)=>path(`M${x} ${y-6}h28`,color,3,dash?'stroke-dasharray="7 5"':'')+text(x+40,y,name,23);
 export function controlTeachingFigure(build,data){
  if(!data)return null;
- if(build===1)return svg('simulation-and-sensing','The simulation knows output motion and elastic torque; deployment has motor-side sensors only. These motivate teacher and student roles.',
- arrow('M230 238H328')+arrow('M632 238H730')+arrow('M480 352V424')+
- box(24,132,208,216)+text(128,177,'Muscles',30,C.ink,'middle')+text(128,222,'22 actuators',25,C.muted,'middle')+text(128,288,'Human policy',24,C.muted,'middle')+
- box(328,132,304,216)+text(480,178,'Human + implants',29,C.ink,'middle')+text(480,231,'MuJoCo',30,C.muted,'middle')+text(480,287,'Coupled dynamics',25,C.muted,'middle')+
- box(730,132,208,216,true)+text(834,177,'Motors',30,C.ink,'middle')+text(834,223,'2 commands',25,C.muted,'middle')+text(834,289,'Assist control',24,C.muted,'middle')+
- text(64,64,'Learn with full state. Execute with local signals.',34)+
- box(136,424,688,154)+text(170,467,'Available in simulation',25,C.muted)+text(170,514,'Output motion · spring torque · contact',28)+text(170,554,'A device cannot read all of these states.',25,C.accent));
+ if(build===1)return svg('simulation-and-sensing','Muscle and implant motor commands both act on the same coupled human dynamics. The simulator exposes output motion, spring torque and contact; a real device has local sensors only.',
+ text(480,48,'Two control paths · one shared movement',34,C.ink,'middle')+
+ box(64,90,320,142)+text(224,131,'Human policy',30,C.ink,'middle')+text(224,168,'22 muscle actuators',25,C.muted,'middle')+wave(110,205,228,28)+
+ box(576,90,320,142,true)+text(736,131,'Implant control',30,C.ink,'middle')+text(736,168,'Two motor commands',25,C.muted,'middle')+wave(622,205,228,28,.6,C.accent)+
+ arrow('M224 232V274Q224 282 232 282H430Q438 282 438 290V324')+arrow('M736 232V274Q736 282 728 282H530Q522 282 522 290V324',true)+
+ box(272,324,416,130)+text(480,368,'Coupled dynamics',31,C.ink,'middle')+text(480,409,'Human + implanted knees',25,C.muted,'middle')+text(480,440,'MuJoCo · MyoAssist',23,C.muted,'middle')+
+ path('M64 500H896',C.rule,1.3)+text(480,544,'Simulation: output motion · spring torque · contact',27,C.ink,'middle')+text(480,591,'Device: local signals only',27,C.accent,'middle'));
  if(build===3){
  const shown=[data.stsSearch.candidates[0],data.stsSearch.candidates[2],data.stsSearch.candidates[4]];const p=plot({x:65,y:285,w:390,h:205,ymax:6,series:shown.map((s,i)=>({time:s.timeSec,value:s.torqueNm,color:i===2?C.accent:C.muted,width:i===2?3:1.6,dash:i===1}))});
  return svg('teacher-strategy-search','Saved finite nominal torque and start-time candidates; task and hardware gates precede activation-cost comparison. The body shows separate recorded development attempts, not these curves as one learning trajectory.',
@@ -31,18 +37,25 @@ export function controlTeachingFigure(build,data){
  text(56,148,'Torque target',25)+text(440,148,'2 / 4 / 6 N·m',25,C.accent,'end')+text(56,190,'Charge start',25)+text(440,190,'0.8 / 1.2 s',25,C.ink,'end')+
  text(250,229,'Shown: 0.8 s charge start',22,C.muted,'middle')+p.body+key(52,600,'2 N·m',C.muted)+key(206,600,'4 N·m',C.muted,true)+key(360,600,'6 N·m',C.accent)+text(250,644,'Task + hardware gates first',25,C.accent,'middle')+text(250,684,'Then compare activation cost',24,C.muted,'middle')+text(250,728,'Recorded development attempt',23,C.accent,'middle','data-control-value="development"'),500,750);
  }
- if(build===4)return svg('teacher-student-input-output','Standing teacher uses true output motion and spring state. Student uses 18 device signals over three frames, then GRU memory, two target residuals, physical observer and fixed servo. The student does not receive muscle state or true output state.',
- text(20,43,'The sensing boundary defines the architecture',34)+
- arrow('M280 194H356')+arrow('M608 194H684')+arrow('M280 470H356')+arrow('M608 470H684')+
- box(20,96,260,214)+text(42,139,'Teacher inputs',29)+text(42,187,'Motor angle / speed',24,C.muted)+text(42,225,'True output motion',24)+text(42,263,'True spring torque',24)+
- box(356,96,252,214)+text(482,143,'Teacher control',28,C.ink,'middle')+text(482,201,'Spring target',27,C.ink,'middle')+text(482,244,'Tracking control',25,C.muted,'middle')+
- box(684,96,256,214)+text(812,143,'Output',29,C.ink,'middle')+text(812,201,'Motor torque',28,C.ink,'middle')+text(812,244,'Hardware limits',25,C.muted,'middle')+
- path('M20 344H940',C.rule,1.3)+text(22,375,'Runtime sensor boundary',24,C.accent)+
- box(20,408,260,214)+encoder(65,475)+text(110,460,'Encoder + speed',24)+text(110,499,'Current proxy',24)+text(42,549,'Cue + past command',24)+text(150,603,'18 × 3 = 54',28,C.ink,'middle')+
- box(356,408,252,214,true)+text(482,452,'GRU · 64 memory',26,C.ink,'middle')+text(482,503,'54 inputs → 2 residuals',23,C.accent,'middle')+text(482,550,'10 Hz decisions',24,C.muted,'middle')+text(482,591,'Observer + fixed servo',22,C.muted,'middle')+
- box(684,408,256,214)+text(812,452,'Output',29,C.ink,'middle')+text(812,504,'Spring-torque targets',24,C.ink,'middle')+text(812,550,'Motor requests',25,C.ink,'middle')+text(812,591,'100 Hz servo',24,C.muted,'middle'));
- if(build===5){const r=data.distillationProgress,p=plot({x:88,y:357,w:784,h:176,xmin:0,xmax:400,ymin:0,ymax:.012,xticks:[0,100,200,300,400],yticks:[0,.006,.012],xlabel:'Imitation epoch',ylabel:'Held-out target RMSE (N·m)',series:[{time:r.map(x=>x.epoch),value:r.map(x=>x.validation.goal_torque_RMSE_Nm)}]});return svg('distilling-the-standing-strategy','Actual 400-epoch held-out goal-torque error; the deployed model is imitation, with no measured additional PPO gain.',
- arrow('M272 137H350')+arrow('M610 137H688')+box(24,80,248,116)+text(148,123,'Teacher target',28,C.ink,'middle')+text(148,165,'Saved training labels',22,C.muted,'middle')+box(350,80,260,116,true)+text(480,123,'Student · GRU64',28,C.ink,'middle')+text(480,165,'Device history only',23,C.muted,'middle')+box(688,80,248,116)+text(812,123,'2 spring targets',27,C.ink,'middle')+text(812,165,'Servo → motor',24,C.muted,'middle')+math('loss',104,221,752,68,33)+p.body+text(480,641,'Selected: imitation checkpoint · PPO added no measured gain',25,C.muted,'middle'));
+ if(build===4)return svg('teacher-student-input-output','Standing teacher uses true output motion and spring state. Device54 is three frames of eighteen local signals. A GRU64 produces two spring-target residuals at ten Hz; the physical observer and fixed servo execute at one hundred Hz. Sample motion is schematic, not recorded sensor data.',
+ text(24,48,'Full-state teacher',31)+arrow('M328 188H400')+arrow('M648 188H720')+
+ box(24,92,304,190)+text(48,134,'Simulator signals',28)+text(48,179,'Motor angle / speed',24,C.muted)+text(48,220,'True output motion',24)+text(48,258,'True spring torque',24)+
+ box(400,92,248,190)+text(524,135,'Teacher control',28,C.ink,'middle')+wave(438,188,172,40)+text(524,244,'Model-based tracking',23,C.muted,'middle')+
+ box(720,92,216,190)+text(828,135,'Motor torque',28,C.ink,'middle')+servo(828,192)+text(828,258,'Hardware limits',23,C.muted,'middle')+
+ path('M24 313H936',C.rule,1.4)+text(24,347,'Runtime: local signals only',27,C.accent)+
+ arrow('M284 488H344')+arrow('M484 488H544',true)+arrow('M740 488H800',true)+
+ signalNode(24,374)+box(344,374,140,236)+text(414,416,'History',27,C.ink,'middle')+history(374,444)+text(414,576,'3 frames',23,C.muted,'middle')+text(414,600,'18 × 3 = 54',19,C.muted,'middle')+
+ `<circle class="teaching-flow-token" cx="292" cy="488" r="4" fill="${C.muted}" aria-hidden="true"/>`+
+ box(544,374,196,236,true)+text(642,416,'GRU · 64',28,C.ink,'middle')+memory(604,438)+text(642,556,'2 target residuals',21,C.ink,'middle')+text(642,592,'10 Hz',23,C.muted,'middle')+
+ box(800,374,136,236)+text(868,416,'Servo',27,C.ink,'middle')+servo(868,474)+text(868,541,'Observer',21,C.muted,'middle')+text(868,570,'+ fixed servo',19,C.muted,'middle')+text(868,598,'100 Hz',21,C.muted,'middle'),960,650);
+ if(build===5){const r=data.distillationProgress,p=plot({x:88,y:447,w:784,h:150,xmin:0,xmax:400,ymin:0,ymax:.012,xticks:[0,100,200,300,400],yticks:[0,.006,.012],xlabel:'Imitation epoch',ylabel:'Held-out target RMSE (N·m)',series:[{time:r.map(x=>x.epoch),value:r.map(x=>x.validation.goal_torque_RMSE_Nm)}]});return svg('distilling-the-standing-strategy','Teacher targets supervise a GRU64 student from device history. The actual four-hundred-epoch held-out target error is retained below. Animated signals and memory cells are schematic; the curve is recorded training data.',
+ text(24,38,'Training',26,C.muted)+arrow('M665 176V226Q665 234 657 234H442Q434 234 434 242V264',true)+arrow('M312 112H394',true)+box(24,60,288,116)+text(168,99,'Teacher targets',28,C.ink,'middle')+wave(56,144,224,34,0,C.accent)+box(394,60,542,116,true)+text(665,99,'Imitation learning',28,C.ink,'middle')+math('loss',408,110,514,58,27)+
+ path('M24 204H936',C.rule,1.3)+text(24,241,'Runtime',26,C.muted)+arrow('M254 318H334')+arrow('M534 318H614',true)+arrow('M784 318H836')+
+ box(24,264,230,120)+text(139,301,'Sensor history',27,C.ink,'middle')+[0,1,2].map(i=>wave(48+i*64,344,50,32,i*.6)).join('')+
+ box(334,264,200,120,true)+text(434,302,'GRU · 64',28,C.ink,'middle')+memory(408,318,7,4)+
+ box(614,264,170,120)+text(699,300,'Spring targets',24,C.ink,'middle')+path('M640 355H760 M640 355V318',C.rule,1.2)+path('M640 350L669 344L700 331L730 322H760',C.muted,2)+
+ box(836,264,100,120)+text(886,301,'Servo',25,C.ink,'middle')+servo(886,341)+
+ p.body+text(480,705,'Selected: imitation checkpoint · PPO added no measured gain',24,C.muted,'middle'),960,730);
  }
  if(build===6){const d=data.sts,p=plot({x:66,y:160,w:390,h:240,ymax:4.5,yticks:[0,2,4],series:[{time:d.timeSec,value:d.teacherTorqueNm,color:C.ink,width:3.5},{time:d.timeSec,value:d.studentTorqueNm,color:C.accent,width:2.8,dash:true}]});return svg('recorded-standing-torque','Actual left spring-shaft torque from separate nominal four-Nm teacher and student executions; not anatomical knee moment, not the six-Nm introductory teacher.',text(250,43,'Teacher → sensor student',31,C.ink,'middle')+p.body+`<path data-teaching-cursor d="M66 160V400" stroke="${C.muted}" stroke-width="1.5"/><circle data-teaching-dot r="7" fill="${C.accent}"/>`+key(70,524,'Teacher',C.ink)+key(280,524,'Student',C.accent,true)+text(250,577,'Recorded spring-shaft torque',25,C.ink,'middle')+text(250,619,'Independent nominal runs · 4 N·m target',21,C.muted,'middle')+text(250,662,'—',27,C.accent,'middle','data-teaching-time'),500,710);}
  if(build===7){const d=data.offlineReference,p=plot({x:65,y:280,w:390,h:196,xmin:0,xmax:1.12,ymin:-45,ymax:45,xticks:[0,.4,.8,1.1],yticks:[-40,0,40],ylabel:'Knee-equivalent torque (N·m)',series:[{time:d.timeSec,value:d.targetMuscleNm,color:C.muted,width:1.8},{time:d.timeSec,value:d.kneeAssistNm,color:C.accent,width:3}]});return svg('optimizing-the-walking-reference','Offline periodic C2 motor trajectory optimized against a fixed-gait active net knee moment. The nearby model is a separate student execution, not a new response to this optimization.',text(250,40,'Plan the torque waveform',31,C.ink,'middle')+text(250,99,'Choose a periodic motor path',25,C.muted,'middle')+math('objectiveShort',16,110,468,70,30)+text(250,203,'τSEA = g(t) f(δ)',25,C.ink,'middle')+text(250,233,'IPOPT · 480 nodes × 16 points',24,C.ink,'middle')+p.body+key(68,572,'Fixed muscle target',C.muted)+key(68,610,'Feasible SEA reference',C.accent)+text(250,659,'8 N·m · 20 W · 45.31 rpm · 24 V',22,C.accent,'middle')+text(250,702,'Fixed-gait solve · local optimum',23,C.muted,'middle'),500,720);}

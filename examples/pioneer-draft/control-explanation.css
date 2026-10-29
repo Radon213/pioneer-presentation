@@ -18,3 +18,8 @@
 .teaching-draw{animation:teaching-line-enter 1.6s cubic-bezier(.16,1,.3,1) both}
 @keyframes teaching-line-enter{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
 @media(prefers-reduced-motion:reduce){.teaching-draw{animation:none}}
+/* One sampled packet links local signals to the restored frame-history block. */
+.teaching-flow-token{animation:teaching-sample-transfer 3s linear infinite}
+@keyframes teaching-sample-transfer{0%{transform:translateX(0);opacity:0}10%{opacity:1}60%{transform:translateX(44px);opacity:1}70%,100%{transform:translateX(44px);opacity:0}}
+@media(prefers-reduced-motion:reduce){.teaching-flow-token{display:none}}
+@media print{.teaching-flow-token{display:none}}

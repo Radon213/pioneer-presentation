@@ -1,5 +1,5 @@
-import slides from './deck-data.js?v=revision-20261029-59';
-import {getTalkStage,countSpokenWords,scriptParts} from './presenter-script.js?v=revision-20261029-59';
+import slides from './deck-data.js?v=revision-20261029-60';
+import {getTalkStage,countSpokenWords,scriptParts} from './presenter-script.js?v=revision-20261029-60';
 const $=selector=>document.querySelector(selector);
 const audienceSession=new URLSearchParams(location.search).get('audience');
 const channel=typeof BroadcastChannel==='function'?new BroadcastChannel(`pioneer-draft-presenter${audienceSession?':'+audienceSession:''}`):null;
