@@ -1,0 +1,17 @@
+/* Keep spring equations in the same reading group as their graphs. */
+.spring-explanation[data-build="1"],.spring-explanation[data-build="2"],.spring-explanation[data-build="3"],.spring-explanation[data-build="4"]{left:27%;width:35%;top:4%;bottom:4%;display:flex;flex-direction:column;justify-content:center;gap:4px}
+.spring-explanation[data-build="1"] .spring-explanation-math,.spring-explanation[data-build="2"] .spring-explanation-math,.spring-explanation[data-build="3"] .spring-explanation-math,.spring-explanation[data-build="4"] .spring-explanation-math{order:-1;flex:0 0 auto;font-size:32px;min-height:76px;margin:0}
+.spring-explanation[data-build="3"] .spring-explanation-math{font-size:28px}
+.spring-explanation[data-build="1"] .spring-explanation-figure,.spring-explanation[data-build="2"] .spring-explanation-figure,.spring-explanation[data-build="3"] .spring-explanation-figure,.spring-explanation[data-build="4"] .spring-explanation-figure{flex:1;min-height:0;max-height:590px}
+.spring-explanation[data-build="6"]{left:0;width:62%;top:0;bottom:0;display:grid;grid-template-rows:minmax(0,1fr) 74px;gap:0}
+.spring-explanation[data-build="6"] .spring-explanation-math{font-size:31px;margin:0}
+.spring-explanation[data-build="6"] .spring-explanation-figure svg{overflow:visible}
+.spring-explanation [data-objective-point],.spring-explanation [data-contact-point],.spring-explanation [data-trade-low],.spring-explanation [data-trade-high]{transition:none}
+@media(prefers-reduced-motion:reduce){.spring-explanation *{animation-duration:0s!important}}
+/* Intrinsic SVG ratios prevent tall flex boxes from inserting letterbox space
+   between the equation and the plotted axes. */
+.spring-explanation[data-build="1"] .spring-explanation-figure{flex:0 0 auto;aspect-ratio:720/560}
+.spring-explanation[data-build="2"] .spring-explanation-figure{flex:0 0 auto;aspect-ratio:720/500}
+.spring-explanation[data-build="3"] .spring-explanation-figure{flex:0 0 auto;aspect-ratio:720/600}
+.spring-explanation[data-build="4"] .spring-explanation-figure{flex:0 0 auto;aspect-ratio:720/580}
+.spring-explanation[data-build="1"] .spring-explanation-math,.spring-explanation[data-build="2"] .spring-explanation-math,.spring-explanation[data-build="3"] .spring-explanation-math,.spring-explanation[data-build="4"] .spring-explanation-math{margin-bottom:-12px}

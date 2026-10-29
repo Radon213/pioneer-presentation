@@ -1,5 +1,5 @@
 // Six large chapters; Control joins the simulation, teacher and limited-sensing execution story.
-export const deckVersion='revision-20261029-46';
+export const deckVersion='revision-20261029-47';
 const stage=(caption,question,notes)=>({caption,question,notes});
 const proposal='Pioneer_2022_proposal.pdf: PDF p11/printed p2 and PDF p40/printed p31';
 const interim='Moon, thesis interim presentation, 2024-12-10: slides3–15';
@@ -74,12 +74,12 @@ const stageBodies={
 ],
 4:[
  `<p><strong>SEA</strong> means<br>series elastic actuator.</p><p>The spring lies <strong>in the torque path</strong>.</p>`,
- `<p><strong>Soft</strong> enough to yield.</p><p><strong>Stiff</strong> enough to transmit torque<br>within limited travel.</p>`,
+ `<p><strong>Low stiffness</strong>: compliant interaction, but more travel.</p><p><strong>High stiffness</strong>: torque with less travel, but less compliance.</p>`,
  `<p>Let stiffness <strong>rise with winding</strong>.</p><p>Balance yielding with<br><strong>torque transmission</strong>.</p>`,
- `<p>In series: <strong>same torque</strong>.</p><p><strong>Both springs deform</strong>;<br>their deflections add.</p>`,
+ `<p>Both units carry the <strong>same torque</strong>.</p><p>Their <strong>deflections add</strong>, producing one equivalent response.</p>`,
  `<p>As the <strong>gap closes</strong>,<br>neighboring turns engage.</p><p>Less free flexure produces<br><strong>higher tangent stiffness</strong>.</p>`,
  `<p>Follow <strong>deformation</strong><br>and <strong>reaction torque</strong><br>through the loading path.</p>`,
- `<p><strong>Geometry</strong> shapes<br>the torque–rotation response.</p><p>Compare two<br><strong>axial-depth designs</strong>.</p>`
+ `<p>The <strong>lower unit</strong> has a contact-driven response. The <strong>upper unit</strong> shares the torque.</p><p>Their <strong>series response</strong> changes from low to higher stiffness.</p>`
 ],
 5:[
  `<p><strong>Relative angle</strong><br>sets spring deformation.</p><p>Choose <strong>how much</strong> support<br>and <strong>when</strong> to prepare it.</p>`,
@@ -101,7 +101,7 @@ const takeaways={
 1:['Natural motion. Timely support.'],
 2:['Aging affects both joints and muscles.','Replacement restores joint surfaces.','Muscle weakness can remain.','Assistance needs a force path.','Bring assistance into the implant.'],
 3:['The knee is more than a hinge.','Recreate the motion with a linkage.','One mechanism couples the motions.','Rotation follows a medial pivot.','Add power through the same mechanism.','Put compliance in the torque path.'],
-4:['Store energy before delivering support.','One fixed stiffness is a compromise.','Let stiffness grow with winding.','The deflections add in series.','Contact increases stiffness.','Inspect the deformation and response.','Geometry shapes the response.'],
+4:['Store energy before delivering support.','One fixed stiffness is a compromise.','Let stiffness grow with winding.','The deflections add in series.','Contact increases stiffness.','Inspect the deformation and response.','Combine the two elastic responses.'],
 5:['Prepare the spring state.','Evaluate the coupled system.','Preload before the rise.','Develop movement, then assistance.','Infer the state from local signals.','Imitate, then execute through the drive.','Nominal standing is a first step.','Prepare support on every step.','Prepare earlier to respect the limits.'],
 6:['Connect motion, compliance and control.','Establish reproducible assistance.']
 };
@@ -116,10 +116,11 @@ const copyLayouts={
 const authors=[{name:'Jongchan Mun',affiliation:'1',corresponding:false},{name:'Sang Rok Jin',affiliation:'1',corresponding:true}];
 const affiliation='School of Mechanical Engineering, Pusan National University';
 const authorSource='/mnt/arl/NAS관리/백업/학회/2026년도/26.10.27~30 ICCAS/문종찬/논문/main.tex:19–23';
-const springSubtitles=['Elasticity in the torque path','One stiffness, two competing needs','Compliant first, stiffer as winding grows','Two spring units share one torque','Contact changes the free flexure','Inspect deformation and stress','Torque–rotation response'];
+const springSubtitles=['Elasticity in the torque path','Low and high stiffness: a design trade-off','Compliant first, stiffer as winding grows','Series springs add deflection at the same torque','Contact produces a steeper torque response','Inspect deformation and stress','Two unit responses form one series response'];
 const controlSubtitles=['Control the Spring State','Evaluate Human–Implant Interaction','Prepare, Assist, Release','From Failed Rises to Nominal Standing','Operate with Device-Side Sensing','Transfer the Strategy to a Student','Preliminary Sit-to-Stand Evaluation','Repeat Assistance During Walking','Anticipate the Drive Limits'];
 const controlStageDurations=[22,22,27,34,27,33,35,25,25];
 const slides=raw.map(s=>({...s,subtitle:s.id===1?'':s.title,title:headings[s.id]||s.title,authors:s.id===1?authors:undefined,affiliation:s.id===1?affiliation:undefined,affiliationLocation:s.id===1?'Busan, 46231, Korea':undefined,authorSource:s.id===1?authorSource:undefined,targetGroup:s.id===2?'Older adults':undefined,steps:s.stages.length-1,scene:{kind:'continuous',mode:'chapter',chapter:s.id},body:'',bridge:'',dummy:false,stages:s.stages.map((x,i)=>({...x,subtitle:s.id===4?springSubtitles[i]:s.id===5?controlSubtitles[i]:x.subtitle,duration:s.id===5?controlStageDurations[i]:undefined,body:stageBodies[s.id][i].replaceAll('<br>',' '),takeaway:takeaways[s.id][i],layout:copyLayouts[s.id]?.[i]||{}})),notes:s.stages.map((x,i)=>`Stage ${i}: ${x.notes}`).join('\n\n')+(s.id===1?`\nCover authors and affiliation reproduced from ${authorSource}. Exact author spelling/order: Jongchan Mun; Sang Rok Jin. Paper results are not reused.`:'')}));
+slides[3].stages[6].notes+=' Series estimate: supplied curves plotted on identical 0–120 degree / 0–20 Nm axes. Common source-supported torque is 0.0593–1.0921 Nm. Beyond this, the upper unit is linearly extended from 45 degrees / 1.0921 Nm using the terminal OLS slope 0.0280801 Nm/degree; the inferred series response is dashed. Approximate series low/high slopes are 0.0079974 / 0.0260641 Nm/degree (0.458 / 1.493 Nm/rad). These are model estimates from prototype tables, not calibrated current hardware or validated allowable travel. Details: docs/spring-series-20261029.md.';
 const coverReplayNote=' Cover spring: actual stored double-spiral FEA loading frames are replayed forward and backward in the same 1.12-second presentation cycle as recorded walking. The enlarged inset and timing are explanatory presentation choices, not a coupled gait/FEA spring response or a solved unloading branch. PNU signature is the original official transparent PNG, aspect ratio preserved.';
 slides[0].stages[0].notes+=coverReplayNote;slides[0].notes+=coverReplayNote;
 if(slides.reduce((n,s)=>n+s.duration,0)!==720)throw Error('Expected twelve-minute allocation');

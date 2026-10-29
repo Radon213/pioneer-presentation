@@ -248,8 +248,8 @@
         "caption": "Low stiffness permits yielding, but useful torque can require more deflection.",
         "question": "Can one constant stiffness serve both needs?",
         "notes": "With a linear spring, low stiffness needs more relative deflection for the same torque, while high stiffness resists motion more strongly. This is a design trade-off rather than proof that every conventional SEA fails. We want yielding behavior at small loading and stronger torque transfer as deformation grows. 한국어: 낮은 강성과 큰 토크 전달 사이의 설계 상충을 설명한다.",
-        "subtitle": "One stiffness, two competing needs",
-        "body": "<p><strong>Soft</strong> enough to yield.</p><p><strong>Stiff</strong> enough to transmit torque within limited travel.</p>",
+        "subtitle": "Low and high stiffness: a design trade-off",
+        "body": "<p><strong>Low stiffness</strong>: compliant interaction, but more travel.</p><p><strong>High stiffness</strong>: torque with less travel, but less compliance.</p>",
         "takeaway": "One fixed stiffness is a compromise.",
         "layout": {
           "left": 1255,
@@ -274,8 +274,8 @@
         "caption": "Two spiral units in series carry the same torque and share the total deflection.",
         "question": "Which unit deforms more first?",
         "notes": "In an ideal quasistatic serial pair, both springs transmit the same torque and their deflections add. The compliant unit deforms more initially; the stiffer unit also deforms, rather than waiting with zero torque. The axial source-CAD view exposes strip width and coil spacing; axial depth is a separate dimension. 한국어: 직렬 연결은 같은 토크이며 변위가 합쳐진다는 점을 분명히 한다.",
-        "subtitle": "Two spring units share one torque",
-        "body": "<p>In series: <strong>same torque</strong>.</p><p><strong>Both springs deform</strong>; their deflections add.</p>",
+        "subtitle": "Series springs add deflection at the same torque",
+        "body": "<p>Both units carry the <strong>same torque</strong>.</p><p>Their <strong>deflections add</strong>, producing one equivalent response.</p>",
         "takeaway": "The deflections add in series.",
         "layout": {
           "left": 1250,
@@ -287,7 +287,7 @@
         "caption": "Strip width, axial depth and coil gap define the spiral geometry.",
         "question": "How can the design be examined through analysis?",
         "notes": "Identify strip width a, axial depth b and coil gap as separate dimensions. The native spring does not acquire nonlinearity from an invented variable-width profile. The historical concept uses turn approach and the winding limit to change additional compliance, with more added deflection then shared by the stiffer serial unit. This design illustration is not solved contact or a calibrated native spring law. Axial depth cannot be inferred from a top view alone. 한국어: 폭a·축방향 깊이b·코일 간격을 구분하고 실제 원본에 없는 가변 폭 형상을 주장하지 않는다. 다음 해석은 별도 대표형상이다.",
-        "subtitle": "Contact changes the free flexure",
+        "subtitle": "Contact produces a steeper torque response",
         "body": "<p>As the <strong>gap closes</strong>, neighboring turns engage.</p><p>Less free flexure produces <strong>higher tangent stiffness</strong>.</p>",
         "takeaway": "Contact increases stiffness.",
         "layout": {
@@ -312,10 +312,10 @@
       {
         "caption": "Spring geometry shapes the torque–rotation response.",
         "question": "How should control prepare spring deformation?",
-        "notes": "Original ANSYS CSV tables from the user-confirmed NAS backup are plotted with every finite torque point. P=2 mm, a=0.7 mm, b=10 mm spans 1.2–120 degrees; b=20 mm spans 0.45–45 degrees. Each panel has its own labelled axes. The original torque decrease is retained. These are archived prototype computations, not physical measurements or a calibrated law of the current weak/strong series pair. They are independent from the new 110-degree animation reconstruction; no point is synchronized to that animation. CSV headers, raw rows, exact paths and SHA256 are preserved in assets/motion/archived-spring-curves.json. 한국어: 보관된 원본 ANSYS 표를 그대로 표시하며 현재 직렬 스프링의 검증된 특성으로 주장하지 않는다.",
-        "subtitle": "Torque–rotation response",
-        "body": "<p><strong>Geometry</strong> shapes the torque–rotation response.</p><p>Compare two <strong>axial-depth designs</strong>.</p>",
-        "takeaway": "Geometry shapes the response.",
+        "notes": "Original ANSYS CSV tables from the user-confirmed NAS backup are plotted with every finite torque point. P=2 mm, a=0.7 mm, b=10 mm spans 1.2–120 degrees; b=20 mm spans 0.45–45 degrees. Each panel has its own labelled axes. The original torque decrease is retained. These are archived prototype computations, not physical measurements or a calibrated law of the current weak/strong series pair. They are independent from the new 110-degree animation reconstruction; no point is synchronized to that animation. CSV headers, raw rows, exact paths and SHA256 are preserved in assets/motion/archived-spring-curves.json. 한국어: 보관된 원본 ANSYS 표를 그대로 표시하며 현재 직렬 스프링의 검증된 특성으로 주장하지 않는다. Series estimate: supplied curves plotted on identical 0–120 degree / 0–20 Nm axes. Common source-supported torque is 0.0593–1.0921 Nm. Beyond this, the upper unit is linearly extended from 45 degrees / 1.0921 Nm using the terminal OLS slope 0.0280801 Nm/degree; the inferred series response is dashed. Approximate series low/high slopes are 0.0079974 / 0.0260641 Nm/degree (0.458 / 1.493 Nm/rad). These are model estimates from prototype tables, not calibrated current hardware or validated allowable travel. Details: docs/spring-series-20261029.md.",
+        "subtitle": "Two unit responses form one series response",
+        "body": "<p>The <strong>lower unit</strong> has a contact-driven response. The <strong>upper unit</strong> shares the torque.</p><p>Their <strong>series response</strong> changes from low to higher stiffness.</p>",
+        "takeaway": "Combine the two elastic responses.",
         "layout": {
           "left": 1250,
           "width": 555,

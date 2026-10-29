@@ -1,7 +1,8 @@
-import {springResponsePoints,responseAtAngle} from './spring-plot-data.js?v=revision-20261029-46';
-import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-46';
-import {SPRING_MATH} from './spring-math.js';
-import {ARCHIVED_SPRING_CURVES} from './archived-spring-chart.js';
+import {springResponsePoints,responseAtAngle} from './spring-plot-data.js?v=revision-20261029-47';
+import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-47';
+import {SPRING_MATH} from './spring-math.js?v=revision-20261029-47';
+import {SPRING_COMPARISON,SERIES_LINEAR_ESTIMATE} from './spring-series-data.js?v=revision-20261029-47';
+import {sampleSpringExplanationMotion,conceptualContactResponse} from './spring-explanation-motion.js?v=revision-20261029-47';
 // Diagram Design example-architecture / example-process / example-line grammar:
 // retain their neutral nodes, single burnt-tangerine focus, thin connectors,
 // rounded orthogonal ports and line/area/dot hierarchy. Slide shell is untouched.
@@ -28,29 +29,88 @@ function sea(){return svg(
  'Illustrative series-elastic winding: a fixed output and moving input store elastic energy; normalized qualitative torque');}
 function axes(ylabel='Torque',xlabel='Deflection'){return t(95,55,ylabel,27,P.muted,'start')+line('M100 85V410H650',P.muted,1.6)+t(650,460,xlabel,27,P.muted,'end');}
 const curveLine=(d,c)=>`<path data-reveal-curve="true" pathLength="1" d="${d}" fill="none" stroke="${c}" stroke-width="3"/>`;
-function tradeoff(){return svg(axes()+curveLine('M100 410L640 305',P.accent)+curveLine('M100 410L260 95',P.ink)+line('M100 330H640',P.rule,1.5,true)+t(485,290,'Low stiffness',30,P.accent)+t(300,120,'High stiffness',30,P.ink,'start')+t(440,220,'More angle for the same torque',25,P.muted)+`<circle data-reveal-point="true" cx="545" cy="323" r="5" fill="${P.accent}"/>`,'Conceptual low versus high linear stiffness; no calibrated values');}
-function nonlinear(){const pts=Array.from({length:65},(_,i)=>{const x=i/64;return [100+540*x,410-310*(.14*x+.86*x**4)];});return svg(axes()+`<polygon data-reveal-area="true" points="100,410 ${pts.map(p=>p.join(',')).join(' ')} 640,410" fill="rgba(191,69,32,.06)"/><polyline data-reveal-curve="true" pathLength="1" points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${P.accent}" stroke-width="3.4"/>`+t(270,270,'Yield easily',31)+t(525,96,'Build torque',31,P.accent)+t(370,493,'Design objective · qualitative',23,P.muted),'Desired increasing tangent stiffness; conceptual curve');}
-function serial(){return svg(t(360,65,'Two units, one torque path',34)+arrow('M315 200H405',true)+node(40,145,275,110,'Compliant unit','larger early deflection',true)+node(405,145,275,110,'Stiffer unit','smaller early deflection')+t(360,305,'Both units carry torque from the start',27,P.muted)+line('M80 382H300',P.accent,12)+line('M440 382H520',P.ink,12)+t(180,434,'δ₁',36,P.accent)+t(480,434,'δ₂',36)+t(360,488,'Series connection shares total deflection',25,P.muted),'Same torque through two serial spring units with unequal deflection');}
-function turns(){return svg(
- t(180,70,'Before contact',32)+t(540,70,'After contact',32,P.accent)+
- `<path d="M60 245Q180 115 300 245 M80 270Q180 160 280 270" fill="none" stroke="${P.ink}" stroke-width="14" stroke-linecap="round"/>
- <path d="M420 245Q540 115 660 245" fill="none" stroke="${P.ink}" stroke-width="14" stroke-linecap="round"/>
- <path class="coil-closing" d="M440 270Q540 102 640 270" fill="none" stroke="${P.ink}" stroke-width="14" stroke-linecap="round"/>
- <circle class="contact-appears" cx="540" cy="183" r="18" fill="${P.tint}" stroke="${P.accent}" stroke-width="3"/>`+
- line('M180 188V207 M180 198L220 150',P.accent,2)+t(230,145,'Gap',26,P.accent,'start')+
- arrow('M330 225H390',true)+line('M540 163V122H590',P.accent,1.6)+t(600,130,'Contact',25,P.accent,'start')+
- t(180,340,'Coils bend freely',27)+t(540,340,'Contact constrains bending',27)+
- t(360,440,'Less free flexure → higher stiffness',31,P.accent),
- 'Neighboring coil sections: the gap closes, contact develops and constrains further bending');}
-function archive(){let out=t(360,30,'Torque–rotation response',33);for(const [i,s]of ARCHIVED_SPRING_CURVES.series.entries()){
- const y=78+i*220,x=110,w=550,h=140,xmax=i?45:120,ymax=i?1.2:20,color=i?P.ink:P.accent,px=a=>x+a/xmax*w,py=v=>y+h-v/ymax*h,pts=s.data.filter(r=>Number.isFinite(r.angle_deg)&&Number.isFinite(r.torque_Nm));
- out+=t(x,y-20,`b = ${s.geometry.axial_depth_mm} mm`,27,P.ink,'start')+t(660,y-20,'Torque (N·m)',23,P.muted,'end');
- for(let j=0;j<=2;j++){const v=j*ymax/2,yy=py(v);out+=line(`M${x} ${yy}H660`,P.rule,1)+t(x-14,yy+7,String(v),23,P.muted,'end');}
- out+=line(`M${x} ${y}V${y+h}H660`,P.muted,1.4)+`<polyline data-reveal-curve="true" pathLength="1" data-archive-points="${pts.length}" points="${pts.map(r=>`${px(r.angle_deg)},${py(r.torque_Nm)}`).join(' ')}" fill="none" stroke="${color}" stroke-width="2.8"/>`;
- for(const p of pts)out+=`<circle data-reveal-point="true" cx="${px(p.angle_deg)}" cy="${py(p.torque_Nm)}" r="3" fill="${color}"/>`;
- for(let j=0;j<=2;j++)out+=t(px(xmax*j/2),y+h+28,String(xmax*j/2),24,P.muted);
+const axis=(x,y,w,h,{xmax=1,ymax=1,labels=false}={})=>{
+ let out=line(`M${x} ${y}V${y+h}H${x+w}`,P.muted,1.5);
+ if(labels){for(let i=0;i<=4;i++){const yy=y+h-h*i/4;out+=line(`M${x} ${yy}H${x+w}`,P.rule,1)+t(x-12,yy+7,String(ymax*i/4),21,P.muted,'end')+t(x+w*i/4,y+h+28,String(xmax*i/4),21,P.muted);}}
+ return out;
+};
+function tradeoff(){return svg(
+ t(90,46,'Torque',27,P.muted,'start')+axis(90,76,560,260)+
+ curveLine('M90 336L625 166',P.accent)+curveLine('M90 336L275 116',P.ink)+
+ `<path data-trade-guide stroke="${P.muted}" stroke-width="1.4" stroke-dasharray="6 5" fill="none"/>
+ <circle data-trade-low r="8" fill="${P.accent}" stroke="#fdfcf8" stroke-width="2"/>
+ <circle data-trade-high r="8" fill="${P.ink}" stroke="#fdfcf8" stroke-width="2"/>`+
+ t(275,103,'High stiffness',29,P.ink,'start')+t(436,280,'Low stiffness',29,P.accent)+
+ t(648,377,'Deflection',27,P.muted,'end')+
+ line('M82 410H650',P.rule,1.4)+
+ t(82,452,'Low stiffness',28,P.accent,'start')+t(82,489,'Compliant interaction',24,P.ink,'start')+t(82,525,'Needs more travel',24,P.muted,'start')+
+ t(390,452,'High stiffness',28,P.ink,'start')+t(390,489,'Torque with less travel',24,P.ink,'start')+t(390,525,'Less compliant interaction',24,P.muted,'start'),
+ 'Low stiffness permits compliant interaction but requires more angular travel. High stiffness produces torque with less travel but yields less to motion. Both dots carry the same conceptual torque.').replace('720 500','720 560');}
+function nonlinear(){const pts=Array.from({length:65},(_,i)=>{const x=i/64;return [90+550*x,420-320*(.14*x+.86*x**4)];});return svg(
+ t(90,53,'Torque',27,P.muted,'start')+axis(90,80,560,340)+
+ `<polygon data-reveal-area points="90,420 ${pts.map(p=>p.join(',')).join(' ')} 640,420" fill="rgba(191,69,32,.06)"/>
+ <polyline data-reveal-curve pathLength="1" points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${P.accent}" stroke-width="3.5"/>
+ <circle data-objective-point r="8" fill="${P.accent}" stroke="#fdfcf8" stroke-width="2"/>
+ <path data-objective-tangent fill="none" stroke="${P.ink}" stroke-width="2.6"/>`+
+ t(200,345,'Yield to motion',29,P.ink)+line('M202 358L224 401',P.muted,1.3)+
+ t(475,105,'Build support torque',29,P.accent)+line('M515 119L586 207',P.accent,1.3)+
+ t(650,464,'Deflection',27,P.muted,'end'),
+ 'Elastic design objective: compliant response at small deflection and rising tangent stiffness at large deflection. Yield means elastic compliance, not material yielding.');}
+function serial(){return svg(
+ t(100,50,'Same torque, added deflections',32,P.ink,'start')+
+ t(100,100,'Torque',25,P.muted,'start')+axis(100,125,550,295)+
+ `<path data-series-weak fill="none" stroke="${P.accent}" stroke-width="3"/>
+ <path data-series-strong fill="none" stroke="${P.ink}" stroke-width="3"/>
+ <path data-series-combined fill="none" stroke="${P.accent}" stroke-width="4.5"/>
+ <path data-series-guide fill="none" stroke="${P.muted}" stroke-width="1.3" stroke-dasharray="6 5"/>
+ <circle data-series-marker r="8" fill="${P.accent}" stroke="#fdfcf8" stroke-width="2"/>
+ <path data-series-span1 stroke="${P.accent}" stroke-width="8" stroke-linecap="round"/>
+ <path data-series-span2 stroke="${P.ink}" stroke-width="8" stroke-linecap="round"/>`+
+ t(180,478,'δ₁',32,P.accent)+t(330,478,'+ δ₂',32)+t(512,478,'= δ',32,P.accent)+
+ t(650,527,'Total deflection',25,P.muted,'end')+
+ t(110,576,'Compliant unit',24,P.accent,'start')+t(400,576,'Stiffer unit',24,P.ink,'start'),
+ 'Conceptual serial composition: both spring units carry the same torque. At each torque, angular deflections add; the combined curve moves to the right rather than torques adding.').replace('720 500','720 600');}
+function contactCurve(){const pts=Array.from({length:91},(_,i)=>{const u=i/90;const torque=conceptualContactResponse(u).torque;return [100+540*u,420-300*torque];});return svg(
+ t(100,50,'Contact changes the slope',31,P.ink,'start')+t(100,100,'Torque',26,P.muted,'start')+axis(100,120,540,300)+
+ `<polyline data-reveal-curve pathLength="1" points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${P.accent}" stroke-width="3.5"/>
+ <path data-contact-guide d="M397 420V366" fill="none" stroke="${P.muted}" stroke-width="1.4" stroke-dasharray="6 5"/>
+ <circle cx="397" cy="366" r="8" fill="#fdfcf8" stroke="${P.accent}" stroke-width="2.5"/>
+ <circle data-contact-point r="8" fill="${P.accent}" stroke="#fdfcf8" stroke-width="2"/>
+ <path data-contact-tangent fill="none" stroke="${P.ink}" stroke-width="3"/>`+
+ t(397,458,'δc · contact begins',26,P.accent)+t(575,503,'Deflection',25,P.muted,'end')+
+ t(165,335,'Free bending',27,P.ink,'start')+t(495,144,'Rapid stiffening',27,P.accent)+
+ t(360,558,'Contact reduces free flexure',27,P.ink),
+ 'Illustrative contact mechanism: the weak lower spring bends freely until adjacent turns contact. Beyond the contact point the slope increases rapidly; the threshold is conceptual, not a measured contact angle.').replace('720 500','720 580');}
+const sourcePoints=s=>Array.isArray(s)?s:s.points||s.data.filter(p=>Number.isFinite(p.torque_Nm)).map(p=>({angleDeg:p.angle_deg,torqueNm:p.torque_Nm}));
+const dataPath=(pts,px,py)=>pts.map((p,i)=>`${i?'L':'M'}${px(p.angleDeg).toFixed(3)} ${py(p.torqueNm).toFixed(3)}`).join('');
+function archive(){
+ const cmp=SPRING_COMPARISON,weak=sourcePoints(cmp.weak),strong=sourcePoints(cmp.strong),x=76,w=430,h=190,px=a=>x+a/120*w;let out='';
+ for(const [i,points,label,color]of [[0,weak,'Lower spring · compliant / contact',P.accent],[1,strong,'Upper spring · stiffer',P.ink]]){
+  const y=82+i*285,py=v=>y+h-v/20*h;
+  out+=t(x,y-30,label,27,color,'start')+axis(x,y,w,h,{xmax:120,ymax:20,labels:true})+
+   `<path data-reveal-curve pathLength="1" data-common-scale="120deg-20Nm" d="${dataPath(points,px,py)}" fill="none" stroke="${color}" stroke-width="3"/>`;
+  for(const p of points)out+=`<circle data-reveal-point cx="${px(p.angleDeg)}" cy="${py(p.torqueNm)}" r="3" fill="${color}"/>`;
+  out+=t(x+w,y+h+45,'Rotation (°)',23,P.muted,'end');
  }
- return svg(out+t(660,495,'Rotation (°)',25,P.muted,'end'),'Original ANSYS prototype curves; all 34 and 14 finite source points retained');
+ out+=t(76,22,'Torque (N·m)',23,P.muted,'start');
+ const estimate=SERIES_LINEAR_ESTIMATE,cx=700,cy=145,cw=435,ch=420,ex=a=>cx+a/800*cw,ey=v=>cy+ch-v/20*ch;
+ out+=t(cx,38,'Combined series response',32,P.accent,'start')+t(cx,77,'Series estimate',25,P.ink,'start')+t(cx,111,'Torque (N·m)',23,P.muted,'start')+
+ axis(cx,cy,cw,ch,{xmax:800,ymax:20,labels:true})+
+ `<path data-reveal-curve pathLength="1" d="${dataPath(estimate.measuredPoints,ex,ey)}" fill="none" stroke="${P.accent}" stroke-width="4"/>
+ <path data-series-estimate d="${dataPath(estimate.extrapolatedPoints,ex,ey)}" fill="none" stroke="${P.accent}" stroke-width="3.5" stroke-dasharray="9 6"/>
+ <circle data-composition-marker r="7" fill="${P.accent}" stroke="#fdfcf8" stroke-width="2"/>`;
+ for(const [kind,color]of [['low',P.muted],['high',P.ink]]){
+  const fit=estimate.stiffness[kind];if(!fit)continue;
+  const fitSegment=kind==='high'?[.15,.45].map(u=>{const angleDeg=fit.angleRange[0]+u*(fit.angleRange[1]-fit.angleRange[0]);return {angleDeg,torqueNm:fit.kNmPerDeg*angleDeg+fit.interceptNm};}):fit.endpoints;
+  out+=`<path data-fit-line="${kind}" d="${dataPath(fitSegment,ex,ey)}" stroke="${color}" stroke-width="2" fill="none"/>`;
+ }
+ out+=line('M535 292H620',P.muted,1.8)+t(575,278,'δ₁ + δ₂',26,P.ink)+
+ t(cx+cw,624,'Total rotation (°)',24,P.muted,'end')+
+ t(cx,655,`Low: ${estimate.stiffness.low.kNmPerDeg.toFixed(3)} N·m/°`,26,P.muted,'start')+
+ t(cx,694,`High: ≈ ${estimate.stiffness.high.kNmPerDeg.toFixed(3)} N·m/°`,26,P.ink,'start')+
+ t(76,685,'Raw curves: identical axes',24,P.muted,'start')+
+ line('M700 734H748',P.accent,3,true)+t(762,742,'Linear upper-unit approximation',23,P.muted,'start');
+ return svg(out,'Original two supplied responses have identical0 to120 degree and0 to20 Nm axes. Series calculation adds deflections at a common torque. Dashed continuation assumes a linear upper-unit response beyond its recorded range.').replace('720 500','1200 770');
 }
 function feaLegend(fea){if(!fea)return '';const curve=springResponsePoints,ymax=20,px=x=>680+x/120*450,py=y=>460-y/ymax*260;
  let out=t(600,15,'Deformation and torque response',36)+t(510,125,'Normalized stress',25,P.muted);
@@ -62,20 +122,59 @@ function feaLegend(fea){if(!fea)return '';const curve=springResponsePoints,ymax=
  return svg(out,'Angle-aligned FEA replay and ANSYS spring design response; stress normalized by the unchanged global source maximum').replace('viewBox="0 0 720 500"','viewBox="0 0 1200 600"');}
 const SOURCES=[
  'Illustrative winding · motor angle referred to spring input.',
- 'Conceptual comparison; no fitted stiffness values.',
- 'Increasing tangent stiffness.',
+ 'Same torque · different angular travel.',
+ 'Elastic design objective · qualitative.',
  'Same torque · additive deflection.',
- 'Gap closure → contact → reduced free flexure.',
+ 'Illustrative contact threshold · not a fitted angle.',
  'Angle-aligned view · P = 2 mm, a = 0.7 mm, b = 10 mm.',
  'P = 2 mm · a = 0.7 mm · two axial-depth designs.'
 ];
+function updatePanelMotion(root,build,motion){
+ const m=motion?.load===undefined?sampleSpringExplanationMotion(motion?.timeSec||0,build):motion;
+ const attr=(sel,key,value)=>root.querySelector(sel)?.setAttribute(key,value);
+ const point=(sel,x,y)=>{attr(sel,'cx',x);attr(sel,'cy',y);};
+ const u=m.load;
+ root.dataset.motionPhase=String(m.phase);root.dataset.motionClass='illustrative';
+ if(build===1){const y=336-170*u;point('[data-trade-low]',90+535*u,y);point('[data-trade-high]',90+142.955*u,y);attr('[data-trade-guide]','d',`M90 ${y}H${90+535*u}`);}
+ if(build===2){const x=90+550*u,y=420-320*(.14*u+.86*u**4),slope=-320*(.14+3.44*u**3)/550;
+  point('[data-objective-point]',x,y);attr('[data-objective-tangent]','d',`M${x-45} ${y-slope*45}L${x+45} ${y+slope*45}`);}
+ if(build===3){
+  const merge=m.merge??0,px=d=>100+d/1.65*550,py=t=>420-t*295;
+  const arr=Array.from({length:60},(_,i)=>{const tau=i/59,weak=.78*tau+.3*tau**.35,strong=.26*tau;return {tau,weak,strong};});
+  // At constant torque the two horizontal deflections are placed end-to-end.
+  attr('[data-series-weak]','d',arr.map((p,i)=>`${i?'L':'M'}${px(p.weak)} ${py(p.tau)}`).join(''));
+  attr('[data-series-strong]','d',arr.map((p,i)=>`${i?'L':'M'}${px(p.strong+merge*p.weak)} ${py(p.tau)}`).join(''));
+  attr('[data-series-combined]','d',arr.map((p,i)=>`${i?'L':'M'}${px(p.weak+p.strong)} ${py(p.tau)}`).join(''));
+  attr('[data-series-combined]','opacity',merge);attr('[data-series-strong]','opacity',1-.65*merge);attr('[data-series-weak]','opacity',1-.65*merge);
+  const weak=.78*u+.3*u**.35,strong=.26*u,y=py(u),xx=px(weak+strong*merge);
+  point('[data-series-marker]',xx,y);attr('[data-series-guide]','d',`M100 ${y}H${px(weak+strong)}`);
+  attr('[data-series-span1]','d',`M100 445H${px(weak)}`);attr('[data-series-span2]','d',`M${px(weak)+8} 445H${px(weak+strong)+8}`);
+  root.dataset.seriesMerge=String(merge);
+ }
+ if(build===4){const q=conceptualContactResponse(u).torque,x=100+540*u,y=420-300*q;
+  const slope=-300*conceptualContactResponse(u).slope/540;
+  point('[data-contact-point]',x,y);attr('[data-contact-tangent]','d',`M${x-32} ${y-slope*32}L${x+32} ${y+slope*32}`);
+  attr('[data-contact-guide]','stroke',m.contact?P.accent:P.muted);root.dataset.contact=String(m.contact);
+ }
+ if(build===6)updateQuantitativeComposition(root,m);
+}
+function updateQuantitativeComposition(root,m){
+ // The source estimate is rendered below when its two source branches overlap.
+ const marker=root.querySelector('[data-composition-marker]');if(!marker)return;
+ const data=SERIES_LINEAR_ESTIMATE.points;
+ const index=Math.min(data.length-1,m.load*(data.length-1)),i=Math.floor(index),u=index-i,a=data[i],b=data[Math.min(data.length-1,i+1)];if(!a)return;const p={angleDeg:a.angleDeg+(b.angleDeg-a.angleDeg)*u,torqueNm:a.torqueNm+(b.torqueNm-a.torqueNm)*u};
+ const x=700+p.angleDeg/800*435,y=565-p.torqueNm/20*420;
+ marker.setAttribute('cx',x);marker.setAttribute('cy',y);
+}
 export function createSpringExplanationPanel(host){
  const root=document.createElement('div');root.className='spring-explanation';root.hidden=true;root.setAttribute('aria-label','Nonlinear torsion spring explanation');host.append(root);let current=-1;
- return {update({active,build,settled,fea,winding}){root.hidden=!active;if(!active)return;if(current!==build){current=build;const figures=[sea,tradeoff,nonlinear,serial,turns,()=>feaLegend(fea),archive];root.innerHTML=`<div class="spring-explanation-figure">${figures[build]()}</div><div class="spring-explanation-math">${SPRING_MATH[build]}</div><p class="spring-explanation-source">${SOURCES[build]}</p>`;root.dataset.build=String(build);
+ return {update({active,build,settled,fea,winding,springMotion,timeSec}){root.hidden=!active;if(!active)return;if(current!==build){current=build;const figures=[sea,tradeoff,nonlinear,serial,contactCurve,()=>feaLegend(fea),archive];root.innerHTML=`<div class="spring-explanation-figure">${figures[build]()}</div><div class="spring-explanation-math">${SPRING_MATH[build]}</div><p class="spring-explanation-source">${SOURCES[build]}</p>`;root.dataset.build=String(build);
+ root.querySelector('.spring-explanation-source').hidden=true;
  if(build===0){root.style.left='29%';root.style.width='33%';root.style.top='10%';root.style.bottom='10%';root.style.gridTemplateRows='auto auto';root.style.alignContent='center';root.querySelector('.spring-explanation-figure').style.aspectRatio='720 / 500';root.style.gap='0';const source=root.querySelector('.spring-explanation-source');source.hidden=true;root.querySelector('.spring-explanation-math').style.cssText='font-size:27px;min-height:60px;margin-top:0;';}
  else{root.style.removeProperty('left');root.style.removeProperty('width');root.style.removeProperty('top');root.style.removeProperty('bottom');root.style.removeProperty('grid-template-rows');root.style.removeProperty('gap');root.style.removeProperty('align-content');}}
 
  root.style.opacity=settled?'1':'0';root.dataset.settled=String(settled);
+ updatePanelMotion(root,build,springMotion||sampleSpringExplanationMotion(timeSec||0,build));
  if(build===0&&winding){
  const fraction=Math.max(0,Math.min(1,winding.torqueFraction||0)),height=270*fraction,bar=root.querySelector('[data-winding-bar]');bar?.setAttribute('height',height.toFixed(3));bar?.setAttribute('y',(395-height).toFixed(3));const input=root.querySelector('[data-winding-input]');if(input)input.textContent=`θᵢₙ = ${winding.inputDeg.toFixed(0)}°`;
  Object.assign(root.dataset,{inputAngleDeg:String(winding.inputDeg),outputAngleDeg:'0',springTorqueNormalized:String(fraction),windingClassification:winding.classification});}
