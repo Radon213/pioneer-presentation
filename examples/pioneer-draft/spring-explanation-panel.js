@@ -1,8 +1,8 @@
-import {springResponsePoints,responseAtAngle} from './spring-plot-data.js?v=revision-20261029-49';
-import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-49';
-import {SPRING_MATH} from './spring-math.js?v=revision-20261029-49';
-import {SPRING_COMPARISON,SERIES_LINEAR_ESTIMATE} from './spring-series-data.js?v=revision-20261029-49';
-import {sampleSpringExplanationMotion,conceptualContactResponse} from './spring-explanation-motion.js?v=revision-20261029-49';
+import {springResponsePoints,responseAtAngle} from './spring-plot-data.js?v=revision-20261029-50';
+import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-50';
+import {SPRING_MATH} from './spring-math.js?v=revision-20261029-50';
+import {SPRING_COMPARISON,SERIES_LINEAR_ESTIMATE} from './spring-series-data.js?v=revision-20261029-50';
+import {sampleSpringExplanationMotion,conceptualContactResponse,seriesRegimeAtLoad} from './spring-explanation-motion.js?v=revision-20261029-50';
 // Diagram Design example-architecture / example-process / example-line grammar:
 // retain their neutral nodes, single burnt-tangerine focus, thin connectors,
 // rounded orthogonal ports and line/area/dot hierarchy. Slide shell is untouched.
@@ -54,19 +54,22 @@ function nonlinear(){const pts=Array.from({length:65},(_,i)=>{const x=i/64;retur
  t(650,464,'Deflection',27,P.muted,'end'),
  'Elastic design objective: compliant response at small deflection and rising tangent stiffness at large deflection. Yield means elastic compliance, not material yielding.');}
 function serial(){return svg(
- t(100,50,'Same torque, added deflections',32,P.ink,'start')+
- t(100,100,'Torque',25,P.muted,'start')+axis(100,125,550,295)+
- `<path data-series-weak fill="none" stroke="${P.accent}" stroke-width="3"/>
- <path data-series-strong fill="none" stroke="${P.ink}" stroke-width="3"/>
- <path data-series-combined fill="none" stroke="${P.accent}" stroke-width="4.5"/>
+ t(100,45,'Which spring sets the stiffness?',31,P.ink,'start')+
+ t(100,100,'Torque',25,P.muted,'start')+axis(100,130,550,290)+
+ `<path data-reveal-curve pathLength="1" data-series-weak fill="none" stroke="${P.muted}" stroke-width="2" opacity=".55"/>
+ <path data-reveal-curve pathLength="1" data-series-strong fill="none" stroke="${P.ink}" stroke-width="2" opacity=".55"/>
+ <path data-reveal-curve pathLength="1" data-series-combined fill="none" stroke="${P.accent}" stroke-width="4"/>
  <path data-series-guide fill="none" stroke="${P.muted}" stroke-width="1.3" stroke-dasharray="6 5"/>
+ <circle data-series-unit1 r="6" fill="${P.muted}"/>
+ <circle data-series-unit2 r="6" fill="${P.ink}"/>
  <circle data-series-marker r="8" fill="${P.accent}" stroke="#fdfcf8" stroke-width="2"/>
- <path data-series-span1 stroke="${P.accent}" stroke-width="8" stroke-linecap="round"/>
- <path data-series-span2 stroke="${P.ink}" stroke-width="8" stroke-linecap="round"/>`+
- t(180,478,'δ₁',32,P.accent)+t(330,478,'+ δ₂',32)+t(512,478,'= δ',32,P.accent)+
- t(650,527,'Total deflection',25,P.muted,'end')+
- t(110,576,'Compliant unit',24,P.accent,'start')+t(400,576,'Stiffer unit',24,P.ink,'start'),
- 'Conceptual serial composition: both spring units carry the same torque. At each torque, angular deflections add; the combined curve moves to the right rather than torques adding.').replace('720 500','720 600');}
+ <g data-series-before>${t(95,506,'Before contact',27,P.accent,'start')}${t(95,551,'k₁ ≪ k₂',32,P.ink,'start')}<text x="95" y="590" font-size="31" fill="${P.accent}">k<tspan baseline-shift="sub" font-size="20">eq</tspan> ≈ k₁</text></g>
+ <g data-series-after>${t(405,506,'After contact',27,P.accent,'start')}${t(405,551,'k₁ ≫ k₂',32,P.ink,'start')}<text x="405" y="590" font-size="31" fill="${P.accent}">k<tspan baseline-shift="sub" font-size="20">eq</tspan> ≈ k₂</text></g>`+
+ t(430,112,'k₁',27,P.muted)+t(270,112,'k₂',27,P.ink)+
+ t(650,193,'Series',29,P.accent,'end')+
+ t(650,462,'Deflection',25,P.muted,'end'),
+ 'Conceptual series stiffness: before contact k1 is much less than k2, so equivalent stiffness follows k1. After contact k1 becomes much greater than k2, so equivalent stiffness follows k2. Both units continue to share the same torque.').replace('720 500','720 640');}
+
 function contactCurve(){const pts=Array.from({length:91},(_,i)=>{const u=i/90;const torque=conceptualContactResponse(u).torque;return [100+540*u,420-300*torque];});return svg(
  t(100,50,'Contact changes the slope',31,P.ink,'start')+t(100,100,'Torque',26,P.muted,'start')+axis(100,120,540,300)+
  `<polyline data-reveal-curve pathLength="1" points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${P.accent}" stroke-width="3.5"/>
@@ -122,7 +125,7 @@ const SOURCES=[
  'Illustrative winding · motor angle referred to spring input.',
  'Same torque · different angular travel.',
  'Elastic design objective · qualitative.',
- 'Same torque · additive deflection.',
+ 'Illustrative stiffness dominance switches at contact.',
  'Illustrative contact threshold · not a fitted angle.',
  'Angle-aligned view · P = 2 mm, a = 0.7 mm, b = 10 mm.',
  'P = 2 mm · a = 0.7 mm · two axial-depth designs.'
@@ -137,18 +140,15 @@ function updatePanelMotion(root,build,motion){
  if(build===2){const x=90+550*u,y=420-320*(.14*u+.86*u**4),slope=-320*(.14+3.44*u**3)/550;
   point('[data-objective-point]',x,y);attr('[data-objective-tangent]','d',`M${x-45} ${y-slope*45}L${x+45} ${y+slope*45}`);}
  if(build===3){
-  const merge=m.merge??0,px=d=>100+d/1.65*550,py=t=>420-t*295;
-  const arr=Array.from({length:60},(_,i)=>{const tau=i/59,weak=.78*tau+.3*tau**.35,strong=.26*tau;return {tau,weak,strong};});
-  // At constant torque the two horizontal deflections are placed end-to-end.
-  attr('[data-series-weak]','d',arr.map((p,i)=>`${i?'L':'M'}${px(p.weak)} ${py(p.tau)}`).join(''));
-  attr('[data-series-strong]','d',arr.map((p,i)=>`${i?'L':'M'}${px(p.strong+merge*p.weak)} ${py(p.tau)}`).join(''));
-  attr('[data-series-combined]','d',arr.map((p,i)=>`${i?'L':'M'}${px(p.weak+p.strong)} ${py(p.tau)}`).join(''));
-  attr('[data-series-combined]','opacity',merge);attr('[data-series-strong]','opacity',1-.65*merge);attr('[data-series-weak]','opacity',1-.65*merge);
-  const weak=.78*u+.3*u**.35,strong=.26*u,y=py(u),xx=px(weak+strong*merge);
-  point('[data-series-marker]',xx,y);attr('[data-series-guide]','d',`M100 ${y}H${px(weak+strong)}`);
-  attr('[data-series-span1]','d',`M100 445H${px(weak)}`);attr('[data-series-span2]','d',`M${px(weak)+8} 445H${px(weak+strong)+8}`);
-  root.dataset.seriesMerge=String(merge);
+  const px=d=>100+d/1.3*550,py=t=>420-t*290,arr=Array.from({length:101},(_,i)=>{const tau=i/100,weak=tau<=.18?4*tau:.72+.04*(tau-.18),strong=.4*tau;return {tau,weak,strong};});
+  for(const [selector,value]of [['weak',p=>p.weak],['strong',p=>p.strong],['combined',p=>p.weak+p.strong]])attr(`[data-series-${selector}]`,'d',arr.map((p,i)=>`${i?'L':'M'}${px(value(p))} ${py(p.tau)}`).join(''));
+  const q=m.series||seriesRegimeAtLoad(u),y=py(q.tau);
+  point('[data-series-marker]',px(q.total),y);point('[data-series-unit1]',px(q.weak),y);point('[data-series-unit2]',px(q.strong),y);
+  attr('[data-series-guide]','d',`M100 ${y}H${px(q.total)}`);
+  for(const [selector,active]of [['[data-series-before]',!q.contact],['[data-series-after]',q.contact]]){const group=root.querySelector(selector);group?.setAttribute('font-weight',active?'600':'400');group?.querySelectorAll('text').forEach(node=>node.setAttribute('fill',active?P.accent:P.muted));}
+  root.dataset.seriesRegime=q.contact?'k1 >> k2; keq follows k2':'k1 << k2; keq follows k1';
  }
+
  if(build===4){const q=conceptualContactResponse(u).torque,x=100+540*u,y=420-300*q;
   const slope=-300*conceptualContactResponse(u).slope/540;
   point('[data-contact-point]',x,y);attr('[data-contact-tangent]','d',`M${x-32} ${y-slope*32}L${x+32} ${y+slope*32}`);
