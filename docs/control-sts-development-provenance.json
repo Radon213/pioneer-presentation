@@ -19,32 +19,39 @@
   "attempts": [
     {
       "id": "early",
-      "label": "Early strategy",
-      "sourceTrace": "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/p0_causal_execution_r1/p5_momentum_screen_r1/actual_trace.npz",
-      "sourceTraceSHA256": "95fc9e044eb950c46eb09972f33c0e29af8abae425749ef552d82674a2626d15",
-      "sourceModel": "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/runtime_p5_momentum_screen_r1/path48_15/chair22.xml",
-      "sourceModelSHA256": "264b1348b75070fd3fc04439db6fe4d3aebef194f63f69e1af629577d1277995",
-      "sourceWorld": 0,
+      "label": "Early human-policy training",
+      "sourceTrace": "/home/arl/Documents/Pioneer/work/myoassist22-single-ppo-path-cooptimization-2026-10-28/baseline_development/threshold_0.51/trace.npz",
+      "sourceTraceSHA256": "98c33193b6dce2d029dbe5215509f78845863967a2439f98ec91ce8630ac5905",
+      "sourceModel": "/home/arl/Documents/Pioneer/work/myoassist22-single-ppo-path-cooptimization-2026-10-28/runtime/path48_15/chair22.xml",
+      "sourceModelSHA256": "a799d7b6ee0e4b05bb21bb6ff37ad679a4ef1fe1053fae4e94e76693b121e4b3",
+      "sourceWorld": 24,
       "sourceIndexRange": [
         0,
-        358
+        190
       ],
-      "durationSeconds": 3.58,
-      "sourceSampleHz": 100,
-      "displaySampleHz": 25,
-      "frameCount": 91,
-      "terminalFailureReason": 128,
+      "durationSeconds": 9.5,
+      "sourceSampleHz": 20,
+      "displaySampleHz": 20,
+      "frameCount": 191,
+      "terminalFailureReason": 259,
       "taskSuccess": false,
+      "bareHuman": true,
+      "continuedAfterValidityFailure": true,
+      "fullGroundFallSourceRecorded": true,
+      "sourceTendonCount": 22,
+      "displayTendonSlots": 26,
+      "validityFailureSourceIndex": 85,
+      "playbackRate": 0.75,
+      "terminalHoldSeconds": 1.5,
       "qualified": false,
       "physicsSteps": 0,
-      "offlineKinematicsCalls": 91,
+      "offlineKinematicsCalls": 191,
       "sharedMeshMaxDifferenceM": 0,
       "allProtectedSourcesUnchanged": true,
       "protectedSourceHashes": {
-        "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/p0_causal_execution_r1/p5_momentum_screen_r1/actual_trace.npz": "95fc9e044eb950c46eb09972f33c0e29af8abae425749ef552d82674a2626d15",
-        "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/runtime_p5_momentum_screen_r1/path48_15/chair22.xml": "264b1348b75070fd3fc04439db6fe4d3aebef194f63f69e1af629577d1277995",
-        "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/p0_causal_execution_r1/p5_momentum_screen_r1/recording.json": "22dbf30526f666ebbce4f338b0b5bce14e10c4d28af1d39a9bfa5d766f4406eb",
-        "/home/arl/Documents/Pioneer/work/myoassist22-aakj-sts-teacher-student-2026-10-28/p0_causal_execution_r1/p5_momentum_screen_r1/independent_dwell_audit.json": "e4f6f511a43fc6d882b2503a5a95879962f60b197684223f07fdaa0c85fa6a14"
+        "/home/arl/Documents/Pioneer/work/myoassist22-single-ppo-path-cooptimization-2026-10-28/baseline_development/threshold_0.51/trace.npz": "98c33193b6dce2d029dbe5215509f78845863967a2439f98ec91ce8630ac5905",
+        "/home/arl/Documents/Pioneer/work/myoassist22-single-ppo-path-cooptimization-2026-10-28/runtime/path48_15/chair22.xml": "a799d7b6ee0e4b05bb21bb6ff37ad679a4ef1fe1053fae4e94e76693b121e4b3",
+        "/home/arl/Documents/Pioneer/work/myoassist22-single-ppo-path-cooptimization-2026-10-28/baseline_development/threshold_0.51/RESULT.json": "0ee84f7ffe51d709f149477582b1e8f568867161bc7121fedd5259345c8580c2"
       }
     },
     {
@@ -65,6 +72,14 @@
       "frameCount": 134,
       "terminalFailureReason": 256,
       "taskSuccess": false,
+      "bareHuman": false,
+      "continuedAfterValidityFailure": false,
+      "fullGroundFallSourceRecorded": false,
+      "sourceTendonCount": 26,
+      "displayTendonSlots": 26,
+      "validityFailureSourceIndex": null,
+      "playbackRate": 0.75,
+      "terminalHoldSeconds": 1.5,
       "qualified": false,
       "physicsSteps": 0,
       "offlineKinematicsCalls": 134,
@@ -78,8 +93,8 @@
       }
     }
   ],
-  "bytes": 1744680,
-  "gzipBytes": 891928,
-  "binarySHA256": "4c80572e1b2ce2a961b60469e23c4f7bd0de6f679402093cce989ad496f9acfa",
-  "gzipSHA256": "877509663fd92397c929e61f4bd3a3bb3597d3c8690602c1ed2428d5b7f28be8"
+  "bytes": 2495984,
+  "gzipBytes": 869168,
+  "binarySHA256": "d6e0492897e2672ab38547dcd1dd28cfdb0e1f010175f266df3abc02b915bc6a",
+  "gzipSHA256": "8c71703a09aa4b232b935f2ac193b12ce6cbbfa5e3101ae5cb6bd9498d0ecd80"
 }

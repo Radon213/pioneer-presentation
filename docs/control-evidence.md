@@ -55,10 +55,17 @@ Root:
 
 Use one persistent Three.js scene with next-driven camera/element emphasis. Use the true stored STS trajectory for the result and show its original time, including any playback speed. A conceptual spring loading sequence must be labeled as a target illustration or separated from recorded telemetry. Keep equations in rendered LaTeX. Diagrams should closely follow Diagram Design's neutral paper/ink/coral repository examples. Keep the cream academic slide shell, existing serif fonts, authors and source colors.
 
-Walking figures now use the full saved 100 Hz record and an exact saved-state FK export from the same candidate. The first walking stage replays the full interval with a four-second moving chart window; the next focuses on 25.5–27.19 s with the same model retained. Display markers and pose transforms interpolate continuously; they do not add simulated samples or change the terminal exceedance. The actual 26.95 W terminal value remains visible beyond the 25 W limit.
+Walking figures now use the full saved 100 Hz record and an exact saved-state FK export from the same candidate. The first walking stage replays the full interval with a four-second moving chart window; the next focuses on 22.19–27.19 s with the same model retained. Display markers and pose transforms interpolate continuously; they do not add simulated samples or change the terminal exceedance. The actual 26.95 W terminal value remains visible beyond the 25 W limit.
 
 ## Revision 38 visual changes
 
 The detached native spring front shot is replaced by a conceptual animated torsion diagram, integrating relative angle, torque and stored energy within the same figure. Equations sit inside the relevant nodes rather than below the whole diagram. The recorded STS model accompanies the task sequence and development snapshots. Development clips are separate saved controller configurations, not a plotted PPO improvement curve. The rear two chair legs use the prior approved render-only +0.10 m source-X correction, preserving seat height and saved dynamics.
 
 The Prepare/Assist/Release introduction replays the first six seconds of the same student record. Phase divisions follow the source's descriptive seated/rising/standing boundaries at 0.94 and 4.79 s. Its elastic-state curve is explicitly conceptual, not a measured spring channel.
+
+
+## Revision 40 readability and replay
+
+Walking torque is displayed as a 0.24 s centred time average with rounded, segment-bounded interpolation. Power uses a 0.5 s causal mean; its numerical value is held for 0.75 s between updates and rounded to 0.1 W. Raw data, raw peak and limit events are unchanged; the terminal figure separately states the recorded 26.95 W maximum. Both walking stages run at 1x source speed, and the terminal stage plays the last five seconds.
+
+Development now begins with an actual full ground fall from earlier human-policy training, without implants. That recorded continuation after a validity-failure flag is unscored; it is not an implant-assistance result. See control-sts-development.md for the exact source and slow-motion/hold schedule.
