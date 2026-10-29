@@ -1,4 +1,4 @@
-import {TEACHING_MATH} from './control-teaching-math.js?v=revision-20261029-61';
+import {TEACHING_MATH} from './control-teaching-math.js?v=revision-20261029-62';
 const C={ink:'#2d3142',muted:'#4f5d75',accent:'#bf4520',paper:'#fdfcf8',rule:'#c6c8ca',tint:'#f7eee8'};
 const esc=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
 const text=(x,y,s,n=26,color=C.ink,anchor='start',attrs='')=>`<text x="${x}" y="${y}" font-size="${n}" fill="${color}" text-anchor="${anchor}" ${attrs}>${esc(s)}</text>`;
@@ -29,7 +29,7 @@ export function controlTeachingFigure(build,data){
  box(576,90,320,142,true)+text(736,131,'Implant control',30,C.ink,'middle')+text(736,168,'Two motor commands',25,C.muted,'middle')+wave(622,205,228,28,.6,C.accent)+
  arrow('M224 232V274Q224 282 232 282H430Q438 282 438 290V324')+arrow('M736 232V274Q736 282 728 282H530Q522 282 522 290V324',true)+
  box(272,324,416,130)+text(480,368,'Coupled dynamics',31,C.ink,'middle')+text(480,409,'Human + implanted knees',25,C.muted,'middle')+text(480,440,'MuJoCo · MyoAssist',23,C.muted,'middle')+
- path('M64 500H896',C.rule,1.3)+text(480,544,'Simulation: output motion · spring torque · contact',27,C.ink,'middle')+text(480,591,'Device: local signals only',27,C.accent,'middle'));
+ path('M64 500H896',C.rule,1.3)+text(480,544,'Simulation: output motion + spring torque',27,C.ink,'middle')+text(480,591,'Device: motor-side signals',27,C.accent,'middle'));
  if(build===3){
  const shown=[data.stsSearch.candidates[0],data.stsSearch.candidates[2],data.stsSearch.candidates[4]];const p=plot({x:65,y:126,w:390,h:312,ymax:6,series:shown.map((s,i)=>({time:s.timeSec,value:s.torqueNm,color:i===2?C.accent:C.muted,width:i===2?3:1.6,dash:i===1}))});
  return svg('teacher-strategy-search','Actual saved spring-torque candidates for two, four and six Nm targets at a 0.8 second charge start. The full search also tests 1.2 seconds. The adjacent body shows separate controller-development recordings; gate and cost details are in speaker notes.',
@@ -40,7 +40,7 @@ export function controlTeachingFigure(build,data){
  box(24,92,304,190)+text(48,134,'Simulator signals',28)+text(48,179,'Motor angle / speed',24,C.muted)+text(48,220,'True output motion',24)+text(48,258,'True spring torque',24)+
  box(400,92,248,190)+text(524,135,'Teacher control',28,C.ink,'middle')+wave(438,188,172,40)+text(524,244,'Model-based tracking',23,C.muted,'middle')+
  box(720,92,216,190)+text(828,135,'Motor torque',28,C.ink,'middle')+servo(828,192)+text(828,258,'Hardware limits',23,C.muted,'middle')+
- path('M24 313H936',C.rule,1.4)+text(24,347,'Runtime: local signals only',27,C.accent)+
+ path('M24 313H936',C.rule,1.4)+text(24,347,'Runtime: motor-side signals only',27,C.accent)+
  arrow('M284 488H344')+arrow('M484 488H544',true)+arrow('M740 488H800',true)+
  signalNode(24,374)+box(344,374,140,236)+text(414,416,'History',27,C.ink,'middle')+history(374,444)+text(414,576,'3 frames',23,C.muted,'middle')+text(414,600,'18 × 3 = 54',19,C.muted,'middle')+
  `<circle class="teaching-flow-token" cx="292" cy="488" r="4" fill="${C.muted}" aria-hidden="true"/>`+

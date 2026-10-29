@@ -18,7 +18,9 @@ test('Control advances from spring-state preparation to a nominal result and wal
  assert.equal(control.duration,275);
  assert.equal(control.stages.reduce((sum,s)=>sum+s.duration,0),control.duration);
  assert.match(audience(control.stages[0]),/spring.*state|elastic state/i);
- assert.match(audience(control.stages[1]),/human|person/i);
+ assert.match(audience(control.stages[1]),/inside the body/i);
+ assert.match(audience(control.stages[1]),/sensors.*output motion.*spring deformation.*hard to place/is);
+ assert.match(audience(control.stages[1]),/motor.side signals/i);
  assert.match(audience(control.stages[2]),/prepare.*assist.*release/is);
  assert.match(audience(control.stages[3]),/teacher/i);
  assert.match(audience(control.stages[4]),/device.side|sensing/i);

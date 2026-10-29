@@ -1,8 +1,8 @@
 # Pioneer — English speaker script
 
-1355 words · 12 minutes allocated · 6 chapters · 30 audience stages.
+1356 words · 12 minutes allocated · 6 chapters · 30 audience stages.
 
-**Bold words** carry the main emphasis. A **/** marks a short breath or pause; do not read the slash aloud. Keep the sentences simple and let the animation finish the explanation. The allocation averages about 113 spoken words per minute, including pauses. At 120 words per minute, the text takes about 11 minutes 17 seconds. Rehearse once and adjust pauses to your pace.
+**Bold words** carry the main emphasis. A **/** marks a short breath or pause; do not read the slash aloud. Keep the sentences simple and let the animation finish the explanation. The allocation averages about 113 spoken words per minute, including pauses. At 120 words per minute, the text takes about 11 minutes 18 seconds. Rehearse once and adjust pauses to your pace.
 
 ## Presenter mode
 
@@ -104,7 +104,7 @@ Control must prepare the **spring state**, / not simply request knee torque. The
 
 ### 5-2 · 07:16–07:36 · 20 seconds
 
-We study this / in a **human-and-implant simulation**. One controller drives twenty-two muscles. Another drives the implant motors. The simulator can show their full state. But a real device / sees only **local sensor signals**. This gap motivates our teacher-student approach.
+Our implant sits **inside the body**. / This makes sensors on the output shaft / or spring hard to place. The simulator can show these **hidden states**. A device must use **motor-side signals**. This is why we use / a teacher and a student.
 
 ### 5-3 · 07:36–07:59 · 23 seconds
 
@@ -116,7 +116,7 @@ We first developed the human movement, / then searched for assistance. We tested
 
 ### 5-5 · 08:31–09:00 · 29 seconds
 
-The **teacher** reads true motor motion, / output motion, / and spring torque from the simulator. The **student** gets three recent sets / of eighteen local signals. These include encoder readings, / a current-based torque estimate, / earlier commands, / and a timing cue. Its memory predicts two torque-target corrections / at **ten hertz**. An observer and motor servo / turn these into motor commands.
+The **teacher** sees true output motion / and spring torque. The **student** must work / without those sensor readings. It uses three frames / of eighteen local signals: motor encoders, / speed, / a current-based torque estimate, / past commands, / and a timing cue. Its memory predicts two torque-target corrections / at **ten hertz**. An observer and servo / turn them into motor commands.
 
 ### 5-6 · 09:00–09:30 · 30 seconds
 

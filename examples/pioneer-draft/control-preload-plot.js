@@ -1,4 +1,4 @@
-import {PRELOAD_CURVE,preloadOperatingPoint,preloadTorqueNm} from './control-preload-data.js?v=revision-20261029-61';
+import {PRELOAD_CURVE,preloadOperatingPoint,preloadTorqueNm} from './control-preload-data.js?v=revision-20261029-62';
 const C={ink:'#2d3142',muted:'#4f5d75',accent:'#bf4520',paper:'#fdfcf8',rule:'rgba(45,49,66,.15)'};
 const x=d=>66+(d+40)/145*394;
 const projection=(top,bottom)=>t=>bottom-(t+1)/12*(bottom-top);
