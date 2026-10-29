@@ -1,11 +1,11 @@
 {
   "schema": "pioneer-runtime-package-v1",
-  "runtimeBytes": 70044867,
+  "runtimeBytes": 70046233,
   "files": [
     {
       "path": "examples/pioneer-draft/app.js",
       "bytes": 15306,
-      "sha256": "075b157224809c2b3a1a7d28cac2fd2fcd92d48c63572768e23a6a846bff21a5"
+      "sha256": "617be2c017e281cf827a55b8186addff36525cabcb9c669cd9c52401a4f66705"
     },
     {
       "path": "examples/pioneer-draft/archived-spring-chart.js",
@@ -129,8 +129,8 @@
     },
     {
       "path": "examples/pioneer-draft/chapter-overlays.js",
-      "bytes": 8832,
-      "sha256": "99daf975d3799cf569f47c2f044dd813ac8fcd243fe57687b8ef98938d4285f0"
+      "bytes": 9466,
+      "sha256": "f982590f02f7d5cd196bd4319eb2c5b4f87902c1af2f962fa78e856f42a3dc3f"
     },
     {
       "path": "examples/pioneer-draft/clinical-knee-layer.js",
@@ -140,32 +140,32 @@
     {
       "path": "examples/pioneer-draft/continuous-human-layer.js",
       "bytes": 15653,
-      "sha256": "5a1738ef4fb20ecbef7ca723ce18491b91bde418997421e4651a07f1d4af0bb8"
+      "sha256": "3f80210b560c871b523c16e7a9a3da8dbd1ab0ee370672d6c7864e0d42867f6b"
     },
     {
       "path": "examples/pioneer-draft/continuous-knee-viewer.js",
-      "bytes": 67564,
-      "sha256": "7aa6610ce412595df4e128d5b9be3677535aa05b6c0e759dfec698af7fd43eb1"
+      "bytes": 68296,
+      "sha256": "5513c74ca72c3bf4d278d5d67028b4c141444893d361fa2f10eaa87310de3aff"
     },
     {
       "path": "examples/pioneer-draft/deck-data.js",
       "bytes": 29193,
-      "sha256": "838fab2518ddbf3a88e00588236c5a279b6a85fe3847a88a1ee65086dd78073e"
+      "sha256": "b215aec0eab37acf6e3d67f47352f3e0755190e106f759c62e46f9ecb2a16c40"
     },
     {
       "path": "examples/pioneer-draft/gait-binary-loader.js",
       "bytes": 3591,
-      "sha256": "9830e42831e009d2ab37db27f20484b395b46953b5921bef4493d23c9975acb7"
+      "sha256": "4867959ea257eaf71862c1871af2254639f2184e65806dd8c7145127b4472533"
     },
     {
       "path": "examples/pioneer-draft/gait-chapter-layer.js",
       "bytes": 12714,
-      "sha256": "a60f8efa111e0bc1a5363e6e64936781f55f8f132a84636c7e75a3f331abf87d"
+      "sha256": "c90460bce2cebad7bc8ce54981cab71777ebe388cfc233d9a8c7c87e8208679f"
     },
     {
       "path": "examples/pioneer-draft/index.html",
       "bytes": 25321,
-      "sha256": "eb69d8477f3e5314289c9ffb7e87f603fe6c47f8e2c91cf89c76c6e5785958a1"
+      "sha256": "e80df0643391ca5130a00064eadc8a57327cee1376271ebb1cef2b19fdb9aafc"
     },
     {
       "path": "examples/pioneer-draft/motion-clock.js",
@@ -175,17 +175,17 @@
     {
       "path": "examples/pioneer-draft/myoassist-examples-layer.js",
       "bytes": 9888,
-      "sha256": "fbf6a32a51bd39ecf994b85408a1edb67415f428fee5a51884d12cd5064b5dca"
+      "sha256": "d46978114e1865b4fec5100953a075abf7e8102640c2812162614bad0c2e6663"
     },
     {
       "path": "examples/pioneer-draft/myoleg80-muscle-layer.js",
       "bytes": 2220,
-      "sha256": "e7816824e226319827c8822e51957c1d859c4c44b48d457418be8cbdfd0095fa"
+      "sha256": "4132a2a9e1d6ae26a4e21bcff6a99de6e01b3be346e8ae7e8d8aa6a271a18da2"
     },
     {
       "path": "examples/pioneer-draft/native-knee-comparison.js",
       "bytes": 8916,
-      "sha256": "79eb7ce0771e93d98757c447dee4b7f4ede88e8c22e807f336c9c0f15c870117"
+      "sha256": "8af87f330156f35b7746f3e2074fd4a6e9aef729d050aad627a03aec9c970b2e"
     },
     {
       "path": "examples/pioneer-draft/performance-benchmark.js",
@@ -210,12 +210,12 @@
     {
       "path": "examples/pioneer-draft/spring-analysis-data.js",
       "bytes": 4089,
-      "sha256": "c888d7826b8a53a2acd60bd8b5904372086c65e3202b1b2764a4a348c39160ac"
+      "sha256": "8c2b60e2315971fab48ec45102973a2e9f5c21b8652d595d137e04a242bec8e8"
     },
     {
       "path": "examples/pioneer-draft/spring-fea-layer.js",
       "bytes": 8574,
-      "sha256": "815afa3a06a326784e33bcb5361d11d00968c6b312dd194658ad1dfffebc9ce4"
+      "sha256": "45b3fbf5691be9fdab550629d04d82c435998371cab11edac71c970bba38ff34"
     },
     {
       "path": "examples/pioneer-draft/style.css",

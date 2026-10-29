@@ -1,6 +1,6 @@
-import {buildArchivedSpringChart} from './archived-spring-chart.js?v=revision-20261029-22';
-import {buildDiagram} from './chapter-diagram-layer.js?v=revision-20261029-22';
-import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-22';
+import {buildArchivedSpringChart} from './archived-spring-chart.js?v=revision-20261029-23';
+import {buildDiagram} from './chapter-diagram-layer.js?v=revision-20261029-23';
+import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-23';
 // Short visual explanations. All quantitative FEA marks use the same archived solver case.
 const C={ink:'#1a3a7a',accent:'#a44725',muted:'#585950',line:'#b5b3ab',paper:'#fdfcf8'};
 const text=(x,y,s,z=26,c=C.ink,a='middle')=>`<text x="${x}" y="${y}" font-size="${z}" fill="${c}" text-anchor="${a}" stroke="${C.paper}" stroke-width="5" paint-order="stroke">${s}</text>`;
@@ -27,20 +27,24 @@ export function buildChapterOverlay(ctx){
   if(b===0&&knee)s+=label(project(knee),'Joint surfaces');
   if(b===1&&(live.bgInspect||0)>.95){const p=partPoint('clinical')?.insert;if(p){const q=project(p);s+=text(1450,490,'Polyethylene insert',34,C.ink,'end')+arrow([1220,460],[q[0]+180,q[1]+65],C.ink);}}
   if(b===2){
+   const p=Math.max(0,Math.min(1,live.bgChart??1)),smooth=t=>t*t*(3-2*t),phase=(a,b)=>Math.max(0,Math.min(1,(p-a)/(b-a)));
+   const fade=(a,b,content)=>`<g opacity="${smooth(phase(a,b)).toFixed(4)}">${content}</g>`;
+   const grow=(a,b)=>1-Math.pow(1-phase(a,b),3);
    const a=human?.getAttachment('left');
-   if(a?.hipAnchor&&a?.kneeAnchor){
-    const thigh=a.hipAnchor.clone().lerp(a.kneeAnchor,.56);
-    s+=label(project(thigh),'Thigh muscles',-440,10);
-   }
-   // Reconstruct the reported relative change; 62% is strength loss, not prevalence.
-   // Preoperative strength=100; postoperative strength=38. No invented variance.
-   const x=970,w=480;
-   s+=text(1220,135,'Quadriceps strength',44,C.ink)+text(1220,178,'Preoperative level = 100',29,C.muted);
-   s+=text(x,218,'Before TKA',33,C.ink,'start')+`<rect x="${x}" y="235" width="${w}" height="34" fill="${C.ink}"/>`+text(x+w+20,263,'100',36,C.ink,'start');
-   s+=text(x,318,'≈1 month after TKA',33,C.ink,'start')+`<rect x="${x}" y="335" width="${w*.38}" height="34" fill="${C.accent}"/>`+text(x+w*.38+20,363,'38',36,C.accent,'start');
-   s+=text(1370,375,'−62%',64,C.accent)+text(1220,438,'n = 20 · mean 27 days after TKA',27,C.muted)+text(1220,475,'Mizner et al., JBJS, 2005',27,C.muted);
-
+   if(a?.hipAnchor&&a?.kneeAnchor){const thigh=a.hipAnchor.clone().lerp(a.kneeAnchor,.56);s+=fade(.06,.28,label(project(thigh),'Thigh muscles',-440,10));}
+   // Every frame follows one scalar timeline; rebuilt SVG nodes never restart
+   // CSS animations. Labels fade while each bar extends from its fixed origin.
+   const x=970,w=480,pre=grow(.24,.65),post=grow(.46,.88);
+   s+=fade(.06,.28,text(1220,135,'Quadriceps strength',44,C.ink)+text(1220,178,'Preoperative level = 100',29,C.muted));
+   s+=fade(.16,.35,text(x,218,'Before TKA',33,C.ink,'start'));
+   s+=`<g data-strength-bar="pre" data-progress="${pre.toFixed(4)}" transform="translate(${x} 235) scale(${pre.toFixed(5)} 1)"><rect width="${w}" height="34" fill="${C.ink}"/></g>`;
+   s+=fade(.62,.76,text(x+w+20,263,'100',36,C.ink,'start'));
+   s+=fade(.36,.53,text(x,318,'≈1 month after TKA',33,C.ink,'start'));
+   s+=`<g data-strength-bar="post" data-progress="${post.toFixed(4)}" transform="translate(${x} 335) scale(${post.toFixed(5)} 1)"><rect width="${w*.38}" height="34" fill="${C.accent}"/></g>`;
+   s+=fade(.85,.96,text(x+w*.38+20,363,'38',36,C.accent,'start'))+fade(.86,1,text(1370,375,'−62%',64,C.accent));
+   s+=fade(.10,.30,text(1220,438,'n = 20 · mean 27 days after TKA',27,C.muted)+text(1220,475,'Mizner et al., JBJS, 2005',27,C.muted));
   }
+
   if(b===3){
    if((live.bgExamples||0)<.98)return '';
    // The layer provides one real world-space label anchor per attached model.
