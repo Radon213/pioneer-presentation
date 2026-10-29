@@ -1,6 +1,6 @@
-import {buildArchivedSpringChart} from './archived-spring-chart.js?v=revision-20261029-21';
-import {buildDiagram} from './chapter-diagram-layer.js?v=revision-20261029-21';
-import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-21';
+import {buildArchivedSpringChart} from './archived-spring-chart.js?v=revision-20261029-22';
+import {buildDiagram} from './chapter-diagram-layer.js?v=revision-20261029-22';
+import {springFEAColor} from './spring-fea-layer.js?v=revision-20261029-22';
 // Short visual explanations. All quantitative FEA marks use the same archived solver case.
 const C={ink:'#1a3a7a',accent:'#a44725',muted:'#585950',line:'#b5b3ab',paper:'#fdfcf8'};
 const text=(x,y,s,z=26,c=C.ink,a='middle')=>`<text x="${x}" y="${y}" font-size="${z}" fill="${c}" text-anchor="${a}" stroke="${C.paper}" stroke-width="5" paint-order="stroke">${s}</text>`;
@@ -32,15 +32,14 @@ export function buildChapterOverlay(ctx){
     const thigh=a.hipAnchor.clone().lerp(a.kneeAnchor,.56);
     s+=label(project(thigh),'Thigh muscles',-440,10);
    }
-   // Pooled estimate for TKA populations, not a rate for all older adults.
-   // The interval is uncertainty across the meta-analysis, not muscle-force loss.
-   const x=920,y=310,w=570,max=40,value=20.1,lo=13.6,hi=28.8;
-   const q=v=>x+w*v/max;
-   s+=text(x+w/2,180,'Sarcopenia in TKA populations',42,C.ink);
-   s+=`<path d="M${x} ${y+28}H${x+w}" fill="none" stroke="${C.line}" stroke-width="2"/>`;
-   for(const v of[0,10,20,30,40])s+=`<path d="M${q(v)} ${y+24}v8" stroke="${C.line}" stroke-width="2"/>`+text(q(v),y+65,`${v}%`,32,C.muted);
-   s+=`<path d="M${q(lo)} ${y}H${q(hi)}M${q(lo)} ${y-9}v18M${q(hi)} ${y-9}v18" fill="none" stroke="${C.accent}" stroke-width="4"/><circle cx="${q(value)}" cy="${y}" r="8" fill="${C.accent}"/>`;
-   s+=text(q(value),y-30,'20.1%',62,C.accent)+text(x+w/2,430,'95% CI 13.6–28.8%',35,C.muted)+text(x+w/2,455,'Sumbal et al., 2024',27,C.muted);
+   // Reconstruct the reported relative change; 62% is strength loss, not prevalence.
+   // Preoperative strength=100; postoperative strength=38. No invented variance.
+   const x=970,w=480;
+   s+=text(1220,135,'Quadriceps strength',44,C.ink)+text(1220,178,'Preoperative level = 100',29,C.muted);
+   s+=text(x,218,'Before TKA',33,C.ink,'start')+`<rect x="${x}" y="235" width="${w}" height="34" fill="${C.ink}"/>`+text(x+w+20,263,'100',36,C.ink,'start');
+   s+=text(x,318,'≈1 month after TKA',33,C.ink,'start')+`<rect x="${x}" y="335" width="${w*.38}" height="34" fill="${C.accent}"/>`+text(x+w*.38+20,363,'38',36,C.accent,'start');
+   s+=text(1370,375,'−62%',64,C.accent)+text(1220,438,'n = 20 · mean 27 days after TKA',27,C.muted)+text(1220,475,'Mizner et al., JBJS, 2005',27,C.muted);
+
   }
   if(b===3){
    if((live.bgExamples||0)<.98)return '';

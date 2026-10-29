@@ -1,11 +1,11 @@
 {
   "schema": "pioneer-runtime-package-v1",
-  "runtimeBytes": 70044342,
+  "runtimeBytes": 70044867,
   "files": [
     {
       "path": "examples/pioneer-draft/app.js",
       "bytes": 15306,
-      "sha256": "adfd315ebb60cd8fff321278f6df9dce659917ce420f834aa10d0abb6b2c5fa3"
+      "sha256": "075b157224809c2b3a1a7d28cac2fd2fcd92d48c63572768e23a6a846bff21a5"
     },
     {
       "path": "examples/pioneer-draft/archived-spring-chart.js",
@@ -129,8 +129,8 @@
     },
     {
       "path": "examples/pioneer-draft/chapter-overlays.js",
-      "bytes": 8920,
-      "sha256": "38b96e555cad403e9f9ad680de7635cf9120ba4d2151d438c6066f50a23ff658"
+      "bytes": 8832,
+      "sha256": "99daf975d3799cf569f47c2f044dd813ac8fcd243fe57687b8ef98938d4285f0"
     },
     {
       "path": "examples/pioneer-draft/clinical-knee-layer.js",
@@ -140,32 +140,32 @@
     {
       "path": "examples/pioneer-draft/continuous-human-layer.js",
       "bytes": 15653,
-      "sha256": "8ac7d333ed5f4cec70bdbb0fcc8f5b64e41e2a20864a25c39a53d337542301ae"
+      "sha256": "5a1738ef4fb20ecbef7ca723ce18491b91bde418997421e4651a07f1d4af0bb8"
     },
     {
       "path": "examples/pioneer-draft/continuous-knee-viewer.js",
       "bytes": 67564,
-      "sha256": "bada50001182dbedf5150eb95c6cd91a54b08bcfefdcf84052817fff0f63764a"
+      "sha256": "7aa6610ce412595df4e128d5b9be3677535aa05b6c0e759dfec698af7fd43eb1"
     },
     {
       "path": "examples/pioneer-draft/deck-data.js",
-      "bytes": 28858,
-      "sha256": "06020a96c86eb20959a8115dc6fcf14b806438b02393b2cfd1644ca6e7fd8788"
+      "bytes": 29193,
+      "sha256": "838fab2518ddbf3a88e00588236c5a279b6a85fe3847a88a1ee65086dd78073e"
     },
     {
       "path": "examples/pioneer-draft/gait-binary-loader.js",
       "bytes": 3591,
-      "sha256": "83a8b0df81a3ca6f11824b73d1fbb2a42b402689c8755f1c19748b43132d83c4"
+      "sha256": "9830e42831e009d2ab37db27f20484b395b46953b5921bef4493d23c9975acb7"
     },
     {
       "path": "examples/pioneer-draft/gait-chapter-layer.js",
       "bytes": 12714,
-      "sha256": "a98e4b42217bbf8be5983f7ad475fef518cd53347ee362dd0e38fb12c8d5e2f3"
+      "sha256": "a60f8efa111e0bc1a5363e6e64936781f55f8f132a84636c7e75a3f331abf87d"
     },
     {
       "path": "examples/pioneer-draft/index.html",
-      "bytes": 25043,
-      "sha256": "790193f8b58892655ce813a733e57067ecfe534120bc588b795ac26f8ec6cab6"
+      "bytes": 25321,
+      "sha256": "eb69d8477f3e5314289c9ffb7e87f603fe6c47f8e2c91cf89c76c6e5785958a1"
     },
     {
       "path": "examples/pioneer-draft/motion-clock.js",
@@ -175,17 +175,17 @@
     {
       "path": "examples/pioneer-draft/myoassist-examples-layer.js",
       "bytes": 9888,
-      "sha256": "a596bfc74589d6168bef5889cda181459a01badb0480e960176e2b49a26d342a"
+      "sha256": "fbf6a32a51bd39ecf994b85408a1edb67415f428fee5a51884d12cd5064b5dca"
     },
     {
       "path": "examples/pioneer-draft/myoleg80-muscle-layer.js",
       "bytes": 2220,
-      "sha256": "671a0e268ddd31a30fe491fcb4b3ba4859bc855ac0d66a63415a9f777d72aef3"
+      "sha256": "e7816824e226319827c8822e51957c1d859c4c44b48d457418be8cbdfd0095fa"
     },
     {
       "path": "examples/pioneer-draft/native-knee-comparison.js",
       "bytes": 8916,
-      "sha256": "c0b16ab03f503aba01751b2af3e0a84f1fea35e0554885fbcab9742505585120"
+      "sha256": "79eb7ce0771e93d98757c447dee4b7f4ede88e8c22e807f336c9c0f15c870117"
     },
     {
       "path": "examples/pioneer-draft/performance-benchmark.js",
@@ -210,12 +210,12 @@
     {
       "path": "examples/pioneer-draft/spring-analysis-data.js",
       "bytes": 4089,
-      "sha256": "0e68250e992092547340da1337294e905d7bc329d1aa8940a08e27f411a47669"
+      "sha256": "c888d7826b8a53a2acd60bd8b5904372086c65e3202b1b2764a4a348c39160ac"
     },
     {
       "path": "examples/pioneer-draft/spring-fea-layer.js",
       "bytes": 8574,
-      "sha256": "684830a20c24548b2425ecebd010bf6807594cbfdddff1252f317eec6baabf5d"
+      "sha256": "815afa3a06a326784e33bcb5361d11d00968c6b312dd194658ad1dfffebc9ce4"
     },
     {
       "path": "examples/pioneer-draft/style.css",

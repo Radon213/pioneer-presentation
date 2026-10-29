@@ -1,6 +1,6 @@
 # Pioneer · ICCAS 2026 presentation
 
-Working source and public presentation with continuous Three.js scenes. Current slide revision: `revision-20261029-21`.
+Working source and public presentation with continuous Three.js scenes. Current slide revision: `revision-20261029-22`.
 
 - [Presentation](https://radon213.github.io/pioneer-presentation/examples/pioneer-draft/index.html)
 - Right / Space: next stage. Left: previous stage. Hold an arrow for fast navigation.
@@ -29,7 +29,7 @@ Third-party notices are in `THIRD_PARTY_NOTICES.md` and the corresponding source
 
 ## Background sequence
 
-The five Background builds follow joint degeneration, conventional replacement, age-related muscle capacity, three source-composed wearable examples, and a conventional replacement plus source BLDC motor concept, including its shaft. The completed Pioneer assembly is withheld in the last concept build.
+The five Background builds follow joint degeneration, conventional replacement, early postoperative quadriceps weakness, three source-composed wearable examples, and a conventional replacement plus source BLDC motor concept, including its shaft. The completed Pioneer assembly is withheld in the last concept build.
 
 HMEDI, OpenExo and Dephy ExoBoot retain their actual MyoAssist human attachments. Their small source-keyframe motion is a kinematic illustration, not a learned assistance result. The 4.42 MB compressed examples prepare on demand while the preceding Background stage is shown; they are absent from the cover download. Quantitative source/provenance and licenses are in `assets/myoassist-examples/`.
 
@@ -38,3 +38,5 @@ The cover restores the four retained native femur/tibia shafts from the existing
 All continuous 3D scenes use orthographic projection. Source geometry and camera orientation are retained independently of framing; the Background insert inspection is aligned with the tibial proximal axis and magnified to a 105 mm field height. Femoral and tibial components approach along the bone axis, from below and above respectively.
 
 The clinical teaching layer aligns the tibial tray with the retained native bone cross-section: 10.55 mm posterior display offset and 2.918 mm lift from its original teaching registration. The cut follows the source baseplate underside. Source articular surfaces are sampled at 0.25 mm spacing for a nominal 0.05 mm display clearance. This is illustrative source-mesh alignment, not validated implant contact or surgical planning. Original STL geometry and native bone transforms are unchanged.
+
+Background 2-3 uses Mizner et al. (JBJS 2005, PMID 15866968): 20 patients, mean 10 days before and 27 days after TKA, reported quadriceps strength decrease 62%. The display normalizes preoperative strength to 100 and postoperative strength to 38. This is an early postoperative study result, not sarcopenia prevalence or long-term weakness.
