@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {createShadedEdges} from './shaded-edges.js?v=revision-20261029-19';
+import {createShadedEdges} from './shaded-edges.js?v=revision-20261029-20';
 
 /** Actual source bone surfaces, with an explicitly qualitative joint motion.
  *

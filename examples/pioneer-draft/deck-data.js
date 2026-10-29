@@ -1,5 +1,5 @@
 // Eight large chapters; the archived thirty-page draft remains in archive/.
-export const deckVersion='revision-20261029-19';
+export const deckVersion='revision-20261029-20';
 const stage=(caption,question,notes)=>({caption,question,notes});
 const proposal='Pioneer_2022_proposal.pdf: PDF p11/printed p2 and PDF p40/printed p31';
 const interim='Moon, thesis interim presentation, 2024-12-10: slides3–15';

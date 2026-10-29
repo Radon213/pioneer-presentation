@@ -35,13 +35,17 @@ export async function createClinicalKneeLayer(scene,{human}={}){
   // Preserve both tibial source origins and their +90° correction. One common
   // presentation fit scale is separate from the exact STL mm->m conversion.
   const fit=.9;group.scale.setScalar(fit);
-  const FEMORAL_Z=-.0199,TIBIAL_Z=-.0511;
+  // Source-surface vertical clearance sampled at 0.25 mm spacing: 6.443539 mm.
+  // Retain a 0.05 mm display clearance rather than interpenetrating the meshes.
+  const ARTICULAR_LIFT=.006393539,FEMORAL_Z=-.0199,TIBIAL_Z=-.0511+ARTICULAR_LIFT/fit;
   const up=new THREE.Vector3(0,1,0).applyQuaternion(human.kneeRotation).normalize();
   // The source cap reaches above the old -14 mm cut. Resect only the local
   // articular ends, leaving the complete shaft and surrounding anatomy. These
   // explanatory display planes are not patient-specific surgical resections.
   const femoralCut=fit*(FEMORAL_Z+femoralGeometry.boundingBox.max.z)-.003;
-  const tibialCut=fit*TIBIAL_Z-.0015;
+  // The baseplate underside is source z=5 mm. Raise the teaching resection
+  // to that face, retaining more proximal tibial bone beneath the plate.
+  const tibialCut=fit*(TIBIAL_Z+.005)-.0001;
   const inverse={femur:{value:new THREE.Matrix4()},tibia:{value:new THREE.Matrix4()}};
   const uniforms={highlight:{value:0},cut:{value:0},center:{value:human.kneeAnchor.clone()},up:{value:up.clone()}};
   const restored=[];
@@ -91,7 +95,7 @@ export async function createClinicalKneeLayer(scene,{human}={}){
     inverse.femur.value.copy(upper).invert();inverse.tibia.value.copy(lower).invert();
     uniforms.center.value.addScaledVector(up,-.055*state.separation);
     featureEdges.forEach(e=>e.sync());
-    Object.assign(group.userData,{source:'aqnazar/TKA-implant-design',side:limb,sourceFemoralFile:femoralFile,commit:'5770570174487f0b59e3a5bbf684a958e21924b5',license:'Apache-2.0',sourceUnitScale:.001,presentationFitScale:fit,classification:'Actual academic conventional implant CAD / illustrative anatomical placement and resection',clinicalApprovedProduct:false,nativeKneeGeoms:[...nativeGeoms],resection:'Five-plane femoral envelope and source-fitted tibial teaching resection; no surgical validation',resectionFemoralHeightMeters:femoralCut,resectionTibialHeightMeters:tibialCut,shading:'authored surfaces with source crease/boundary edges',...state});
+    Object.assign(group.userData,{source:'aqnazar/TKA-implant-design',side:limb,sourceFemoralFile:femoralFile,commit:'5770570174487f0b59e3a5bbf684a958e21924b5',license:'Apache-2.0',sourceUnitScale:.001,presentationFitScale:fit,classification:'Actual academic conventional implant CAD / illustrative anatomical placement and resection',clinicalApprovedProduct:false,nativeKneeGeoms:[...nativeGeoms],resection:'Five-plane femoral envelope and source-fitted tibial teaching resection; no surgical validation',articularDisplayLiftMeters:ARTICULAR_LIFT,nominalDisplayClearanceMeters:.00005,resectionFemoralHeightMeters:femoralCut,resectionTibialHeightMeters:tibialCut,shading:'authored surfaces with source crease/boundary edges',...state});
   }
   function center(mesh){return mesh.geometry.boundingBox.getCenter(new THREE.Vector3()).applyMatrix4(mesh.matrixWorld);}
   setState();

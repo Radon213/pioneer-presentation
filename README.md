@@ -1,6 +1,6 @@
 # Pioneer · ICCAS 2026 presentation
 
-Working source and public presentation with continuous Three.js scenes. Current slide revision: `revision-20261029-19`.
+Working source and public presentation with continuous Three.js scenes. Current slide revision: `revision-20261029-20`.
 
 - [Presentation](https://radon213.github.io/pioneer-presentation/examples/pioneer-draft/index.html)
 - Right / Space: next stage. Left: previous stage. Hold an arrow for fast navigation.
@@ -36,3 +36,5 @@ HMEDI, OpenExo and Dephy ExoBoot retain their actual MyoAssist human attachments
 The cover restores the four retained native femur/tibia shafts from the existing anatomy meshes and attaches them to the saved bilateral gait bone frames; source gait transforms remain unchanged. The Background surgery build separates the bones, shows explanatory femoral/tibial preparation, inserts the conventional components, presents the polyethylene insert from above, then returns and reduces the joint. This visual sequence is not a surgical planning result. The muscle build uses the original neutral paths from the 80-muscle `myo_sim` model (40 left-side paths); authored tapered display envelopes improve legibility without claiming segmented muscle volumes or activation results. The source count, license and tendon SHA256 are included in `assets/myoleg80-muscles.json`. This adds about 8.5 kB to the lazy muscle step and reuses the loaded native shaft geometries.
 
 All continuous 3D scenes use orthographic projection. Source geometry and camera orientation are retained independently of framing; the Background insert inspection is aligned with the tibial proximal axis and magnified to a 105 mm field height. Femoral and tibial components approach along the bone axis, from below and above respectively.
+
+The clinical teaching layer raises the tibial component by 6.394 mm in display space and resects to the source baseplate underside, preserving more proximal bone. The adjustment follows a 0.25 mm source-surface clearance sampling with a nominal 0.05 mm display gap; it is an illustrative fit, not validated implant contact or a surgical plan. Original STL geometry is unchanged.
