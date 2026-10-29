@@ -1,6 +1,6 @@
 # Pioneer · ICCAS 2026 presentation
 
-Working source and public presentation with continuous Three.js scenes. Current slide revision: `revision-20261029-20`.
+Working source and public presentation with continuous Three.js scenes. Current slide revision: `revision-20261029-21`.
 
 - [Presentation](https://radon213.github.io/pioneer-presentation/examples/pioneer-draft/index.html)
 - Right / Space: next stage. Left: previous stage. Hold an arrow for fast navigation.
@@ -37,4 +37,4 @@ The cover restores the four retained native femur/tibia shafts from the existing
 
 All continuous 3D scenes use orthographic projection. Source geometry and camera orientation are retained independently of framing; the Background insert inspection is aligned with the tibial proximal axis and magnified to a 105 mm field height. Femoral and tibial components approach along the bone axis, from below and above respectively.
 
-The clinical teaching layer raises the tibial component by 6.394 mm in display space and resects to the source baseplate underside, preserving more proximal bone. The adjustment follows a 0.25 mm source-surface clearance sampling with a nominal 0.05 mm display gap; it is an illustrative fit, not validated implant contact or a surgical plan. Original STL geometry is unchanged.
+The clinical teaching layer aligns the tibial tray with the retained native bone cross-section: 10.55 mm posterior display offset and 2.918 mm lift from its original teaching registration. The cut follows the source baseplate underside. Source articular surfaces are sampled at 0.25 mm spacing for a nominal 0.05 mm display clearance. This is illustrative source-mesh alignment, not validated implant contact or surgical planning. Original STL geometry and native bone transforms are unchanged.

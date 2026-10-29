@@ -1,11 +1,11 @@
 {
   "schema": "pioneer-runtime-package-v1",
-  "runtimeBytes": 70044166,
+  "runtimeBytes": 70044342,
   "files": [
     {
       "path": "examples/pioneer-draft/app.js",
       "bytes": 15306,
-      "sha256": "44fe3038cb176d77570033e18e8ea6fbced240fdd310836b6a1af195e556d91c"
+      "sha256": "adfd315ebb60cd8fff321278f6df9dce659917ce420f834aa10d0abb6b2c5fa3"
     },
     {
       "path": "examples/pioneer-draft/archived-spring-chart.js",
@@ -130,42 +130,42 @@
     {
       "path": "examples/pioneer-draft/chapter-overlays.js",
       "bytes": 8920,
-      "sha256": "9109afe32abd482bbba4fadd7361b4ffe90a2f22c515468789b5239c8ee836a0"
+      "sha256": "38b96e555cad403e9f9ad680de7635cf9120ba4d2151d438c6066f50a23ff658"
     },
     {
       "path": "examples/pioneer-draft/clinical-knee-layer.js",
-      "bytes": 9917,
-      "sha256": "d525b5289dbea6642c6d7c55ee6511be77146ac906f9168bcf22e7cd85006ebf"
+      "bytes": 10093,
+      "sha256": "1e0134b399c69a94a632b1b9ceb66f691104652f396bf0be893944478b1d8686"
     },
     {
       "path": "examples/pioneer-draft/continuous-human-layer.js",
       "bytes": 15653,
-      "sha256": "5b0d5214c2e5c4e0d1438d57983fbf4de0e4eb895b4905b3fcc63606c94b1474"
+      "sha256": "8ac7d333ed5f4cec70bdbb0fcc8f5b64e41e2a20864a25c39a53d337542301ae"
     },
     {
       "path": "examples/pioneer-draft/continuous-knee-viewer.js",
       "bytes": 67564,
-      "sha256": "db3cd3a7943d85d821dca4f9a3ec78ecd6e93a4442b47e529239c719df8d33e6"
+      "sha256": "bada50001182dbedf5150eb95c6cd91a54b08bcfefdcf84052817fff0f63764a"
     },
     {
       "path": "examples/pioneer-draft/deck-data.js",
       "bytes": 28858,
-      "sha256": "a2d74e1d92540f67340526a6abd1c1554a68de1d290fe42571db34d31a73647b"
+      "sha256": "06020a96c86eb20959a8115dc6fcf14b806438b02393b2cfd1644ca6e7fd8788"
     },
     {
       "path": "examples/pioneer-draft/gait-binary-loader.js",
       "bytes": 3591,
-      "sha256": "254d9d9ca9e7923ff79752478bede0c13e4a8e381ab30d2d93e15a3f035a4dd5"
+      "sha256": "83a8b0df81a3ca6f11824b73d1fbb2a42b402689c8755f1c19748b43132d83c4"
     },
     {
       "path": "examples/pioneer-draft/gait-chapter-layer.js",
       "bytes": 12714,
-      "sha256": "36c86a10bd9b2cbd5323d9e0898c927ca58966046de67fd55470da8bfbed297e"
+      "sha256": "a98e4b42217bbf8be5983f7ad475fef518cd53347ee362dd0e38fb12c8d5e2f3"
     },
     {
       "path": "examples/pioneer-draft/index.html",
       "bytes": 25043,
-      "sha256": "bffce87668c25e5cff44a484af3941ef7c535fc94508b5a4bf1981249aeae6ca"
+      "sha256": "790193f8b58892655ce813a733e57067ecfe534120bc588b795ac26f8ec6cab6"
     },
     {
       "path": "examples/pioneer-draft/motion-clock.js",
@@ -175,17 +175,17 @@
     {
       "path": "examples/pioneer-draft/myoassist-examples-layer.js",
       "bytes": 9888,
-      "sha256": "8c771e96a1fae1cfa89f9b4137acee997b35f73aed625c120fc452b2103717d9"
+      "sha256": "a596bfc74589d6168bef5889cda181459a01badb0480e960176e2b49a26d342a"
     },
     {
       "path": "examples/pioneer-draft/myoleg80-muscle-layer.js",
       "bytes": 2220,
-      "sha256": "bae6a59165db13c75c7c4372521f19b3d854503959ab3ba9c3b2d2e9562a83a3"
+      "sha256": "671a0e268ddd31a30fe491fcb4b3ba4859bc855ac0d66a63415a9f777d72aef3"
     },
     {
       "path": "examples/pioneer-draft/native-knee-comparison.js",
       "bytes": 8916,
-      "sha256": "62873e61313433b73c2078cb9c27569001666078b2cf24d6dc73550d39cd1a93"
+      "sha256": "c0b16ab03f503aba01751b2af3e0a84f1fea35e0554885fbcab9742505585120"
     },
     {
       "path": "examples/pioneer-draft/performance-benchmark.js",
@@ -210,12 +210,12 @@
     {
       "path": "examples/pioneer-draft/spring-analysis-data.js",
       "bytes": 4089,
-      "sha256": "5236835b5d2c1bb99cfb8f8200cbd332c8a6ae07eb6a0501cd0e527b9fa9580e"
+      "sha256": "0e68250e992092547340da1337294e905d7bc329d1aa8940a08e27f411a47669"
     },
     {
       "path": "examples/pioneer-draft/spring-fea-layer.js",
       "bytes": 8574,
-      "sha256": "42a8bb9741ae37241d0499174eb4838027ba5d1a160d7342150ea36c7b2555fc"
+      "sha256": "684830a20c24548b2425ecebd010bf6807594cbfdddff1252f317eec6baabf5d"
     },
     {
       "path": "examples/pioneer-draft/style.css",

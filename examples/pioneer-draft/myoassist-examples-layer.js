@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {loadBinaryWithProgress,reportLoadStage} from './asset-loading.js?v=revision-20261029-20';
+import {loadBinaryWithProgress,reportLoadStage} from './asset-loading.js?v=revision-20261029-21';
 import {createShadedEdges} from './shaded-edges.js';
 
 /** Three source-composed wearable examples, in the parent's one scene and clock.

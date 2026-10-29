@@ -35,9 +35,10 @@ export async function createClinicalKneeLayer(scene,{human}={}){
   // Preserve both tibial source origins and their +90° correction. One common
   // presentation fit scale is separate from the exact STL mm->m conversion.
   const fit=.9;group.scale.setScalar(fit);
-  // Source-surface vertical clearance sampled at 0.25 mm spacing: 6.443539 mm.
+  // The tibial footprint is aligned to the retained bone cross-section centroid.
+  // Source surfaces are sampled at 0.25 mm spacing to retain articular contact.
   // Retain a 0.05 mm display clearance rather than interpenetrating the meshes.
-  const ARTICULAR_LIFT=.006393539,FEMORAL_Z=-.0199,TIBIAL_Z=-.0511+ARTICULAR_LIFT/fit;
+  const TIBIAL_POSTERIOR=-.01055,ARTICULAR_LIFT=.002918,FEMORAL_Z=-.0199,TIBIAL_Z=-.0511+ARTICULAR_LIFT/fit;
   const up=new THREE.Vector3(0,1,0).applyQuaternion(human.kneeRotation).normalize();
   // The source cap reaches above the old -14 mm cut. Resect only the local
   // articular ends, leaving the complete shaft and surrounding anatomy. These
@@ -88,14 +89,14 @@ export async function createClinicalKneeLayer(scene,{human}={}){
     for(const m of[trayMetal,polyethylene]){m.opacity*=state.tibialReveal;m.depthWrite=m.opacity>.85;}
     metal.opacity*=state.upperOpacity;metal.depthWrite=metal.opacity>.85;
     femoral.position.set(0,0,FEMORAL_Z+state.explode*.055+state.separation*.055/fit-(1-state.femoralInsertion)*.065/fit);
-    tibial.position.set(0,.006/fit,TIBIAL_Z-state.separation*.055/fit+(1-state.tibialInsertion)*.065/fit);plate.position.set(0,0,-state.explode*.052);insert.position.set(0,0,state.explode*.015);
+    tibial.position.set(TIBIAL_POSTERIOR/fit,.006/fit,TIBIAL_Z-state.separation*.055/fit+(1-state.tibialInsertion)*.065/fit);plate.position.set(0,0,-state.explode*.052);insert.position.set(0,0,state.explode*.015);
     uniforms.highlight.value=clamp(state.highlight);uniforms.cut.value=clamp(state.cut);uniforms.center.value.copy(human.kneeAnchor);up.set(0,1,0).applyQuaternion(human.kneeRotation).normalize();uniforms.up.value.copy(up);
     group.updateMatrixWorld(true);
     const upper=new THREE.Matrix4().makeTranslation(...up.clone().multiplyScalar(.055*state.separation).toArray()).multiply(group.matrixWorld),lower=new THREE.Matrix4().makeTranslation(...up.clone().multiplyScalar(-.055*state.separation).toArray()).multiply(group.matrixWorld);
     inverse.femur.value.copy(upper).invert();inverse.tibia.value.copy(lower).invert();
     uniforms.center.value.addScaledVector(up,-.055*state.separation);
     featureEdges.forEach(e=>e.sync());
-    Object.assign(group.userData,{source:'aqnazar/TKA-implant-design',side:limb,sourceFemoralFile:femoralFile,commit:'5770570174487f0b59e3a5bbf684a958e21924b5',license:'Apache-2.0',sourceUnitScale:.001,presentationFitScale:fit,classification:'Actual academic conventional implant CAD / illustrative anatomical placement and resection',clinicalApprovedProduct:false,nativeKneeGeoms:[...nativeGeoms],resection:'Five-plane femoral envelope and source-fitted tibial teaching resection; no surgical validation',articularDisplayLiftMeters:ARTICULAR_LIFT,nominalDisplayClearanceMeters:.00005,resectionFemoralHeightMeters:femoralCut,resectionTibialHeightMeters:tibialCut,shading:'authored surfaces with source crease/boundary edges',...state});
+    Object.assign(group.userData,{source:'aqnazar/TKA-implant-design',side:limb,sourceFemoralFile:femoralFile,commit:'5770570174487f0b59e3a5bbf684a958e21924b5',license:'Apache-2.0',sourceUnitScale:.001,presentationFitScale:fit,classification:'Actual academic conventional implant CAD / illustrative anatomical placement and resection',clinicalApprovedProduct:false,nativeKneeGeoms:[...nativeGeoms],resection:'Five-plane femoral envelope and source-fitted tibial teaching resection; no surgical validation',tibialPosteriorDisplayOffsetMeters:TIBIAL_POSTERIOR,articularDisplayLiftMeters:ARTICULAR_LIFT,nominalDisplayClearanceMeters:.00005,resectionFemoralHeightMeters:femoralCut,resectionTibialHeightMeters:tibialCut,shading:'authored surfaces with source crease/boundary edges',...state});
   }
   function center(mesh){return mesh.geometry.boundingBox.getCenter(new THREE.Vector3()).applyMatrix4(mesh.matrixWorld);}
   setState();
